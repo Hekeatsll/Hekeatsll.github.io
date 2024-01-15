@@ -906,7 +906,7 @@ button {
   clear: both;
 }
 .markdown-body {
-  font-family: 'Satoshi-Variable', sans-serif, 'Noto Sans SC', sans-serif, sans-serif;
+  font-family: 'Satoshi-Variable', sans-serif, 'Noto Sans SC', sans-serif;
   font-size: 16px;
 }
 .markdown-body blockquote {
@@ -1016,7 +1016,7 @@ button {
 .markdown-body .h4,
 .markdown-body .h5,
 .markdown-body .h6 {
-  font-family: 'Satoshi-Variable', sans-serif, 'Noto Sans SC', sans-serif, sans-serif;
+  font-family: 'Satoshi-Variable', sans-serif, 'Noto Sans SC', sans-serif;
   color: var(--second-text-color);
   line-height: 1.5;
   margin-bottom: 1rem !important;
@@ -3018,7 +3018,7 @@ html.is-animating .transition-fade {
   width: 100%;
   font-size: 0.92rem;
   box-sizing: border-box;
-  font-family: 'Satoshi-Variable', sans-serif, 'Noto Sans SC', sans-serif, 'Noto Sans', 'Noto Sans SC', sans-serif;
+  font-family: 'Satoshi-Variable', sans-serif, 'Noto Sans SC', 'Noto Sans', 'Noto Sans SC', sans-serif;
 }
 .post-toc-wrap .post-toc .toc-title {
   font-size: 0.8rem;
@@ -4325,6 +4325,23 @@ html.is-animating .transition-fade {
   left: 0;
   width: 100%;
   z-index: 1009;
+}
+.progress-bar-container .scroll-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  visibility: hidden;
+  z-index: 1007;
+  background: var(--primary-color);
+  transition-property: color, background, box-shadow, border-color, width, opacity;
+  transition-delay: 0s, 0s, 0s, 0s, 0s, 0s;
+  transition-duration: 0.2s, 0.2s, 0.2s, 0.2s, 0.1s, 0.1s;
+  transition-timing-function: ease, ease, ease, ease, ease, ease;
+}
+.progress-bar-container .scroll-progress-bar.hide {
+  display: none !important;
 }
 html.is-animating .scroll-progress-bar {
   opacity: 0;
@@ -7268,7 +7285,7 @@ html.is-animating .scroll-progress-bar {
   font-size: 1.4rem;
   line-height: 1.5;
   color: var(--second-text-color);
-  font-family: 'Satoshi-Variable', sans-serif, 'Noto Sans SC', sans-serif, 'Noto Sans SC', sans-serif;
+  font-family: 'Satoshi-Variable', sans-serif, 'Noto Sans SC', 'Noto Sans SC', sans-serif;
   margin: 0;
 }
 @media (max-width: 768px) {
@@ -8004,7 +8021,7 @@ html.is-animating .scroll-progress-bar {
   display: block;
   opacity: 1;
   transition: opacity 0.2s ease-in 0.2s;
-  width: 210px;
+  width: 350px;
 }
 .post-page-container.show-toc .toc-content-container:hover::-webkit-scrollbar-thumb {
   border: 3px solid rgba(183,183,183,0.3);
