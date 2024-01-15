@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/16/thm-network security(网络安全介绍)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="简单介绍网络安全概念，了解基本的网络攻击步骤，并尝试完成一个侵入目标服务器的实例。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Network Security(网络安全介绍)-学习">
+<meta property="og:url" content="http://example.com/2024/01/16/THM-Network%20Security(%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="简单介绍网络安全概念，了解基本的网络攻击步骤，并尝试完成一个侵入目标服务器的实例。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20230322195255546.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230322200053263.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230322200919536.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230320215249669.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230322201637351.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230322204848872.png">
+<meta property="og:image" content="http://example.com/2024/01/16/articleimg/a8e61f1f9a2ea3612d3bf84f9a11f41c.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230320215635939.png">
+<meta property="og:image" content="http://example.com/articleimg/a708c20aa1243c8e2be30bb9e74bd663.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230322221312517.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230322221546534.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230322221617429.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230322221757084.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230322222032954.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230320215901969.png">
+<meta property="article:published_time" content="2024-01-15T23:32:55.000Z">
+<meta property="article:modified_time" content="2024-01-15T23:35:59.213Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="网络安全基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20230322195255546.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Network Security(网络安全介绍)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-7289o9.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://assets.tryhackme.com/room-banners/intro-to-offensive-security.png" alt="THM-Network Security(网络安全介绍)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Network Security(网络安全介绍)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-16 07:32:55</span>
+        <span class="mobile">2024-01-16 07:32:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-16 07:35:59</span>
+            <span class="mobile">2024-01-16 07:35:59</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.7k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>14 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/intronetworksecurity" >https://tryhackme.com/room/intronetworksecurity <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：简单介绍网络安全概念，了解基本的网络攻击步骤，并尝试完成一个侵入目标服务器的实例。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>计算机网络是一组相互连接的计算机和设备，而网络安全则侧重于保护这些设备以及连接它们的链路的安全。（更准确地说，网络安全包括了保护计算机网络及其数据的机密性、完整性和可用性的一切安全设备、安全技术和过程）</p>
+<p>网络安全由不同的硬件和软件解决方案组成，以实现既定的安全目标。网络安全的硬件解决方案是指 你在网络中设置的用于保护网络安全的设备，这些设备是硬件，所以你可以在现实中接触到它们。硬件设备可能类似于下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322195255546.png"
+                      alt="image-20230322195255546"
+                ></p>
+<p>网络安全硬件设备的示例包括：</p>
+<ul>
+<li>防火墙设备：防火墙将根据一组预定义的规则来允许和阻止连接，它将限制什么可以进入网络 和 什么可以离开网络。</li>
+<li>入侵检测系统 (IDS) 设备：IDS 会检测系统入侵、网络入侵以及入侵企图，它会尝试检测攻击者侵入你的网络的企图。</li>
+<li>入侵防御系统 (IPS) 设备：IPS 可阻止检测到的入侵行为和入侵企图，它旨在防止攻击者闯入你的网络。</li>
+<li>虚拟专用网络 (VPN) 集线器设备：VPN 可确保网络流量无法被第三方读取或更改，它保护发送的数据的机密性（secrecy）和完整性。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322200053263.png"
+                      alt="image-20230322200053263"
+                ></p>
+<p>另一方面，网络安全也有软件解决方案，常见的例子有：</p>
+<ul>
+<li>防病毒软件：你可以在计算机或者智能手机上安装防病毒软件以检测恶意文件并阻止它们的执行。</li>
+<li>主机防火墙：与防火墙设备（硬件设备）不同，主机防火墙是作为操作系统的一部分而被提供的程序，或者是安装在操作系统上的程序。例如，MS Windows 操作系统中就包含了 Windows Defender 防火墙程序，Apple macOS 中也包含了应用防火墙(application firewal)，以上两者都是主机防火墙。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322200919536.png"
+                      alt="image-20230322200919536"
+                ></p>
+<p>根据 IBM Security 发布的<a class="link"   target="_blank" rel="noopener" href="https://newsroom.ibm.com/2021-07-28-IBM-Report-Cost-of-a-Data-Breach-Hits-Record-High-During-Pandemic" >《2021 年数据泄露成本报告》 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，2021 年数据泄露平均每起事件给公司造成 424 万美元的损失，而 2020 年为 386 万美元，平均成本因行业和国家&#x2F;地区而异。 例如，医疗行业数据泄露的平均总成本为 923 万美元，而教育行业则为 379 万美元。</p>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><blockquote>
+<p>Windows Defender 防火墙是什么类型的防火墙：Host Firewall</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230320215249669.png"
+                      alt="image-20230320215249669"
+                ></p>
+<h2 id="网络攻击步骤介绍"><a href="#网络攻击步骤介绍" class="headerlink" title="网络攻击步骤介绍"></a>网络攻击步骤介绍</h2><p>每个“操作”的执行 都需要拥有某种形式的计划才能最终取得成功。假如你对野生动物摄影感兴趣，除非你完全不在乎结果，否则你不能只是拿起相机就直接前往丛林进行摄影，为了安全、成功地进行野生动物摄影之旅，你往往需要更多地去了解你想要用相机拍摄的动物(这包括动物的习性和你要避免的危险)；以上例子同样适用于针对目标网络进行攻击的网络安全行动。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322201637351.png"
+                      alt="image-20230322201637351"
+                ></p>
+<p>闯入目标网络通常包括多个步骤，根据<a class="link"   target="_blank" rel="noopener" href="https://www.lockheedmartin.com/en-us/capabilities/cyber/cyber-kill-chain.html" >洛克希德·马丁公司 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的说法，网络杀伤链有七个步骤：</p>
+<ol>
+<li>Recon(侦察)：Recon，是reconnaissance(侦察)的缩写，指的是攻击者将在此阶段 试图尽可能多地了解目标，主要包括——目标的服务器类型、操作系统、IP 地址、用户名和电子邮件地址等信息，获取到这些信息将有利于网络攻击成功。</li>
+<li>Weaponization(武器化(：这一步是指准备一个带有恶意组件的文件，例如，相关恶意组件能够为攻击者提供远程访问。</li>
+<li>Delivery(投递)：投递是指通过任何可行的方式将“武器化”的文件投递给目标，例如通过电子邮件或者U盘进行投递。</li>
+<li>Exploitation(利用)：当用户打开（攻击者所投递的）恶意文件时，用户所使用的系统就会执行恶意组件。</li>
+<li>Installation(安装)：经过上一步的恶意组件执行之后，目标系统就会被安装上恶意软件。</li>
+<li>Command &amp; Control(命令与控制-C2)：恶意软件的成功安装会为攻击者提供对目标系统的命令和控制能力。</li>
+<li>Actions on Objectives(针对目标的行动)：在获得对一个目标系统的控制权后，攻击者就能够达到他们的行动目标，关于行动目标的示例：数据泄露（一旦成功窃取到了目标系统的数据，即代表攻击者达到行动目标）。</li>
+</ol>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230322204848872.png"
+                      alt="image-20230322204848872" style="zoom:67%;" 
+                >
+
+<p>关于网络攻击步骤的另一个类比是：对目标房屋感兴趣的小偷。小偷在开始行动之前，往往会花一些时间了解目标房屋，谁住在那里，他们什么时候离开以及什么时候回家，小偷还会确定目标房屋是否有安装安全摄像头以及警报系统，一旦收集到足够的信息，小偷就会制定最佳的进入策略。关于物理盗窃的计划和执行在某种程度上也类似于旨在闯入网络并窃取数据的恶意攻击行为。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../articleimg/a8e61f1f9a2ea3612d3bf84f9a11f41c.png"
+                      alt="img"  
+                >
+
+<h3 id="答题-1"><a href="#答题-1" class="headerlink" title="答题"></a><strong>答题</strong></h3><blockquote>
+<p>攻击者在网络杀伤链的哪一步收集有关目标的信息：Recon (侦察)</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230320215635939.png"
+                      alt="image-20230320215635939"
+                ></p>
+<h2 id="网络安全实例"><a href="#网络安全实例" class="headerlink" title="网络安全实例"></a>网络安全实例</h2><p>在本小节的实例中，我们将尝试侵入目标 Linux 系统。</p>
+<p>我们攻击的第一步是侦察；我们可以使用不同的工具来加快我们的侦察活动，这些工具将收集与目标相关的各个方面的信息。</p>
+<p>为了简单起见，我们将在此使用Nmap工具，Nmap是 Network Mapper 的缩写，它是一个网络扫描器，可以帮助我们发现正在运行的机器（存活主机）以及在这些机器上运行的任何对外界可见的程序（计算机服务）。我们可以通过在终端提示符下运行 <code>nmap MACHINE_IP</code>命令来扫描目标IP：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">tips：在实际执行命令时，我们直接用目标ip地址代替下面命令中的MACHINE_IP。</span></span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash">nmap MACHINE_IP</span></span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-04-06 17:38 EEST</span><br><span class="line">Nmap scan report for MACHINE_IP</span><br><span class="line">Host is up (0.00024s latency).</span><br><span class="line">Not shown: 997 closed tcp ports (reset)</span><br><span class="line">PORT   STATE SERVICE</span><br><span class="line">21/tcp open  ftp</span><br><span class="line">22/tcp open  ssh</span><br><span class="line">80/tcp open  http</span><br><span class="line"></span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 0.33 seconds</span><br></pre></td></tr></table></figure></div>
+
+<p>我们发现了三个服务正在运行：</p>
+<ol>
+<li>FTP 服务器：FTP 代表文件传输协议，用于在机器之间传输文件。</li>
+<li>SSH 服务器：SSH 代表 Secure Shell，用于安全远程登录，换句话说，它允许你在远程系统上安全地执行命令。</li>
+<li>HTTP 服务器：HTTP 代表超文本传输协议，用于web服务，每当你在网站上浏览网页时，你都在使用 HTTP协议 或 HTTPS协议，HTTPS 是 HTTP 的安全（加密）版本。</li>
+</ol>
+<p>你还可以注意到 Nmap 会根据主机是否收到任何响应来报告主机是否已启动（存活），这有助于我们知道什么时候目标机器将显示没有端口打开或者显示没有端口可访问。</p>
+<p>让我们尝试收集有关 FTP 服务器的更多信息：</p>
+<ol>
+<li>我们将在 AttackBox 的终端中输入 <code>ftp MACHINE_IP</code> 命令来连接到目标的 FTP 服务器。</li>
+<li>接下来我们尝试使用login anonymous登录，看看这个FTP服务器是否支持匿名登录。</li>
+<li>成功完成匿名登录之后，我们可以尝试使用命令 ls（list的缩写）来查看可用的文件，我们能得到文件名列表及文件的详细信息。</li>
+<li>如果你对所发现的任何文件感到好奇，可以使用 <code>get filename</code> 命令来进行下载，比如我想知道 secret.txt 文件包含什么，所以使用 <code>get secret.txt</code> 命令来进行文件下载。</li>
+<li>成功下载文件之后，键入 <code>exit</code> 或 <code>bye</code> 即可退出 FTP 客户端。</li>
+</ol>
+<p>与目标FTP服务器的交互过程将如下所示：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash">ftp MACHINE_IP</span></span><br><span class="line">Connected to MACHINE_IP (MACHINE_IP).</span><br><span class="line">220 (vsFTPd 3.0.3)</span><br><span class="line">Name (MACHINE_IP:root): anonymous</span><br><span class="line">230 Login successful.</span><br><span class="line">Remote system type is UNIX.</span><br><span class="line">Using binary mode to transfer files.</span><br><span class="line"><span class="meta prompt_">ftp&gt; </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line">227 Entering Passive Mode (10,20,30,130,181,190).</span><br><span class="line">150 Here comes the directory listing.</span><br><span class="line">-rw-r--r--    1 ftp      ftp        425351 Apr 06 11:22 2680-0.txt</span><br><span class="line">-rw-r--r--    1 ftp      ftp           356 Apr 06 11:22 2680.epub</span><br><span class="line">-rw-r--r--    1 ftp      ftp        251857 Apr 06 11:22 55317-0.txt</span><br><span class="line">-rw-r--r--    1 ftp      ftp           358 Apr 06 11:22 55317.epub</span><br><span class="line">-rwxr-xr-x    1 ftp      ftp           214 Apr 06 11:22 backup.sh</span><br><span class="line">-rw-r--r--    1 ftp      ftp            23 Apr 06 11:22 secret.txt</span><br><span class="line">226 Directory send OK.</span><br><span class="line"><span class="meta prompt_">ftp&gt; </span><span class="language-bash">get secret.txt</span> </span><br><span class="line">local: secret.txt remote: secret.txt</span><br><span class="line">227 Entering Passive Mode (10,20,30,130,159,46).</span><br><span class="line">150 Opening BINARY mode data connection for secret.txt (23 bytes).</span><br><span class="line">226 Transfer complete.</span><br><span class="line">23 bytes received in 0.00107 secs (21.48 Kbytes/sec)</span><br><span class="line"><span class="meta prompt_">ftp&gt; </span><span class="language-bash"><span class="built_in">exit</span></span></span><br><span class="line">221 Goodbye.</span><br></pre></td></tr></table></figure></div>
+
+<p>我们注意到上述FTP服务器中一共有六个文件：三个 txt 文件、两个 epub 文件和一个 sh 文件。txt和epub扩展名分别用于文本文件和电子书文件，而 sh 扩展名则表示该文件是一个 shell 脚本，shell 脚本通常会包含一组需要重复执行的命令。</p>
+<p>在我们使用 FTP 命令 <code>get secret.txt</code>下载文件secret.txt 并使用<code>exit</code>退出 FTP 客户端之后，我们就会返回到攻击机的终端界面；此时我们可以在攻击机的终端界面中使用<code>cat secret.txt</code>命令来显示 secret.txt 文件的文本内容。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">cat</span> secret.txt</span> </span><br><span class="line">password: [redacted]   #实际上这行会显示密码信息，此处的redacted表示隐藏（相当于马赛克）的意思</span><br></pre></td></tr></table></figure></div>
+
+<p>我们得到了一个无意中复制到公共 FTP 服务器上的账户密码明文，让我们试试看它是否适用于 root 帐户（root账户在Linux系统上拥有完全的权限，可以读写任何文件，能够安装和删除任何程序）。在攻击机终端界面，我们可以输入 <code>ssh root@MACHINE_IP</code>来进行ssh登录，随后我们将被要求输入root账号的密码以进行身份验证，我们直接尝试输入我们在 FTP 服务器上发现的密码明文即可。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash">ssh root@MACHINE_IP</span></span><br><span class="line">root@MACHINE_IP&#x27;s password: </span><br><span class="line">Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-107-generic x86_64)</span><br><span class="line"></span><br><span class="line"> * Documentation:  https://help.ubuntu.com</span><br><span class="line"> * Management:     https://landscape.canonical.com</span><br><span class="line"> * Support:        https://ubuntu.com/advantage</span><br><span class="line"></span><br><span class="line">  System information as of Thu  7 Apr 08:16:42 UTC 2022</span><br><span class="line"></span><br><span class="line">  System load:  0.15              Processes:              225</span><br><span class="line">  Usage of /:   64.6% of 6.53GB   Users logged in:        0</span><br><span class="line">  Memory usage: 19%               IPv4 address for ens33: MACHINE_IP</span><br><span class="line">  Swap usage:   0%</span><br><span class="line"></span><br><span class="line"> * Super-optimized for small spaces - read how we shrank the memory</span><br><span class="line">   footprint of MicroK8s to make it the smallest full K8s around.</span><br><span class="line"></span><br><span class="line">   https://ubuntu.com/blog/microk8s-memory-optimisation</span><br><span class="line"></span><br><span class="line">0 updates can be applied immediately.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Last login: Thu Apr  7 07:53:28 2022 from 10.10.10.1</span><br></pre></td></tr></table></figure></div>
+
+<p>以 root 身份完成ssh登录后，我们就可以完全控制目标服务器了，为了查找目标文件 我们可以使用以下 Linux 命令：</p>
+<ol>
+<li>使用<code>pwd</code>命令，pwd是print working directory 的缩写，此命令可用来查看我们在系统中的当前位置。</li>
+<li>使用<code>ls</code>命令来列出文件信息，查看文件列表中有无目标文件。</li>
+<li>使用<code>cat flag.txt</code>命令来查看文件内容。</li>
+</ol>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">pwd</span></span></span><br><span class="line">/root</span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line">flag.txt  snap</span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">cat</span> flag.txt</span> </span><br><span class="line">[redacted]</span><br></pre></td></tr></table></figure></div>
+
+<p>因为我们以 root 身份完成了登录，所以我们可以完全访问所有文件，包括其他用户的文件，我们可以执行以下 Linux 命令进行探索：</p>
+<ol>
+<li><p>使用<code>cd /home</code> 命令转到包含所有用户主目录的目录吗，cd 是 change directory（更改目录）的缩写。</p>
+</li>
+<li><p>我们在&#x2F;home目录中运行<code>ls</code>命令，查看系统的所有用户名称，因为我们拥有系统管理员（root）权限，所以我们可以直接检查其他用户的主文件夹下的内容。</p>
+</li>
+<li><p>使用<code>cd librarian</code>命令进入用户librarian的目录。</p>
+</li>
+<li><p>使用 <code>pwd</code> 命令以查看我们在系统中的当前位置（ &#x2F;home&#x2F;librarian）。</p>
+</li>
+<li><p>使用<code>ls</code>命令显示 librarian 目录下的文件信息，查看文件列表中有无目标文件。</p>
+</li>
+<li><p>我们可以使用<code>cat flag.txt</code>命令打印文本文件内容到终端界面。</p>
+</li>
+</ol>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">cd</span> /home</span></span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line">ftpsecure  librarian  strategos</span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">cd</span> librarian/</span></span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">pwd</span></span></span><br><span class="line">/home/librarian</span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line">flag.txt</span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">cat</span> flag.txt</span> </span><br><span class="line">[redacted]</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/a708c20aa1243c8e2be30bb9e74bd663.png"
+                      alt="img"
+                ></p>
+<p>让我们总结一下我们在本小节中的工作，我们的目标是获取 IP 地址为MACHINE_IP的目标系统的root访问权限：</p>
+<ol>
+<li>我们使用 nmap 来了解目标机器正在运行的服务。</li>
+<li>我们连接到目标机的 FTP 服务器以了解有关其配置的更多信息。</li>
+<li>我们发现一个包含root密码的文件被错误地复制到了FTP服务器中的公共文件夹下。</li>
+<li>我们使用找到的密码，以root用户身份来进行ssh登录。</li>
+<li>最终，我们获得了所有用户文件的访问权限（因为此时的用户身份为root）。</li>
+</ol>
+<h3 id="答题-2"><a href="#答题-2" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><em>在本文相关的Tryhackme实验房间页面 部署虚拟实验环境，并完成本小节对应的实例。</em></p>
+<p><em><strong>问题</strong></em></p>
+<ol>
+<li>secret.txt文件内容中的密码是什么？</li>
+<li>&#x2F;root目录中的flag.txt文件内容是什么？</li>
+<li>&#x2F;home&#x2F;librarian目录中的flag.txt文件内容是什么？</li>
+</ol>
+<p><em><strong>操作</strong></em></p>
+<p>使用nmap进行端口扫描：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV -sC -T4 10.10.98.42</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322221312517.png"
+                      alt="image-20230322221312517"
+                ></p>
+<blockquote>
+<p>目标机器上存在FTP服务且允许进行匿名登录</p>
+</blockquote>
+<p>针对目标机的ftp服务进行匿名登录尝试：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ftp 10.10.98.42</span><br><span class="line">anonymous</span><br><span class="line">ls</span><br><span class="line">get secret.txt </span><br><span class="line">exit</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322221546534.png"
+                      alt="image-20230322221546534"
+                ></p>
+<p>下载完敏感文件后，在攻击机终端查看到该文件内容为root用户的密码明文，所以我们基于已知密码 直接尝试以root用户身份进行ssh登录：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat secret.txt #password: ABC789xyz123</span><br><span class="line"></span><br><span class="line">ssh root@10.10.98.42</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322221617429.png"
+                      alt="image-20230322221617429"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322221757084.png"
+                      alt="image-20230322221757084"
+                ></p>
+<blockquote>
+<p>secret.txt文件内容中的密码是：ABC789xyz123 。</p>
+</blockquote>
+<p>成功完成ssh登录成功后，我们获得了root权限，接下来我们将查找目标系统上的目标文本文件并查看相关的文本内容：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd /root</span><br><span class="line">ls</span><br><span class="line">cat flag.txt</span><br><span class="line"></span><br><span class="line">cd /home</span><br><span class="line">ls</span><br><span class="line">cd /home/librarian/</span><br><span class="line">ls</span><br><span class="line">cat flag.txt</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322222032954.png"
+                      alt="image-20230322222032954"
+                ></p>
+<blockquote>
+<p>&#x2F;root目录中的flag.txt文件内容是：THM{FTP_SERVER_OWNED} 。</p>
+<p>&#x2F;home&#x2F;librarian目录中的flag.txt文件内容是：THM{LIBRARIAN_ACCOUNT_COMPROMISED} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230320215901969.png"
+                      alt="image-20230320215901969"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Network Security(网络安全介绍)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-16 07:32:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-16 07:35:59
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/16/THM-Network Security(网络安全介绍)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">#网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/16/THM-Operating%20System%20Security(%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Operating System Security(操作系统安全介绍)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Network Security(网络安全介绍)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E6%AD%A5%E9%AA%A4%E4%BB%8B%E7%BB%8D"><span class="nav-text">网络攻击步骤介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-1"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AE%9E%E4%BE%8B"><span class="nav-text">网络安全实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-2"><span class="nav-text">答题</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

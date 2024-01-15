@@ -484,4 +484,630 @@
 <p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>THM-Operating System Security(操作系统安全介绍)-学习</title>
+    <url>/2024/01/16/THM-Operating%20System%20Security(%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/operatingsystemsecurity" >https://tryhackme.com/room/operatingsystemsecurity <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：简单介绍操作系统安全，并演示 Linux系统 上的 SSH 身份验证实例。</p>
+<h2 id="操作系统安全简介"><a href="#操作系统安全简介" class="headerlink" title="操作系统安全简介"></a>操作系统安全简介</h2><p>每天当你使用智能手机或者笔记本电脑以及其他任何类型的计算机时，你都会直接或间接地与操作系统进行交互；常用的操作系统包括 MS Windows、macOS、iOS、Android、Chrome OS 和 Linux。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/41f5388e5280b8a769158537e4372eae.png"
+                      alt="img"
+                ></p>
+<p>什么是操作系统？ 要定义操作系统，我们首先需要知道一个计算机术语：硬件。</p>
+<p>计算机硬件是指所有可以用手触摸到的计算机部件和外围设备。硬件包括屏幕、键盘、打印机、U盘和主板；其中主板包含了许多组件，特别是中央处理器（CPU）和内存芯片（RAM），主板通常会连接存储设备（HDD-机械硬盘 或 SSD-固态硬盘）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230322012635473.png"
+                      alt="image-20230322012635473"
+                ></p>
+<p>主板是计算机的关键部分，从键盘和鼠标到屏幕和打印机的所有其他硬件都将连接到计算机主板；但是，如果你想在计算机中运行自己喜欢的程序或者应用程序，硬件组件本身是没办法直接被使用的，所以我们需要一个操作系统来控制和“驱动”这些硬件组件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230322013136875.png"
+                      alt="image-20230322013136875"
+                ></p>
+<p>操作系统 (OS) 是位于硬件与你正在运行的应用程序或者程序之间的层。</p>
+<p>你日常使用的示例程序可能包括网络浏览器，例如 Firefox、Safari 和 Chrome，以及消息传递应用程序，例如 Signal、WhatsApp 和 Telegram。所有的程序和应用程序都不能直接在计算机硬件上运行，但是，它们能够运行在操作系统上，操作系统能够允许程序按照特定的规则去访问硬件。</p>
+<p>某些操作系统专为在笔记本电脑和个人台式机上运行而设计，例如 MS Windows 11 和 macOS；还有某些操作系统专为智能手机而设计，例如 Android 和 iOS；另外还有用于服务器的操作系统，例如 <a class="link"   href="https://www.microsoft.com/en-us/windows-server/" >MS Windows Server 2022 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>、<a class="link"   href="https://www.ibm.com/products/aix" >IBM AIX <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 和 <a class="link"   href="https://www.oracle.com/solaris" >Oracle Solaris <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>；最后，还有一些在个人计算机上以及在服务器上都能被使用的操作系统，比如Linux。</p>
+<p>下图是2022 年 1 月期间收集的数据，这些数据显示了当时 用于浏览互联网的不同操作系统的流行程度。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230322014002536.png"
+                      alt="image-20230322014002536"
+                ></p>
+<p>你的智能手机可能运行在 Android 或 iOS操作系统上，并且其中可能拥有关于你的大量私人数据，包括：</p>
+<ol>
+<li>与家人和朋友的私人谈话</li>
+<li>与家人和朋友的私人照片</li>
+<li>你用于个人和工作通信的电子邮件客户端</li>
+<li>保存在网络浏览器中密码（甚至保存在笔记中的密码）</li>
+<li>电子银行应用程序</li>
+</ol>
+<p>关于机密和私人数据的清单可能还有更多内容，你应该不会希望你所不信任的人打开你的手机并浏览你的照片、对话和应用程序；因此，你需要保护好自己的手机及其操作系统的安全。</p>
+<p>保护私人数据同样适用于 运行了 MS Windows、macOS、Linux 等操作系统的笔记本电脑或计算机，你的计算机中很可能包含了大量信息，例如：</p>
+<ol>
+<li>与你的工作或大学相关的机密文件</li>
+<li>你的私人个人文件，例如你的身份证或护照复印件</li>
+<li>你所使用的电子邮件程序，例如 MS Outlook、Mozilla Thunderbird等</li>
+<li>你保存在网络浏览器和其他应用程序中的密码</li>
+<li>你的数码相机和智能手机中的照片的复印件</li>
+</ol>
+<p>这些关于私人信息的列表可能会很长，具体内容取决于用户类型。</p>
+<p>考虑到所保存的数据的性质，你肯定会希望能够尽量确保个人信息安全，而当我们谈论到信息安全时，我们应该想到要保护好以下几点：</p>
+<ul>
+<li>机密性(Confidentiality)：你希望确保 机密的和私人的文件、信息仅供指定人员使用。</li>
+<li>完整性(Integrity)：任何人都不能篡改存储在你的系统上的文件 或者 篡改你在网络上传输的文件。</li>
+<li>可用性(Availability)：你希望你的笔记本电脑或智能手机在你决定使用时能够随时处于可用状态。</li>
+</ul>
+<p>tips：Confidentiality、Integrity、Availability——即CIA三合一模型。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230322015625614.png"
+                      alt="image-20230322015625614"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230320213504737.png"
+                      alt="image-20230320213504737"
+                ></p>
+<h2 id="关于操作系统安全的常见示例"><a href="#关于操作系统安全的常见示例" class="headerlink" title="关于操作系统安全的常见示例"></a>关于操作系统安全的常见示例</h2><p>正如我们在上一小节中所提到的，操作系统安全将涉及针对以下几个方面的攻击：</p>
+<ul>
+<li>Confidentiality-机密性</li>
+<li>Integrity-完整性</li>
+<li>Availability-可用性</li>
+</ul>
+<p>在本小节，我们将重点关注恶意用户所针对的三个安全缺陷：</p>
+<ol>
+<li>身份验证中的弱密码</li>
+<li>弱文件权限</li>
+<li>恶意程序</li>
+</ol>
+<h3 id="身份验证中的弱密码"><a href="#身份验证中的弱密码" class="headerlink" title="身份验证中的弱密码"></a>身份验证中的弱密码</h3><p>身份验证是验证你身份的行为，无论是本地系统还是远程系统，身份验证可以通过三种主要方式实现：</p>
+<ul>
+<li>你知道的信息，例如密码或 PIN 码。</li>
+<li>你是什么，例如指纹。</li>
+<li>你拥有的东西，例如可以接收 SMS(短信服务) 消息的电话号码。</li>
+</ul>
+<p>由于密码是最常见的身份验证形式，因此它们也是最容易受到攻击的。许多用户倾向于在网站上使用容易猜到的简单密码 或者 在多个网站上使用相同的密码；此外，一些用户是设置密码时 会依赖个人详细信息，例如出生日期和宠物的名字等，他们认为这很容易记忆并且不会被攻击者知道（事实上攻击者已经意识到了：用户在设置密码时，会倾向于依赖个人详细信息）。</p>
+<p>2019 年 4 月 21 日 英国国家网络安全中心 (NCSC) 发布了 <a class="link"   href="https://www.ncsc.gov.uk/blog-post/passwords-passwords-everywhere" >100,000 个最常用密码 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的列表，让我们看看常用的前 20 个密码(Top20)。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">Rank	          Password</span><br><span class="line">1	              123456</span><br><span class="line">2	              123456789</span><br><span class="line">3	              qwerty</span><br><span class="line">4	              password</span><br><span class="line">5	              111111</span><br><span class="line">6	              12345678</span><br><span class="line">7	              abc123</span><br><span class="line">8	              1234567</span><br><span class="line">9	              password1</span><br><span class="line">10	              12345</span><br><span class="line">11	              1234567890</span><br><span class="line">12	              123123</span><br><span class="line">13	              000000</span><br><span class="line">14	              iloveyou</span><br><span class="line">15	              1234</span><br><span class="line">16	              1q2w3e4r5t</span><br><span class="line">17	              qwertyuiop</span><br><span class="line">18	              123</span><br><span class="line">19	              monkey</span><br><span class="line">20	              dragon</span><br></pre></td></tr></table></figure></div>
+
+<p>阅读以上Top20密码列表：我们可以看到 123、1234、12345、…、123456789 和 1234567890 都在列表中，password、iloveyou、monkey、dragon等也是常用的英文，而在英文字典中没有的无含义词包括 qwerty、qwertyuiop 和 1q2w3e4r5t，这些看似复杂的(无含义词)密码 其实也非常容易预测，因为它们是遵循键盘布局进行输入的。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/1510e4bd81418a2937060f9c55dad593.gif"
+                      alt="img"
+                ></p>
+<p>简而言之，如果攻击者可以猜出你的任何在线帐户（例如你的电子邮件或社交媒体帐户）的密码，他们将能够直接访问你的私人数据。 因此，选择复杂的密码，并且在不同的账户下使用不同的密码是至关重要的。</p>
+<h3 id="弱文件权限"><a href="#弱文件权限" class="headerlink" title="弱文件权限"></a>弱文件权限</h3><p>适当的安全性决定了最小特权原则。在工作环境中，你希望任何文件都只有那些需要访问它才能完成工作的人 有权进行访问；在个人层面上，假设你计划与家人或朋友一起去旅行，你可能只希望与参加该旅行的人共享与旅行计划相关的所有文件，而不想直接公开让所有人共享此类文件——这就是最小特权原则。简而言之，最小特权原则是指：我们要确定“谁才可以访问什么？”。</p>
+<p>弱文件权限会使攻击者很容易针对机密性和完整性进行攻击：攻击者可以攻击机密性，因为弱权限允许他们访问他们不应该访问的文件；攻击者也可以攻击完整性，因为他们能够修改他们不应该进行编辑的文件。</p>
+<h3 id="恶意程序"><a href="#恶意程序" class="headerlink" title="恶意程序"></a>恶意程序</h3><p>我们要举的最后一个例子是恶意程序，根据恶意程序的类型，它们可以针对机密性、完整性和可用性进行攻击。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/f0a69acdee2506b2898e34fc231fe94b.png"
+                      alt="img" style="zoom:50%;" 
+                >
+
+<p>某些类型的恶意程序（例如特洛伊木马）允许攻击者访问你的系统，因此，攻击者将能够读取你的文件甚至修改你的文件。</p>
+<p>某些类型的恶意程序会针对可用性进行攻击，例如勒索软件(ransomware)。勒索软件是一种能够加密用户文件的恶意程序，加密能够使文件在不知道加密密码的情况下变得不可读，换句话说，文件在没有进行解密（逆向加密）的情况下会变成乱码。在勒索软件事件中，攻击者往往会为用户提供恢复文件可用性的方法，攻击者会让用户重新获得对其原始文件的访问权限：当用户愿意支付“赎金-ransom”时，攻击者则会向用户提供加密密码以进行解密。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230320213351214.png"
+                      alt="image-20230320213351214"
+                ></p>
+<h2 id="关于操作系统安全的简单实例"><a href="#关于操作系统安全的简单实例" class="headerlink" title="关于操作系统安全的简单实例"></a>关于操作系统安全的简单实例</h2><p>在典型的网络攻击中，攻击者可能会试图获得对远程目标系统的访问权，我们可以通过诱使目标运行恶意文件或者通过直接获取用户名、密码来完成此类攻击。</p>
+<p>在本小节我们将重点关注：通过获取用户名、密码来获得对远程目标系统的访问权。 在发现有效用户名后，我们往往可以尝试“猜测”对应的密码，此外，我们也将进一步尝试将权限提升到系统管理员。</p>
+<p>系统管理员账号身份在安卓、苹果、Linux系统上被称为<strong>root</strong>，而在 MS Windows 系统上，管理员账号身份会被称为<strong>administrator</strong>，root 账户和administrator 账户对目标系统都具有完全不受限制的访问权限。</p>
+<p>在本小节中，我们将使用Linux系统进行练习，我们将可能使用以下 Linux 命令：</p>
+<ul>
+<li><code>whoami</code></li>
+<li><code>ssh USERNAME@MACHINE_IP</code></li>
+<li><code>ls</code></li>
+<li><code>cat FILENAME</code></li>
+<li><code>history</code></li>
+</ul>
+<p><strong>模拟场景</strong>：</p>
+<p>我们受雇检查某家公司的安全性，当我们查看客户的办公室环境时，我们注意到其中一个桌子上有留有一张便条，上面有两个词：sammie 和 dragon，让我们猜测一下 dragon 是不是 Sammie用户 在目标机器 (MACHINE_IP)上所使用的密码？在 AttackBox 的终端中，我们将尝试通过执行<code>ssh sammie@MACHINE_IP</code>命令来登录到 Sammie 的ssh帐户，远程目标系统会要求你提供 sammie 的密码——我们输入 dragon 进行尝试。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230322173552863.png"
+                      alt="image-20230322173552863"
+                ></p>
+<p>AttackBox 终端上的登录交互如下所示：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">user@AttackBox# </span><span class="language-bash">ssh sammie@MACHINE_IP</span></span><br><span class="line">sammie@MACHINE_IP&#x27;s password: </span><br><span class="line">Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-100-generic x86_64)</span><br><span class="line"></span><br><span class="line"> * Documentation:  https://help.ubuntu.com</span><br><span class="line"> * Management:     https://landscape.canonical.com</span><br><span class="line"> * Support:        https://ubuntu.com/advantage</span><br><span class="line"></span><br><span class="line">  System information as of Tue  1 Mar 13:20:32 UTC 2022</span><br><span class="line"></span><br><span class="line">  System load:  0.03              Processes:              216</span><br><span class="line">  Usage of /:   51.8% of 6.53GB   Users logged in:        1</span><br><span class="line">  Memory usage: 17%               IPv4 address for ens33: MACHINE_IP</span><br><span class="line">  Swap usage:   0%</span><br><span class="line"></span><br><span class="line"> * Super-optimized for small spaces - read how we shrank the memory</span><br><span class="line">   footprint of MicroK8s to make it the smallest full K8s around.</span><br><span class="line"></span><br><span class="line">   https://ubuntu.com/blog/microk8s-memory-optimisation</span><br><span class="line"></span><br><span class="line">0 updates can be applied immediately.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Last login: Tue Mar  1 09:46:11 2022 from MACHINE_IP</span><br></pre></td></tr></table></figure></div>
+
+<p>成功通过ssh完成登录后，我们可以使用<code>whoami</code>命令 来验证当前用户身份是否为–sammie；我们可以使用 <code>ls</code>(list 的缩写)命令 来列出当前目录中的文件，此命令将显示出当前目录中的所有文件，但隐藏文件并不会显示；如果要显示任何文本文件的内容，我们可以使用命令 <code>cat FILENAME</code>，cat是concatenate 的缩写，此命令将在终端屏幕上打印出文本文件的内容。</p>
+<p>在下面的终端交互中，我们看到了四个命令的使用情况：<code>ssh</code>、<code>whoami</code>、<code>ls</code> 和 <code>cat</code> 。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">user@AttackBox# </span><span class="language-bash">ssh sammie@10.20.30.130</span></span><br><span class="line">sammie@10.20.30.130&#x27;s password: </span><br><span class="line">Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-100-generic x86_64)</span><br><span class="line"></span><br><span class="line">[...]</span><br><span class="line"></span><br><span class="line">Last login: Tue Mar  1 14:45:53 2022 from 10.20.30.1</span><br><span class="line">sammie@beginner-os-security:~$ whoami</span><br><span class="line">sammie</span><br><span class="line">sammie@beginner-os-security:~$ ls</span><br><span class="line">country.txt  draft.md  icon.png  password.txt  profile.jpg</span><br><span class="line">sammie@beginner-os-security:~$ cat draft.md </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Operating System Security</span></span><br><span class="line"></span><br><span class="line">Reusing passwords means that your password for other sites becomes exposed if one service is hacked.</span><br><span class="line">sammie@beginner-os-security:~$</span><br></pre></td></tr></table></figure></div>
+
+<p>接下来，我们将介绍的最后一个命令是 <code>history</code>，此命令将在终端界面打印出用户曾经使用的命令；当你使用<code>history</code>命令之后，也许能在终端输出结果中找到一些敏感信息。</p>
+<p>假设我们已经知道了另外两个可以访问目标机器的用户名：</p>
+<ul>
+<li><em><strong>johnny</strong></em></li>
+<li><em><strong>linda</strong></em></li>
+</ul>
+<p>如果以上两个用户都很少考虑安全性，我们可以使用多种方式来猜测这两个用户的密码，此处我们将列出以下两种情况：</p>
+<ul>
+<li>如果你未以 sammie用户 或任何其他用户身份完成ssh登录操作，你可以直接使用 <code>ssh johnny@MACHINE_IP</code>命令并手动尝试输入多个密码进行猜测，以查看哪个密码对 johnny用户 有效。</li>
+<li>如果你已经以 sammie用户 或任何其他用户身份完成了ssh登录操作，你可以使用 <code>su - johnny</code>命令 来切换用户身份，并手动尝试输入一个又一个密码，以查看哪个密码对 johnny用户 有效。</li>
+</ul>
+<p><strong>答题</strong></p>
+<p><em>在本文相关的Tryhackme实验房间页面 部署虚拟实验环境，并完成本小节对应的实例。</em></p>
+<p><em><strong>问题：</strong></em></p>
+<ol>
+<li>根据本文所介绍的Top 7 常用密码，让我们尝试找出 Johnny 的密码，用户 johnny 的密码是什么？</li>
+<li>以 Johnny 身份登录后，使用<code>history</code>命令检查 Johnny 曾经键入过的命令，我们发现Johnny错误地把 root 密码当成命令输入过，root密码的内容是什么？</li>
+<li>以 Johnny 身份登录后，使用命令 <code>su - root</code> 切换到 root 帐户(并输入root密码通过身份验证)，查看根目录下的flag.txt的内容，flag.txt的内容是什么？</li>
+</ol>
+<p><em><strong>操作：</strong></em></p>
+<p>我们可以使用以下命令针对目标机器进行ssh登录尝试：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">ssh johnny@10.10.210.242</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">经过登录尝试发现可用密码：abc123</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230322181721434.png"
+                      alt="image-20230322181721434"
+                ></p>
+<blockquote>
+<p>用户 johnny 的密码是：abc123</p>
+</blockquote>
+<p>成功完成ssh登录后，输入<code>history</code>命令：发现root用户的密码。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230322181911146.png"
+                      alt="image-20230322181911146"
+                ></p>
+<blockquote>
+<p>root用户的密码为：happyHack!NG 。</p>
+</blockquote>
+<p>切换用户身份到root（使用我们刚才找到的密码完成身份验证），以root用户身份查找flag.txt文件 并获取其文本内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230322182319042.png"
+                      alt="image-20230322182319042"
+                ></p>
+<blockquote>
+<p>flag.txt的内容是：THM{YouGotRoot} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230320214350583.png"
+                      alt="image-20230320214350583"
+                ></p>
+]]></content>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-Web Application Security(Web应用程序安全介绍)-学习</title>
+    <url>/2024/01/16/THM-Web%20Application%20Security(Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%AE%89%E5%85%A8%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/introwebapplicationsecurity" >https://tryhackme.com/room/introwebapplicationsecurity <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解 Web 应用程序并探索它们的一些常见安全问题</p>
+<h2 id="Web应用程序简介"><a href="#Web应用程序简介" class="headerlink" title="Web应用程序简介"></a>Web应用程序简介</h2><p>我们每个人都会在我们的计算机上使用不同的程序。 一般来说，当程序在计算机上运行时，就将使用计算机的处理能力和存储功能，而且，要使用一个程序，我们还需要先安装它。如果我们想不经过安装操作就直接使用程序应该怎么办？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230421124001893.png"
+                      alt="image-20230421124001893"
+                ></p>
+<p>Web 应用程序类似于普通的“程序”，并且只要我们的计算机上有一个现代的、标准的 Web 浏览器，例如 Firefox、Safari 或 Chrome等，我们就可以不经安装而直接使用Web应用程序——当我们想运行Web应用程序时，我们无需安装 运行时所需的每个程序，只需直接访问相关浏览器页面即可。 </p>
+<p>以下是关于 Web 应用程序的一些示例：</p>
+<ul>
+<li>网络邮件，例如 Tutanota、Protonmail、Outlook 和 Gmail</li>
+<li>在线办公套件，如 Microsoft Office 365（Word、Excel 和 PowerPoint）、Google Drive（Docs、Sheets 和 Slides）和 Zoho Office（Writer、Sheet 和 Show）</li>
+<li>在线购物网站，例如 Amazon.com、AliExpress 和 Etsy</li>
+</ul>
+<p>其他示例还包括网上银行、汇款、天气预报和网络社交媒体等，成千上万的Web应用程序提供了数不胜数的在线服务。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230421124018938.png"
+                      alt="image-20230421124018938"
+                ></p>
+<p>Web 应用程序的概念是一个在远程服务器上运行的程序，而服务器是指连续运行以“服务”用户客户端的计算机系统，在这种情况下，服务器将运行特定类型的程序，并且这些程序可以通过Web浏览器被访问。</p>
+<p>以一个在线购物 Web 应用程序为例，此 Web 应用程序将从数据库服务器中读取有关产品及其详细信息的数据，数据库将用于 以有组织的方式存储信息，在本例中这些数据可能会包括有关产品、客户和发票的信息。（数据库服务器会负责许多功能，包括对数据库进行读取、搜索和写入等操作） </p>
+<p>一个在线购物 Web 应用程序在运行时 可能需要访问多个数据库，例如：</p>
+<ul>
+<li>产品数据库：该数据库包含有关产品的详细信息，例如名称、图像、规格和价格。</li>
+<li>客户数据库：该数据库包含与客户相关的所有详细信息，例如姓名、地址、电子邮件和电话号码。</li>
+<li>销售数据库：我们希望在这个数据库中看到每个客户购买了什么以及他们是如何支付的。</li>
+</ul>
+<p>我们已经大概了解了存储在任何在线购物系统中的信息量，假如攻击者设法利用（破解）Web 应用程序并窃取客户的数据库内容，那么这将给公司及相关客户带来重大损失。</p>
+<p>下图显示了在Online购物网站上搜索商品可能将发生什么，在最简单的Online购物网站中，搜索商品可能会经历以下四个步骤：</p>
+<ol>
+<li><p>用户在搜索字段中输入项目名称或相关关键字，Web 浏览器会将被搜索的关键字发送给在线购物 Web 应用程序。</p>
+</li>
+<li><p>Web 应用程序查询（搜索）产品数据库以查找用户所提交的关键字。</p>
+</li>
+<li><p>产品数据库将与用户提供的关键字相匹配的搜索结果返回给 Web 应用程序。</p>
+</li>
+<li><p>Web 应用程序将结果格式化为友好可读的网页页面并将它们返回给用户以供浏览。</p>
+</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230319224615610.png"
+                      alt="image-20230319224615610"
+                ></p>
+<p>从用户的角度来看，他们只会访问到一个隐藏所有技术基础设施的在线商店页面。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230319224808863.png"
+                      alt="image-20230319224808863" style="zoom: 67%;" 
+                >
+
+<p><strong>答题</strong></p>
+<blockquote>
+<p>Browser - 浏览器</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230319213257215.png"
+                      alt="image-20230319213257215"
+                ></p>
+<h2 id="Web-应用程序常见安全风险"><a href="#Web-应用程序常见安全风险" class="headerlink" title="Web 应用程序常见安全风险"></a>Web 应用程序常见安全风险</h2><p>假设你想从网上商店购买商品，你就会希望能够在相关 Web 应用程序上执行某些功能，用户完成一个在线商品订单可能分为以下几个步骤：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230319225857754.png"
+                      alt="image-20230319225857754"
+                ></p>
+<p>针对 Web 应用程序的常见攻击有很多，下面简单介绍一些攻击方式：</p>
+<ul>
+<li><p>在登录网站时：攻击者可以通过进行多次登录尝试来枚举发现有效密码；攻击者能够使用密码字典和一些自动化工具来针对登录页面来进行多次测试。(暴力枚举)</p>
+</li>
+<li><p>在搜索产品时：攻击者可以通过在搜索字段中添加特定字符和代码来尝试破坏目标系统；攻击者的目的是让目标系统返回它不应该返回的数据或者执行它不应该执行的程序。(注入类攻击)</p>
+</li>
+<li><p>在提供付款细节时：攻击者会检查 和付款细节相关的数据 是以明文形式发送还是使用了弱加密；加密是指 让数据在不知道密钥或密码的情况下变得不可读。(明文、弱加密)</p>
+</li>
+</ul>
+<p>tips：本小节只介绍一些针对Web应用程序的攻击方式 而并非全部。</p>
+<h3 id="身份识别和验证错误"><a href="#身份识别和验证错误" class="headerlink" title="身份识别和验证错误"></a>身份识别和验证错误</h3><p>身份识别(Identification)是指 可以对用户身份进行唯一识别的能力，而身份验证(authentication)是指 可以证明用户实际身份和用户所声称的身份相符合的能力；当用户登录网上商店时，正常情况下：商店必须先识别用户的身份并进行身份验证，然后才能让用户使用该在线购物系统。</p>
+<p>如果网站的身份识别和身份验证机制不佳，那么在网站登录界面就可能存在一些漏洞，关于此类漏洞的示例有：</p>
+<ul>
+<li><p>目标网站允许攻击者使用暴力枚举；攻击者能够尝试多次输入不同密码以进行登录操作——通常攻击者会使用自动化工具来暴力枚举，从而找到有效的登录凭据。</p>
+</li>
+<li><p>目标网站允许正常用户使用弱密码；弱密码通常很容易被攻击者猜到。</p>
+</li>
+<li><p>目标网站以明文形式存储用户密码；如果此时攻击者能够设法读取包含密码的文件，那么他们就能够获知存储的密码内容。</p>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230319234328832.png"
+                      alt="image-20230319234328832"
+                ></p>
+<h3 id="损坏的访问控制机制"><a href="#损坏的访问控制机制" class="headerlink" title="损坏的访问控制机制"></a>损坏的访问控制机制</h3><p>访问控制(Access control)机制 能够确保每个用户只能访问与其角色或工作相关的文件（文档、图像等）；例如，公司的网站管理员应该不希望市场部的某人能够直接访问（阅读）财务部的文档。</p>
+<p>与访问控制相关的示例漏洞包括：</p>
+<ul>
+<li><p>网站管理员未能应用最小权限原则并为用户提供超出其需要的访问权限；例如，在线客户应该能够查看商品的价格，但他们不应该能够更改商品价格。</p>
+</li>
+<li><p>攻击者能够使用用户的唯一标识符查看或修改他人的帐户信息；例如，你应该不希望一个银行客户能够查看另一个客户的交易详情。</p>
+</li>
+<li><p>攻击者能够以未经身份验证的用户身份 浏览需要身份验证（登录）的页面；例如，我们不应该让任何人在登录之前就能查看到网络邮件内容。</p>
+</li>
+</ul>
+<h3 id="注入攻击"><a href="#注入攻击" class="headerlink" title="注入攻击"></a>注入攻击</h3><p>注入攻击是指 对 Web 应用程序中的注入类漏洞进行利用，在注入类漏洞存在的情况下：攻击者可以插入恶意代码作为用户输入内容的一部分。</p>
+<p>注入类漏洞存在的一个原因是 目标网站缺乏对“用户输入”的适当验证和清理。</p>
+<h3 id="未成功加密"><a href="#未成功加密" class="headerlink" title="未成功加密"></a>未成功加密</h3><p>此类漏洞的存在是由于发生了与密码学相关的错误，密码学侧重于数据的加密和解密过程，加密是指 对明文内容使用加密算法计算以得到密文；对于没有密钥解密的人来说，经过加密产生的密文是无法读懂的，换句话说，加密能够确保没有人可以在不知道密钥的情况下直接读取数据，只有使用密钥进行解密 才能将密文转换回原始明文。</p>
+<p>未成功加密(加密失败)的例子包括：</p>
+<ul>
+<li>目标网站以明文形式发送敏感数据，例如，网站使用 HTTP 协议而不是 HTTPS 协议； HTTP 是用于访问 Web 的协议，而 HTTPS 是 HTTP 的安全版本，攻击者可以阅读通过 HTTP 协议发送的所有内容，但不能阅读使用 HTTPS 协议发送的内容。</li>
+<li>目标网站依赖弱密码算法进行加密（很容易被破解）；有一种古老的密码算法是将每个字母移位一个，例如，将“TRY HACK ME”变成“USZ IBDL NF”，如果使用这种加密算法就很容易被攻击者破解密文。</li>
+<li>目标网站使用默认或弱密钥进行加密；破解使用 1234 作为密钥的加密并不困难，所以如果使用弱密钥加密就很容易被攻击者破解。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230421124046841.png"
+                      alt="image-20230421124046841"
+                ></p>
+<p><strong>答题</strong></p>
+<blockquote>
+<p>Identification and Authentication Failure 身份识别和身份验证错误</p>
+<p>Cryptographic Failures 未成功加密（加密失败）</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230319214337998.png"
+                      alt="image-20230319214337998"
+                ></p>
+<h2 id="Web-应用程序安全实例"><a href="#Web-应用程序安全实例" class="headerlink" title="Web 应用程序安全实例"></a>Web 应用程序安全实例</h2><p>本小节将调查一个存在<u>不安全直接对象引用</u> (IDOR漏洞) 的易受攻击的示例网站。</p>
+<p>IDOR漏洞属于损坏的访问控制机制的一种，所谓 损坏的访问控制机制 意味着攻击者可以访问不适合他们访问的信息 或者 执行不适合他们执行的操作。</p>
+<p>Web 服务器能够接收用户提供的输入以检索对象（文件、数据、文档），这些被检索的对象可能是按顺序编号的；我们假设当前用户有权访问名为 IMG_1003.JPG 的照片，我们可能会猜测 Web服务器上还存在IMG_1002.JPG照片 和 IMG_1004.JPG照片；然而，即使我们已经知道了图像文件的名称，Web 应用程序也不应该向我们提供某些图像。一般来说，如果Web应用程序对“用户输入”的信任度过高，就可能会出现IDOR漏洞，换句话说，此时 Web 应用程序并没有严格验证用户是否有权访问所请求的对象。</p>
+<p>即使知道了某个用户或某个产品相关的正确 URL 也不一定意味着当前用户应该能够访问这些 URL（所以这需要我们进行实际的访问验证）。假设我们已经知道某个产品页面的URL： <a class="link"   href="https://store.tryhackme.thm/products/product?id=52" >https://store.tryhackme.thm/products/product?id=52 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ；我们可以期望此 URL 会提供有关编号为 52 的产品详细信息；如果在数据库中，产品数据项是将按顺序分配编号的，那么攻击者就可以尝试使用其他数字 如 51 或 53来取代URL中的 52；一旦目标 Web 应用程序存在IDOR漏洞，那么攻击者就可能会访问到 其他已停用产品或未发布产品的相关页面。</p>
+<p>让我们考虑一个更关键的例子(此例基于目标系统存在IDOR漏洞的前提条件下)，假设有一个URL <a class="link"   href="https://store.tryhackme.thm/customers/user?id=16" >https://store.tryhackme.thm/customers/user?id=16 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ，这个URL将返回 id&#x3D;16 的用户相关页面；同样，我们希望用户所对应的 ID 号是连续的，那么攻击者就可以尝试在URL中使用其他ID号 并可能成功访问到其他用户帐户所相关的页面（进而能够查看到其他用户的敏感信息）。</p>
+<p>IDOR漏洞也适用于访问一些按顺序命名并存储的文件；例如，攻击者在URL中看到007.txt，那么可以尝试使用其他文件名称，如001.txt、006.txt等。(此例基于目标系统存在IDOR漏洞的前提条件下)</p>
+<p><strong>答题</strong></p>
+<p><em>在本文相关的Tryhackme实验房间页面 部署虚拟实验环境，并完成本小节对应的实例。</em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230319215632445.png"
+                      alt="image-20230319215632445" style="zoom: 67%;" 
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230319220131634.png"
+                      alt="image-20230319220131634" style="zoom:67%;" 
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230319220240818.png"
+                      alt="image-20230319220240818" style="zoom:67%;" 
+                >
+
+<blockquote>
+<p>最后得到的flag内容为：THM{IDOR_EXPLORED} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230319215450568.png"
+                      alt="image-20230319215450568"
+                ></p>
+]]></content>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-Network Security(网络安全介绍)-学习</title>
+    <url>/2024/01/16/THM-Network%20Security(%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/intronetworksecurity" >https://tryhackme.com/room/intronetworksecurity <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：简单介绍网络安全概念，了解基本的网络攻击步骤，并尝试完成一个侵入目标服务器的实例。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>计算机网络是一组相互连接的计算机和设备，而网络安全则侧重于保护这些设备以及连接它们的链路的安全。（更准确地说，网络安全包括了保护计算机网络及其数据的机密性、完整性和可用性的一切安全设备、安全技术和过程）</p>
+<p>网络安全由不同的硬件和软件解决方案组成，以实现既定的安全目标。网络安全的硬件解决方案是指 你在网络中设置的用于保护网络安全的设备，这些设备是硬件，所以你可以在现实中接触到它们。硬件设备可能类似于下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322195255546.png"
+                      alt="image-20230322195255546"
+                ></p>
+<p>网络安全硬件设备的示例包括：</p>
+<ul>
+<li>防火墙设备：防火墙将根据一组预定义的规则来允许和阻止连接，它将限制什么可以进入网络 和 什么可以离开网络。</li>
+<li>入侵检测系统 (IDS) 设备：IDS 会检测系统入侵、网络入侵以及入侵企图，它会尝试检测攻击者侵入你的网络的企图。</li>
+<li>入侵防御系统 (IPS) 设备：IPS 可阻止检测到的入侵行为和入侵企图，它旨在防止攻击者闯入你的网络。</li>
+<li>虚拟专用网络 (VPN) 集线器设备：VPN 可确保网络流量无法被第三方读取或更改，它保护发送的数据的机密性（secrecy）和完整性。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322200053263.png"
+                      alt="image-20230322200053263"
+                ></p>
+<p>另一方面，网络安全也有软件解决方案，常见的例子有：</p>
+<ul>
+<li>防病毒软件：你可以在计算机或者智能手机上安装防病毒软件以检测恶意文件并阻止它们的执行。</li>
+<li>主机防火墙：与防火墙设备（硬件设备）不同，主机防火墙是作为操作系统的一部分而被提供的程序，或者是安装在操作系统上的程序。例如，MS Windows 操作系统中就包含了 Windows Defender 防火墙程序，Apple macOS 中也包含了应用防火墙(application firewal)，以上两者都是主机防火墙。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322200919536.png"
+                      alt="image-20230322200919536"
+                ></p>
+<p>根据 IBM Security 发布的<a class="link"   href="https://newsroom.ibm.com/2021-07-28-IBM-Report-Cost-of-a-Data-Breach-Hits-Record-High-During-Pandemic" >《2021 年数据泄露成本报告》 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，2021 年数据泄露平均每起事件给公司造成 424 万美元的损失，而 2020 年为 386 万美元，平均成本因行业和国家&#x2F;地区而异。 例如，医疗行业数据泄露的平均总成本为 923 万美元，而教育行业则为 379 万美元。</p>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><blockquote>
+<p>Windows Defender 防火墙是什么类型的防火墙：Host Firewall</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230320215249669.png"
+                      alt="image-20230320215249669"
+                ></p>
+<h2 id="网络攻击步骤介绍"><a href="#网络攻击步骤介绍" class="headerlink" title="网络攻击步骤介绍"></a>网络攻击步骤介绍</h2><p>每个“操作”的执行 都需要拥有某种形式的计划才能最终取得成功。假如你对野生动物摄影感兴趣，除非你完全不在乎结果，否则你不能只是拿起相机就直接前往丛林进行摄影，为了安全、成功地进行野生动物摄影之旅，你往往需要更多地去了解你想要用相机拍摄的动物(这包括动物的习性和你要避免的危险)；以上例子同样适用于针对目标网络进行攻击的网络安全行动。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322201637351.png"
+                      alt="image-20230322201637351"
+                ></p>
+<p>闯入目标网络通常包括多个步骤，根据<a class="link"   href="https://www.lockheedmartin.com/en-us/capabilities/cyber/cyber-kill-chain.html" >洛克希德·马丁公司 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的说法，网络杀伤链有七个步骤：</p>
+<ol>
+<li>Recon(侦察)：Recon，是reconnaissance(侦察)的缩写，指的是攻击者将在此阶段 试图尽可能多地了解目标，主要包括——目标的服务器类型、操作系统、IP 地址、用户名和电子邮件地址等信息，获取到这些信息将有利于网络攻击成功。</li>
+<li>Weaponization(武器化(：这一步是指准备一个带有恶意组件的文件，例如，相关恶意组件能够为攻击者提供远程访问。</li>
+<li>Delivery(投递)：投递是指通过任何可行的方式将“武器化”的文件投递给目标，例如通过电子邮件或者U盘进行投递。</li>
+<li>Exploitation(利用)：当用户打开（攻击者所投递的）恶意文件时，用户所使用的系统就会执行恶意组件。</li>
+<li>Installation(安装)：经过上一步的恶意组件执行之后，目标系统就会被安装上恶意软件。</li>
+<li>Command &amp; Control(命令与控制-C2)：恶意软件的成功安装会为攻击者提供对目标系统的命令和控制能力。</li>
+<li>Actions on Objectives(针对目标的行动)：在获得对一个目标系统的控制权后，攻击者就能够达到他们的行动目标，关于行动目标的示例：数据泄露（一旦成功窃取到了目标系统的数据，即代表攻击者达到行动目标）。</li>
+</ol>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230322204848872.png"
+                      alt="image-20230322204848872" style="zoom:67%;" 
+                >
+
+<p>关于网络攻击步骤的另一个类比是：对目标房屋感兴趣的小偷。小偷在开始行动之前，往往会花一些时间了解目标房屋，谁住在那里，他们什么时候离开以及什么时候回家，小偷还会确定目标房屋是否有安装安全摄像头以及警报系统，一旦收集到足够的信息，小偷就会制定最佳的进入策略。关于物理盗窃的计划和执行在某种程度上也类似于旨在闯入网络并窃取数据的恶意攻击行为。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../articleimg/a8e61f1f9a2ea3612d3bf84f9a11f41c.png"
+                      alt="img"  
+                >
+
+<h3 id="答题-1"><a href="#答题-1" class="headerlink" title="答题"></a><strong>答题</strong></h3><blockquote>
+<p>攻击者在网络杀伤链的哪一步收集有关目标的信息：Recon (侦察)</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230320215635939.png"
+                      alt="image-20230320215635939"
+                ></p>
+<h2 id="网络安全实例"><a href="#网络安全实例" class="headerlink" title="网络安全实例"></a>网络安全实例</h2><p>在本小节的实例中，我们将尝试侵入目标 Linux 系统。</p>
+<p>我们攻击的第一步是侦察；我们可以使用不同的工具来加快我们的侦察活动，这些工具将收集与目标相关的各个方面的信息。</p>
+<p>为了简单起见，我们将在此使用Nmap工具，Nmap是 Network Mapper 的缩写，它是一个网络扫描器，可以帮助我们发现正在运行的机器（存活主机）以及在这些机器上运行的任何对外界可见的程序（计算机服务）。我们可以通过在终端提示符下运行 <code>nmap MACHINE_IP</code>命令来扫描目标IP：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">tips：在实际执行命令时，我们直接用目标ip地址代替下面命令中的MACHINE_IP。</span></span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash">nmap MACHINE_IP</span></span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-04-06 17:38 EEST</span><br><span class="line">Nmap scan report for MACHINE_IP</span><br><span class="line">Host is up (0.00024s latency).</span><br><span class="line">Not shown: 997 closed tcp ports (reset)</span><br><span class="line">PORT   STATE SERVICE</span><br><span class="line">21/tcp open  ftp</span><br><span class="line">22/tcp open  ssh</span><br><span class="line">80/tcp open  http</span><br><span class="line"></span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 0.33 seconds</span><br></pre></td></tr></table></figure></div>
+
+<p>我们发现了三个服务正在运行：</p>
+<ol>
+<li>FTP 服务器：FTP 代表文件传输协议，用于在机器之间传输文件。</li>
+<li>SSH 服务器：SSH 代表 Secure Shell，用于安全远程登录，换句话说，它允许你在远程系统上安全地执行命令。</li>
+<li>HTTP 服务器：HTTP 代表超文本传输协议，用于web服务，每当你在网站上浏览网页时，你都在使用 HTTP协议 或 HTTPS协议，HTTPS 是 HTTP 的安全（加密）版本。</li>
+</ol>
+<p>你还可以注意到 Nmap 会根据主机是否收到任何响应来报告主机是否已启动（存活），这有助于我们知道什么时候目标机器将显示没有端口打开或者显示没有端口可访问。</p>
+<p>让我们尝试收集有关 FTP 服务器的更多信息：</p>
+<ol>
+<li>我们将在 AttackBox 的终端中输入 <code>ftp MACHINE_IP</code> 命令来连接到目标的 FTP 服务器。</li>
+<li>接下来我们尝试使用login anonymous登录，看看这个FTP服务器是否支持匿名登录。</li>
+<li>成功完成匿名登录之后，我们可以尝试使用命令 ls（list的缩写）来查看可用的文件，我们能得到文件名列表及文件的详细信息。</li>
+<li>如果你对所发现的任何文件感到好奇，可以使用 <code>get filename</code> 命令来进行下载，比如我想知道 secret.txt 文件包含什么，所以使用 <code>get secret.txt</code> 命令来进行文件下载。</li>
+<li>成功下载文件之后，键入 <code>exit</code> 或 <code>bye</code> 即可退出 FTP 客户端。</li>
+</ol>
+<p>与目标FTP服务器的交互过程将如下所示：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash">ftp MACHINE_IP</span></span><br><span class="line">Connected to MACHINE_IP (MACHINE_IP).</span><br><span class="line">220 (vsFTPd 3.0.3)</span><br><span class="line">Name (MACHINE_IP:root): anonymous</span><br><span class="line">230 Login successful.</span><br><span class="line">Remote system type is UNIX.</span><br><span class="line">Using binary mode to transfer files.</span><br><span class="line"><span class="meta prompt_">ftp&gt; </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line">227 Entering Passive Mode (10,20,30,130,181,190).</span><br><span class="line">150 Here comes the directory listing.</span><br><span class="line">-rw-r--r--    1 ftp      ftp        425351 Apr 06 11:22 2680-0.txt</span><br><span class="line">-rw-r--r--    1 ftp      ftp           356 Apr 06 11:22 2680.epub</span><br><span class="line">-rw-r--r--    1 ftp      ftp        251857 Apr 06 11:22 55317-0.txt</span><br><span class="line">-rw-r--r--    1 ftp      ftp           358 Apr 06 11:22 55317.epub</span><br><span class="line">-rwxr-xr-x    1 ftp      ftp           214 Apr 06 11:22 backup.sh</span><br><span class="line">-rw-r--r--    1 ftp      ftp            23 Apr 06 11:22 secret.txt</span><br><span class="line">226 Directory send OK.</span><br><span class="line"><span class="meta prompt_">ftp&gt; </span><span class="language-bash">get secret.txt</span> </span><br><span class="line">local: secret.txt remote: secret.txt</span><br><span class="line">227 Entering Passive Mode (10,20,30,130,159,46).</span><br><span class="line">150 Opening BINARY mode data connection for secret.txt (23 bytes).</span><br><span class="line">226 Transfer complete.</span><br><span class="line">23 bytes received in 0.00107 secs (21.48 Kbytes/sec)</span><br><span class="line"><span class="meta prompt_">ftp&gt; </span><span class="language-bash"><span class="built_in">exit</span></span></span><br><span class="line">221 Goodbye.</span><br></pre></td></tr></table></figure></div>
+
+<p>我们注意到上述FTP服务器中一共有六个文件：三个 txt 文件、两个 epub 文件和一个 sh 文件。txt和epub扩展名分别用于文本文件和电子书文件，而 sh 扩展名则表示该文件是一个 shell 脚本，shell 脚本通常会包含一组需要重复执行的命令。</p>
+<p>在我们使用 FTP 命令 <code>get secret.txt</code>下载文件secret.txt 并使用<code>exit</code>退出 FTP 客户端之后，我们就会返回到攻击机的终端界面；此时我们可以在攻击机的终端界面中使用<code>cat secret.txt</code>命令来显示 secret.txt 文件的文本内容。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">cat</span> secret.txt</span> </span><br><span class="line">password: [redacted]   #实际上这行会显示密码信息，此处的redacted表示隐藏（相当于马赛克）的意思</span><br></pre></td></tr></table></figure></div>
+
+<p>我们得到了一个无意中复制到公共 FTP 服务器上的账户密码明文，让我们试试看它是否适用于 root 帐户（root账户在Linux系统上拥有完全的权限，可以读写任何文件，能够安装和删除任何程序）。在攻击机终端界面，我们可以输入 <code>ssh root@MACHINE_IP</code>来进行ssh登录，随后我们将被要求输入root账号的密码以进行身份验证，我们直接尝试输入我们在 FTP 服务器上发现的密码明文即可。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash">ssh root@MACHINE_IP</span></span><br><span class="line">root@MACHINE_IP&#x27;s password: </span><br><span class="line">Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-107-generic x86_64)</span><br><span class="line"></span><br><span class="line"> * Documentation:  https://help.ubuntu.com</span><br><span class="line"> * Management:     https://landscape.canonical.com</span><br><span class="line"> * Support:        https://ubuntu.com/advantage</span><br><span class="line"></span><br><span class="line">  System information as of Thu  7 Apr 08:16:42 UTC 2022</span><br><span class="line"></span><br><span class="line">  System load:  0.15              Processes:              225</span><br><span class="line">  Usage of /:   64.6% of 6.53GB   Users logged in:        0</span><br><span class="line">  Memory usage: 19%               IPv4 address for ens33: MACHINE_IP</span><br><span class="line">  Swap usage:   0%</span><br><span class="line"></span><br><span class="line"> * Super-optimized for small spaces - read how we shrank the memory</span><br><span class="line">   footprint of MicroK8s to make it the smallest full K8s around.</span><br><span class="line"></span><br><span class="line">   https://ubuntu.com/blog/microk8s-memory-optimisation</span><br><span class="line"></span><br><span class="line">0 updates can be applied immediately.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Last login: Thu Apr  7 07:53:28 2022 from 10.10.10.1</span><br></pre></td></tr></table></figure></div>
+
+<p>以 root 身份完成ssh登录后，我们就可以完全控制目标服务器了，为了查找目标文件 我们可以使用以下 Linux 命令：</p>
+<ol>
+<li>使用<code>pwd</code>命令，pwd是print working directory 的缩写，此命令可用来查看我们在系统中的当前位置。</li>
+<li>使用<code>ls</code>命令来列出文件信息，查看文件列表中有无目标文件。</li>
+<li>使用<code>cat flag.txt</code>命令来查看文件内容。</li>
+</ol>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">pwd</span></span></span><br><span class="line">/root</span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line">flag.txt  snap</span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">cat</span> flag.txt</span> </span><br><span class="line">[redacted]</span><br></pre></td></tr></table></figure></div>
+
+<p>因为我们以 root 身份完成了登录，所以我们可以完全访问所有文件，包括其他用户的文件，我们可以执行以下 Linux 命令进行探索：</p>
+<ol>
+<li><p>使用<code>cd /home</code> 命令转到包含所有用户主目录的目录吗，cd 是 change directory（更改目录）的缩写。</p>
+</li>
+<li><p>我们在&#x2F;home目录中运行<code>ls</code>命令，查看系统的所有用户名称，因为我们拥有系统管理员（root）权限，所以我们可以直接检查其他用户的主文件夹下的内容。</p>
+</li>
+<li><p>使用<code>cd librarian</code>命令进入用户librarian的目录。</p>
+</li>
+<li><p>使用 <code>pwd</code> 命令以查看我们在系统中的当前位置（ &#x2F;home&#x2F;librarian）。</p>
+</li>
+<li><p>使用<code>ls</code>命令显示 librarian 目录下的文件信息，查看文件列表中有无目标文件。</p>
+</li>
+<li><p>我们可以使用<code>cat flag.txt</code>命令打印文本文件内容到终端界面。</p>
+</li>
+</ol>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">cd</span> /home</span></span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line">ftpsecure  librarian  strategos</span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">cd</span> librarian/</span></span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">pwd</span></span></span><br><span class="line">/home/librarian</span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line">flag.txt</span><br><span class="line"><span class="meta prompt_">root@AttackBox# </span><span class="language-bash"><span class="built_in">cat</span> flag.txt</span> </span><br><span class="line">[redacted]</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/a708c20aa1243c8e2be30bb9e74bd663.png"
+                      alt="img"
+                ></p>
+<p>让我们总结一下我们在本小节中的工作，我们的目标是获取 IP 地址为MACHINE_IP的目标系统的root访问权限：</p>
+<ol>
+<li>我们使用 nmap 来了解目标机器正在运行的服务。</li>
+<li>我们连接到目标机的 FTP 服务器以了解有关其配置的更多信息。</li>
+<li>我们发现一个包含root密码的文件被错误地复制到了FTP服务器中的公共文件夹下。</li>
+<li>我们使用找到的密码，以root用户身份来进行ssh登录。</li>
+<li>最终，我们获得了所有用户文件的访问权限（因为此时的用户身份为root）。</li>
+</ol>
+<h3 id="答题-2"><a href="#答题-2" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><em>在本文相关的Tryhackme实验房间页面 部署虚拟实验环境，并完成本小节对应的实例。</em></p>
+<p><em><strong>问题</strong></em></p>
+<ol>
+<li>secret.txt文件内容中的密码是什么？</li>
+<li>&#x2F;root目录中的flag.txt文件内容是什么？</li>
+<li>&#x2F;home&#x2F;librarian目录中的flag.txt文件内容是什么？</li>
+</ol>
+<p><em><strong>操作</strong></em></p>
+<p>使用nmap进行端口扫描：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">nmap -sV -sC -T4 10.10.98.42</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322221312517.png"
+                      alt="image-20230322221312517"
+                ></p>
+<blockquote>
+<p>目标机器上存在FTP服务且允许进行匿名登录</p>
+</blockquote>
+<p>针对目标机的ftp服务进行匿名登录尝试：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">ftp 10.10.98.42</span><br><span class="line">anonymous</span><br><span class="line">ls</span><br><span class="line">get secret.txt </span><br><span class="line">exit</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322221546534.png"
+                      alt="image-20230322221546534"
+                ></p>
+<p>下载完敏感文件后，在攻击机终端查看到该文件内容为root用户的密码明文，所以我们基于已知密码 直接尝试以root用户身份进行ssh登录：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">cat secret.txt #password: ABC789xyz123</span><br><span class="line"></span><br><span class="line">ssh root@10.10.98.42</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322221617429.png"
+                      alt="image-20230322221617429"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322221757084.png"
+                      alt="image-20230322221757084"
+                ></p>
+<blockquote>
+<p>secret.txt文件内容中的密码是：ABC789xyz123 。</p>
+</blockquote>
+<p>成功完成ssh登录成功后，我们获得了root权限，接下来我们将查找目标系统上的目标文本文件并查看相关的文本内容：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">cd /root</span><br><span class="line">ls</span><br><span class="line">cat flag.txt</span><br><span class="line"></span><br><span class="line">cd /home</span><br><span class="line">ls</span><br><span class="line">cd /home/librarian/</span><br><span class="line">ls</span><br><span class="line">cat flag.txt</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230322222032954.png"
+                      alt="image-20230322222032954"
+                ></p>
+<blockquote>
+<p>&#x2F;root目录中的flag.txt文件内容是：THM{FTP_SERVER_OWNED} 。</p>
+<p>&#x2F;home&#x2F;librarian目录中的flag.txt文件内容是：THM{LIBRARIAN_ACCOUNT_COMPROMISED} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230320215901969.png"
+                      alt="image-20230320215901969"
+                ></p>
+]]></content>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
 </search>
