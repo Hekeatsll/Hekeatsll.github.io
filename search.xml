@@ -1601,14 +1601,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327163246516.png"
+                     data-src="/articleimg/image-20230327163246516.png"
                       alt="image-20230327163246516"
                 ></p>
 <p>如果网络管理员想让公众(通过互联网)访问上图中的网站，管理员就必须实现端口转发，如下图所示：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327163735248.png"
+                     data-src="/articleimg/image-20230327163735248.png"
                       alt="image-20230327163735248"
                 ></p>
 <p>通过上图这种设计，网络2现在可以使用网络1的公共IP地址(82.62.51.70)并通过80端口访问运行在网络1上的web服务器。</p>
@@ -1618,7 +1618,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/..%5Carticleimg%5Cimage-20230327165324795.png"
+                     data-src="/articleimg/image-20230327165324795.png"
                       alt="image-20230327165324795"
                 ></p>
 <h2 id="防火墙简介"><a href="#防火墙简介" class="headerlink" title="防火墙简介"></a>防火墙简介</h2><img  
@@ -1646,7 +1646,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327173045469.png"
+                     data-src="/articleimg/image-20230327173045469.png"
                       alt="image-20230327173045469"
                 ></p>
 <h2 id="防火墙模拟示例"><a href="#防火墙模拟示例" class="headerlink" title="防火墙模拟示例"></a>防火墙模拟示例</h2><p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
@@ -1664,7 +1664,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327180155107.png"
+                     data-src="/articleimg/image-20230327180155107.png"
                       alt="image-20230327180155107"
                 ></p>
 <blockquote>
@@ -1673,7 +1673,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327175546858.png"
+                     data-src="/articleimg/image-20230327175546858.png"
                       alt="image-20230327175546858"
                 ></p>
 <h2 id="VPN基础"><a href="#VPN基础" class="headerlink" title="VPN基础"></a>VPN基础</h2><p>虚拟专用网络(VPN-Virtual Private Network)是一种允许不同网络上的设备通过在Internet(互联网公网)上彼此之间创建专用路径(称为隧道)进行安全通信的技术，在此隧道内连接的多个设备将形成它们自己的专用网络。</p>
@@ -1686,7 +1686,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327180844134.png"
+                     data-src="/articleimg/image-20230327180844134.png"
                       alt="image-20230327180844134"
                 ></p>
 <p>连接在Network#3上的设备仍然是Network#1和Network#2的一部分，但这些设备同时也形成了一个私有网络(Network#3)，只有通过相关的VPN连接的设备才能在这个专用网络(Network#3)上进行通信。</p>
@@ -1718,7 +1718,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327202321786.png"
+                     data-src="/articleimg/image-20230327202321786.png"
                       alt="image-20230327202321786"
                 ></p>
 <h2 id="局域网-LAN-网络设备"><a href="#局域网-LAN-网络设备" class="headerlink" title="局域网(LAN)网络设备"></a>局域网(LAN)网络设备</h2><p><strong>路由器（Router）</strong></p>
@@ -1728,7 +1728,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327203318544.png"
+                     data-src="/articleimg/image-20230327203318544.png"
                       alt="image-20230327203318544"
                 ></p>
 <p><em>tips：路由器是专用设备，它的功能与交换机不同。</em></p>
@@ -1749,7 +1749,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327210327136.png"
+                     data-src="/articleimg/image-20230327210327136.png"
                       alt="image-20230327210327136"
                 ></p>
 <p><em><strong>tips：上图中的交换机是第二层交换机，OSI模型的第二层是数据链路层，所以上图中的交换机只负责将帧(数据帧)发送到正确的设备上。</strong></em></p>
@@ -1764,7 +1764,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327212506663.png"
+                     data-src="/articleimg/image-20230327212506663.png"
                       alt="image-20230327212506663"
                 ></p>
 <p>如上图所示：“销售部门”和“会计部门”都能够访问Internet(互联网公网)，但这两个部门网络之间并不能实现相互通信(尽管这两个部门都连接到同一个交换机)。</p>
@@ -1772,7 +1772,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327214314866.png"
+                     data-src="/articleimg/image-20230327214314866.png"
                       alt="image-20230327214314866"
                 ></p>
 <h2 id="网络模拟器示例"><a href="#网络模拟器示例" class="headerlink" title="网络模拟器示例"></a>网络模拟器示例</h2><p>部署附加到此示例的静态站点，用一个简单的网络模拟器进行实验。此模拟器将分解 数据包从点A传输到点B所需要的每一步，请尝试从computer1发送一个TCP包到computer3并得到一个flag。</p>
@@ -1806,7 +1806,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/%5Carticleimg%5Cimage-20230327013125313.png"
+                     data-src="/articleimg/image-20230327013125313.png"
                       alt="image-20230327013125313"
                 ></p>
 ]]></content>
