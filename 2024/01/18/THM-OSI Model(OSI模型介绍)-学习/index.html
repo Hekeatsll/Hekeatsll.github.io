@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/18/thm-osi model(osi模型介绍)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解决定跨网络处理数据的各个阶段的基本网络框架。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-OSI Model(OSI模型介绍)-学习">
+<meta property="og:url" content="http://example.com/2024/01/18/THM-OSI%20Model(OSI%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解决定跨网络处理数据的各个阶段的基本网络框架。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326005100677.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326005200447.png">
+<meta property="og:image" content="http://example.com/articleimg/application.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326010503208.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326010536829.png">
+<meta property="og:image" content="http://example.com/articleimg/presentation.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326154514416.png">
+<meta property="og:image" content="http://example.com/articleimg/session.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326155132061.png">
+<meta property="og:image" content="http://example.com/articleimg/transport.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326164124956.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326170113306.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326160454354.png">
+<meta property="og:image" content="http://example.com/articleimg/network.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326174126984.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326174251520.png">
+<meta property="og:image" content="http://example.com/articleimg/datalink.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326175234403.png">
+<meta property="og:image" content="http://example.com/articleimg/physical.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326180259445.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326175520887.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326181243963.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326181212728.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230326180750610.png">
+<meta property="article:published_time" content="2024-01-18T15:02:55.000Z">
+<meta property="article:modified_time" content="2024-01-18T15:06:30.974Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="网络安全基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20230326005100677.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-OSI Model(OSI模型介绍)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">15</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://assets.tryhackme.com/room-banners/networking.png" alt="THM-OSI Model(OSI模型介绍)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-OSI Model(OSI模型介绍)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-18 23:02:55</span>
+        <span class="mobile">2024-01-18 23:02:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-18 23:06:30</span>
+            <span class="mobile">2024-01-18 23:06:30</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>8 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/osimodelzi" >https://tryhackme.com/room/osimodelzi <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解决定跨网络处理数据的各个阶段的基本网络框架。</p>
+<h2 id="什么是OSI模型？"><a href="#什么是OSI模型？" class="headerlink" title="什么是OSI模型？"></a>什么是OSI模型？</h2><p>OSI模型(开放系统互连模型-Open Systems Interconnection Model)是网络中使用的绝对基本模型，这个关键模型提供了一个框架，规定了所有联网设备将如何发送、接收和解释数据。</p>
+<p>OSI模型的主要好处之一是：当与其他设备进行通信时，网络上的设备可以具有不同的功能和设计，而且在遵循OSI模型一致性的网络上发送的数据也可以被其他设备理解。</p>
+<p>OSI模型由七层组成，从第7层到第1层，每一层都有不同的职责。</p>
+<p>数据传递在OSI的每一层都会发生特定的过程，OSI的每一层都会将部分信息添加到原数据中，这个过程被称为封装，下图为OSI模型示意图：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326005100677.png"
+                      alt="image-20230326005100677" style="zoom: 67%;" 
+                >
+
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326005200447.png"
+                      alt="image-20230326005200447"
+                ></p>
+<h2 id="Layer-7-应用层-Application"><a href="#Layer-7-应用层-Application" class="headerlink" title="Layer 7 - 应用层(Application)"></a>Layer 7 - 应用层(Application)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/application.png"
+                      alt="img"
+                ></p>
+<p>OSI模型的应用层是你最熟悉的一层，这种熟悉程度是因为应用程序层是协议和规则所在的层，应用层用于确定用户应该如何与发送或接收的数据进行交互。</p>
+<p>日常的应用程序，如电子邮件客户端、浏览器或文件服务器浏览软件(如FileZilla) 等，它们能够为用户提供一个友好的图形用户界面(GUI)，这个GUI可用于用户与数据（发送的数据或接收的数据）进行交互；应用层中还包括了DNS协议(域名系统)，DNS能将网站地址转换为IP地址。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326010503208.png"
+                      alt="image-20230326010503208"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326010536829.png"
+                      alt="image-20230326010536829"
+                ></p>
+<h2 id="Layer-6-表示层-Presentation"><a href="#Layer-6-表示层-Presentation" class="headerlink" title="Layer 6 - 表示层(Presentation)"></a>Layer 6 - 表示层(Presentation)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/presentation.png"
+                      alt="img"
+                ></p>
+<p>OSI模型的第6层是标准化开始发生的层。软件开发人员可以以不同的方式开发应用程序，例如电子邮件客户端等，而无论应用程序如何工作，数据仍然需要以相同的方式进行处理。</p>
+<p>这一层能够充当数据与应用层(第7层)之间的翻译器。接收信息的计算机也能理解以一种格式发送到计算机的数据以另一种格式发送，例如：当你通过某种类型的电子邮件客户端发送电子邮件时，其他用户可能使用的是另一种电子邮件客户端来接收信息，但是电子邮件的内容仍然能够正常显示。</p>
+<p>数据加密（如访问安全站点时使用HTTPS协议）等安全特性也将在表示层得到应用。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326154514416.png"
+                      alt="image-20230326154514416"
+                ></p>
+<h2 id="Layer-5-会话层-Session"><a href="#Layer-5-会话层-Session" class="headerlink" title="Layer 5 - 会话层(Session)"></a>Layer 5 - 会话层(Session)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/session.png"
+                      alt="img"
+                ></p>
+<p>一旦数据从表示层(第6层)正确地转换或格式化，会话层(第5层)将开始创建到数据目的地(另一台计算机)的连接。当连接建立后，将同时创建一个会话，并且当该连接处于活动状态时，对应的会话也将处于活动状态。</p>
+<p>会话层(第5层)将使两台计算机同步，以确保它们在发送数据和接收数据之前处于同一页面上，一旦相关的检查到位，会话层将开始把要发送的数据分成更小的数据块，并开始一次一个地发送这些数据块(Packets-数据包)；这种对数据分块处理的方式是有益的，因为如果连接发生丢失，则仅有尚未发送的部分数据块需要再次发送——而不需要重新发送全部数据块。</p>
+<p>值得注意的是，会话是唯一的——这意味着数据不能在不同的会话之间传输，而只能在相同会话之间传输（一个会话将包含两端：发送数据端和接收数据端）。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326155132061.png"
+                      alt="image-20230326155132061"
+                ></p>
+<h2 id="Layer-4-传输层-Transport"><a href="#Layer-4-传输层-Transport" class="headerlink" title="Layer 4 - 传输层(Transport)"></a>Layer 4 - 传输层(Transport)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/transport.png"
+                      alt="img"
+                ></p>
+<p>OSI模型的第4层在通过网络传输数据方面起着至关重要的作用。当数据在设备之间发送时，它将遵循以下两种不同的协议之一：</p>
+<ul>
+<li>TCP（传输控制协议）</li>
+<li>UDP（用户数据报协议）</li>
+</ul>
+<p><strong>TCP协议</strong></p>
+<p>传输控制协议（TCP-<strong>T</strong>ransmission <strong>C</strong>ontrol <strong>P</strong>rotocol）在设计时考虑到了数据传输的可靠性；并且TCP协议在发送数据和接收数据所需的时间内，将在两个设备之间保持恒定的连接——TCP协议是面向连接的。</p>
+<p>不仅如此，TCP还在其设计中加入了错误检查，错误检查能够确认从会话层(第5层)发送的小块数据已经按顺序（按发送数据的顺序）被接收和重新组装。</p>
+<p>让我们总结一下TCP的优点和缺点：</p>
+<ul>
+<li>TCP的优点：能够保证数据的准确性；能够同步两个设备，以防止彼此被数据淹没；将执行更多流程，以确保数据传输的可靠性。</li>
+<li>TCP的缺点：要求两台设备之间有可靠的连接，如果没有接收到一小块数据，则无法使用整个数据块；TCP的慢速连接可能会导致其他设备达到数据传输的瓶颈，因为在数据传输完毕之前——相关的TCP连接将一直保留在接收端计算机上；TCP 比 UDP 慢得多，因为使用此协议的设备必须完成更多工作。</li>
+</ul>
+<p>TCP主要用于文件共享、互联网浏览或发送电子邮件等情况，因为这些服务要求数据是准确和完整的，而TCP协议的特性能够满足这些要求。</p>
+<p>在下图的例子中，我们可以看到一张照片是如何被分解成来自“网络服务器”的小数据块(称为数据包)，而接收数据的计算机会将照片重新按正确的顺序完成构建。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326164124956.png"
+                      alt="image-20230326164124956"
+                ></p>
+<p><strong>UDP协议</strong></p>
+<p>现在让我们介绍用户数据报协议(UDP-<strong>U</strong>ser <strong>D</strong>atagram <strong>P</strong>rotocol)。UDP协议远不如TCP协议先进，它没有TCP所提供的多种特性，如错误检查和数据传输的可靠性。任何基于UDP协议发送的数据都无法确保不会发生数据丢失，UDP协议在进行数据传输时并没有实现设备的同步过程，UDP的特性是：无连接、不可靠、快速传输。</p>
+<p>让我们总结一下UDP的优点和缺点：</p>
+<ul>
+<li>UDP的优点：UDP比TCP快得多；UDP让应用层(用户软件)决定是否控制数据包的发送速度；UDP不像TCP那样在设备上保留连续连接。</li>
+<li>UDP的缺点：UDP不关心发送的数据是否成功被接收，容易发生数据丢失；UDP这种不稳定的数据传输方式可能会给用户糟糕的体验。</li>
+</ul>
+<p>我们使用与上面相同的例子，假设我们基于UDP协议传输数据，我们现在可以看到“接收数据的计算机”仅接收到数据包 #1 和 #3，这意味着图像发生了丢失。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326170113306.png"
+                      alt="image-20230326170113306"
+                ></p>
+<p>UDP协议在需要发送小块数据的情况下很有用，例如，用于发现设备的协议(ARP协议和DHCP协议)或者视频流等更大的文件(视频的某些部分出现像素化是可允许的，像素化部分代表了对应数据的丢失)。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326160454354.png"
+                      alt="image-20230326160454354"
+                ></p>
+<h2 id="Layer-3-网络层-Network"><a href="#Layer-3-网络层-Network" class="headerlink" title="Layer 3 - 网络层(Network)"></a>Layer 3 - 网络层(Network)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/network.png"
+                      alt="img"
+                ></p>
+<p>OSI模型的第三层(网络层)是路由和重新组装数据之处，而路由能够确定发送数据块时应该选择的最优路径。</p>
+<p>网络层的一些协议确切地确定了数据到达设备的“最佳”路径，这些协议包括了开放最短路径优先协议(OSPF-Open Shortest Path First)和路由信息协议(RIP-Routing Information Protocol)；此外，路径的选择还由以下因素决定：</p>
+<ul>
+<li>哪条路径最短?也就是说，数据包需要通过的设备最少。</li>
+<li>哪条路径最可靠?例如，之前在该路径上丢失过数据包吗?</li>
+<li>哪条路径的物理连接更快?例如，一条路径是使用铜缆线连接(较慢)还是光纤连接(相当快)?</li>
+</ul>
+<p>在这一层，一切都是通过IP地址(如192.168.1.100)进行处理的，能够使用IP地址发送数据包的路由器等设备也被称为第三层设备，因为它们能够在OSI模型的第三层工作。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326174126984.png"
+                      alt="image-20230326174126984"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326174251520.png"
+                      alt="image-20230326174251520"
+                ></p>
+<h2 id="Layer-2-数据链路层-Data-Link"><a href="#Layer-2-数据链路层-Data-Link" class="headerlink" title="Layer 2 - 数据链路层(Data Link)"></a>Layer 2 - 数据链路层(Data Link)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/datalink.png"
+                      alt="img"
+                ></p>
+<p>数据链路层着重于数据传输过程中的物理寻址。该层级将接收来自网络层的数据包(包括远程计算机的IP地址)，并会在数据包中添加接收端点的物理MAC(媒体访问控制)地址。</p>
+<p>在每一台联网计算机内部都有一个网络接口卡(NIC- Network Interface Card)，它带有一个唯一的MAC(Media Access Control)地址作为标识；MAC地址由制造商设置，并刻入网络接口卡中，MAC地址不能被改变——尽管MAC地址可以被欺骗；当信息通过网络发送时，实际上是使用物理地址来确定将信息发送到哪里。此外，以适合传输的格式表示数据也是数据链路层的工作之一。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326175234403.png"
+                      alt="image-20230326175234403"
+                ></p>
+<h2 id="Layer-1-物理层-Physical"><a href="#Layer-1-物理层-Physical" class="headerlink" title="Layer 1 - 物理层(Physical)"></a>Layer 1 - 物理层(Physical)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/physical.png"
+                      alt="img"
+                ></p>
+<p>物理层包括了在网络中所使用的硬件的物理组件，是OSI模型的最低层，这些设备将使用电信号在二进制编号系统( 0 和 1 )中相互传输数据。</p>
+<p>例如，以太网电缆连接设备：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326180259445.png"
+                      alt="image-20230326180259445" style="zoom: 67%;" 
+                >
+
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326175520887.png"
+                      alt="image-20230326175520887"
+                ></p>
+<h2 id="OSI实例练习"><a href="#OSI实例练习" class="headerlink" title="OSI实例练习"></a>OSI实例练习</h2><p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
+<p><strong>答题</strong></p>
+<p>根据数据发送时在OSI七层中所经过的顺序完成模拟实验，并得到最后的flag。</p>
+<p><em>tips：使用左、右方向键控制移动，使用空格键进行爬楼。</em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326181243963.png"
+                      alt="image-20230326181243963" style="zoom: 67%;" 
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326181212728.png"
+                      alt="image-20230326181212728" style="zoom: 67%;" 
+                >
+
+<blockquote>
+<p>最后得到的flag是：THM{OSI_DUNGEON_ESCAPED} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326180750610.png"
+                      alt="image-20230326180750610"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-OSI Model(OSI模型介绍)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-18 23:02:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-18 23:06:30
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/18/THM-OSI Model(OSI模型介绍)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">#网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/18/THM-Packets&amp;Frames(%E4%BA%86%E8%A7%A3%E6%95%B0%E6%8D%AE%E5%8C%85%E5%92%8C%E5%B8%A7)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Packets &amp; Frames(了解数据包和帧)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/18/THM-Intro%20to%20LAN(%E5%B1%80%E5%9F%9F%E7%BD%91%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Intro to LAN(局域网基础介绍)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-OSI Model(OSI模型介绍)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFOSI%E6%A8%A1%E5%9E%8B%EF%BC%9F"><span class="nav-text">什么是OSI模型？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-7-%E5%BA%94%E7%94%A8%E5%B1%82-Application"><span class="nav-text">Layer 7 - 应用层(Application)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-6-%E8%A1%A8%E7%A4%BA%E5%B1%82-Presentation"><span class="nav-text">Layer 6 - 表示层(Presentation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-5-%E4%BC%9A%E8%AF%9D%E5%B1%82-Session"><span class="nav-text">Layer 5 - 会话层(Session)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-4-%E4%BC%A0%E8%BE%93%E5%B1%82-Transport"><span class="nav-text">Layer 4 - 传输层(Transport)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-3-%E7%BD%91%E7%BB%9C%E5%B1%82-Network"><span class="nav-text">Layer 3 - 网络层(Network)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-2-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82-Data-Link"><span class="nav-text">Layer 2 - 数据链路层(Data Link)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-1-%E7%89%A9%E7%90%86%E5%B1%82-Physical"><span class="nav-text">Layer 1 - 物理层(Physical)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSI%E5%AE%9E%E4%BE%8B%E7%BB%83%E4%B9%A0"><span class="nav-text">OSI实例练习</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

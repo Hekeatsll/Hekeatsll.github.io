@@ -1591,4 +1591,1132 @@
         <tag>常见问题-FAQ</tag>
       </tags>
   </entry>
+  <entry>
+    <title>THM-Extending Your Network(网络扩展基础介绍)-学习</title>
+    <url>/2024/01/18/THM-Extending%20Your%20Network(%E7%BD%91%E7%BB%9C%E6%89%A9%E5%B1%95%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/extendingyournetwork" >https://tryhackme.com/room/extendingyournetwork <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解一些用于将网络扩展到 Internet(互联网公网) 的技术以及这样做的动机。</p>
+<h2 id="端口转发介绍"><a href="#端口转发介绍" class="headerlink" title="端口转发介绍"></a>端口转发介绍</h2><p>端口转发是应用程序和服务连接到 Internet(互联网公网) 所需的重要步骤，如果没有端口转发，应用程序和服务(如web服务)只能对同一直连网络中的设备可用。</p>
+<p>以下面的网络为例：在以下网络中，IP地址为“192.168.1.10”的服务器在端口80上运行着web服务，但该网络上只有另外两台计算机能够访问此web服务。(这种网络被称为内部网络)</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327163246516.png"
+                      alt="image-20230327163246516"
+                ></p>
+<p>如果网络管理员想让公众(通过互联网)访问上图中的网站，管理员就必须实现端口转发，如下图所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327163735248.png"
+                      alt="image-20230327163735248"
+                ></p>
+<p>通过上图这种设计，网络2现在可以使用网络1的公共IP地址(82.62.51.70)并通过80端口访问运行在网络1上的web服务器。</p>
+<p>我们很容易将端口转发行为与防火墙的行为混淆，但是这两者是不一样的；防火墙能够决定流量是否可以通过某些端口(即使这些端口是通过端口转发开放的)。</p>
+<p><em>tips：端口转发是在网络中的路由器上配置的。</em></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327165324795.png"
+                      alt="image-20230327165324795"
+                ></p>
+<h2 id="防火墙简介"><a href="#防火墙简介" class="headerlink" title="防火墙简介"></a>防火墙简介</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/roomicon.png"
+                      alt="img" style="zoom:50%;" 
+                >
+
+<p>防火墙是网络中的一种设备，它负责确定允许哪些流量进入网络和退出网络，防火墙可以被视为网络的边界安全。网络管理员可以根据多种因素将防火墙配置为允许或拒绝某些流量进入或退出网络，例如：</p>
+<ul>
+<li>流量从哪里来？ （防火墙是否被告知：接受&#x2F;拒绝来自特定网络的流量？）</li>
+<li>流量要往哪里去？ （防火墙是否被告知：接受&#x2F;拒绝发往特定网络的流量？）</li>
+<li>流量流向哪个端口？ （防火墙是否被告知：仅接受&#x2F;拒绝发往端口 80 的流量？）</li>
+<li>流量使用什么协议？ （防火墙是否被告知：接受&#x2F;拒绝 UDP、TCP 或两者的流量？）</li>
+</ul>
+<p><em><strong>tips：防火墙将通过执行数据包检查来确定以上这些问题的答案。</strong></em></p>
+<p>防火墙有各种各样的形状和大小：从可以处理大量数据的专用硬件(通常存在于像企业这样的大型网络中)到住宅路由器(通常存在于家庭网络中)或者Snort软件(一种开源入侵防御系统-IPS)，防火墙可以分为2到5类。</p>
+<p>我们将在下面介绍两种主要类型的防火墙：</p>
+<ul>
+<li>Stateful（有状态）：这种类型的防火墙将使用来自连接的全部信息，这种防火墙不是基于单个数据包检查，而是<em><strong>基于整个连接来确定设备的行为</strong></em>；与无状态防火墙相比，有状态防火墙会消耗很多资源，因为相关的流量决策是动态的，例如，有状态防火墙可以让TCP三次握手过程中的第一部分执行失败；如果来自主机的连接不正常，这将阻塞整个设备。</li>
+<li>Stateless（无状态）：这种类型的防火墙将使用一组静态规则来<em><strong>确定单个数据包是否可接受</strong></em>，例如，某设备发送了一个坏数据包并不意味着此设备随后都将会被阻塞；虽然无状态防火墙比其他防火墙使用更少的资源，但无状态防火墙的表现也更笨，例如，无状态防火墙只有在定义了规则时才有效，如果规则没有完全匹配，那么此规则实际上将是无用的；当从一组主机接收大量流量时(例如发生了分布式拒绝服务攻击-DDoS攻击)，无状态防火墙将变得非常有用。</li>
+</ul>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327173045469.png"
+                      alt="image-20230327173045469"
+                ></p>
+<h2 id="防火墙模拟示例"><a href="#防火墙模拟示例" class="headerlink" title="防火墙模拟示例"></a>防火墙模拟示例</h2><p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：正确配置防火墙规则以防止设备超载——示例中的203.0.110.1网站正在遭到攻击，请快速添加一些防火墙规则来阻止服务器崩溃（红色的数据包来自于攻击者的机器）。</em></p>
+<p>添加规则：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230327180344996.png"
+                      alt="image-20230327180344996" style="zoom: 67%;" 
+                >
+
+<p>得到flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327180155107.png"
+                      alt="image-20230327180155107"
+                ></p>
+<blockquote>
+<p>最后得到的flag是：THM{FIREWALLS_RULE} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327175546858.png"
+                      alt="image-20230327175546858"
+                ></p>
+<h2 id="VPN基础"><a href="#VPN基础" class="headerlink" title="VPN基础"></a>VPN基础</h2><p>虚拟专用网络(VPN-Virtual Private Network)是一种允许不同网络上的设备通过在Internet(互联网公网)上彼此之间创建专用路径(称为隧道)进行安全通信的技术，在此隧道内连接的多个设备将形成它们自己的专用网络。</p>
+<p>只有同一网络中的设备(如企业的内部网络)可以直接通信，而VPN允许两个局点相连，让我们看看下图，其中有三个网络：</p>
+<ol>
+<li>Network #1 (Office #1)</li>
+<li>Network #2 (Office #2)</li>
+<li>Network #3 (两个设备通过VPN连接)</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327180844134.png"
+                      alt="image-20230327180844134"
+                ></p>
+<p>连接在Network#3上的设备仍然是Network#1和Network#2的一部分，但这些设备同时也形成了一个私有网络(Network#3)，只有通过相关的VPN连接的设备才能在这个专用网络(Network#3)上进行通信。</p>
+<p>让我们介绍VPN提供的一些其他好处:</p>
+<ul>
+<li>允许不同地理位置的网络进行连接：例如，拥有多个办公室网络的企业会发现VPN是有益的，因为这意味着可以从办公室网络 直接访问远程服务器或基础设施等资源。</li>
+<li>提供隐秘性：VPN使用了加密技术来保护数据，这意味着数据包只能在发送它的设备和目的地之间被理解，这些数据不容易被嗅探；VPN加密技术在有公共WiFi的地方可能很有用处，因为普通的公共WiFi网络并不提供加密；你可以使用VPN来保护你所使用的流量不被其他人查看。</li>
+<li>提供匿名性：记者和其他活动人士可以依靠VPN技术 在言论自由受到控制的国家安全地报道全球问题；通常，你所使用的流量可以被你的ISP和其他中介机构查看，并能因此被跟踪，而VPN所提供的匿名级别也仅仅与网络上的其他设备如何尊重隐私有关，例如，使用一个会记录所有数据或者历史的VPN 本质上与不使用VPN的效果是一样的。</li>
+</ul>
+<p>例如TryHackMe网站可以使用VPN技术 将你的本地机和一些易受攻击的机器连接起来，并且不允许那些易受攻击的机器能被公众直接在互联网上访问，这意味着:</p>
+<ul>
+<li><p>你可以安全地与 TryHackMe网站所提供的那些易受攻击的机器 进行交互，从而进行攻击模拟；</p>
+</li>
+<li><p>服务提供商如ISP不会认为你在使用本地机攻击互联网上的正常机器(因为攻击正常机器可能违反了ISP的服务条款)；</p>
+</li>
+<li><p>使用VPN也为TryHackMe网站提供了安全性，因为 TryHackMe所提供的易受攻击的机器 无法直接通过Internet被公众访问。</p>
+</li>
+</ul>
+<p>多年以来，VPN技术经过了不断改进，下面让我们来探讨一些现有的VPN技术：</p>
+<ul>
+<li><p>PPP：PPP是指点对点协议，它能提供加密以及数字验证功能，使用了PPP技术的VPN会通过私钥和公共证书(类似于SSH)来工作，如果要成功建立VPN连接，那么私钥和证书就必须完成匹配，但是，基于PPP技术进行传输的数据 并不能单独离开网络(即不可路由)；此外，PPTP将使用PPP技术来进行身份验证并提供数据加密。</p>
+</li>
+<li><p>PPTP：点对点隧道协议(PPTP-<strong>P</strong>oint-to-<strong>P</strong>oint <strong>T</strong>unneling <strong>P</strong>rotocol)是一种“允许PPP数据在网络中传输并离开网络”的技术，PPTP协议非常容易设置，大多数设备都支持它，然而，与其他VPN方案相比，PPTP是弱加密的。</p>
+</li>
+<li><p>IPSec：IPsec (Internet Protocol Security)将使用现有的IP (Internet Protocol)框架对数据进行加密，与其他VPN方案相比，IPSec更难建立，但只要建立完成，IPSec就能使用强大的加密功能，并且IPSec技术在许多设备上都能得到支持。</p>
+</li>
+</ul>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327202321786.png"
+                      alt="image-20230327202321786"
+                ></p>
+<h2 id="局域网-LAN-网络设备"><a href="#局域网-LAN-网络设备" class="headerlink" title="局域网(LAN)网络设备"></a>局域网(LAN)网络设备</h2><p><strong>路由器（Router）</strong></p>
+<p>路由器的工作是连接网络并在网络之间传递数据，它是通过使用路由来做到这一点的(因此得名路由器)。</p>
+<p>路由是给“数据在网络中传输的过程”的标签，路由涉及在网络之间创建一条路径，以便能够成功地传递数据；路由器运行在OSI模型的第3层(网络层)，它通常具有交互式界面(如网页界面或控制台界面)，这能够允许管理员配置各种规则，如配置端口转发规则或配置防火墙规则。</p>
+<p>当设备由多条路径连接时，如下面的示例图所示，路由就能发挥作用以采用最优路径：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327203318544.png"
+                      alt="image-20230327203318544"
+                ></p>
+<p><em>tips：路由器是专用设备，它的功能与交换机不同。</em></p>
+<p>从上图的例子中，我们可以看到计算机A的网络通过中间的路由器连接到计算机B的网络——共有两条路由路径可供选择，接下来的问题是：我们将采取什么路由路径？</p>
+<p>使用不同的协议将决定采取不同的路由路径，此外，路径的选择还包括以下因素：</p>
+<ul>
+<li><p>哪条路径最短？（数据包需要通过的设备最少）</p>
+</li>
+<li><p>哪条路径最可靠？（之前在该路径上是否丢失过数据包）</p>
+</li>
+<li><p>哪条路径有更快的物理传输介质(铜缆线或光纤)？</p>
+</li>
+</ul>
+<p><strong>交换机（Switch）</strong></p>
+<p>交换机是一种专用的网络设备，它负责在网络上提供连接到多个设备的方法——一个交换机可以通过以太网电缆连接多个设备(从3到63个)。</p>
+<p>交换机可以在OSI模型的第二层(数据链路层)和第三层(网络层)同时工作，然而，这是具有排他性的——第二层交换机不能在第三层运行。</p>
+<p>以下图中的第二层交换机为例，交换机将通过MAC地址把帧(此处不是数据包，因为IP协议已被剥离)转发到它所连接的设备上。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327210327136.png"
+                      alt="image-20230327210327136"
+                ></p>
+<p><em><strong>tips：上图中的交换机是第二层交换机，OSI模型的第二层是数据链路层，所以上图中的交换机只负责将帧(数据帧)发送到正确的设备上。</strong></em></p>
+<p>第三层交换机能够在OSI模型的第三层（网络层）工作，第三层交换机比第二层交换机更复杂，因为它还可以执行路由器的一些职责；也就是说，第三层交换机能向设备发送帧(就像第二层交换机一样)，并能使用IP协议将数据包路由到其他设备。</p>
+<p>第三层交换机的使用还涉及到了VLAN(虚拟局域网)技术，我们稍后将介绍VLAN，先假设我们有以下IP地址备用：</p>
+<ul>
+<li>192.168.1.1</li>
+<li>192.168.2.1</li>
+</ul>
+<p>虚拟局域网(<strong>V</strong>irtual <strong>L</strong>ocal <strong>A</strong>rea <strong>N</strong>etwork)技术 能够允许网络中的特定设备被虚拟分割，这种分割意味着相关的网络设备可以在互联网连接等方面受益，同时相关的网络设备也将被分区处理；由VLAN技术所形成的网络隔离能够提供安全性，因为这意味着将由适当的规则来决定特定设备如何相互通信，这种网络隔离如下图所示：</p>
+<p><em>tips：下图中的交换机是第三层交换机，下图示例将使用交换机划分VLAN，然后给VLAN分配IP。</em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327212506663.png"
+                      alt="image-20230327212506663"
+                ></p>
+<p>如上图所示：“销售部门”和“会计部门”都能够访问Internet(互联网公网)，但这两个部门网络之间并不能实现相互通信(尽管这两个部门都连接到同一个交换机)。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327214314866.png"
+                      alt="image-20230327214314866"
+                ></p>
+<h2 id="网络模拟器示例"><a href="#网络模拟器示例" class="headerlink" title="网络模拟器示例"></a>网络模拟器示例</h2><p>部署附加到此示例的静态站点，用一个简单的网络模拟器进行实验。此模拟器将分解 数据包从点A传输到点B所需要的每一步，请尝试从computer1发送一个TCP包到computer3并得到一个flag。</p>
+<p>注意：请使用Chrome或Firefox浏览器完成此练习。</p>
+<p><strong>答题</strong></p>
+<p>从 computer1 发送TCP包到 computer3 ：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230327012723958.png"
+                      alt="image-20230327012723958" style="zoom:50%;" 
+                >
+
+<p>得到的flag结果：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230327012919841.png"
+                      alt="image-20230327012919841" style="zoom:50%;" 
+                >
+
+<blockquote>
+<p>得到的flag为：THM{YOU’VE_GOT_DATA} 。</p>
+</blockquote>
+<p>对应的网络日志的内容（在TCP连接全过程中 所记录的日志如下）：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HANDSHAKE: Starting TCP/IP Handshake between computer1 and computer3</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HANDSHAKE: Sending SYN Packet from computer1 to computer3</span></span><br><span class="line">ROUTING: computer1 says computer3 is not on my local network sending to gateway: router</span><br><span class="line">ARP REQUEST: Who has router tell computer1</span><br><span class="line">ARP RESPONSE: Hey computer1, I am router</span><br><span class="line">ARP REQUEST: Who has computer3 tell router</span><br><span class="line">ARP RESPONSE: Hey router, I am computer3</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HANDSHAKE: computer3 received SYN Packet from computer1, sending SYN/ACK Packet to computer1</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HANDSHAKE: computer1 received SYN/ACK Packet from computer3, sending ACK packet to computer3</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HANDSHAKE: computer3 received ACK packet from computer1, Handshake Complete</span></span><br><span class="line">TCP: Sending TCP packet from computer1 to computer3</span><br><span class="line">TCP: computer3 received TCP Packet from computer1, sending ACK Packet to computer1</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>网络日志中共有 5 个HANDSHAKE条目。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327013125313.png"
+                      alt="image-20230327013125313"
+                ></p>
+]]></content>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-OSI Model(OSI模型介绍)-学习</title>
+    <url>/2024/01/18/THM-OSI%20Model(OSI%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/osimodelzi" >https://tryhackme.com/room/osimodelzi <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解决定跨网络处理数据的各个阶段的基本网络框架。</p>
+<h2 id="什么是OSI模型？"><a href="#什么是OSI模型？" class="headerlink" title="什么是OSI模型？"></a>什么是OSI模型？</h2><p>OSI模型(开放系统互连模型-Open Systems Interconnection Model)是网络中使用的绝对基本模型，这个关键模型提供了一个框架，规定了所有联网设备将如何发送、接收和解释数据。</p>
+<p>OSI模型的主要好处之一是：当与其他设备进行通信时，网络上的设备可以具有不同的功能和设计，而且在遵循OSI模型一致性的网络上发送的数据也可以被其他设备理解。</p>
+<p>OSI模型由七层组成，从第7层到第1层，每一层都有不同的职责。</p>
+<p>数据传递在OSI的每一层都会发生特定的过程，OSI的每一层都会将部分信息添加到原数据中，这个过程被称为封装，下图为OSI模型示意图：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326005100677.png"
+                      alt="image-20230326005100677" style="zoom: 67%;" 
+                >
+
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326005200447.png"
+                      alt="image-20230326005200447"
+                ></p>
+<h2 id="Layer-7-应用层-Application"><a href="#Layer-7-应用层-Application" class="headerlink" title="Layer 7 - 应用层(Application)"></a>Layer 7 - 应用层(Application)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/application.png"
+                      alt="img"
+                ></p>
+<p>OSI模型的应用层是你最熟悉的一层，这种熟悉程度是因为应用程序层是协议和规则所在的层，应用层用于确定用户应该如何与发送或接收的数据进行交互。</p>
+<p>日常的应用程序，如电子邮件客户端、浏览器或文件服务器浏览软件(如FileZilla) 等，它们能够为用户提供一个友好的图形用户界面(GUI)，这个GUI可用于用户与数据（发送的数据或接收的数据）进行交互；应用层中还包括了DNS协议(域名系统)，DNS能将网站地址转换为IP地址。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326010503208.png"
+                      alt="image-20230326010503208"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326010536829.png"
+                      alt="image-20230326010536829"
+                ></p>
+<h2 id="Layer-6-表示层-Presentation"><a href="#Layer-6-表示层-Presentation" class="headerlink" title="Layer 6 - 表示层(Presentation)"></a>Layer 6 - 表示层(Presentation)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/presentation.png"
+                      alt="img"
+                ></p>
+<p>OSI模型的第6层是标准化开始发生的层。软件开发人员可以以不同的方式开发应用程序，例如电子邮件客户端等，而无论应用程序如何工作，数据仍然需要以相同的方式进行处理。</p>
+<p>这一层能够充当数据与应用层(第7层)之间的翻译器。接收信息的计算机也能理解以一种格式发送到计算机的数据以另一种格式发送，例如：当你通过某种类型的电子邮件客户端发送电子邮件时，其他用户可能使用的是另一种电子邮件客户端来接收信息，但是电子邮件的内容仍然能够正常显示。</p>
+<p>数据加密（如访问安全站点时使用HTTPS协议）等安全特性也将在表示层得到应用。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326154514416.png"
+                      alt="image-20230326154514416"
+                ></p>
+<h2 id="Layer-5-会话层-Session"><a href="#Layer-5-会话层-Session" class="headerlink" title="Layer 5 - 会话层(Session)"></a>Layer 5 - 会话层(Session)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/session.png"
+                      alt="img"
+                ></p>
+<p>一旦数据从表示层(第6层)正确地转换或格式化，会话层(第5层)将开始创建到数据目的地(另一台计算机)的连接。当连接建立后，将同时创建一个会话，并且当该连接处于活动状态时，对应的会话也将处于活动状态。</p>
+<p>会话层(第5层)将使两台计算机同步，以确保它们在发送数据和接收数据之前处于同一页面上，一旦相关的检查到位，会话层将开始把要发送的数据分成更小的数据块，并开始一次一个地发送这些数据块(Packets-数据包)；这种对数据分块处理的方式是有益的，因为如果连接发生丢失，则仅有尚未发送的部分数据块需要再次发送——而不需要重新发送全部数据块。</p>
+<p>值得注意的是，会话是唯一的——这意味着数据不能在不同的会话之间传输，而只能在相同会话之间传输（一个会话将包含两端：发送数据端和接收数据端）。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326155132061.png"
+                      alt="image-20230326155132061"
+                ></p>
+<h2 id="Layer-4-传输层-Transport"><a href="#Layer-4-传输层-Transport" class="headerlink" title="Layer 4 - 传输层(Transport)"></a>Layer 4 - 传输层(Transport)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/transport.png"
+                      alt="img"
+                ></p>
+<p>OSI模型的第4层在通过网络传输数据方面起着至关重要的作用。当数据在设备之间发送时，它将遵循以下两种不同的协议之一：</p>
+<ul>
+<li>TCP（传输控制协议）</li>
+<li>UDP（用户数据报协议）</li>
+</ul>
+<p><strong>TCP协议</strong></p>
+<p>传输控制协议（TCP-<strong>T</strong>ransmission <strong>C</strong>ontrol <strong>P</strong>rotocol）在设计时考虑到了数据传输的可靠性；并且TCP协议在发送数据和接收数据所需的时间内，将在两个设备之间保持恒定的连接——TCP协议是面向连接的。</p>
+<p>不仅如此，TCP还在其设计中加入了错误检查，错误检查能够确认从会话层(第5层)发送的小块数据已经按顺序（按发送数据的顺序）被接收和重新组装。</p>
+<p>让我们总结一下TCP的优点和缺点：</p>
+<ul>
+<li>TCP的优点：能够保证数据的准确性；能够同步两个设备，以防止彼此被数据淹没；将执行更多流程，以确保数据传输的可靠性。</li>
+<li>TCP的缺点：要求两台设备之间有可靠的连接，如果没有接收到一小块数据，则无法使用整个数据块；TCP的慢速连接可能会导致其他设备达到数据传输的瓶颈，因为在数据传输完毕之前——相关的TCP连接将一直保留在接收端计算机上；TCP 比 UDP 慢得多，因为使用此协议的设备必须完成更多工作。</li>
+</ul>
+<p>TCP主要用于文件共享、互联网浏览或发送电子邮件等情况，因为这些服务要求数据是准确和完整的，而TCP协议的特性能够满足这些要求。</p>
+<p>在下图的例子中，我们可以看到一张照片是如何被分解成来自“网络服务器”的小数据块(称为数据包)，而接收数据的计算机会将照片重新按正确的顺序完成构建。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326164124956.png"
+                      alt="image-20230326164124956"
+                ></p>
+<p><strong>UDP协议</strong></p>
+<p>现在让我们介绍用户数据报协议(UDP-<strong>U</strong>ser <strong>D</strong>atagram <strong>P</strong>rotocol)。UDP协议远不如TCP协议先进，它没有TCP所提供的多种特性，如错误检查和数据传输的可靠性。任何基于UDP协议发送的数据都无法确保不会发生数据丢失，UDP协议在进行数据传输时并没有实现设备的同步过程，UDP的特性是：无连接、不可靠、快速传输。</p>
+<p>让我们总结一下UDP的优点和缺点：</p>
+<ul>
+<li>UDP的优点：UDP比TCP快得多；UDP让应用层(用户软件)决定是否控制数据包的发送速度；UDP不像TCP那样在设备上保留连续连接。</li>
+<li>UDP的缺点：UDP不关心发送的数据是否成功被接收，容易发生数据丢失；UDP这种不稳定的数据传输方式可能会给用户糟糕的体验。</li>
+</ul>
+<p>我们使用与上面相同的例子，假设我们基于UDP协议传输数据，我们现在可以看到“接收数据的计算机”仅接收到数据包 #1 和 #3，这意味着图像发生了丢失。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326170113306.png"
+                      alt="image-20230326170113306"
+                ></p>
+<p>UDP协议在需要发送小块数据的情况下很有用，例如，用于发现设备的协议(ARP协议和DHCP协议)或者视频流等更大的文件(视频的某些部分出现像素化是可允许的，像素化部分代表了对应数据的丢失)。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326160454354.png"
+                      alt="image-20230326160454354"
+                ></p>
+<h2 id="Layer-3-网络层-Network"><a href="#Layer-3-网络层-Network" class="headerlink" title="Layer 3 - 网络层(Network)"></a>Layer 3 - 网络层(Network)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/network.png"
+                      alt="img"
+                ></p>
+<p>OSI模型的第三层(网络层)是路由和重新组装数据之处，而路由能够确定发送数据块时应该选择的最优路径。</p>
+<p>网络层的一些协议确切地确定了数据到达设备的“最佳”路径，这些协议包括了开放最短路径优先协议(OSPF-Open Shortest Path First)和路由信息协议(RIP-Routing Information Protocol)；此外，路径的选择还由以下因素决定：</p>
+<ul>
+<li>哪条路径最短?也就是说，数据包需要通过的设备最少。</li>
+<li>哪条路径最可靠?例如，之前在该路径上丢失过数据包吗?</li>
+<li>哪条路径的物理连接更快?例如，一条路径是使用铜缆线连接(较慢)还是光纤连接(相当快)?</li>
+</ul>
+<p>在这一层，一切都是通过IP地址(如192.168.1.100)进行处理的，能够使用IP地址发送数据包的路由器等设备也被称为第三层设备，因为它们能够在OSI模型的第三层工作。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326174126984.png"
+                      alt="image-20230326174126984"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326174251520.png"
+                      alt="image-20230326174251520"
+                ></p>
+<h2 id="Layer-2-数据链路层-Data-Link"><a href="#Layer-2-数据链路层-Data-Link" class="headerlink" title="Layer 2 - 数据链路层(Data Link)"></a>Layer 2 - 数据链路层(Data Link)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/datalink.png"
+                      alt="img"
+                ></p>
+<p>数据链路层着重于数据传输过程中的物理寻址。该层级将接收来自网络层的数据包(包括远程计算机的IP地址)，并会在数据包中添加接收端点的物理MAC(媒体访问控制)地址。</p>
+<p>在每一台联网计算机内部都有一个网络接口卡(NIC- Network Interface Card)，它带有一个唯一的MAC(Media Access Control)地址作为标识；MAC地址由制造商设置，并刻入网络接口卡中，MAC地址不能被改变——尽管MAC地址可以被欺骗；当信息通过网络发送时，实际上是使用物理地址来确定将信息发送到哪里。此外，以适合传输的格式表示数据也是数据链路层的工作之一。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326175234403.png"
+                      alt="image-20230326175234403"
+                ></p>
+<h2 id="Layer-1-物理层-Physical"><a href="#Layer-1-物理层-Physical" class="headerlink" title="Layer 1 - 物理层(Physical)"></a>Layer 1 - 物理层(Physical)</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/physical.png"
+                      alt="img"
+                ></p>
+<p>物理层包括了在网络中所使用的硬件的物理组件，是OSI模型的最低层，这些设备将使用电信号在二进制编号系统( 0 和 1 )中相互传输数据。</p>
+<p>例如，以太网电缆连接设备：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326180259445.png"
+                      alt="image-20230326180259445" style="zoom: 67%;" 
+                >
+
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326175520887.png"
+                      alt="image-20230326175520887"
+                ></p>
+<h2 id="OSI实例练习"><a href="#OSI实例练习" class="headerlink" title="OSI实例练习"></a>OSI实例练习</h2><p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
+<p><strong>答题</strong></p>
+<p>根据数据发送时在OSI七层中所经过的顺序完成模拟实验，并得到最后的flag。</p>
+<p><em>tips：使用左、右方向键控制移动，使用空格键进行爬楼。</em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326181243963.png"
+                      alt="image-20230326181243963" style="zoom: 67%;" 
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326181212728.png"
+                      alt="image-20230326181212728" style="zoom: 67%;" 
+                >
+
+<blockquote>
+<p>最后得到的flag是：THM{OSI_DUNGEON_ESCAPED} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326180750610.png"
+                      alt="image-20230326180750610"
+                ></p>
+]]></content>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-Intro to LAN(局域网基础介绍)-学习</title>
+    <url>/2024/01/18/THM-Intro%20to%20LAN(%E5%B1%80%E5%9F%9F%E7%BD%91%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/introtolan" >https://tryhackme.com/room/introtolan <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解一些支持专用网络的技术和设计。</p>
+<h2 id="局域网-LAN-Local-Area-Network-拓扑简介"><a href="#局域网-LAN-Local-Area-Network-拓扑简介" class="headerlink" title="局域网(LAN-Local Area Network)拓扑简介"></a>局域网(LAN-Local Area Network)拓扑简介</h2><p>多年以来，人们对各种网络设计进行了试验和实施，在网络中，当我们提到术语“拓扑-Topology”时，实际上指的是当前网络的设计或外观。下面我们将讨论一下这些拓扑的优缺点。</p>
+<h3 id="Star-Topology（星型拓扑）"><a href="#Star-Topology（星型拓扑）" class="headerlink" title="Star Topology（星型拓扑）"></a><strong>Star Topology（星型拓扑）</strong></h3><p>星型拓扑结构的主要前提是设备通过中央网络设备(如交换机或集线器)单独连接；尽管成本高昂，但由于其可靠性和可伸缩性，这种拓扑在今天仍是最常见的。</p>
+<p>在星型拓扑结构中 发送到设备的任何信息都是通过此设备所连接的中心设备发送的，下面让我们探讨一下这种拓扑结构的一些优点和缺点:</p>
+<p>由于这种拓扑结构需要更多的电缆布线和购买专用的网络设备，因此它比其他任何拓扑结构都要昂贵。然而，尽管增加了成本，星型拓扑结构也确实提供了一些显著的优势：例如，这种拓扑本质上将具有更强的可伸缩性，这意味着随着网络需求的增加，我们可以很容易地添加更多设备。</p>
+<p>但不幸的是，随着网络规模越来越大，在星星拓扑中保持网络功能所需的维护成本就越高，而这种对维护的依赖增加也会使得故障排除变得更加困难。此外，星形拓扑仍然可能失效(尽管这种拓扑结构减少了失效的可能性)，例如，如果连接各个设备的集中式硬件出现故障，那么这些设备将不再能够继续发送或接收数据，值得庆幸的是，这些集中式硬件设备通常都很健壮。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325211744823.png"
+                      alt="image-20230325211744823" style="zoom:50%;" 
+                >
+
+<h3 id="Bus-Topology（总线拓扑）"><a href="#Bus-Topology（总线拓扑）" class="headerlink" title="Bus Topology（总线拓扑）"></a><strong>Bus Topology（总线拓扑）</strong></h3><p>总线拓扑中的各个设备在连接时 依赖于主干电缆的单一连接，此类拓扑结构中的设备就类似于树的叶子，因为在某种意义上，设备(叶子)起源于主干电缆上的分支。</p>
+<p>下面让我们探讨一下这种拓扑结构的一些优点和缺点:</p>
+<p>由于发送到每个设备的所有数据都沿着同一条电缆传输，所以如果总线拓扑中的各个设备同时请求数据，就很容易让数据传输变得缓慢和阻塞。当数据传输的阻塞情况达到瓶颈后，就会导致故障排除变得非常困难，因为在进行故障排除时——很难确定哪个设备正在经历“由于所有数据都沿着相同的路线传输而导致数据阻塞”。</p>
+<p>尽管如此，总线拓扑仍然是一种更容易配置且成本更低的拓扑结构，它主要的花费在于购买连接各个设备的电缆或专用网络设备。</p>
+<p>总线拓扑的另一个缺点是在发生故障时几乎没有冗余，这个缺点的存在是因为：如果在主干电缆上有一个单点故障，即电缆线突然断了，那么设备就不能再沿着总线接收或传输数据。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325211804758.png"
+                      alt="image-20230325211804758" style="zoom:50%;" 
+                >
+
+<h3 id="Ring-Topology（环型拓扑）"><a href="#Ring-Topology（环型拓扑）" class="headerlink" title="Ring Topology（环型拓扑）"></a><strong>Ring Topology（环型拓扑）</strong></h3><p>环形拓扑(也称为令牌拓扑)，在此拓扑中将由计算机等设备直接相互连接形成环路，这意味着几乎不需要电缆布线（只需要一点点电缆布线），也不太依赖于星型拓扑结构中的专用硬件。</p>
+<p>环形拓扑的工作原理是通过环路发送数据，直到数据到达目标设备，在这个过程中会使用环路上的其他设备转发数据。有趣的是，在这个拓扑中，如果一个设备本身没有任何数据要发送，那么它只会转发从另一个设备接收到的数据；而如果该设备恰好有数据要发送，它会先发送自己的数据，然后再转发来自于其他设备的数据。</p>
+<p>因为数据在这个拓扑结构中只有一个传输方向，所以很容易排除出现的任何故障；然而，这是一把双刃剑，因为单向传输在网络中并不是一种有效的数据传输方式，在总线拓扑中传输数据时，数据必须先访问多个设备才能最终到达预期的目标设备。</p>
+<p>环形拓扑不太容易出现数据传输瓶颈，因为在总线拓扑结构中，大量流量不会在任何时候同时通过网络传输。然而，这种拓扑结构的设计也意味着：如果剪断电缆或损坏设备则将导致整个网络中断。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325211833122.png"
+                      alt="image-20230325211833122" style="zoom:50%;" 
+                >
+
+<h3 id="什么是交换机（Switch）？"><a href="#什么是交换机（Switch）？" class="headerlink" title="什么是交换机（Switch）？"></a><strong>什么是交换机（Switch）？</strong></h3><p>交换机是网络中的专用设备，它被设计用于聚合多个其他设备，如计算机、打印机或使用以太网的任何其他具有网络功能的设备；这些不同的设备都将插入交换机的端口。交换机通常存在于较大的网络中，如企业、学校或类似规模的网络，在这种环境下将有许多设备需要被连接到网络，此时交换机可以通过4、8、16、24、32、64端口来连接大量的设备。</p>
+<p>交换机比它们的次要对应物(集线器&#x2F;中继器)更有效，交换机会跟踪哪些设备连接到哪个端口，因此，当交换机接收到一个数据包时，就不会像集线器那样将该数据包重复发送到每个端口，而是直接将数据包通过已知端口发送给预定的目标即可，从而减少了网络流量的消耗。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325122204859.png"
+                      alt="image-20230325122204859"
+                ></p>
+<p>交换机和路由器都可以相互连接，这样做可通过为数据添加多条路径来增加网络的冗余(可靠性)——如果一条路走不通，就可以用另一条路。虽然这可能会降低网络的整体性能，因为数据包要花费更长的时间来传输，但这尽量保证了网络没有停机时间——考虑到其他替代方案，降低网络的整体性能只是一个很小的代价。</p>
+<h3 id="什么是路由器（Router）？"><a href="#什么是路由器（Router）？" class="headerlink" title="什么是路由器（Router）？"></a><strong>什么是路由器（Router）？</strong></h3><p>路由器的工作是连接网络并在网络之间传递数据，它通过使用路由(因此得名路由器)来做到这一点。</p>
+<p>路由是给“数据在网络中传输的过程”的标签，路由涉及在网络之间创建一条路径，以便能够成功地传递数据。</p>
+<p>当设备由多条路径连接时，如下面的示例图所示，路由就能发挥作用。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325121757937.png"
+                      alt="image-20230325121757937"
+                ></p>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
+<p><em>tips：该实验环境将带我们了解不同网络拓扑结构中的缺陷。</em></p>
+<p>在环形拓扑结构中，所有设备都连接到其他两个设备，形成一个完整的圆圈，数据包从一个设备传输到下一个设备，直到到达目的地：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325214051829.png"
+                      alt="image-20230325214051829" style="zoom:50%;" 
+                >
+
+<p>环形拓扑的主要缺陷之一是，如果设备故障或电缆损坏，则数据将不再传递，网络中的设备也无法再相互通信：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325214218366.png"
+                      alt="image-20230325214218366" style="zoom:50%;" 
+                >
+
+<p>在总线拓扑中，所有设备都连接到一根电缆上，这根电缆通常被称为主干电缆，数据将顺着主干电缆沿左右两个方向发送，直到到达数据包的目的地：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325214458459.png"
+                      alt="image-20230325214458459" style="zoom:50%;" 
+                >
+
+<p>总线拓扑的一个主要缺陷是它不能处理大量数据，如果同时发送的数据包过多，就会导致网络关闭：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325214722436.png"
+                      alt="image-20230325214722436" style="zoom:50%;" 
+                >
+
+<p>在星型拓扑中，所有设备都通过自己的电缆连接到中央交换机&#x2F;集线器，每个数据包都将通过中央交换机发送：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325214952528.png"
+                      alt="image-20230325214952528" style="zoom:50%;" 
+                >
+
+<p>如果交换机发生故障，则网络将不再工作：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325215037202.png"
+                      alt="image-20230325215037202" style="zoom:50%;" 
+                >
+
+<p>完成上述步骤，最后得到一个flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325215123783.png"
+                      alt="image-20230325215123783"
+                ></p>
+<blockquote>
+<p>最后得到的flag为：THM{TOPOLOGY_FLAWS} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325213845669.png"
+                      alt="image-20230325213845669"
+                ></p>
+<h2 id="子网划分入门"><a href="#子网划分入门" class="headerlink" title="子网划分入门"></a>子网划分入门</h2><p>在现实世界中，你可以找到各种形状和大小的网络，而子网划分是将网络内部划分为更小的微型网络的术语。你可以把子网划分想象成你正在给你的朋友们切蛋糕，只有一定份额的蛋糕可以分给大家，但每个人都想要得到一块蛋糕，子网划分就是由你来决定谁将得到哪块蛋糕（最后还需要保留一部分未划分区域）。</p>
+<p>以一家企业为例，企业中有不同的部门，比如:</p>
+<ul>
+<li>会计（Accounting）</li>
+<li>金融（Finance）</li>
+<li>人力资源（Human Resources）</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325220009334.png"
+                      alt="image-20230325220009334" style="zoom:50%;" 
+                >
+
+<p>在现实生活中，你知道要把信息发送到正确的企业部门，在网络中也同样需要知道这一点；网络管理员将使用子网划分来分类网络和分配网络的特定部分。</p>
+<p>子网划分将通过划分网络中可以容纳的主机数量来实现，这将用一组被称为子网掩码的数字表示，让我们查看下图:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325220503766.png"
+                      alt="image-20230325220503766"
+                ></p>
+<p>我们知道，一个IP地址由四个“八位二进制数”组成，共四个字节，而子网掩码也是如此，子网掩码同样是被表示为四个字节(1个字节占8个二进制位，共32位)的一组数字，每个字节的范围是从0到255(0-255)。</p>
+<p>子网通过三种不同的方式使用IP地址：</p>
+<ul>
+<li>标识网络地址（network address）</li>
+<li>标识主机地址（host address）</li>
+<li>标识默认网关（default gateway）</li>
+</ul>
+<p>让我们了解一下以上三种方式的目的，如下所示:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325221335603.png"
+                      alt="image-20230325221335603"
+                ></p>
+<p>tips：默认网关是网络中的一个特殊设备，它能够向另一个网络上的设备发送信息。</p>
+<p>在像家庭网络这样的小型网络中，你的计算机设备将处于一个子网中，你不太可能在这样的小型网络中需要一次连接超过254个设备；而像企业这样的大型网络中，将会有更多的设备(如各企业部门的pc、打印机、相机和传感器等)，在大型网络中更加需要进行子网划分。</p>
+<p>子网划分提供了一系列好处，包括:</p>
+<ul>
+<li>效率</li>
+<li>安全</li>
+<li>完全控制</li>
+</ul>
+<p>我们将在以后继续探索子网划分是如何提供好处的，现在我们只需要了解子网划分所提供的安全元素；让我们以街上的咖啡馆为例，假设某家咖啡馆有两个网络：</p>
+<ul>
+<li>一个网络用于员工、收银机和其他店内联网设备。</li>
+<li>一个网络供公众使用WiFi。</li>
+</ul>
+<p>子网划分允许你将以上例子中的两个网络彼此分开，同时还能连接到互联网等更大的网络。</p>
+<h3 id="答题-1"><a href="#答题-1" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325225950872.png"
+                      alt="image-20230325225950872"
+                ></p>
+<h2 id="ARP协议介绍"><a href="#ARP协议介绍" class="headerlink" title="ARP协议介绍"></a>ARP协议介绍</h2><p>回顾我们上文所述，网络中的设备可以有两个标识符： MAC 地址和 IP 地址；而通过ARP协议可以允许设备在网络中识别自己，ARP协议即地址解析协议（<strong>A</strong>ddress <strong>R</strong>esolution <strong>P</strong>rotocol ）。</p>
+<p>简而言之，ARP协议允许设备将其MAC地址与网络上的IP地址相关联，网络上的每个设备都将保存与其他设备关联的MAC地址的日志；每当一个设备希望与另一个设备进行通信时，它将向整个网络发送广播以搜索目标设备，也就是说——网络中的设备可以通过ARP协议找到目标设备的MAC地址(即物理标识符)从而进行通信。</p>
+<p><strong>ARP协议是如何工作的?</strong></p>
+<p>网络中的每个设备都有一个用于存储信息的分类账簿，被称为缓存，在ARP协议的上下文中，这个缓存会存储网络上其他设备的标识符。</p>
+<p>为了将这两个标识符(IP地址和MAC地址)映射在一起，ARP协议会发送两种类型的消息：</p>
+<ul>
+<li>ARP Request（ARP请求）</li>
+<li>ARP Reply（ARP应答）</li>
+</ul>
+<p>当发送ARP请求时，初始源设备会向网络上的其他设备广播一条消息，以询问其他设备的MAC地址是否与初始源设备所请求的IP地址相匹配；如果某个设备确实有初始源设备所请求的IP地址（此设备即为初始目标设备），则会向初始源设备返回一个ARP应答消息以进行确认，初始源设备随后将记住这一映射关系，并将其存储在初始源设备的缓存中(以一个ARP条目的形式存储)。</p>
+<p>这个过程如下图所示：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325233634467.png"
+                      alt="image-20230325233634467" style="zoom: 67%;" 
+                >
+
+<h3 id="答题-2"><a href="#答题-2" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325234520603.png"
+                      alt="image-20230325234520603"
+                ></p>
+<h2 id="DHCP协议介绍"><a href="#DHCP协议介绍" class="headerlink" title="DHCP协议介绍"></a>DHCP协议介绍</h2><p>IP 地址可以手动分配，方法是将 IP 手动绑定到设备，IP 地址也可以自动分配，最常见的是使用动态主机配置协议（DHCP）服务器。当设备连接到网络时，如果尚未手动为其分配 IP 地址，它则会发出一个请求消息（DHCP Discover）以查看网络上是否有任何 DHCP 服务器，然后 DHCP 服务器将回复一个包含原设备可用的 IP 地址信息的消息（DHCP Offer）给原设备，紧接着原设备将再发送一个请求消息（DHCP Request）以确认它需要这个被提供的 IP 地址，最后，DHCP服务器将会发送一个应答消息（DHCP ACK）以确认IP分配操作已经完成，此后原设备就可以开始使用由DHCP服务器所提供的 IP 地址。</p>
+<p>tips：DHCP-<strong>D</strong>ynamic <strong>H</strong>ost <strong>C</strong>onfiguration <strong>P</strong>rotocol（动态主机配置协议）</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325235958781.png"
+                      alt="image-20230325235958781" style="zoom: 67%;" 
+                >
+
+<h3 id="答题-3"><a href="#答题-3" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326000851046.png"
+                      alt="image-20230326000851046"
+                ></p>
+]]></content>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-Packets &amp; Frames(了解数据包和帧)-学习</title>
+    <url>/2024/01/18/THM-Packets&amp;Frames(%E4%BA%86%E8%A7%A3%E6%95%B0%E6%8D%AE%E5%8C%85%E5%92%8C%E5%B8%A7)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/packetsframes" >https://tryhackme.com/room/packetsframes <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解数据如何被分成更小的部分并通过网络传输到另一台设备。</p>
+<h2 id="什么是数据包和帧？"><a href="#什么是数据包和帧？" class="headerlink" title="什么是数据包和帧？"></a>什么是数据包和帧？</h2><p>数据包和帧是小块的数据，当它们组合在一起时，就构成了更大的信息或消息；然而，数据包和帧在OSI模型中是两种不同的东西，帧位于OSI的第2层——数据链路层，这意味着帧不包含IP地址这样的信息。类比案例：你可以想象把一个信封放在另外一个信封里，然后邮寄完整的信封，此完整信封对应的是发送的数据包，一旦打开完整信封，里面仍然会存在并包含一些数据(也就是一个帧)。</p>
+<p>数据包和帧的组合过程被称为封装，在这个阶段中，我们可以安全地假设：任何包含IP地址的信息指的都是数据包，而当封装好的信息被剥离时，我们谈论的信息则是帧本身。</p>
+<p>数据包是跨网络设备传输数据的有效方式，由于这些数据是分小块传输的，所以此时在整个网络中发生数据传输阻塞的几率 比一次性发送大消息进而造成传输阻塞的几率要小。</p>
+<p>当你从网站加载图像时，该图像不会作为一个整体发送到你的计算机，而是在你的计算机上由小块图像开始重建进而得到一个完整图像；下面的图片说明了以上过程，来自于网站的图像将被分成三个数据包，当数据包到达计算机时，图像就会开始重建，最终形成完整的图像。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326193818536.png"
+                      alt="image-20230326193818536"
+                ></p>
+<p>数据包有不同的结构，这些结构取决于正在发送的数据包的类型，网络上充满了各种标准和协议，这些标准和协议充当了设备上如何处理数据包的一组规则。</p>
+<p>使用了协议的数据包将有一组标头，其中包含跨网络发送的数据的附加信息。</p>
+<p>一些值得注意的标头信息包括：</p>
+<ul>
+<li>Time to Live（生存时间）：该字段为数据包设置了一个过期计时器，即使数据包永远无法到达目标主机，这也不会阻塞你的网络。</li>
+<li>Checksum（校验和）：该字段能够为TCP&#x2F;IP等协议提供完整性检查，如果数据被更改了，那么此时的Checksum值将变得与预期的Checksum值不同。</li>
+<li>Source Address（源地址）：该字段表示发送数据包的设备的IP地址，这样数据就知道该返回到哪里。</li>
+<li>Destination Address（目标地址）：数据包要发送到的设备的IP地址，以便数据知道下一步要传输到哪里。</li>
+</ul>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326201110685.png"
+                      alt="image-20230326201110685"
+                ></p>
+<h2 id="TCP-IP（三次握手）介绍"><a href="#TCP-IP（三次握手）介绍" class="headerlink" title="TCP&#x2F;IP（三次握手）介绍"></a>TCP&#x2F;IP（三次握手）介绍</h2><p>传输控制协议(TCP-Transmission Control Protocol)是在网络中使用的一个规则。</p>
+<p>基于TCP&#x2F;IP协议集的TCP&#x2F;IP模型与OSI模型非常相似，TCP&#x2F;IP模型由四层分级组成，可以说是OSI模型的一个简化版本，TCP&#x2F;IP模型所包含的分层有:</p>
+<ul>
+<li>Application（应用层）</li>
+<li>Transport（传输层）</li>
+<li>Internet（网际层）</li>
+<li>Network Interface（网络接口层）</li>
+</ul>
+<p>与OSI模型的工作原理非常相似，数据包在经过TCP&#x2F;IP模型的每一层时都会被添加部分信息——这个过程被称为封装，而与此过程相反的是解封装。</p>
+<p><strong>关于TCP协议</strong></p>
+<p>TCP协议的一个定义特征是它是基于连接的，这意味着在发送数据之前，TCP必须在客户端和作为服务器的设备之间建立起一个持续的连接；因此，TCP能够保证发送的任何数据都会在另一端被正确地接收到，这个数据发送和接收过程被称为TCP&#x2F;IP三次握手。</p>
+<p>下面是关于TCP优点和缺点的比较:</p>
+<ul>
+<li>TCP的优点：能够保证数据的准确性；能够同步两个设备，以防止彼此被数据淹没；将执行更多流程，以确保数据传输的可靠性。</li>
+<li>TCP的缺点：要求两台设备之间有可靠的连接，如果没有接收到一小块数据，那么整个数据块就不能使用（必须重新发送）；TCP的慢速连接可能会导致其他设备达到数据传输的瓶颈，因为在数据传输完毕之前——相关的TCP连接将一直保留在接收端计算机上；TCP 比 UDP 慢得多，因为使用此协议的设备必须完成更多的工作（计算）。</li>
+</ul>
+<p>TCP数据包还将包含 在封装过程中所添加的被称为标头的信息部分，接下来让我们了解一些重要的TCP标头信息：</p>
+<ul>
+<li>Source Port（源端口）：发送方为发送TCP数据包而开放的端口，该值是随机选择的(从0-65535之间 选择尚未使用的端口)。</li>
+<li>Destination Port（目标端口）：远程主机（接收数据的主机）上运行的应用程序或服务的端口号，例如，默认运行 Web 服务器的端口 80；与源端口不同，目标端口号并不是随机选择的。</li>
+<li>Source IP（源IP地址）：这是发送数据包的设备的IP地址。</li>
+<li>Destination IP（目标IP地址）：这是数据包要到达的设备的IP地址。</li>
+<li>Sequence Number（序列号）：当TCP连接建立时，所传输的第一段数据将被赋予一个随机数。</li>
+<li>Acknowledgement Number（确认号）：在一段数据被赋予序列号之后，下一段数据的序列号值将会是序列号+ 1。</li>
+<li>Checksum（校验和）：这个值可用于对TCP数据包的完整性进行检查，如果校验和的值在数据传输过程中发生了变化，则说明数据已经被损坏。</li>
+<li>Data（数据）：这个标头是存储数据的地方，所存储的是正在传输的文件的字节。</li>
+<li>Flag（标志）：这个TCP标头决定了在三次握手过程中任一设备应该如何处理数据包，特定的标志将决定特定的行为。</li>
+</ul>
+<p><strong>TCP&#x2F;IP三次握手</strong></p>
+<p>接下来，我们将讨论TCP&#x2F;IP三次握手——这是用于在两个设备之间建立连接的过程的术语。</p>
+<p>TCP&#x2F;IP三次握手会使用一些特殊的信息进行交流，下面是一些主要的信息：</p>
+<ul>
+<li>1-SYN：SYN消息是客户端在握手过程中发送的初始数据包。这个包用于发起连接并同步两个设备。</li>
+<li>2-SYN&#x2F;ACK：此数据包将由接收设备(服务器)发送，以确认来自客户端的同步尝试。</li>
+<li>3-ACK：客户端或服务器都可以使用确认数据包来确认已经成功接收了一系列消息&#x2F;数据包。</li>
+<li>4-DATA：一旦两个设备建立了连接，数据(例如文件的字节)就会通过“DATA”消息发送。</li>
+<li>5-FIN：此数据包可用于在TCP连接完成后 干净地(正确地)关闭TCP连接。</li>
+<li>RST：RST数据包能够立刻终止所有的TCP通信，如果使用了RST数据包则表明在TCP握手过程中存在一些问题——比如发生了服务或应用程序异常以及系统资源不足等故障。</li>
+</ul>
+<p>下图显示了Alice和Bob之间正常的TCP三次握手过程，在现实生活中，这将发生在两个设备之间：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326214033986.png"
+                      alt="image-20230326214033986"
+                ></p>
+<p>在TCP三次握手过程中，客户端所发送的数据将被赋予一个随机数序列，这个数字序列接下来将进行重构并递增1；两台计算机设备必须就相同的数字序列达成一致，才能以正确的顺序发送数据，这个顺序是在三个步骤中商定的（下面步骤中的序列号是随机值）：</p>
+<ul>
+<li>SYN-Client：客户端将设置用于同步的SYN标志位并生成一个随机初始序列号(ISN)——0 。</li>
+<li>SYN&#x2F;ACK-Server：服务器端将设置SYN标志位和ACK标志位并生成一个随机初始序列号(5000)，并对客户端的初始序列号(0)进行确认（ACK&#x3D;0+1）。</li>
+<li>ACK-Client： 客户端设置ACK标志位，并对服务器端的初始序列号(5000)进行确认（ACK&#x3D;5000+1）。</li>
+</ul>
+<p>tips：SYNchronise-SYN(同步)，ACKnowledge-ACK(确认)，Initial Sequence Number-ISN(初始序列号)；以上步骤的结果——客户端ISN+1，服务器端ISN+1。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326221426557.png"
+                      alt="image-20230326221426557" style="zoom: 50%;" 
+                >
+
+<p><strong>TCP连接的关闭</strong></p>
+<p>接下来，让我们简单介绍一下TCP连接关闭背后的过程。</p>
+<p>首先，一旦源设备确定目标设备成功接收了所有数据，那么TCP连接就将要被关闭；因为TCP会在设备上占用一些系统资源，所以最好在不需要的时候尽快关闭TCP连接。</p>
+<p>为了启动TCP连接的关闭过程，设备将发送一个“FIN”数据包到另一个设备，当然，这仍基于TCP协议，其他设备也必须确认这个“FIN”数据包。</p>
+<p>让我们像前文一样使用Alice和Bob来展示这个过程：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326223520503.png"
+                      alt="image-20230326223520503"
+                ></p>
+<p>在上图中，我们可以看到Alice首先向Bob发送一个“FIN”包，当Bob收到这个消息之后，Bob会让Alice知道他已经收到消息(ACK)，并且Bob将表示他也想要关闭连接(FIN)，而Alice在收到来自于Bob的消息(ACK+FIN)之后，将进行最终的确认(ACK)——结果是TCP连接被成功关闭。</p>
+<h3 id="答题-1"><a href="#答题-1" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326224720813.png"
+                      alt="image-20230326224720813"
+                ></p>
+<h2 id="关于三次握手的模拟练习"><a href="#关于三次握手的模拟练习" class="headerlink" title="关于三次握手的模拟练习"></a>关于三次握手的模拟练习</h2><p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
+<p><em>tips：以正确的顺序重新组装TCP握手过程，以帮助 Alice 和 Bob 进行通信，在 Alice 与 Bob 的对话结束后会给出一个flag值。</em></p>
+<h3 id="答题-2"><a href="#答题-2" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><em><strong>Part1：</strong></em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326225206394.png"
+                      alt="image-20230326225206394" style="zoom:50%;" 
+                >
+
+<p><em><strong>Part2：</strong></em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326225315154.png"
+                      alt="image-20230326225315154" style="zoom:50%;" 
+                >
+
+<p><em><strong>Part3：</strong></em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326225411070.png"
+                      alt="image-20230326225411070" style="zoom:50%;" 
+                >
+
+<p><em><strong>Part4：</strong></em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326225512847.png"
+                      alt="image-20230326225512847" style="zoom:50%;" 
+                >
+
+<p><em><strong>Part5：</strong></em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326225632300.png"
+                      alt="image-20230326225632300" style="zoom:50%;" 
+                >
+
+<p><em><strong>Part6：</strong></em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326225759731.png"
+                      alt="image-20230326225759731" style="zoom:50%;" 
+                >
+
+<p><em><strong>Part7：</strong></em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326225838033.png"
+                      alt="image-20230326225838033" style="zoom:50%;" 
+                >
+
+<p><em><strong>Part8：</strong></em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230326225910031.png"
+                      alt="image-20230326225910031" style="zoom:50%;" 
+                >
+
+<p>对话结束，得到一个flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326225933032.png"
+                      alt="image-20230326225933032"
+                ></p>
+<blockquote>
+<p>最后得到的flag值为：THM{TCP_CHATTER} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326225109100.png"
+                      alt="image-20230326225109100"
+                ></p>
+<h2 id="UDP-IP介绍"><a href="#UDP-IP介绍" class="headerlink" title="UDP&#x2F;IP介绍"></a>UDP&#x2F;IP介绍</h2><p>用户数据报协议(UDP-<strong>U</strong>ser <strong>D</strong>atagram <strong>P</strong>rotocol)是另一种用于设备之间进行数据通信的协议。</p>
+<p>与TCP不同，UDP是一种无状态协议，它不需要通过在两个设备之间保持恒定的连接来发送数据；UDP协议不会发生三次握手过程，两个互相通信的设备之间也不存在任何同步。</p>
+<p>UDP主要用于应用程序可以容忍数据丢失的情况下(如视频流程序或语音聊天程序)，下面是对UDP协议的优缺点比较：</p>
+<ul>
+<li>UDP的优点：UDP比TCP快得多；UDP让应用层(用户软件)决定是否控制数据包的发送速度；UDP不像TCP那样在设备上保留连续连接。</li>
+<li>UDP的缺点：UDP不关心发送的数据是否成功被接收，容易发生数据丢失；UDP这种不稳定的数据传输方式可能会给用户糟糕的体验。</li>
+</ul>
+<p>如前所述，在两台设备之间建立UDP连接时不会发生任何过程，这意味着UDP不考虑数据是否被接收，也没有TCP所提供的保护措施（例如保护数据完整性）。</p>
+<p>UDP数据包比TCP数据包简单得多，并且有更少的标头，然而，这两个协议也能共享一些标准的标头，如下所示：</p>
+<ul>
+<li>Time to Live (TTL-生存时间)：该字段为数据包设置了一个过期计时器，即使数据包永远无法到达目标主机，这也不会阻塞你的网络。</li>
+<li>Source Address(源地址)：发送数据包的设备的IP地址，以便数据知道返回到哪里。</li>
+<li>Destination Address(目标地址)：数据包要发送到的设备的IP地址，以便数据知道下一步要传输到哪里。</li>
+<li>Source Port(源端口)：此值是发送方为发送TCP数据包而打开的端口，该端口号的值是随机选择的(从0-65535之间 选择尚未被使用的端口)。</li>
+<li>Destination Port(目标端口)：远程主机（接收数据的主机）上运行的应用程序或服务的端口号，例如，默认运行 Web 服务器的端口 80；与源端口不同，目标端口号并不是随机选择的。</li>
+<li>Data(数据)：这个标头是存储数据的地方，所存储的是正在传输的文件的字节。</li>
+</ul>
+<p>通过UDP通信与通过TCP通信的过程是不同的，我们应该记住UDP协议是无状态的，在UDP传输数据期间并不会发送确认数据包（ACK）</p>
+<p>下图显示了Alice和Bob之间的正常UDP通信，在现实生活中，UDP通信过程将发生在两个设备之间。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326234005977.png"
+                      alt="image-20230326234005977"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230326234125159.png"
+                      alt="image-20230326234125159"
+                ></p>
+<h2 id="端口基础介绍-相关实例练习"><a href="#端口基础介绍-相关实例练习" class="headerlink" title="端口基础介绍&amp;相关实例练习"></a>端口基础介绍&amp;相关实例练习</h2><p><strong>端口基础介绍</strong></p>
+<p>Port(端口)是数据进行交换的关键点，Port也有港口的含义，此名称或许恰如其分；你可以想象在海边有一个又一个港口，所有想要靠岸停放的船舶都必须前往与船舶尺寸和船舶用途相匹配的港口，例如，一艘游轮不能停靠在为渔船而建造的港口处，反之亦然。</p>
+<p>这些端口会规定什么服务才可以使用什么端口号——如果某个服务和某个端口不兼容，就不能为该服务分配此端口；网络设备在相互通信时也将使用端口来执行一些严格的规则，当两个设备建立起连接之后，设备所发送或接收的任何数据都将通过端口进行通信。</p>
+<p>在计算机中，端口号所对应的是 0 到 65535 之间的数值。</p>
+<p>由于端口的范围可以是0-65535之间的任何数值，因此很快就会出现难以跟踪哪个应用程序正在使用哪个端口的风险，值得庆幸的是，我们能够将应用程序、软件和行为与一组标准规则相关联；例如，通过强制任何web浏览器的数据都必须通过端口80发送，软件开发人员可以设计出多种使用80端口进行通信的web浏览器，如Chrome浏览器、Firefox浏览器等，而这些浏览器最终都能以相同的方式解释数据。</p>
+<p>这意味着现在所有的浏览器都有一个共同的标准规则——通过80端口发送数据；但是浏览器的外观、使用感觉和易用性则取决于设计师或用户的个人选择。</p>
+<p>除了web浏览器的标准规则是“使用端口80进行通信”之外，其他一些协议也已经分配了对应的标准规则，接下来我们将探讨 和一些其他协议相对应的标准规则：</p>
+<p><em>tips：任何在 0 到 1024 之间的端口都被称为普通端口。</em></p>
+<ul>
+<li><strong>F</strong>ile <strong>T</strong>ransfer <strong>P</strong>rotocol (<strong>FTP</strong>协议)：文件传输协议；默认使用21端口；此协议用于构建在客户机-服务器(C&#x2F;S)模型上的文件共享应用程序，这意味着你可以从FTP服务器上下载文件。</li>
+<li><strong>S</strong>ecure <strong>Sh</strong>ell (<strong>SSH</strong>协议)：安全外壳协议；默认使用22端口；该协议可用于通过基于文本的管理界面安全地登录目标系统。</li>
+<li><strong>H</strong>yper<strong>T</strong>ext Transfer Protocol (<strong>HTTP</strong>协议)：超文本传输协议；默认使用80端口；这个协议为万维网(WWW)提供了基础，你的浏览器能够使用该协议来访问或者下载网页上的文本、图像和视频等资源。</li>
+<li><strong>H</strong>yper<strong>T</strong>ext <strong>T</strong>ransfer <strong>P</strong>rotocol <strong>S</strong>ecure (<strong>HTTPS</strong>协议)：超文本传输安全协议；默认使用443端口；该协议与HTTP协议相同，但是另外还增加了安全加密特性。</li>
+<li><strong>S</strong>erver <strong>M</strong>essage <strong>B</strong>lock (<strong>SMB</strong>协议)：服务器消息块协议，是一种网络文件系统访问协议；默认使用445端口；该协议类似于文件传输协议(FTP)，但是，除了文件之外，SMB协议还允许你共享打印机等设备。</li>
+<li><strong>R</strong>emote <strong>D</strong>esktop <strong>P</strong>rotocol (<strong>RDP</strong>协议)：远程桌面协议；默认使用3389端口；该协议是一种使用可视桌面界面登录目标系统的安全方法(与SSH协议基于文本界面的限制不同)。</li>
+</ul>
+<p>我们在此只是简单地介绍了网络安全中的一些常见协议，你可以在以下链接中找到1024个常用端口列表：</p>
+<blockquote>
+<p><a class="link"   href="http://www.vmaxx.net/techinfo/ports.htm" >http://www.vmaxx.net/techinfo/ports.htm <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p>注意：上述这些协议只是默认会遵循标准规则来使用端口，也就是说，你其实可以在不同的端口上来管理与协议交互的应用程序，而不只是使用标准端口(比如在8080端口上而不是在80标准端口上运行web服务器)；但是应用程序将假定遵循标准规则来使用端口，因此你在通过浏览器访问目标服务器时——必须在URL的最后提供冒号(:)并加上具体的端口号。</p>
+<p><strong>实例练习</strong></p>
+<p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：通过端口“1234”连接到目标IP地址“8.8.8.8”，最后将收到一个flag。</em></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230327011252012.png"
+                      alt="image-20230327011252012" style="zoom:67%;" 
+                >
+
+<blockquote>
+<p>最后得到的flag是：THM{YOU_CONNECTED_TO_A_PORT} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230327011307845.png"
+                      alt="image-20230327011307845"
+                ></p>
+]]></content>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-What is Networking？(什么是网络？)-学习</title>
+    <url>/2024/01/18/THM-What%20is%20Networking%EF%BC%9F(%E4%BB%80%E4%B9%88%E6%98%AF%E7%BD%91%E7%BB%9C%EF%BC%9F)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/whatisnetworking" >https://tryhackme.com/room/whatisnetworking <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：学习一些关于计算机网络的基础知识。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>网络是连接在一起的东西，例如，你的朋友圈：你们都因为相似的兴趣、爱好、技能和类型而联系在一起。</p>
+<p>网络可以在各行各业中找到:</p>
+<ul>
+<li>城市公共交通系统</li>
+<li>国家电网等基础设施</li>
+<li>你和邻居会见和互相问候</li>
+<li>邮寄信件和包裹的邮政系统</li>
+</ul>
+<p>在计算机领域，网络的概念和上述例子类似，只是分散到了各个技术设备上；以你的手机为例，你拥有它的原因是为了获取东西。我们将介绍这些设备如何相互通信以及它们遵循什么规则。</p>
+<p>在计算机领域，一个网络可以由2个到数十亿个设备组成，这些设备包括你的笔记本电脑和手机，安全摄像头，交通信号灯，甚至农场。</p>
+<p>网络已经融入了我们的日常生活，无论是收集天气数据，还是为家庭供电，甚至是确定谁在道路上有优先通行权都和网络有所关联；由于网络是嵌入在现代社会中的，所以网络也是网络安全中必须掌握的一个基本概念。</p>
+<p>以下图为例，Alice, Bob和Jim已经组成了他们的网络。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325111701678.png"
+                      alt="image-20230325111701678"
+                ></p>
+<p>网络有各种各样的形状和大小，这也是我们将在本文中讨论的内容。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325111758447.png"
+                      alt="image-20230325111758447"
+                ></p>
+<h2 id="什么是互联网？"><a href="#什么是互联网？" class="headerlink" title="什么是互联网？"></a>什么是互联网？</h2><p>现在我们已经了解了什么是网络，以及在计算机中网络是如何定义的(在计算机领域：网络表示多个连接的设备)，让我们来探索什么是互联网。</p>
+<p>互联网是一个巨大的网络，它由许许多多小网络组成。基于上一小节中的例子，现在让我们想象 Alice 交了一些名叫 Zayn 和 Toby 的新朋友，她想把他们介绍给Bob和Jim，而问题是Alice是唯一一个和Zayn和Toby说同一种语言的人，所以Alice必须成为传达信息的信使。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325112358537.png"
+                      alt="image-20230325112358537"
+                ></p>
+<p>因为Alice会说两种语言，上图中的其他人可以通过Alice实现互相交流——这从而形成一个新的网络。</p>
+<p>互联网的第一次迭代是在20世纪60年代末的 ARPANET 项目中，该项目由美国国防部资助，是第一个记录在案的计算机网络；然而，直到1989年，蒂姆·伯纳斯·李 才通过创建万维网(WWW-<strong>W</strong>orld <strong>W</strong>ide <strong>W</strong>eb) 发明了我们现在所知道的互联网，至此，互联网才开始被用作存储和共享信息的存储库(就像今天一样)。</p>
+<p>让我们将上面例子中的Alice的朋友网络与计算机设备联系起来，互联网看起来将像下面这类图表的放大版:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325113424671.png"
+                      alt="image-20230325113424671"
+                ></p>
+<p>如前所述，互联网是由许多小型网络连接在一起组成的；这些小网络被称为专用网络(private networks)，连接这些小网络的网络被称为公共网络(private networks)——也就是Internet 。所以，我们可以概括得出，计算机网络可以是以下两种类型之一：</p>
+<ul>
+<li>Private network（专用网络）</li>
+<li>Public network（公共网络）</li>
+</ul>
+<p>tips：在网络上，计算机设备将使用一组标签来标识自己。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325114031504.png"
+                      alt="image-20230325114031504"
+                ></p>
+<h2 id="识别网络上的设备"><a href="#识别网络上的设备" class="headerlink" title="识别网络上的设备"></a>识别网络上的设备</h2><p>为了通信和维持秩序，网络上的设备必须具有识别性和可识别性，如果你都不知道你在和谁说话，那么网络又有什么用呢?</p>
+<p>计算机网络中的设备与人类非常相似，人类有两种被识别的方式:</p>
+<ul>
+<li>名字</li>
+<li>指纹</li>
+</ul>
+<p>我们可以改变名字，但是我们不能改变指纹，每个人都有自己的一套指纹，这意味着即使改了名字，我们仍然有唯一的身份标识；在网络中的计算机设备具有类似的被识别方式：</p>
+<ul>
+<li>IP地址</li>
+<li>媒体访问控制(MAC-Media Access Control)地址——可以把它看作是一个类似于序列号的地址。</li>
+</ul>
+<h3 id="IP-Addresses"><a href="#IP-Addresses" class="headerlink" title="IP Addresses"></a><strong>IP Addresses</strong></h3><p>简单地说，IP地址(或Internet协议)可以在一段时间内用作识别网络上的主机的方式，然后该IP地址也可以（在前一个设备使用该IP地址的时间过期后）与另一个设备相关联，而不会使IP地址发生改变。</p>
+<p>让我们精确地划分IP地址：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325182903071.png"
+                      alt="image-20230325182903071"
+                ></p>
+<p>IP地址是一组共32位的二进制数字，可分为4个8位二进制数，这些 <u>8位二进制数(<em><strong>octet</strong></em>)</u> 的值将被汇总为网络设备的IP地址；这组数字是通过被称为 IP 寻址和子网划分的技术计算出来的，此处需要理解的重点是：IP 地址可以因设备而异，但不能在同一个网络中同时被多个设备使用。</p>
+<p>tips：一个字节由8个二进制位组成，所以一个IPv4地址共四个字节。</p>
+<p>IP地址遵循一组被称为协议的标准，这些协议是网络的主干，迫使许多设备使用同一种语言进行通信；设备既可以在私有网络（专用网络）上，也可以在公共网络上。根据设备所处的位置，将决定它们所拥有的IP地址类型：公共IP地址或者私有IP地址。</p>
+<p>公共地址可用于在Internet上识别设备，而私有地址可用于在其他设备之中识别设备。以下面的表格和截图为例，假如我们有两个设备在专用网络（私有网络）上:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325185159663.png"
+                      alt="image-20230325185159663"
+                ></p>
+<p>以上两台设备将能够使用它们的私有IP地址相互通信，但是，从这两台设备发送到Internet的任何数据都将被相同的公共IP地址识别。公共IP地址可由你的互联网服务提供商(ISP-Internet Service Provider)提供，并且按月收费。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325185615792.png"
+                      alt="image-20230325185615792"
+                ></p>
+<p>随着越来越多的设备联网，想要获得一个未被使用的公共地址也变得越来越难。根据网络行业巨头思科公司的估计，到2021年底，将有大约500亿台设备连接到互联网(<a class="link"   href="https://www.cisco.com/c/dam/en_us/about/ac79/docs/innov/IoT_IBSG_0411FINAL.pdf" >思科, 2021 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>)。但是IP地址不止一个版本，到目前为止，我们只讨论了一个版本的互联网协议寻址方案，即 IPv4 ，它使用的是一个具有2^32(42.9亿)个IP地址的编号系统。</p>
+<p>IPv6是互联网协议寻址方案的新迭代版本，能够帮助解决IP地址短缺的问题，IPv6有一些好处：</p>
+<ul>
+<li>支持最多2^128(340万亿+)个IP地址，有助于解决IPv4面临的地址短缺问题。</li>
+<li>由于采用了新的方法，IPv6的效率更高。</li>
+</ul>
+<p>下面的截图显示了IPv6地址和IPv4地址的实例：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325191000099.png"
+                      alt="image-20230325191000099"
+                ></p>
+<h3 id="MAC-Addresses"><a href="#MAC-Addresses" class="headerlink" title="MAC Addresses"></a><strong>MAC Addresses</strong></h3><p>网络上的设备都有一个物理网络接口，和接口对应的是该设备主板上的一个微型芯片板；设备的物理网络接口会由制造芯片的工厂分配一个唯一的地址，此地址被称为MAC(媒体访问控制-<strong>M</strong>edia <strong>A</strong>ccess <strong>C</strong>ontrol)地址。MAC地址是一个具有十二个字符的十六进制数字(十六进制：是一种以16为基数的数字系统，可用于在计算机中表示数字)，每一位十六进制的数字都代表两个字符，在具体表示十六进制数时会用冒号分隔，这些冒号是分隔符，例如：<code>a4:c3:f0:85:ac:2d</code>。</p>
+<p>MAC地址的前六个字符（前三位MAC地址）代表制作物理网络接口的公司，MAC地址的后六个字符则是唯一的数字。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325192759185.png"
+                      alt="image-20230325192759185"
+                ></p>
+<p>然而，关于MAC地址的一个有趣的事是，它们可以被伪造或“欺骗”。当一台联网设备使用MAC地址伪装成另一台设备时，就会发生MAC地址欺骗，当MAC地址欺骗发生时，通常会破坏一些实现得很差的安全设计，这些（安全性差的）安全设计会假设在网络上通信的设备是可信的。以下面的场景为例：如果防火墙已被配置为允许管理员 MAC 地址之间发生任何通信，如果一个设备伪造或“欺骗”管理员的MAC地址，防火墙就会认为它正在接收来自管理员的通信（而实际上并没有）。</p>
+<p>咖啡馆和酒店等场所在使用“Guest”或“Public”Wi-Fi时经常会使用MAC地址进行控制，这种配置可以提供更好的服务，也就是说，如果你愿意为每台设备支付费用，就可以以一定的价格获得更快的连接。</p>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>在和本文相关的TryHackMe实验房间中 部署交互式实验环境并回答下面问题。</p>
+<p><em>tips：此交互式实验环境模拟了酒店的Wi-Fi网络，你必须为上网服务付费。你可以注意到路由器不允许Bob的数据包(蓝色)进入TryHackMe网站，并将这些数据包放入垃圾箱中，但是Alice的数据包(绿色)却可以通过，因为Alice已经支付了使用Wi-Fi所需的费用；现在我们尝试将Bob的MAC地址更改为与Alice的MAC地址相同，看看会发生什么事情。</em></p>
+<p>正常的通信情况：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325200205269.png"
+                      alt="image-20230325200205269" style="zoom:50%;" 
+                >
+
+<p>伪装MAC地址进行通信：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325200413832.png"
+                      alt="image-20230325200413832" style="zoom:50%;" 
+                >
+
+<p>得到flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325200323536.png"
+                      alt="image-20230325200323536"
+                ></p>
+<blockquote>
+<p>最后得到的flag为：THM{YOU_GOT_ON_TRYHACKME} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325200012653.png"
+                      alt="image-20230325200012653"
+                ></p>
+<h2 id="关于Ping-ICMP"><a href="#关于Ping-ICMP" class="headerlink" title="关于Ping (ICMP)"></a>关于Ping (ICMP)</h2><p>Ping是我们可用的最基本的网络工具之一。Ping使用ICMP (Internet Control Message Protocol)报文来判断设备之间连接的性能，例如连接是否存在或者连接是否可靠。</p>
+<p>如下面的截图所示，ICMP报文在设备之间传输所花费的时间可通过ping来测量；这种测量是使用 ICMP 的回波数据包(echo packet)和来自目标设备的 ICMP 回波应答(echo reply)来完成的。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325115450514.png"
+                      alt="image-20230325115450514"
+                ></p>
+<p>Ping可以针对网络上的设备执行，例如你的家庭网络或者网站等资源。ping工具易于使用，并能安装在Linux和Windows等操作系统上，执行 ping 命令的简单语法是 <code>ping IP address or website URL</code> 。</p>
+<p>基于上面的ping命令示例截图：我们正在ping一个私有地址为192.168.1.254的设备，我们可以看到已发送了6个ICMP数据包（手动按ctrl+c按键停止ping命令），所有这些数据包是在平均5.3秒的时间内收到的。</p>
+<p><strong>答题</strong></p>
+<p>在和本文相关的TryHackMe实验房间中部署实验环境并回答下面问题。</p>
+<p><em>tips：在部署的实验环境中对地址“8.8.8.8”使用ping命令。</em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325120527199.png"
+                      alt="image-20230325120527199"
+                ></p>
+<blockquote>
+<p>执行ping命令得到的flag为：THM{I_PINGED_THE_SERVER} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325120413513.png"
+                      alt="image-20230325120413513"
+                ></p>
+]]></content>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
 </search>

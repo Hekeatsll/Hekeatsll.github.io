@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/18/thm-what is networking？(什么是网络？)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="学习一些关于计算机网络的基础知识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-What is Networking？(什么是网络？)-学习">
+<meta property="og:url" content="http://example.com/2024/01/18/THM-What%20is%20Networking%EF%BC%9F(%E4%BB%80%E4%B9%88%E6%98%AF%E7%BD%91%E7%BB%9C%EF%BC%9F)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="学习一些关于计算机网络的基础知识。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325111701678.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325111758447.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325112358537.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325113424671.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325114031504.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325182903071.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325185159663.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325185615792.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325191000099.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325192759185.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325200205269.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325200413832.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325200323536.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325200012653.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325115450514.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325120527199.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230325120413513.png">
+<meta property="article:published_time" content="2024-01-18T14:52:55.000Z">
+<meta property="article:modified_time" content="2024-01-18T14:56:16.274Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="网络安全基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20230325111701678.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-What is Networking？(什么是网络？)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">15</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://assets.tryhackme.com/room-banners/networking.png" alt="THM-What is Networking？(什么是网络？)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-What is Networking？(什么是网络？)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-18 22:52:55</span>
+        <span class="mobile">2024-01-18 22:52:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-18 22:56:16</span>
+            <span class="mobile">2024-01-18 22:56:16</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.8k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>9 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/whatisnetworking" >https://tryhackme.com/room/whatisnetworking <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：学习一些关于计算机网络的基础知识。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>网络是连接在一起的东西，例如，你的朋友圈：你们都因为相似的兴趣、爱好、技能和类型而联系在一起。</p>
+<p>网络可以在各行各业中找到:</p>
+<ul>
+<li>城市公共交通系统</li>
+<li>国家电网等基础设施</li>
+<li>你和邻居会见和互相问候</li>
+<li>邮寄信件和包裹的邮政系统</li>
+</ul>
+<p>在计算机领域，网络的概念和上述例子类似，只是分散到了各个技术设备上；以你的手机为例，你拥有它的原因是为了获取东西。我们将介绍这些设备如何相互通信以及它们遵循什么规则。</p>
+<p>在计算机领域，一个网络可以由2个到数十亿个设备组成，这些设备包括你的笔记本电脑和手机，安全摄像头，交通信号灯，甚至农场。</p>
+<p>网络已经融入了我们的日常生活，无论是收集天气数据，还是为家庭供电，甚至是确定谁在道路上有优先通行权都和网络有所关联；由于网络是嵌入在现代社会中的，所以网络也是网络安全中必须掌握的一个基本概念。</p>
+<p>以下图为例，Alice, Bob和Jim已经组成了他们的网络。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325111701678.png"
+                      alt="image-20230325111701678"
+                ></p>
+<p>网络有各种各样的形状和大小，这也是我们将在本文中讨论的内容。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325111758447.png"
+                      alt="image-20230325111758447"
+                ></p>
+<h2 id="什么是互联网？"><a href="#什么是互联网？" class="headerlink" title="什么是互联网？"></a>什么是互联网？</h2><p>现在我们已经了解了什么是网络，以及在计算机中网络是如何定义的(在计算机领域：网络表示多个连接的设备)，让我们来探索什么是互联网。</p>
+<p>互联网是一个巨大的网络，它由许许多多小网络组成。基于上一小节中的例子，现在让我们想象 Alice 交了一些名叫 Zayn 和 Toby 的新朋友，她想把他们介绍给Bob和Jim，而问题是Alice是唯一一个和Zayn和Toby说同一种语言的人，所以Alice必须成为传达信息的信使。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325112358537.png"
+                      alt="image-20230325112358537"
+                ></p>
+<p>因为Alice会说两种语言，上图中的其他人可以通过Alice实现互相交流——这从而形成一个新的网络。</p>
+<p>互联网的第一次迭代是在20世纪60年代末的 ARPANET 项目中，该项目由美国国防部资助，是第一个记录在案的计算机网络；然而，直到1989年，蒂姆·伯纳斯·李 才通过创建万维网(WWW-<strong>W</strong>orld <strong>W</strong>ide <strong>W</strong>eb) 发明了我们现在所知道的互联网，至此，互联网才开始被用作存储和共享信息的存储库(就像今天一样)。</p>
+<p>让我们将上面例子中的Alice的朋友网络与计算机设备联系起来，互联网看起来将像下面这类图表的放大版:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325113424671.png"
+                      alt="image-20230325113424671"
+                ></p>
+<p>如前所述，互联网是由许多小型网络连接在一起组成的；这些小网络被称为专用网络(private networks)，连接这些小网络的网络被称为公共网络(private networks)——也就是Internet 。所以，我们可以概括得出，计算机网络可以是以下两种类型之一：</p>
+<ul>
+<li>Private network（专用网络）</li>
+<li>Public network（公共网络）</li>
+</ul>
+<p>tips：在网络上，计算机设备将使用一组标签来标识自己。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325114031504.png"
+                      alt="image-20230325114031504"
+                ></p>
+<h2 id="识别网络上的设备"><a href="#识别网络上的设备" class="headerlink" title="识别网络上的设备"></a>识别网络上的设备</h2><p>为了通信和维持秩序，网络上的设备必须具有识别性和可识别性，如果你都不知道你在和谁说话，那么网络又有什么用呢?</p>
+<p>计算机网络中的设备与人类非常相似，人类有两种被识别的方式:</p>
+<ul>
+<li>名字</li>
+<li>指纹</li>
+</ul>
+<p>我们可以改变名字，但是我们不能改变指纹，每个人都有自己的一套指纹，这意味着即使改了名字，我们仍然有唯一的身份标识；在网络中的计算机设备具有类似的被识别方式：</p>
+<ul>
+<li>IP地址</li>
+<li>媒体访问控制(MAC-Media Access Control)地址——可以把它看作是一个类似于序列号的地址。</li>
+</ul>
+<h3 id="IP-Addresses"><a href="#IP-Addresses" class="headerlink" title="IP Addresses"></a><strong>IP Addresses</strong></h3><p>简单地说，IP地址(或Internet协议)可以在一段时间内用作识别网络上的主机的方式，然后该IP地址也可以（在前一个设备使用该IP地址的时间过期后）与另一个设备相关联，而不会使IP地址发生改变。</p>
+<p>让我们精确地划分IP地址：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325182903071.png"
+                      alt="image-20230325182903071"
+                ></p>
+<p>IP地址是一组共32位的二进制数字，可分为4个8位二进制数，这些 <u>8位二进制数(<em><strong>octet</strong></em>)</u> 的值将被汇总为网络设备的IP地址；这组数字是通过被称为 IP 寻址和子网划分的技术计算出来的，此处需要理解的重点是：IP 地址可以因设备而异，但不能在同一个网络中同时被多个设备使用。</p>
+<p>tips：一个字节由8个二进制位组成，所以一个IPv4地址共四个字节。</p>
+<p>IP地址遵循一组被称为协议的标准，这些协议是网络的主干，迫使许多设备使用同一种语言进行通信；设备既可以在私有网络（专用网络）上，也可以在公共网络上。根据设备所处的位置，将决定它们所拥有的IP地址类型：公共IP地址或者私有IP地址。</p>
+<p>公共地址可用于在Internet上识别设备，而私有地址可用于在其他设备之中识别设备。以下面的表格和截图为例，假如我们有两个设备在专用网络（私有网络）上:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325185159663.png"
+                      alt="image-20230325185159663"
+                ></p>
+<p>以上两台设备将能够使用它们的私有IP地址相互通信，但是，从这两台设备发送到Internet的任何数据都将被相同的公共IP地址识别。公共IP地址可由你的互联网服务提供商(ISP-Internet Service Provider)提供，并且按月收费。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325185615792.png"
+                      alt="image-20230325185615792"
+                ></p>
+<p>随着越来越多的设备联网，想要获得一个未被使用的公共地址也变得越来越难。根据网络行业巨头思科公司的估计，到2021年底，将有大约500亿台设备连接到互联网(<a class="link"   target="_blank" rel="noopener" href="https://www.cisco.com/c/dam/en_us/about/ac79/docs/innov/IoT_IBSG_0411FINAL.pdf" >思科, 2021 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>)。但是IP地址不止一个版本，到目前为止，我们只讨论了一个版本的互联网协议寻址方案，即 IPv4 ，它使用的是一个具有2^32(42.9亿)个IP地址的编号系统。</p>
+<p>IPv6是互联网协议寻址方案的新迭代版本，能够帮助解决IP地址短缺的问题，IPv6有一些好处：</p>
+<ul>
+<li>支持最多2^128(340万亿+)个IP地址，有助于解决IPv4面临的地址短缺问题。</li>
+<li>由于采用了新的方法，IPv6的效率更高。</li>
+</ul>
+<p>下面的截图显示了IPv6地址和IPv4地址的实例：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325191000099.png"
+                      alt="image-20230325191000099"
+                ></p>
+<h3 id="MAC-Addresses"><a href="#MAC-Addresses" class="headerlink" title="MAC Addresses"></a><strong>MAC Addresses</strong></h3><p>网络上的设备都有一个物理网络接口，和接口对应的是该设备主板上的一个微型芯片板；设备的物理网络接口会由制造芯片的工厂分配一个唯一的地址，此地址被称为MAC(媒体访问控制-<strong>M</strong>edia <strong>A</strong>ccess <strong>C</strong>ontrol)地址。MAC地址是一个具有十二个字符的十六进制数字(十六进制：是一种以16为基数的数字系统，可用于在计算机中表示数字)，每一位十六进制的数字都代表两个字符，在具体表示十六进制数时会用冒号分隔，这些冒号是分隔符，例如：<code>a4:c3:f0:85:ac:2d</code>。</p>
+<p>MAC地址的前六个字符（前三位MAC地址）代表制作物理网络接口的公司，MAC地址的后六个字符则是唯一的数字。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325192759185.png"
+                      alt="image-20230325192759185"
+                ></p>
+<p>然而，关于MAC地址的一个有趣的事是，它们可以被伪造或“欺骗”。当一台联网设备使用MAC地址伪装成另一台设备时，就会发生MAC地址欺骗，当MAC地址欺骗发生时，通常会破坏一些实现得很差的安全设计，这些（安全性差的）安全设计会假设在网络上通信的设备是可信的。以下面的场景为例：如果防火墙已被配置为允许管理员 MAC 地址之间发生任何通信，如果一个设备伪造或“欺骗”管理员的MAC地址，防火墙就会认为它正在接收来自管理员的通信（而实际上并没有）。</p>
+<p>咖啡馆和酒店等场所在使用“Guest”或“Public”Wi-Fi时经常会使用MAC地址进行控制，这种配置可以提供更好的服务，也就是说，如果你愿意为每台设备支付费用，就可以以一定的价格获得更快的连接。</p>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>在和本文相关的TryHackMe实验房间中 部署交互式实验环境并回答下面问题。</p>
+<p><em>tips：此交互式实验环境模拟了酒店的Wi-Fi网络，你必须为上网服务付费。你可以注意到路由器不允许Bob的数据包(蓝色)进入TryHackMe网站，并将这些数据包放入垃圾箱中，但是Alice的数据包(绿色)却可以通过，因为Alice已经支付了使用Wi-Fi所需的费用；现在我们尝试将Bob的MAC地址更改为与Alice的MAC地址相同，看看会发生什么事情。</em></p>
+<p>正常的通信情况：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325200205269.png"
+                      alt="image-20230325200205269" style="zoom:50%;" 
+                >
+
+<p>伪装MAC地址进行通信：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230325200413832.png"
+                      alt="image-20230325200413832" style="zoom:50%;" 
+                >
+
+<p>得到flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325200323536.png"
+                      alt="image-20230325200323536"
+                ></p>
+<blockquote>
+<p>最后得到的flag为：THM{YOU_GOT_ON_TRYHACKME} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325200012653.png"
+                      alt="image-20230325200012653"
+                ></p>
+<h2 id="关于Ping-ICMP"><a href="#关于Ping-ICMP" class="headerlink" title="关于Ping (ICMP)"></a>关于Ping (ICMP)</h2><p>Ping是我们可用的最基本的网络工具之一。Ping使用ICMP (Internet Control Message Protocol)报文来判断设备之间连接的性能，例如连接是否存在或者连接是否可靠。</p>
+<p>如下面的截图所示，ICMP报文在设备之间传输所花费的时间可通过ping来测量；这种测量是使用 ICMP 的回波数据包(echo packet)和来自目标设备的 ICMP 回波应答(echo reply)来完成的。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325115450514.png"
+                      alt="image-20230325115450514"
+                ></p>
+<p>Ping可以针对网络上的设备执行，例如你的家庭网络或者网站等资源。ping工具易于使用，并能安装在Linux和Windows等操作系统上，执行 ping 命令的简单语法是 <code>ping IP address or website URL</code> 。</p>
+<p>基于上面的ping命令示例截图：我们正在ping一个私有地址为192.168.1.254的设备，我们可以看到已发送了6个ICMP数据包（手动按ctrl+c按键停止ping命令），所有这些数据包是在平均5.3秒的时间内收到的。</p>
+<p><strong>答题</strong></p>
+<p>在和本文相关的TryHackMe实验房间中部署实验环境并回答下面问题。</p>
+<p><em>tips：在部署的实验环境中对地址“8.8.8.8”使用ping命令。</em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325120527199.png"
+                      alt="image-20230325120527199"
+                ></p>
+<blockquote>
+<p>执行ping命令得到的flag为：THM{I_PINGED_THE_SERVER} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230325120413513.png"
+                      alt="image-20230325120413513"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-What is Networking？(什么是网络？)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-18 22:52:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-18 22:56:16
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/18/THM-What is Networking？(什么是网络？)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">#网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/18/THM-Intro%20to%20LAN(%E5%B1%80%E5%9F%9F%E7%BD%91%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Intro to LAN(局域网基础介绍)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/18/%E5%9C%A8Kali%E4%B8%AD%E9%85%8D%E7%BD%AEclash%E4%BB%A3%E7%90%86(%E5%90%AB%E7%BB%88%E7%AB%AF%E6%B5%81%E9%87%8F)/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">在Kali中配置clash代理(含终端流量)</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-What is Networking？(什么是网络？)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%92%E8%81%94%E7%BD%91%EF%BC%9F"><span class="nav-text">什么是互联网？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8A%E7%9A%84%E8%AE%BE%E5%A4%87"><span class="nav-text">识别网络上的设备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IP-Addresses"><span class="nav-text">IP Addresses</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MAC-Addresses"><span class="nav-text">MAC Addresses</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EPing-ICMP"><span class="nav-text">关于Ping (ICMP)</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/18/thm-extending your network(网络扩展基础介绍)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解一些用于将网络扩展到 Internet(互联网公网) 的技术以及这样做的动机。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Extending Your Network(网络扩展基础介绍)-学习">
+<meta property="og:url" content="http://example.com/2024/01/18/THM-Extending%20Your%20Network(%E7%BD%91%E7%BB%9C%E6%89%A9%E5%B1%95%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解一些用于将网络扩展到 Internet(互联网公网) 的技术以及这样做的动机。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327163246516.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327163735248.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327165324795.png">
+<meta property="og:image" content="http://example.com/articleimg/roomicon.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327173045469.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230327180344996.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327180155107.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327175546858.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327180844134.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327202321786.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327203318544.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327210327136.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327212506663.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327214314866.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230327012723958.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230327012919841.png">
+<meta property="og:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327013125313.png">
+<meta property="article:published_time" content="2024-01-18T15:36:55.000Z">
+<meta property="article:modified_time" content="2024-01-18T15:40:52.439Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="网络安全基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/..%5Carticleimg%5Cimage-20230327163246516.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Extending Your Network(网络扩展基础介绍)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">15</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/61add44b3c6be8004802cc37/room-content/b12a04bf3cd3605ae0d80150cb3efa06.svg" alt="THM-Extending Your Network(网络扩展基础介绍)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Extending Your Network(网络扩展基础介绍)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-18 23:36:55</span>
+        <span class="mobile">2024-01-18 23:36:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-18 23:40:52</span>
+            <span class="mobile">2024-01-18 23:40:52</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.4k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>12 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/extendingyournetwork" >https://tryhackme.com/room/extendingyournetwork <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解一些用于将网络扩展到 Internet(互联网公网) 的技术以及这样做的动机。</p>
+<h2 id="端口转发介绍"><a href="#端口转发介绍" class="headerlink" title="端口转发介绍"></a>端口转发介绍</h2><p>端口转发是应用程序和服务连接到 Internet(互联网公网) 所需的重要步骤，如果没有端口转发，应用程序和服务(如web服务)只能对同一直连网络中的设备可用。</p>
+<p>以下面的网络为例：在以下网络中，IP地址为“192.168.1.10”的服务器在端口80上运行着web服务，但该网络上只有另外两台计算机能够访问此web服务。(这种网络被称为内部网络)</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327163246516.png"
+                      alt="image-20230327163246516"
+                ></p>
+<p>如果网络管理员想让公众(通过互联网)访问上图中的网站，管理员就必须实现端口转发，如下图所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327163735248.png"
+                      alt="image-20230327163735248"
+                ></p>
+<p>通过上图这种设计，网络2现在可以使用网络1的公共IP地址(82.62.51.70)并通过80端口访问运行在网络1上的web服务器。</p>
+<p>我们很容易将端口转发行为与防火墙的行为混淆，但是这两者是不一样的；防火墙能够决定流量是否可以通过某些端口(即使这些端口是通过端口转发开放的)。</p>
+<p><em>tips：端口转发是在网络中的路由器上配置的。</em></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327165324795.png"
+                      alt="image-20230327165324795"
+                ></p>
+<h2 id="防火墙简介"><a href="#防火墙简介" class="headerlink" title="防火墙简介"></a>防火墙简介</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/roomicon.png"
+                      alt="img" style="zoom:50%;" 
+                >
+
+<p>防火墙是网络中的一种设备，它负责确定允许哪些流量进入网络和退出网络，防火墙可以被视为网络的边界安全。网络管理员可以根据多种因素将防火墙配置为允许或拒绝某些流量进入或退出网络，例如：</p>
+<ul>
+<li>流量从哪里来？ （防火墙是否被告知：接受&#x2F;拒绝来自特定网络的流量？）</li>
+<li>流量要往哪里去？ （防火墙是否被告知：接受&#x2F;拒绝发往特定网络的流量？）</li>
+<li>流量流向哪个端口？ （防火墙是否被告知：仅接受&#x2F;拒绝发往端口 80 的流量？）</li>
+<li>流量使用什么协议？ （防火墙是否被告知：接受&#x2F;拒绝 UDP、TCP 或两者的流量？）</li>
+</ul>
+<p><em><strong>tips：防火墙将通过执行数据包检查来确定以上这些问题的答案。</strong></em></p>
+<p>防火墙有各种各样的形状和大小：从可以处理大量数据的专用硬件(通常存在于像企业这样的大型网络中)到住宅路由器(通常存在于家庭网络中)或者Snort软件(一种开源入侵防御系统-IPS)，防火墙可以分为2到5类。</p>
+<p>我们将在下面介绍两种主要类型的防火墙：</p>
+<ul>
+<li>Stateful（有状态）：这种类型的防火墙将使用来自连接的全部信息，这种防火墙不是基于单个数据包检查，而是<em><strong>基于整个连接来确定设备的行为</strong></em>；与无状态防火墙相比，有状态防火墙会消耗很多资源，因为相关的流量决策是动态的，例如，有状态防火墙可以让TCP三次握手过程中的第一部分执行失败；如果来自主机的连接不正常，这将阻塞整个设备。</li>
+<li>Stateless（无状态）：这种类型的防火墙将使用一组静态规则来<em><strong>确定单个数据包是否可接受</strong></em>，例如，某设备发送了一个坏数据包并不意味着此设备随后都将会被阻塞；虽然无状态防火墙比其他防火墙使用更少的资源，但无状态防火墙的表现也更笨，例如，无状态防火墙只有在定义了规则时才有效，如果规则没有完全匹配，那么此规则实际上将是无用的；当从一组主机接收大量流量时(例如发生了分布式拒绝服务攻击-DDoS攻击)，无状态防火墙将变得非常有用。</li>
+</ul>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327173045469.png"
+                      alt="image-20230327173045469"
+                ></p>
+<h2 id="防火墙模拟示例"><a href="#防火墙模拟示例" class="headerlink" title="防火墙模拟示例"></a>防火墙模拟示例</h2><p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：正确配置防火墙规则以防止设备超载——示例中的203.0.110.1网站正在遭到攻击，请快速添加一些防火墙规则来阻止服务器崩溃（红色的数据包来自于攻击者的机器）。</em></p>
+<p>添加规则：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230327180344996.png"
+                      alt="image-20230327180344996" style="zoom: 67%;" 
+                >
+
+<p>得到flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327180155107.png"
+                      alt="image-20230327180155107"
+                ></p>
+<blockquote>
+<p>最后得到的flag是：THM{FIREWALLS_RULE} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327175546858.png"
+                      alt="image-20230327175546858"
+                ></p>
+<h2 id="VPN基础"><a href="#VPN基础" class="headerlink" title="VPN基础"></a>VPN基础</h2><p>虚拟专用网络(VPN-Virtual Private Network)是一种允许不同网络上的设备通过在Internet(互联网公网)上彼此之间创建专用路径(称为隧道)进行安全通信的技术，在此隧道内连接的多个设备将形成它们自己的专用网络。</p>
+<p>只有同一网络中的设备(如企业的内部网络)可以直接通信，而VPN允许两个局点相连，让我们看看下图，其中有三个网络：</p>
+<ol>
+<li>Network #1 (Office #1)</li>
+<li>Network #2 (Office #2)</li>
+<li>Network #3 (两个设备通过VPN连接)</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327180844134.png"
+                      alt="image-20230327180844134"
+                ></p>
+<p>连接在Network#3上的设备仍然是Network#1和Network#2的一部分，但这些设备同时也形成了一个私有网络(Network#3)，只有通过相关的VPN连接的设备才能在这个专用网络(Network#3)上进行通信。</p>
+<p>让我们介绍VPN提供的一些其他好处:</p>
+<ul>
+<li>允许不同地理位置的网络进行连接：例如，拥有多个办公室网络的企业会发现VPN是有益的，因为这意味着可以从办公室网络 直接访问远程服务器或基础设施等资源。</li>
+<li>提供隐秘性：VPN使用了加密技术来保护数据，这意味着数据包只能在发送它的设备和目的地之间被理解，这些数据不容易被嗅探；VPN加密技术在有公共WiFi的地方可能很有用处，因为普通的公共WiFi网络并不提供加密；你可以使用VPN来保护你所使用的流量不被其他人查看。</li>
+<li>提供匿名性：记者和其他活动人士可以依靠VPN技术 在言论自由受到控制的国家安全地报道全球问题；通常，你所使用的流量可以被你的ISP和其他中介机构查看，并能因此被跟踪，而VPN所提供的匿名级别也仅仅与网络上的其他设备如何尊重隐私有关，例如，使用一个会记录所有数据或者历史的VPN 本质上与不使用VPN的效果是一样的。</li>
+</ul>
+<p>例如TryHackMe网站可以使用VPN技术 将你的本地机和一些易受攻击的机器连接起来，并且不允许那些易受攻击的机器能被公众直接在互联网上访问，这意味着:</p>
+<ul>
+<li><p>你可以安全地与 TryHackMe网站所提供的那些易受攻击的机器 进行交互，从而进行攻击模拟；</p>
+</li>
+<li><p>服务提供商如ISP不会认为你在使用本地机攻击互联网上的正常机器(因为攻击正常机器可能违反了ISP的服务条款)；</p>
+</li>
+<li><p>使用VPN也为TryHackMe网站提供了安全性，因为 TryHackMe所提供的易受攻击的机器 无法直接通过Internet被公众访问。</p>
+</li>
+</ul>
+<p>多年以来，VPN技术经过了不断改进，下面让我们来探讨一些现有的VPN技术：</p>
+<ul>
+<li><p>PPP：PPP是指点对点协议，它能提供加密以及数字验证功能，使用了PPP技术的VPN会通过私钥和公共证书(类似于SSH)来工作，如果要成功建立VPN连接，那么私钥和证书就必须完成匹配，但是，基于PPP技术进行传输的数据 并不能单独离开网络(即不可路由)；此外，PPTP将使用PPP技术来进行身份验证并提供数据加密。</p>
+</li>
+<li><p>PPTP：点对点隧道协议(PPTP-<strong>P</strong>oint-to-<strong>P</strong>oint <strong>T</strong>unneling <strong>P</strong>rotocol)是一种“允许PPP数据在网络中传输并离开网络”的技术，PPTP协议非常容易设置，大多数设备都支持它，然而，与其他VPN方案相比，PPTP是弱加密的。</p>
+</li>
+<li><p>IPSec：IPsec (Internet Protocol Security)将使用现有的IP (Internet Protocol)框架对数据进行加密，与其他VPN方案相比，IPSec更难建立，但只要建立完成，IPSec就能使用强大的加密功能，并且IPSec技术在许多设备上都能得到支持。</p>
+</li>
+</ul>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327202321786.png"
+                      alt="image-20230327202321786"
+                ></p>
+<h2 id="局域网-LAN-网络设备"><a href="#局域网-LAN-网络设备" class="headerlink" title="局域网(LAN)网络设备"></a>局域网(LAN)网络设备</h2><p><strong>路由器（Router）</strong></p>
+<p>路由器的工作是连接网络并在网络之间传递数据，它是通过使用路由来做到这一点的(因此得名路由器)。</p>
+<p>路由是给“数据在网络中传输的过程”的标签，路由涉及在网络之间创建一条路径，以便能够成功地传递数据；路由器运行在OSI模型的第3层(网络层)，它通常具有交互式界面(如网页界面或控制台界面)，这能够允许管理员配置各种规则，如配置端口转发规则或配置防火墙规则。</p>
+<p>当设备由多条路径连接时，如下面的示例图所示，路由就能发挥作用以采用最优路径：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327203318544.png"
+                      alt="image-20230327203318544"
+                ></p>
+<p><em>tips：路由器是专用设备，它的功能与交换机不同。</em></p>
+<p>从上图的例子中，我们可以看到计算机A的网络通过中间的路由器连接到计算机B的网络——共有两条路由路径可供选择，接下来的问题是：我们将采取什么路由路径？</p>
+<p>使用不同的协议将决定采取不同的路由路径，此外，路径的选择还包括以下因素：</p>
+<ul>
+<li><p>哪条路径最短？（数据包需要通过的设备最少）</p>
+</li>
+<li><p>哪条路径最可靠？（之前在该路径上是否丢失过数据包）</p>
+</li>
+<li><p>哪条路径有更快的物理传输介质(铜缆线或光纤)？</p>
+</li>
+</ul>
+<p><strong>交换机（Switch）</strong></p>
+<p>交换机是一种专用的网络设备，它负责在网络上提供连接到多个设备的方法——一个交换机可以通过以太网电缆连接多个设备(从3到63个)。</p>
+<p>交换机可以在OSI模型的第二层(数据链路层)和第三层(网络层)同时工作，然而，这是具有排他性的——第二层交换机不能在第三层运行。</p>
+<p>以下图中的第二层交换机为例，交换机将通过MAC地址把帧(此处不是数据包，因为IP协议已被剥离)转发到它所连接的设备上。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327210327136.png"
+                      alt="image-20230327210327136"
+                ></p>
+<p><em><strong>tips：上图中的交换机是第二层交换机，OSI模型的第二层是数据链路层，所以上图中的交换机只负责将帧(数据帧)发送到正确的设备上。</strong></em></p>
+<p>第三层交换机能够在OSI模型的第三层（网络层）工作，第三层交换机比第二层交换机更复杂，因为它还可以执行路由器的一些职责；也就是说，第三层交换机能向设备发送帧(就像第二层交换机一样)，并能使用IP协议将数据包路由到其他设备。</p>
+<p>第三层交换机的使用还涉及到了VLAN(虚拟局域网)技术，我们稍后将介绍VLAN，先假设我们有以下IP地址备用：</p>
+<ul>
+<li>192.168.1.1</li>
+<li>192.168.2.1</li>
+</ul>
+<p>虚拟局域网(<strong>V</strong>irtual <strong>L</strong>ocal <strong>A</strong>rea <strong>N</strong>etwork)技术 能够允许网络中的特定设备被虚拟分割，这种分割意味着相关的网络设备可以在互联网连接等方面受益，同时相关的网络设备也将被分区处理；由VLAN技术所形成的网络隔离能够提供安全性，因为这意味着将由适当的规则来决定特定设备如何相互通信，这种网络隔离如下图所示：</p>
+<p><em>tips：下图中的交换机是第三层交换机，下图示例将使用交换机划分VLAN，然后给VLAN分配IP。</em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327212506663.png"
+                      alt="image-20230327212506663"
+                ></p>
+<p>如上图所示：“销售部门”和“会计部门”都能够访问Internet(互联网公网)，但这两个部门网络之间并不能实现相互通信(尽管这两个部门都连接到同一个交换机)。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327214314866.png"
+                      alt="image-20230327214314866"
+                ></p>
+<h2 id="网络模拟器示例"><a href="#网络模拟器示例" class="headerlink" title="网络模拟器示例"></a>网络模拟器示例</h2><p>部署附加到此示例的静态站点，用一个简单的网络模拟器进行实验。此模拟器将分解 数据包从点A传输到点B所需要的每一步，请尝试从computer1发送一个TCP包到computer3并得到一个flag。</p>
+<p>注意：请使用Chrome或Firefox浏览器完成此练习。</p>
+<p><strong>答题</strong></p>
+<p>从 computer1 发送TCP包到 computer3 ：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230327012723958.png"
+                      alt="image-20230327012723958" style="zoom:50%;" 
+                >
+
+<p>得到的flag结果：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230327012919841.png"
+                      alt="image-20230327012919841" style="zoom:50%;" 
+                >
+
+<blockquote>
+<p>得到的flag为：THM{YOU’VE_GOT_DATA} 。</p>
+</blockquote>
+<p>对应的网络日志的内容（在TCP连接全过程中 所记录的日志如下）：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HANDSHAKE: Starting TCP/IP Handshake between computer1 and computer3</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HANDSHAKE: Sending SYN Packet from computer1 to computer3</span></span><br><span class="line">ROUTING: computer1 says computer3 is not on my local network sending to gateway: router</span><br><span class="line">ARP REQUEST: Who has router tell computer1</span><br><span class="line">ARP RESPONSE: Hey computer1, I am router</span><br><span class="line">ARP REQUEST: Who has computer3 tell router</span><br><span class="line">ARP RESPONSE: Hey router, I am computer3</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HANDSHAKE: computer3 received SYN Packet from computer1, sending SYN/ACK Packet to computer1</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HANDSHAKE: computer1 received SYN/ACK Packet from computer3, sending ACK packet to computer3</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HANDSHAKE: computer3 received ACK packet from computer1, Handshake Complete</span></span><br><span class="line">TCP: Sending TCP packet from computer1 to computer3</span><br><span class="line">TCP: computer3 received TCP Packet from computer1, sending ACK Packet to computer1</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>网络日志中共有 5 个HANDSHAKE条目。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/..%5Carticleimg%5Cimage-20230327013125313.png"
+                      alt="image-20230327013125313"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Extending Your Network(网络扩展基础介绍)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-18 23:36:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-18 23:40:52
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/18/THM-Extending Your Network(网络扩展基础介绍)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">#网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/18/THM-Packets&amp;Frames(%E4%BA%86%E8%A7%A3%E6%95%B0%E6%8D%AE%E5%8C%85%E5%92%8C%E5%B8%A7)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Packets &amp; Frames(了解数据包和帧)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Extending Your Network(网络扩展基础介绍)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E4%BB%8B%E7%BB%8D"><span class="nav-text">端口转发介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E7%AE%80%E4%BB%8B"><span class="nav-text">防火墙简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E6%A8%A1%E6%8B%9F%E7%A4%BA%E4%BE%8B"><span class="nav-text">防火墙模拟示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VPN%E5%9F%BA%E7%A1%80"><span class="nav-text">VPN基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E5%9F%9F%E7%BD%91-LAN-%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87"><span class="nav-text">局域网(LAN)网络设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%A8%A1%E6%8B%9F%E5%99%A8%E7%A4%BA%E4%BE%8B"><span class="nav-text">网络模拟器示例</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
