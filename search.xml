@@ -1465,4 +1465,130 @@
         <tag>网络安全基础</tag>
       </tags>
   </entry>
+  <entry>
+    <title>在Kali中配置clash代理(含终端流量)</title>
+    <url>/2024/01/18/%E5%9C%A8Kali%E4%B8%AD%E9%85%8D%E7%BD%AEclash%E4%BB%A3%E7%90%86(%E5%90%AB%E7%BB%88%E7%AB%AF%E6%B5%81%E9%87%8F)/</url>
+    <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文内容概述：</p>
+<ul>
+<li>在Kali中安装clash；</li>
+<li>在Kali中配置终端流量代理，以便终端命令在必要的时候可以走代理流量；</li>
+<li>在Kali中配置浏览器端流量代理，以便通过kali机器访问谷歌等网站；</li>
+<li>解决在使用BurpSuite抓包时遇到的“谷歌recaptcha验证码国内调试”等相关问题。</li>
+</ul>
+<h2 id="下载Clash"><a href="#下载Clash" class="headerlink" title="下载Clash"></a>下载Clash</h2><div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://github.com/Dreamacro/clash/releases/download/v1.15.1/clash-linux-amd64-v1.15.1.gz</span><br><span class="line"></span><br><span class="line">gunzip clash-linux-amd64-v1.15.1.gz</span><br><span class="line"></span><br><span class="line">mv clash-linux-amd64-v1.15.1 clash#重命名文件夹</span><br><span class="line"></span><br><span class="line">cd clash/</span><br><span class="line"></span><br><span class="line">mv clash-linux-amd64 clash#重命名文件</span><br><span class="line"></span><br><span class="line">chmod +x clash</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="配置clash节点-请自行购买vpn节点"><a href="#配置clash节点-请自行购买vpn节点" class="headerlink" title="配置clash节点(请自行购买vpn节点)"></a>配置clash节点(请自行购买vpn节点)</h2><div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">nano /root/.config/clash/config.yaml#将config.yaml配置文件内容更换为已订阅的VPN节点文件内容√</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">可能需要手动复制粘贴节点文件内容</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230745920-1379638961.png"
+                      alt="image-20230505071036891"
+                ></p>
+<h2 id="Kali终端流量代理设置"><a href="#Kali终端流量代理设置" class="headerlink" title="Kali终端流量代理设置"></a>Kali终端流量代理设置</h2><h3 id="修改proxychains4配置文件"><a href="#修改proxychains4配置文件" class="headerlink" title="修改proxychains4配置文件"></a>修改proxychains4配置文件</h3><div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/proxychains4.conf</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在配置文件的末尾部分 添加以下两行</span></span><br><span class="line">http 127.0.0.1 7890       #添加由clash所设置的代理√  端口号7890可通过查看配置文件/root/.config/clash/config.yaml得知</span><br><span class="line">socks5 127.0.0.1 7890     #添加由clash所设置的代理√  端口号7890可通过查看配置文件/root/.config/clash/config.yaml得知</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230746676-1972959411.png"
+                      alt="image-20230505071106289"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230747239-1590817637.png"
+                      alt="image-20230501215816004"
+                ></p>
+<h3 id="通过终端启动clash程序"><a href="#通过终端启动clash程序" class="headerlink" title="通过终端启动clash程序"></a>通过终端启动clash程序</h3><div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">cd /home/hekeats/桌面/clash</span><br><span class="line">./clash</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230747812-1957154928.png"
+                      alt="image-20230501215450971"
+                ></p>
+<p>在浏览器中访问<code>http://clash.razord.top/</code> ，此URL对应的是clash的图形用户界面。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230748314-203330223.png"
+                      alt="image-20230501215534594"
+                ></p>
+<h3 id="测试终端流量代理"><a href="#测试终端流量代理" class="headerlink" title="测试终端流量代理"></a>测试终端流量代理</h3><div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">测试终端流量是否被成功代理，返回结果为ok则说明终端代理配置成功！</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在所有想走代理的终端命令前面添加proxychains4即可</span></span><br><span class="line">proxychains4 curl -sSf http://www.google.com &gt; /dev/null    #test ok √</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230748722-1178580563.png"
+                      alt="image-20230501215340251"
+                ></p>
+<h2 id="浏览器端流量代理设置"><a href="#浏览器端流量代理设置" class="headerlink" title="浏览器端流量代理设置"></a>浏览器端流量代理设置</h2><h3 id="添加浏览器代理"><a href="#添加浏览器代理" class="headerlink" title="添加浏览器代理"></a>添加浏览器代理</h3><p>以下两种方法任选其一即可：</p>
+<ul>
+<li><p>使用浏览器代理插件，以火狐浏览器为例，使用FoxyProxy添加代理<code>127.0.0.1 7890</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230749103-359792420.png"
+                      alt="image-20230501220409534"
+                ></p>
+</li>
+<li><p>打开本地浏览器设置，在网络设置中选择手动配置代理，并填写<code>127.0.0.1 7890</code>。</p>
+<p>通过地址栏快捷访问浏览器的设置界面：<code>about:preferences</code>。</p>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230749427-1894573037.png"
+                      alt="image-20230501222137401"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230749757-395404947.png"
+                      alt="image-20230501220932834"
+                ></p>
+<p>tips：上述端口号<code>7890</code>可通过查看配置文件<code>/root/.config/clash/config.yaml</code>得知。</p>
+<h3 id="测试浏览器端流量代理"><a href="#测试浏览器端流量代理" class="headerlink" title="测试浏览器端流量代理"></a>测试浏览器端流量代理</h3><p>配置好浏览器代理之后，访问 <a class="link"   href="http://www.google.com/" >www.google.com <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ，查看页面响应情况。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230750113-568475238.png"
+                      alt="image-20230501230523149"
+                ></p>
+<h2 id="BurpSuite和calsh代理兼容问题"><a href="#BurpSuite和calsh代理兼容问题" class="headerlink" title="BurpSuite和calsh代理兼容问题"></a>BurpSuite和calsh代理兼容问题</h2><p>在使用BurpSuite抓包时，如果遇到google recaptcha等需要VPN才能访问的验证码机制，我们就需要重新配置本地浏览器代理。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230750487-443165563.png"
+                      alt="image-20230501221558317"
+                ></p>
+<p>tips：设置好8080端口代理，这样BurpSuite才能抓到数据包。</p>
+<p>然后打开BurpSuite，进入到“用户选项”下的“Connections(连接)”子选项卡界面，添加并编辑上游代理规则：</p>
+<p>注意：新版BurpSuite要先点击“设置”按钮，才能开始选择“用户选项”。</p>
+<p><u>中文版界面</u></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230750855-1248001512.png"
+                      alt="image-20230501223436455"
+                ></p>
+<p><u>英文版界面</u></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/2857591-20230508230751240-481769820.png"
+                      alt="image-20230501223806392"
+                ></p>
+<p>参考资料：</p>
+<ul>
+<li><a class="link"   href="https://www.iculture.cc/cybersecurity/pig=265" >https://www.iculture.cc/cybersecurity/pig=265 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   href="https://juejin.cn/post/7223566884502011959" >https://juejin.cn/post/7223566884502011959 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   href="https://juejin.cn/s/kali%E5%AE%89%E8%A3%85clash" >https://juejin.cn/s/kali%E5%AE%89%E8%A3%85clash <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>常见问题-FAQ</tag>
+      </tags>
+  </entry>
 </search>
