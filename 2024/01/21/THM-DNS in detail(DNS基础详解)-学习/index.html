@@ -13,45 +13,37 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/2024/01/18/thm-packets&frames(了解数据包和帧)-学习/"/>
+    <link rel="canonical" href="http://example.com/2024/01/21/thm-dns in detail(dns基础详解)-学习/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="了解数据如何被分成更小的部分并通过网络传输到另一台设备。">
+        <meta name="description" content="了解DNS协议是如何工作的，以及DNS如何帮助我们访问互联网服务。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="THM-Packets &amp; Frames(了解数据包和帧)-学习">
-<meta property="og:url" content="http://example.com/2024/01/18/THM-Packets&Frames(%E4%BA%86%E8%A7%A3%E6%95%B0%E6%8D%AE%E5%8C%85%E5%92%8C%E5%B8%A7)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="THM-DNS in detail(DNS基础详解)-学习">
+<meta property="og:url" content="http://example.com/2024/01/21/THM-DNS%20in%20detail(DNS%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3)-%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="了解数据如何被分成更小的部分并通过网络传输到另一台设备。">
+<meta property="og:description" content="了解DNS协议是如何工作的，以及DNS如何帮助我们访问互联网服务。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326193818536.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326201110685.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326214033986.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326221426557.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326223520503.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326224720813.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326225206394.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326225315154.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326225411070.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326225512847.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326225632300.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326225759731.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326225838033.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326225910031.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326225933032.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326225109100.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326234005977.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230326234125159.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230327011252012.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230327011307845.png">
-<meta property="article:published_time" content="2024-01-18T15:22:55.000Z">
-<meta property="article:modified_time" content="2024-01-18T16:03:32.625Z">
+<meta property="og:image" content="http://example.com/articleimg/image-20230327231452919.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230327231521741.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230327233305530.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230328001000917.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230328003618226.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230328113758899.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230328003958971.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230327232336558.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230327232618617.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230327232832550.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230327233114182.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230327233202973.png">
+<meta property="article:published_time" content="2024-01-21T15:34:55.000Z">
+<meta property="article:modified_time" content="2024-01-21T15:38:55.847Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="TryHackMe">
 <meta property="article:tag" content="网络安全基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/articleimg/image-20230326193818536.png">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20230327231452919.png">
     
     
     <!--- Icon Part-->
@@ -63,7 +55,7 @@
     
     <title>
         
-            THM-Packets &amp; Frames(了解数据包和帧)-学习 -
+            THM-DNS in detail(DNS基础详解)-学习 -
         
         Hekeats-Limited Lyric
     </title>
@@ -416,10 +408,10 @@
             
                 
                 
-                <img src="https://assets.tryhackme.com/room-banners/networking.png" alt="THM-Packets &amp; Frames(了解数据包和帧)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/62c435d1f4d84a005f5df811/room-content/f54f3b9acec93f9cdbf2f1811dff1e70.png" alt="THM-DNS in detail(DNS基础详解)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
                 
                 <div class="w-full flex items-center absolute bottom-0 justify-start">
-                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Packets &amp; Frames(了解数据包和帧)-学习</h1>
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-DNS in detail(DNS基础详解)-学习</h1>
                 </div>
             
             </div>
@@ -438,15 +430,15 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-01-18 23:22:55</span>
-        <span class="mobile">2024-01-18 23:22:55</span>
+        <span class="desktop">2024-01-21 23:34:55</span>
+        <span class="mobile">2024-01-21 23:34:55</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-01-19 00:03:32</span>
-            <span class="mobile">2024-01-19 00:03:32</span>
+            <span class="desktop">2024-01-21 23:38:55</span>
+            <span class="mobile">2024-01-21 23:38:55</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -472,12 +464,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>4.4k Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.3k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>15 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>8 Mins</span>
         </span>
     
     
@@ -496,265 +488,137 @@
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/packetsframes" >https://tryhackme.com/room/packetsframes <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>本文相关内容：了解数据如何被分成更小的部分并通过网络传输到另一台设备。</p>
-<h2 id="什么是数据包和帧？"><a href="#什么是数据包和帧？" class="headerlink" title="什么是数据包和帧？"></a>什么是数据包和帧？</h2><p>数据包和帧是小块的数据，当它们组合在一起时，就构成了更大的信息或消息；然而，数据包和帧在OSI模型中是两种不同的东西，帧位于OSI的第2层——数据链路层，这意味着帧不包含IP地址这样的信息。类比案例：你可以想象把一个信封放在另外一个信封里，然后邮寄完整的信封，此完整信封对应的是发送的数据包，一旦打开完整信封，里面仍然会存在并包含一些数据(也就是一个帧)。</p>
-<p>数据包和帧的组合过程被称为封装，在这个阶段中，我们可以安全地假设：任何包含IP地址的信息指的都是数据包，而当封装好的信息被剥离时，我们谈论的信息则是帧本身。</p>
-<p>数据包是跨网络设备传输数据的有效方式，由于这些数据是分小块传输的，所以此时在整个网络中发生数据传输阻塞的几率 比一次性发送大消息进而造成传输阻塞的几率要小。</p>
-<p>当你从网站加载图像时，该图像不会作为一个整体发送到你的计算机，而是在你的计算机上由小块图像开始重建进而得到一个完整图像；下面的图片说明了以上过程，来自于网站的图像将被分成三个数据包，当数据包到达计算机时，图像就会开始重建，最终形成完整的图像。</p>
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/dnsindetail" >https://tryhackme.com/room/dnsindetail <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解DNS协议是如何工作的，以及DNS如何帮助我们访问互联网服务。</p>
+<h2 id="什么是DNS？"><a href="#什么是DNS？" class="headerlink" title="什么是DNS？"></a>什么是DNS？</h2><p>DNS 指 Domain Name System，即域名系统，DNS能为我们提供一种简单的方式来与互联网上的设备进行通信，而不需要记住复杂的IP地址。</p>
+<p>就像每个家庭都有一个唯一的地址能够用来直接发送和接收邮件一样，互联网上的每台计算机也都有自己唯一的地址能够用于通信，这个地址被称为IP地址。</p>
+<p>IP地址的格式如下：104.26.10.229，主要由4组0 ~ 255的二进制数字组成，中间用英文句点号隔开。当你想用浏览器来访问一个网站时，选择记住和目标网站相对应的那组复杂的IP地址 可能并不太方便，这就是DNS可以帮助我们的地方。在使用了DNS协议之后，我们就不需要记住类似于 104.26.10.229 的IP地址，而是可以选择记住和IP地址对应的域名如：tryhackme.com 。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../articleimg/image-20230326193818536.png"
-                      alt="image-20230326193818536"
-                ></p>
-<p>数据包有不同的结构，这些结构取决于正在发送的数据包的类型，网络上充满了各种标准和协议，这些标准和协议充当了设备上如何处理数据包的一组规则。</p>
-<p>使用了协议的数据包将有一组标头，其中包含跨网络发送的数据的附加信息。</p>
-<p>一些值得注意的标头信息包括：</p>
-<ul>
-<li>Time to Live（生存时间）：该字段为数据包设置了一个过期计时器，即使数据包永远无法到达目标主机，这也不会阻塞你的网络。</li>
-<li>Checksum（校验和）：该字段能够为TCP&#x2F;IP等协议提供完整性检查，如果数据被更改了，那么此时的Checksum值将变得与预期的Checksum值不同。</li>
-<li>Source Address（源地址）：该字段表示发送数据包的设备的IP地址，这样数据就知道该返回到哪里。</li>
-<li>Destination Address（目标地址）：数据包要发送到的设备的IP地址，以便数据知道下一步要传输到哪里。</li>
-</ul>
-<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/../articleimg/image-20230326201110685.png"
-                      alt="image-20230326201110685"
-                ></p>
-<h2 id="TCP-IP（三次握手）介绍"><a href="#TCP-IP（三次握手）介绍" class="headerlink" title="TCP&#x2F;IP（三次握手）介绍"></a>TCP&#x2F;IP（三次握手）介绍</h2><p>传输控制协议(TCP-Transmission Control Protocol)是在网络中使用的一个规则。</p>
-<p>基于TCP&#x2F;IP协议集的TCP&#x2F;IP模型与OSI模型非常相似，TCP&#x2F;IP模型由四层分级组成，可以说是OSI模型的一个简化版本，TCP&#x2F;IP模型所包含的分层有:</p>
-<ul>
-<li>Application（应用层）</li>
-<li>Transport（传输层）</li>
-<li>Internet（网际层）</li>
-<li>Network Interface（网络接口层）</li>
-</ul>
-<p>与OSI模型的工作原理非常相似，数据包在经过TCP&#x2F;IP模型的每一层时都会被添加部分信息——这个过程被称为封装，而与此过程相反的是解封装。</p>
-<p><strong>关于TCP协议</strong></p>
-<p>TCP协议的一个定义特征是它是基于连接的，这意味着在发送数据之前，TCP必须在客户端和作为服务器的设备之间建立起一个持续的连接；因此，TCP能够保证发送的任何数据都会在另一端被正确地接收到，这个数据发送和接收过程被称为TCP&#x2F;IP三次握手。</p>
-<p>下面是关于TCP优点和缺点的比较:</p>
-<ul>
-<li>TCP的优点：能够保证数据的准确性；能够同步两个设备，以防止彼此被数据淹没；将执行更多流程，以确保数据传输的可靠性。</li>
-<li>TCP的缺点：要求两台设备之间有可靠的连接，如果没有接收到一小块数据，那么整个数据块就不能使用（必须重新发送）；TCP的慢速连接可能会导致其他设备达到数据传输的瓶颈，因为在数据传输完毕之前——相关的TCP连接将一直保留在接收端计算机上；TCP 比 UDP 慢得多，因为使用此协议的设备必须完成更多的工作（计算）。</li>
-</ul>
-<p>TCP数据包还将包含 在封装过程中所添加的被称为标头的信息部分，接下来让我们了解一些重要的TCP标头信息：</p>
-<ul>
-<li>Source Port（源端口）：发送方为发送TCP数据包而开放的端口，该值是随机选择的(从0-65535之间 选择尚未使用的端口)。</li>
-<li>Destination Port（目标端口）：远程主机（接收数据的主机）上运行的应用程序或服务的端口号，例如，默认运行 Web 服务器的端口 80；与源端口不同，目标端口号并不是随机选择的。</li>
-<li>Source IP（源IP地址）：这是发送数据包的设备的IP地址。</li>
-<li>Destination IP（目标IP地址）：这是数据包要到达的设备的IP地址。</li>
-<li>Sequence Number（序列号）：当TCP连接建立时，所传输的第一段数据将被赋予一个随机数。</li>
-<li>Acknowledgement Number（确认号）：在一段数据被赋予序列号之后，下一段数据的序列号值将会是序列号+ 1。</li>
-<li>Checksum（校验和）：这个值可用于对TCP数据包的完整性进行检查，如果校验和的值在数据传输过程中发生了变化，则说明数据已经被损坏。</li>
-<li>Data（数据）：这个标头是存储数据的地方，所存储的是正在传输的文件的字节。</li>
-<li>Flag（标志）：这个TCP标头决定了在三次握手过程中任一设备应该如何处理数据包，特定的标志将决定特定的行为。</li>
-</ul>
-<p><strong>TCP&#x2F;IP三次握手</strong></p>
-<p>接下来，我们将讨论TCP&#x2F;IP三次握手——这是用于在两个设备之间建立连接的过程的术语。</p>
-<p>TCP&#x2F;IP三次握手会使用一些特殊的信息进行交流，下面是一些主要的信息：</p>
-<ul>
-<li>1-SYN：SYN消息是客户端在握手过程中发送的初始数据包。这个包用于发起连接并同步两个设备。</li>
-<li>2-SYN&#x2F;ACK：此数据包将由接收设备(服务器)发送，以确认来自客户端的同步尝试。</li>
-<li>3-ACK：客户端或服务器都可以使用确认数据包来确认已经成功接收了一系列消息&#x2F;数据包。</li>
-<li>4-DATA：一旦两个设备建立了连接，数据(例如文件的字节)就会通过“DATA”消息发送。</li>
-<li>5-FIN：此数据包可用于在TCP连接完成后 干净地(正确地)关闭TCP连接。</li>
-<li>RST：RST数据包能够立刻终止所有的TCP通信，如果使用了RST数据包则表明在TCP握手过程中存在一些问题——比如发生了服务或应用程序异常以及系统资源不足等故障。</li>
-</ul>
-<p>下图显示了Alice和Bob之间正常的TCP三次握手过程，在现实生活中，这将发生在两个设备之间：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/../articleimg/image-20230326214033986.png"
-                      alt="image-20230326214033986"
-                ></p>
-<p>在TCP三次握手过程中，客户端所发送的数据将被赋予一个随机数序列，这个数字序列接下来将进行重构并递增1；两台计算机设备必须就相同的数字序列达成一致，才能以正确的顺序发送数据，这个顺序是在三个步骤中商定的（下面步骤中的序列号是随机值）：</p>
-<ul>
-<li>SYN-Client：客户端将设置用于同步的SYN标志位并生成一个随机初始序列号(ISN)——0 。</li>
-<li>SYN&#x2F;ACK-Server：服务器端将设置SYN标志位和ACK标志位并生成一个随机初始序列号(5000)，并对客户端的初始序列号(0)进行确认（ACK&#x3D;0+1）。</li>
-<li>ACK-Client： 客户端设置ACK标志位，并对服务器端的初始序列号(5000)进行确认（ACK&#x3D;5000+1）。</li>
-</ul>
-<p>tips：SYNchronise-SYN(同步)，ACKnowledge-ACK(确认)，Initial Sequence Number-ISN(初始序列号)；以上步骤的结果——客户端ISN+1，服务器端ISN+1。</p>
-<img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/articleimg/image-20230326221426557.png"
-                      alt="image-20230326221426557" style="zoom: 50%;" 
-                >
-
-<p><strong>TCP连接的关闭</strong></p>
-<p>接下来，让我们简单介绍一下TCP连接关闭背后的过程。</p>
-<p>首先，一旦源设备确定目标设备成功接收了所有数据，那么TCP连接就将要被关闭；因为TCP会在设备上占用一些系统资源，所以最好在不需要的时候尽快关闭TCP连接。</p>
-<p>为了启动TCP连接的关闭过程，设备将发送一个“FIN”数据包到另一个设备，当然，这仍基于TCP协议，其他设备也必须确认这个“FIN”数据包。</p>
-<p>让我们像前文一样使用Alice和Bob来展示这个过程：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/../articleimg/image-20230326223520503.png"
-                      alt="image-20230326223520503"
-                ></p>
-<p>在上图中，我们可以看到Alice首先向Bob发送一个“FIN”包，当Bob收到这个消息之后，Bob会让Alice知道他已经收到消息(ACK)，并且Bob将表示他也想要关闭连接(FIN)，而Alice在收到来自于Bob的消息(ACK+FIN)之后，将进行最终的确认(ACK)——结果是TCP连接被成功关闭。</p>
-<h3 id="答题-1"><a href="#答题-1" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/../articleimg/image-20230326224720813.png"
-                      alt="image-20230326224720813"
-                ></p>
-<h2 id="关于三次握手的模拟练习"><a href="#关于三次握手的模拟练习" class="headerlink" title="关于三次握手的模拟练习"></a>关于三次握手的模拟练习</h2><p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
-<p><em>tips：以正确的顺序重新组装TCP握手过程，以帮助 Alice 和 Bob 进行通信，在 Alice 与 Bob 的对话结束后会给出一个flag值。</em></p>
-<h3 id="答题-2"><a href="#答题-2" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><em><strong>Part1：</strong></em></p>
-<img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/articleimg/image-20230326225206394.png"
-                      alt="image-20230326225206394" style="zoom:50%;" 
-                >
-
-<p><em><strong>Part2：</strong></em></p>
-<img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/articleimg/image-20230326225315154.png"
-                      alt="image-20230326225315154" style="zoom:50%;" 
-                >
-
-<p><em><strong>Part3：</strong></em></p>
-<img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/articleimg/image-20230326225411070.png"
-                      alt="image-20230326225411070" style="zoom:50%;" 
-                >
-
-<p><em><strong>Part4：</strong></em></p>
-<img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/articleimg/image-20230326225512847.png"
-                      alt="image-20230326225512847" style="zoom:50%;" 
-                >
-
-<p><em><strong>Part5：</strong></em></p>
-<img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/articleimg/image-20230326225632300.png"
-                      alt="image-20230326225632300" style="zoom:50%;" 
-                >
-
-<p><em><strong>Part6：</strong></em></p>
-<img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/articleimg/image-20230326225759731.png"
-                      alt="image-20230326225759731" style="zoom:50%;" 
-                >
-
-<p><em><strong>Part7：</strong></em></p>
-<img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/articleimg/image-20230326225838033.png"
-                      alt="image-20230326225838033" style="zoom:50%;" 
-                >
-
-<p><em><strong>Part8：</strong></em></p>
-<img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/articleimg/image-20230326225910031.png"
-                      alt="image-20230326225910031" style="zoom:50%;" 
-                >
-
-<p>对话结束，得到一个flag：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/../articleimg/image-20230326225933032.png"
-                      alt="image-20230326225933032"
-                ></p>
-<blockquote>
-<p>最后得到的flag值为：THM{TCP_CHATTER} 。</p>
-</blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/../articleimg/image-20230326225109100.png"
-                      alt="image-20230326225109100"
-                ></p>
-<h2 id="UDP-IP介绍"><a href="#UDP-IP介绍" class="headerlink" title="UDP&#x2F;IP介绍"></a>UDP&#x2F;IP介绍</h2><p>用户数据报协议(UDP-<strong>U</strong>ser <strong>D</strong>atagram <strong>P</strong>rotocol)是另一种用于设备之间进行数据通信的协议。</p>
-<p>与TCP不同，UDP是一种无状态协议，它不需要通过在两个设备之间保持恒定的连接来发送数据；UDP协议不会发生三次握手过程，两个互相通信的设备之间也不存在任何同步。</p>
-<p>UDP主要用于应用程序可以容忍数据丢失的情况下(如视频流程序或语音聊天程序)，下面是对UDP协议的优缺点比较：</p>
-<ul>
-<li>UDP的优点：UDP比TCP快得多；UDP让应用层(用户软件)决定是否控制数据包的发送速度；UDP不像TCP那样在设备上保留连续连接。</li>
-<li>UDP的缺点：UDP不关心发送的数据是否成功被接收，容易发生数据丢失；UDP这种不稳定的数据传输方式可能会给用户糟糕的体验。</li>
-</ul>
-<p>如前所述，在两台设备之间建立UDP连接时不会发生任何过程，这意味着UDP不考虑数据是否被接收，也没有TCP所提供的保护措施（例如保护数据完整性）。</p>
-<p>UDP数据包比TCP数据包简单得多，并且有更少的标头，然而，这两个协议也能共享一些标准的标头，如下所示：</p>
-<ul>
-<li>Time to Live (TTL-生存时间)：该字段为数据包设置了一个过期计时器，即使数据包永远无法到达目标主机，这也不会阻塞你的网络。</li>
-<li>Source Address(源地址)：发送数据包的设备的IP地址，以便数据知道返回到哪里。</li>
-<li>Destination Address(目标地址)：数据包要发送到的设备的IP地址，以便数据知道下一步要传输到哪里。</li>
-<li>Source Port(源端口)：此值是发送方为发送TCP数据包而打开的端口，该端口号的值是随机选择的(从0-65535之间 选择尚未被使用的端口)。</li>
-<li>Destination Port(目标端口)：远程主机（接收数据的主机）上运行的应用程序或服务的端口号，例如，默认运行 Web 服务器的端口 80；与源端口不同，目标端口号并不是随机选择的。</li>
-<li>Data(数据)：这个标头是存储数据的地方，所存储的是正在传输的文件的字节。</li>
-</ul>
-<p>通过UDP通信与通过TCP通信的过程是不同的，我们应该记住UDP协议是无状态的，在UDP传输数据期间并不会发送确认数据包（ACK）</p>
-<p>下图显示了Alice和Bob之间的正常UDP通信，在现实生活中，UDP通信过程将发生在两个设备之间。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/../articleimg/image-20230326234005977.png"
-                      alt="image-20230326234005977"
+                     data-src="/articleimg/image-20230327231452919.png"
+                      alt="image-20230327231452919"
                 ></p>
 <p><strong>答题</strong></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../articleimg/image-20230326234125159.png"
-                      alt="image-20230326234125159"
+                     data-src="/articleimg/image-20230327231521741.png"
+                      alt="image-20230327231521741"
                 ></p>
-<h2 id="端口基础介绍-相关实例练习"><a href="#端口基础介绍-相关实例练习" class="headerlink" title="端口基础介绍&amp;相关实例练习"></a>端口基础介绍&amp;相关实例练习</h2><p><strong>端口基础介绍</strong></p>
-<p>Port(端口)是数据进行交换的关键点，Port也有港口的含义，此名称或许恰如其分；你可以想象在海边有一个又一个港口，所有想要靠岸停放的船舶都必须前往与船舶尺寸和船舶用途相匹配的港口，例如，一艘游轮不能停靠在为渔船而建造的港口处，反之亦然。</p>
-<p>这些端口会规定什么服务才可以使用什么端口号——如果某个服务和某个端口不兼容，就不能为该服务分配此端口；网络设备在相互通信时也将使用端口来执行一些严格的规则，当两个设备建立起连接之后，设备所发送或接收的任何数据都将通过端口进行通信。</p>
-<p>在计算机中，端口号所对应的是 0 到 65535 之间的数值。</p>
-<p>由于端口的范围可以是0-65535之间的任何数值，因此很快就会出现难以跟踪哪个应用程序正在使用哪个端口的风险，值得庆幸的是，我们能够将应用程序、软件和行为与一组标准规则相关联；例如，通过强制任何web浏览器的数据都必须通过端口80发送，软件开发人员可以设计出多种使用80端口进行通信的web浏览器，如Chrome浏览器、Firefox浏览器等，而这些浏览器最终都能以相同的方式解释数据。</p>
-<p>这意味着现在所有的浏览器都有一个共同的标准规则——通过80端口发送数据；但是浏览器的外观、使用感觉和易用性则取决于设计师或用户的个人选择。</p>
-<p>除了web浏览器的标准规则是“使用端口80进行通信”之外，其他一些协议也已经分配了对应的标准规则，接下来我们将探讨 和一些其他协议相对应的标准规则：</p>
-<p><em>tips：任何在 0 到 1024 之间的端口都被称为普通端口。</em></p>
-<ul>
-<li><strong>F</strong>ile <strong>T</strong>ransfer <strong>P</strong>rotocol (<strong>FTP</strong>协议)：文件传输协议；默认使用21端口；此协议用于构建在客户机-服务器(C&#x2F;S)模型上的文件共享应用程序，这意味着你可以从FTP服务器上下载文件。</li>
-<li><strong>S</strong>ecure <strong>Sh</strong>ell (<strong>SSH</strong>协议)：安全外壳协议；默认使用22端口；该协议可用于通过基于文本的管理界面安全地登录目标系统。</li>
-<li><strong>H</strong>yper<strong>T</strong>ext Transfer Protocol (<strong>HTTP</strong>协议)：超文本传输协议；默认使用80端口；这个协议为万维网(WWW)提供了基础，你的浏览器能够使用该协议来访问或者下载网页上的文本、图像和视频等资源。</li>
-<li><strong>H</strong>yper<strong>T</strong>ext <strong>T</strong>ransfer <strong>P</strong>rotocol <strong>S</strong>ecure (<strong>HTTPS</strong>协议)：超文本传输安全协议；默认使用443端口；该协议与HTTP协议相同，但是另外还增加了安全加密特性。</li>
-<li><strong>S</strong>erver <strong>M</strong>essage <strong>B</strong>lock (<strong>SMB</strong>协议)：服务器消息块协议，是一种网络文件系统访问协议；默认使用445端口；该协议类似于文件传输协议(FTP)，但是，除了文件之外，SMB协议还允许你共享打印机等设备。</li>
-<li><strong>R</strong>emote <strong>D</strong>esktop <strong>P</strong>rotocol (<strong>RDP</strong>协议)：远程桌面协议；默认使用3389端口；该协议是一种使用可视桌面界面登录目标系统的安全方法(与SSH协议基于文本界面的限制不同)。</li>
-</ul>
-<p>我们在此只是简单地介绍了网络安全中的一些常见协议，你可以在以下链接中找到1024个常用端口列表：</p>
-<blockquote>
-<p><a class="link"   target="_blank" rel="noopener" href="http://www.vmaxx.net/techinfo/ports.htm" >http://www.vmaxx.net/techinfo/ports.htm <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-</blockquote>
-<p>注意：上述这些协议只是默认会遵循标准规则来使用端口，也就是说，你其实可以在不同的端口上来管理与协议交互的应用程序，而不只是使用标准端口(比如在8080端口上而不是在80标准端口上运行web服务器)；但是应用程序将假定遵循标准规则来使用端口，因此你在通过浏览器访问目标服务器时——必须在URL的最后提供冒号(:)并加上具体的端口号。</p>
-<p><strong>实例练习</strong></p>
-<p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
-<p><strong>答题</strong></p>
-<p><em>tips：通过端口“1234”连接到目标IP地址“8.8.8.8”，最后将收到一个flag。</em></p>
-<img  
+<h2 id="域层次结构"><a href="#域层次结构" class="headerlink" title="域层次结构"></a>域层次结构</h2><p><strong>Domain Hierarchy示意图</strong></p>
+<p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230327011252012.png"
-                      alt="image-20230327011252012" style="zoom:67%;" 
-                >
-
+                     data-src="/articleimg/image-20230327233305530.png"
+                      alt="image-20230327233305530"
+                ></p>
+<p><strong>Top-Level Domain(TLD-顶级域)</strong></p>
+<p>TLD指的是域名最右边的部分，例如，tryhackme.com的顶级域名是.com；TLD有两种类型，包括gTLD(通用顶级域)和ccTLD(国家代码顶级域)。</p>
+<p>在计算机历史上，通用顶级域名主要用于告诉用户“域名的用途”，例如，.com用于商业目的，.org用于组织，.edu用于教育，.gov用于政府；而ccTLD的用途是表示地理位置，例如.ca表示位于加拿大的网站，.co.uk表示位于英国的网站等等。基于用户需求，新的通用顶级域名在大量涌入，包括.online，.club，.website，.biz等等。</p>
+<p>要查看超过2000个顶级域名的完整列表，请访问以下链接：</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt" >https://data.iana.org/TLD/tlds-alpha-by-domain.txt <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><em>tips：gTLD - Generic Top Level、ccTLD - Country Code Top Level Domain 。</em></p>
+<p><strong>Second-Level Domain(二级域)</strong></p>
+<p>以tryhackme.com为例，.com部分是TLD，tryhackme部分则是二级域名。在进行域名注册时，二级域名被限制最长可使用63个字符+顶级域名(TLD)，在具体的二级域名部分只能使用”<code>a-z</code>“、”<code>0-9</code>“和连字符”<code>-</code>“(不能以连字符开头或结尾，也不能使用连续的连字符)。</p>
+<p><strong>Subdomain(子域)</strong></p>
+<p>在一个完整的域名中，子域位于二级域的左侧，两者之间将使用英文句点分隔，例如，在一个域名 admin.tryhackme.com 中，admin部分就是子域。</p>
+<p>子域名的创建限制与二级域名相同，都被限制为最长可用63个字符，并且同样只能使用A -z 0-9和连字符(不能以连字符开头或结尾或使用连续连字符)。</p>
+<p>在一个域名中，我们可以同时使用多个子域，只要用英文句点分隔即可，由此我们便能创建一个较长的域名，例如 jupiter.servers.tryhackme.com ，但是域名的整体长度必须控制在253个字符以内，也就是说：在域名整体长度没超过限制的情况下，我们可以为一个域名创建多个子域名且无数量限制。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230328001000917.png"
+                      alt="image-20230328001000917"
+                ></p>
+<h2 id="DNS记录类型"><a href="#DNS记录类型" class="headerlink" title="DNS记录类型"></a>DNS记录类型</h2><p>我们已经知道DNS可用于寻找目标网站，此外，还存在多种类型的DNS记录，接下来我们将介绍一些常见的DNS记录类型。</p>
+<p><strong>A 记录</strong></p>
+<p>此类DNS记录将被解析为IPv4地址，例如：<code>104.26.10.229</code></p>
+<p><strong>AAAA 记录</strong></p>
+<p>此类DNS记录将被解析为IPv6地址，例如：<code>2606:4700:20::681a:be5</code></p>
+<p><strong>CNAME 记录</strong></p>
+<p>此类DNS记录将被解析到另一个域名，例如，TryHackMe的在线商店有一个子域名store.tryhackme.com，它能返回一个CNAME记录shops.shopify.com，然后再向shops.shopify.com发出另一个DNS请求，就能计算出相关的IP地址。</p>
+<p><strong>MX 记录</strong></p>
+<p>此类DNS记录将被解析为 处理你正在查询的域的电子邮件服务器地址，例如 tryhackme.com 的MX记录响应可能为 alt1.aspmx.l.google.com ；这类记录还会带有一个优先级值，此值将告诉客户端以什么顺序来尝试访问电子邮件服务器，如果主电子邮件服务器宕机，则可以将电子邮件发送到备份电子邮件服务器。</p>
+<p><strong>TXT 记录</strong></p>
+<p>TXT记录是自由文本字段，任何基于文本的数据都可以存储在其中。TXT记录有多种用途，一些常见的用途是 列出有权代表域发送电子邮件的服务器(这可以帮助对抗垃圾邮件和钓鱼邮件)，TXT记录还可用于 在注册第三方服务时验证域名的所有权。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230328003618226.png"
+                      alt="image-20230328003618226"
+                ></p>
+<h2 id="发出DNS请求"><a href="#发出DNS请求" class="headerlink" title="发出DNS请求"></a>发出DNS请求</h2><p><strong>当你发出DNS请求时会发生什么？</strong></p>
+<ol>
+<li>当你请求一个域名时，你的计算机首先会检查它自身的本地缓存，看看你最近是否查询过这个地址(即查看缓存中是否已经为目标网站存储了一个相关的 IP 地址)，如果发现本地缓存中无相关记录，你的计算机则将向递归(<em><strong>recursive</strong></em>)DNS服务器发送DNS请求。</li>
+<li>递归DNS服务器通常会由你的Internet 服务提供商(即ISP，在中国是移动、联通等)提供，但你也可以选择一些其他的递归DNS服务器。递归DNS服务器会带有一个关于“最近查找过的域名”的本地缓存，如果在此缓存中找到结果，则相关的信息将被发送回你的计算机，你的DNS请求也会在这里结束(这种域名请求情况对于谷歌、Facebook、Twitter等受欢迎以及域名请求频率很高的网站服务来说很常见)。如果在递归DNS服务器的本地缓存中无法找到域名请求的结果，接下来就会开始从互联网的根DNS服务器尝试寻找关于域名请求的正确答案。</li>
+<li>根DNS服务器是互联网的DNS主干，它们的工作是将域名请求重定向到正确的顶级域服务器，重定向的结果取决于你的域名请求内容：例如，如果你请求<a class="link"   target="_blank" rel="noopener" href="http://www.tryhackme.com,那么根dns服务器将识别到.com的顶级域名,并会将你指向处理.com地址的正确tld(顶级域)服务器./" >www.tryhackme.com，那么根DNS服务器将识别到.com的顶级域名，并会将你指向处理.com地址的正确TLD(顶级域)服务器。 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li>TLD服务器会保存“在哪里能找到响应DNS请求的权威服务器”的记录。权威服务器通常也被称为域的名称服务器，例如<a class="link"   target="_blank" rel="noopener" href="http://www.tryhackme.com/" >www.tryhackme.com <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 的名称服务器是<code>kip.ns.cloudflare.com</code>和<code>uma.ns.cloudflare.com</code>，一个域名可能会有多个域名服务器，这是为了形成备份以防宕机。（简而言之：当 TLD 服务器收到我们的域名请求时，TLD服务器会将域名请求信息传递给适当的权威名称服务器，而权威名称服务器主要用于直接存储域的 DNS 记录）</li>
+<li>权威DNS服务器是负责存储特定域名的DNS记录的服务器，并且能对所存储的DNS记录进行及时更新。基于DNS记录的不同类型会有多条DNS记录内容，而这些与你的域名请求相关的DNS记录都存储在权威DNS服务器中，当域名请求到达权威DNS服务器之后，权威DNS服务器会将这些与你的域名请求相关的DNS记录 发送回递归DNS服务器，递归DNS服务器将会为这些DNS记录缓存一个本地副本 以备将来的请求所需，然后这些DNS记录将被转发回 发出域名请求的原始客户端机器。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230328113758899.png"
+                      alt="image-20230328113758899"
+                ></p>
+<p>Tips：每个DNS记录都会带有一个TTL（Time To Live-生存时间）值，这个值是一个以秒表示的数字，所有不超过TTL时间的DNS记录都会持续存储在计算机的本地缓存中，如果本地缓存中的DNS记录过期，那么在下次请求域名时，你可能需要再次获取相关的DNS记录（这将重复上述过程）。通过使用计算机本地缓存中的DNS记录——可以节省每次与目标服务器进行通信时 所消耗的DNS请求响应时间。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230328003958971.png"
+                      alt="image-20230328003958971"
+                ></p>
+<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
+<p><em>tips：在模拟界面构建请求以进行DNS查询并查看结果。</em></p>
+<p>查询 shop.website.thm 的CNAME记录：<code>nslookup --type=CNAME shop.website.thm</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230327232336558.png"
+                      alt="image-20230327232336558"
+                ></p>
 <blockquote>
-<p>最后得到的flag是：THM{YOU_CONNECTED_TO_A_PORT} 。</p>
+<p>shop.website.thm 的CNAME记录是：shops.myshopify.com 。</p>
+</blockquote>
+<p>查询 website.thm 的TXT记录：<code>nslookup --type=TXT website.thm</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230327232618617.png"
+                      alt="image-20230327232618617"
+                ></p>
+<blockquote>
+<p>website.thm 的TXT记录是：THM{7012BBA60997F35A9516C2E16D2944FF} 。</p>
+</blockquote>
+<p>查看 website.thm 的MX记录的数字优先级值：<code>nslookup --type=MX website.thm</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230327232832550.png"
+                      alt="image-20230327232832550"
+                ></p>
+<blockquote>
+<p>website.thm 的MX记录的数字优先级值为：30 。</p>
+</blockquote>
+<p>查看 website.thm 的A记录的IP地址：<code>nslookup --type=A website.thm</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/articleimg/image-20230327233114182.png"
+                      alt="image-20230327233114182"
+                ></p>
+<blockquote>
+<p>website.thm 的A记录的IP地址为：10.10.10.10 。</p>
 </blockquote>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../articleimg/image-20230327011307845.png"
-                      alt="image-20230327011307845"
+                     data-src="/articleimg/image-20230327233202973.png"
+                      alt="image-20230327233202973"
                 ></p>
 
         </div>
@@ -763,18 +627,18 @@
             <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
                 <div class="article-copyright-info-container">
     <ul>
-        <li><strong>Title:</strong> THM-Packets &amp; Frames(了解数据包和帧)-学习</li>
+        <li><strong>Title:</strong> THM-DNS in detail(DNS基础详解)-学习</li>
         <li><strong>Author:</strong> Hekeatsll</li>
         <li><strong>Created at
-                :</strong> 2024-01-18 23:22:55</li>
+                :</strong> 2024-01-21 23:34:55</li>
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-01-19 00:03:32
+                    :</strong> 2024-01-21 23:38:55
             </li>
         
         <li>
-            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/18/THM-Packets&amp;Frames(了解数据包和帧)-学习/
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/21/THM-DNS in detail(DNS基础详解)-学习/
         </li>
         <li>
             <strong>
@@ -811,29 +675,14 @@
         
             <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
                 
-                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-                        <a class="prev"
-                        rel="prev"
-                        href="/2024/01/18/THM-Extending%20Your%20Network(%E7%BD%91%E7%BB%9C%E6%89%A9%E5%B1%95%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/"
-                        >
-                            <span class="left arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">THM-Extending Your Network(网络扩展基础介绍)-学习</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2024/01/18/THM-OSI%20Model(OSI%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/"
+                        href="/2024/01/18/THM-Extending%20Your%20Network(%E7%BD%91%E7%BB%9C%E6%89%A9%E5%B1%95%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">THM-OSI Model(OSI模型介绍)-学习</span>
+                                <span class="post-nav-title-item">THM-Extending Your Network(网络扩展基础介绍)-学习</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -896,8 +745,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title">THM-Packets &amp; Frames(了解数据包和帧)-学习</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E5%8C%85%E5%92%8C%E5%B8%A7%EF%BC%9F"><span class="nav-text">什么是数据包和帧？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP%EF%BC%88%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%EF%BC%89%E4%BB%8B%E7%BB%8D"><span class="nav-text">TCP&#x2F;IP（三次握手）介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-1"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E7%9A%84%E6%A8%A1%E6%8B%9F%E7%BB%83%E4%B9%A0"><span class="nav-text">关于三次握手的模拟练习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-2"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UDP-IP%E4%BB%8B%E7%BB%8D"><span class="nav-text">UDP&#x2F;IP介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D-%E7%9B%B8%E5%85%B3%E5%AE%9E%E4%BE%8B%E7%BB%83%E4%B9%A0"><span class="nav-text">端口基础介绍&amp;相关实例练习</span></a></li></ol>
+        <div class="page-title">THM-DNS in detail(DNS基础详解)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFDNS%EF%BC%9F"><span class="nav-text">什么是DNS？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%9F%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-text">域层次结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS%E8%AE%B0%E5%BD%95%E7%B1%BB%E5%9E%8B"><span class="nav-text">DNS记录类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%87%BADNS%E8%AF%B7%E6%B1%82"><span class="nav-text">发出DNS请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="nav-text">简单示例</span></a></li></ol>
 
     </div>
 </div>
