@@ -13,37 +13,50 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/2024/01/21/thm-dns in detail(dns基础详解)-学习/"/>
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-http in detail(http协议介绍)-学习/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="了解DNS协议是如何工作的，以及DNS如何帮助我们访问互联网服务。">
+        <meta name="description" content="了解如何使用 HTTP 协议向 Web 服务器请求内容。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="THM-DNS in detail(DNS基础详解)-学习">
-<meta property="og:url" content="http://example.com/2024/01/21/THM-DNS%20in%20detail(DNS%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="THM-HTTP in detail(HTTP协议介绍)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-HTTP%20in%20detail(HTTP%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="了解DNS协议是如何工作的，以及DNS如何帮助我们访问互联网服务。">
+<meta property="og:description" content="了解如何使用 HTTP 协议向 Web 服务器请求内容。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/articleimg/image-20230327231452919.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230327231521741.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230327233305530.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230328001000917.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230328003618226.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230328113758899.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230328003958971.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230327232336558.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230327232618617.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230327232832550.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230327233114182.png">
-<meta property="og:image" content="http://example.com/articleimg/image-20230327233202973.png">
-<meta property="article:published_time" content="2024-01-21T15:34:55.000Z">
-<meta property="article:modified_time" content="2024-01-21T15:38:55.847Z">
+<meta property="og:image" content="http://example.com/articleimg/image-20221118214001544.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221118215932057.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119090841555.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119092848618.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119100339290.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119101025366.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119110901244.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119111632793.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119111654255.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119173812275.png">
+<meta property="og:image" content="http://example.com/2024/01/27/articleimg/image-20221119181012864.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119223656762.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119231104215.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119231159570.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119231302404.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119231321822.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119231429010.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119231552049.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119231713945.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119231851305.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119231940989.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119232113263.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119232238841.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119232319559.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221119230941300.png">
+<meta property="article:published_time" content="2024-01-27T01:33:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T01:33:21.699Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="TryHackMe">
 <meta property="article:tag" content="网络安全基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/articleimg/image-20230327231452919.png">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20221118214001544.png">
     
     
     <!--- Icon Part-->
@@ -55,7 +68,7 @@
     
     <title>
         
-            THM-DNS in detail(DNS基础详解)-学习 -
+            THM-HTTP in detail(HTTP协议介绍)-学习 -
         
         Hekeats-Limited Lyric
     </title>
@@ -408,10 +421,10 @@
             
                 
                 
-                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/62c435d1f4d84a005f5df811/room-content/f54f3b9acec93f9cdbf2f1811dff1e70.png" alt="THM-DNS in detail(DNS基础详解)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/62c435d1f4d84a005f5df811/room-content/f54f3b9acec93f9cdbf2f1811dff1e70.png" alt="THM-HTTP in detail(HTTP协议介绍)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
                 
                 <div class="w-full flex items-center absolute bottom-0 justify-start">
-                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-DNS in detail(DNS基础详解)-学习</h1>
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-HTTP in detail(HTTP协议介绍)-学习</h1>
                 </div>
             
             </div>
@@ -430,15 +443,15 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-01-21 23:34:55</span>
-        <span class="mobile">2024-01-21 23:34:55</span>
+        <span class="desktop">2024-01-27 09:33:55</span>
+        <span class="mobile">2024-01-27 09:33:55</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-01-21 23:38:55</span>
-            <span class="mobile">2024-01-21 23:38:55</span>
+            <span class="desktop">2024-01-27 09:33:21</span>
+            <span class="mobile">2024-01-27 09:33:21</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -464,12 +477,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.3k Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.5k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>8 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>9 Mins</span>
         </span>
     
     
@@ -488,137 +501,250 @@
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/dnsindetail" >https://tryhackme.com/room/dnsindetail <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>本文相关内容：了解DNS协议是如何工作的，以及DNS如何帮助我们访问互联网服务。</p>
-<h2 id="什么是DNS？"><a href="#什么是DNS？" class="headerlink" title="什么是DNS？"></a>什么是DNS？</h2><p>DNS 指 Domain Name System，即域名系统，DNS能为我们提供一种简单的方式来与互联网上的设备进行通信，而不需要记住复杂的IP地址。</p>
-<p>就像每个家庭都有一个唯一的地址能够用来直接发送和接收邮件一样，互联网上的每台计算机也都有自己唯一的地址能够用于通信，这个地址被称为IP地址。</p>
-<p>IP地址的格式如下：104.26.10.229，主要由4组0 ~ 255的二进制数字组成，中间用英文句点号隔开。当你想用浏览器来访问一个网站时，选择记住和目标网站相对应的那组复杂的IP地址 可能并不太方便，这就是DNS可以帮助我们的地方。在使用了DNS协议之后，我们就不需要记住类似于 104.26.10.229 的IP地址，而是可以选择记住和IP地址对应的域名如：tryhackme.com 。</p>
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/httpindetail" >https://tryhackme.com/room/httpindetail <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>通过学习相关知识点：了解如何使用 HTTP 协议向 Web 服务器请求内容。</p>
+<h2 id="什么是-HTTP-S"><a href="#什么是-HTTP-S" class="headerlink" title="什么是 HTTP(S)?"></a>什么是 HTTP(S)?</h2><p><strong>什么是 HTTP？ （HyperText Transfer Protocol-超文本传输协议）</strong></p>
+<p>HTTP 是你浏览网站时使用的，由 Tim Berners-Lee 和他的团队在 1989-1991 年间开发。 HTTP 是用于与web服务器进行通信以便传输网页数据的一组规则，这些网页数据包括 HTML、图像、视频等。</p>
+<p><strong>什么是 HTTPS？ （HyperText Transfer Protocol Secure）</strong></p>
+<p>HTTPS 是 HTTP 的安全版本。 HTTPS 数据经过了加密处理，因此它不仅可以阻止第三方看到你正在接收和发送的数据内容，而且还可以确保你正在与正确的 Web 服务器进行通信（而不是其他冒充你所访问的目标web服务器的东西）。</p>
+<p><strong>答题</strong></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230327231452919.png"
-                      alt="image-20230327231452919"
+                     data-src="/../articleimg/image-20221118214001544.png"
+                      alt="image-20221118214001544"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221118215932057.png"
+                      alt="image-20221118215932057"
+                ></p>
+<h2 id="请求和响应"><a href="#请求和响应" class="headerlink" title="请求和响应"></a>请求和响应</h2><p>当我们访问一个网站时，你的浏览器将需要向一个web服务器发出请求，以获得诸如 HTML、图像等资源，并根据来自web服务器的响应得到下载权限。在此之前，你需要明确地告诉浏览器如何获取以及在哪里访问具体的资源文件，这里就需要 URL 来提供一些帮助。</p>
+<p><strong>什么是 URL? (Uniform Resource Locator)</strong></p>
+<p>如果你使用过互联网，那么你就使用过 URL，URL 主要用于指示如何访问互联网上的资源。下面的图片显示了一个 URL 的所有特性(它可能不会在每个请求中使用所有特性)。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119090841555.png"
+                      alt="image-20221119090841555"
+                ></p>
+<ul>
+<li>Scheme：这说明了使用什么协议来访问资源，如HTTP、HTTPS、FTP(文件传输协议)。</li>
+<li>User：有些服务需要认证以完成登录，你可以在URL中输入用户名和密码进行登录。</li>
+<li>Host&#x2F;Domain：你希望访问的服务器的域名或IP地址。</li>
+<li>Port：你将要连接到的端口，通常HTTP协议将使用 80 端口，HTTPS协议将使用 443 端口，但是这些协议也可以选择使用 1 - 65535 之间的任何端口号。</li>
+<li>Path：你试图访问的资源的文件名或位置。</li>
+<li>Query String：可以发送到请求路径的额外信息位。例如，&#x2F;blog?id &#x3D;1 将告诉blog path你希望接收id为1的博客文章。</li>
+<li>Fragment：这是对所请求的实际页面上的位置的引用。这通常用于具有较长内容的页面，并且可以将页面的某一部分直接链接到该引用；因此，只要用户通过该URL访问页面，就可以看到链接所对应的部分内容。</li>
+</ul>
+<p><strong>发出请求</strong></p>
+<p>只需要一行”GET &#x2F; HTTP&#x2F;1.1”就可以向web服务器发出请求。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119092848618.png"
+                      alt="image-20221119092848618"
+                ></p>
+<p>但为了获得更丰富的网络体验，你还需要通过请求消息发送其他数据，这些数据将通过请求报头进行发送，在请求报头中也会包含一些额外的信息，以提供给与你进行通信的web服务器。</p>
+<p><strong>请求示例（由浏览器客户端发送至服务器端）</strong></p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/1.1</span><br><span class="line">Host: tryhackme.com</span><br><span class="line">User-Agent: Mozilla/5.0 Firefox/87.0</span><br><span class="line">Referer: https://tryhackme.com/</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>分解以上请求示例的每一行:</p>
+<ul>
+<li>第1行：这个请求将发送GET方法(详见本文的HTTP方法小节)，用<code>/</code>请求主页，并告诉web服务器我们正在使用的HTTP协议版本为<code>1.1</code>。</li>
+<li>第2行：我们将告诉web服务器我们想要访问域名为<code>tryhackme.com</code>的网站。</li>
+<li>第3行：我们将告诉web服务器我们正在使用Firefox 87版本浏览器。</li>
+<li>第4行：我们正在告诉web服务器，将我们指向当前页面的来源网址（引用页）是<code>https://tryhackme.com</code></li>
+<li>第5行：HTTP请求总是以空行结束，以通知web服务器该HTTP请求已经完成。</li>
+</ul>
+<p><strong>响应示例（由服务器端发送至浏览器客户端）</strong></p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.15.8</span><br><span class="line">Date: Fri, 09 Apr 2021 13:34:03 GMT</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Content-Length: 98</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>TryHackMe<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    Welcome To TryHackMe.com</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>分解以上响应示例的每一行:</p>
+<ul>
+<li><p>第1行：HTTP 1.1是服务器正在使用的HTTP协议版本，然后是HTTP状态码(在本例中为“200 Ok”)，它告诉我们该响应对应的请求已经成功完成。</p>
+</li>
+<li><p>第2行：这告诉我们web服务器使用的软件和其版本号。</p>
+</li>
+<li><p>第3行：web服务器的当前日期、时间和时区。</p>
+</li>
+<li><p>第4行：Content-Type报头会告诉客户端该web服务器将要发送什么类型的信息，比如HTML、图像、视频、pdf、XML。</p>
+</li>
+<li><p>第5行：Content-Length将告诉客户端该响应的长度，这样我们就可以确认没有发生数据丢失。</p>
+</li>
+<li><p>第6行：HTTP响应包含一个空行，用于确认HTTP响应的结束。</p>
+</li>
+<li><p>第7-14行：被请求的信息，在本例中是关于目标主页的html代码。</p>
+</li>
+</ul>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119100339290.png"
+                      alt="image-20221119100339290"
+                ></p>
+<h2 id="HTTP方法"><a href="#HTTP方法" class="headerlink" title="HTTP方法"></a>HTTP方法</h2><p>HTTP 方法是客户端在发出 HTTP 请求时显示其预期操作的一种方式。有很多 HTTP 方法，在此我们将介绍最常见的方法，在大多数情况下你将处理的是 GET 和 POST 方法。</p>
+<p>GET 请求：用于从 Web 服务器中获取信息。</p>
+<p>POST 请求：用于向 Web 服务器提交数据并可能创建新记录。</p>
+<p>PUT 请求：用于向 Web 服务器提交数据以更新信息。</p>
+<p>DELETE 请求：用于从Web服务器中删除信息&#x2F;记录。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119101025366.png"
+                      alt="image-20221119101025366"
+                ></p>
+<h2 id="HTTP状态代码"><a href="#HTTP状态代码" class="headerlink" title="HTTP状态代码"></a>HTTP状态代码</h2><p><strong>HTTP状态码</strong></p>
+<p>在前面的叙述中，你能了解到当 HTTP 服务器发出响应时，第一行总是会包含一个状态代码，该状态码用于通知客户端所发出请求对应的结果以及针对请求的可能处理方式。 这些状态码可以分为 5 个不同的范围：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119110901244.png"
+                      alt="image-20221119110901244"
+                ></p>
+<p><strong>常见的HTTP状态码</strong></p>
+<p>有很多不同的 HTTP 状态码，这还不包括应用程序自己定义的状态码，我们将介绍一些你可能遇到的最常见的 HTTP 响应状态码：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119111632793.png"
+                      alt="image-20221119111632793"
                 ></p>
 <p><strong>答题</strong></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230327231521741.png"
-                      alt="image-20230327231521741"
+                     data-src="/../articleimg/image-20221119111654255.png"
+                      alt="image-20221119111654255"
                 ></p>
-<h2 id="域层次结构"><a href="#域层次结构" class="headerlink" title="域层次结构"></a>域层次结构</h2><p><strong>Domain Hierarchy示意图</strong></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/articleimg/image-20230327233305530.png"
-                      alt="image-20230327233305530"
-                ></p>
-<p><strong>Top-Level Domain(TLD-顶级域)</strong></p>
-<p>TLD指的是域名最右边的部分，例如，tryhackme.com的顶级域名是.com；TLD有两种类型，包括gTLD(通用顶级域)和ccTLD(国家代码顶级域)。</p>
-<p>在计算机历史上，通用顶级域名主要用于告诉用户“域名的用途”，例如，.com用于商业目的，.org用于组织，.edu用于教育，.gov用于政府；而ccTLD的用途是表示地理位置，例如.ca表示位于加拿大的网站，.co.uk表示位于英国的网站等等。基于用户需求，新的通用顶级域名在大量涌入，包括.online，.club，.website，.biz等等。</p>
-<p>要查看超过2000个顶级域名的完整列表，请访问以下链接：</p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt" >https://data.iana.org/TLD/tlds-alpha-by-domain.txt <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p><em>tips：gTLD - Generic Top Level、ccTLD - Country Code Top Level Domain 。</em></p>
-<p><strong>Second-Level Domain(二级域)</strong></p>
-<p>以tryhackme.com为例，.com部分是TLD，tryhackme部分则是二级域名。在进行域名注册时，二级域名被限制最长可使用63个字符+顶级域名(TLD)，在具体的二级域名部分只能使用”<code>a-z</code>“、”<code>0-9</code>“和连字符”<code>-</code>“(不能以连字符开头或结尾，也不能使用连续的连字符)。</p>
-<p><strong>Subdomain(子域)</strong></p>
-<p>在一个完整的域名中，子域位于二级域的左侧，两者之间将使用英文句点分隔，例如，在一个域名 admin.tryhackme.com 中，admin部分就是子域。</p>
-<p>子域名的创建限制与二级域名相同，都被限制为最长可用63个字符，并且同样只能使用A -z 0-9和连字符(不能以连字符开头或结尾或使用连续连字符)。</p>
-<p>在一个域名中，我们可以同时使用多个子域，只要用英文句点分隔即可，由此我们便能创建一个较长的域名，例如 jupiter.servers.tryhackme.com ，但是域名的整体长度必须控制在253个字符以内，也就是说：在域名整体长度没超过限制的情况下，我们可以为一个域名创建多个子域名且无数量限制。</p>
+<h2 id="请求标头和响应标头"><a href="#请求标头和响应标头" class="headerlink" title="请求标头和响应标头"></a>请求标头和响应标头</h2><p>标头是你在发出请求时可以发送到 Web 服务器的额外数据位。</p>
+<p>虽然在发出 HTTP 请求时没有严格要求标头，但在缺少标头的情况下，你会发现你很难正确地查看网站。</p>
+<p><strong>常见的请求头</strong></p>
+<p>以下是从客户端（通常是你的浏览器）发送到服务器端的标头信息。</p>
+<p>Host：一些 Web 服务器可能会在多个网站上托管内容，因此通过提供主机标头，你可以告诉web服务器你需要访问哪个网站，否则你只会收到web服务器对应的默认网站的响应。</p>
+<p>User-Agent：这是你所使用的浏览器软件类型和版本号，告诉web服务器你的浏览器软件类型能帮助它为你的浏览器正确格式化网站，而且网站相关的 HTML、JavaScript 和 CSS 的一些元素只在某些浏览器中可用。</p>
+<p>Content-Length：当向 Web 服务器发送数据时，例如当浏览器通过表单向web服务器发送数据时，Content-Length将告诉 Web 服务器该 Web 请求所期望的数据长度，这样web服务器就可以确保它在响应浏览器请求时并不会丢失任何数据。</p>
+<p>Accept-Encoding：这将告诉web服务器 当前使用的浏览器支持什么类型的压缩方法，这样数据就可以变小以便通过互联网进行传输。</p>
+<p>Cookie：Cookie 是发送到服务器以帮助记住你的信息的数据。</p>
+<p><strong>常见的响应头</strong></p>
+<p>以下是发出请求后从服务器端返回给浏览器客户端的标头信息。</p>
+<p>Set-Cookie：表示浏览器端要存储的Cookie信息，之后每次浏览器发出请求时，Cookie值都会发送回 Web 服务器。</p>
+<p>Cache-Control：在再次请求之前，响应内容在浏览器缓存中将存储多长时间。</p>
+<p>Content-Type：这将告诉客户端 从web服务器端所返回的数据类型，即 HTML、CSS、JavaScript、图像、PDF、视频等。使用Content-Type标头，浏览器才能知道如何处理数据。</p>
+<p>Content-Encoding：在通过 Internet 发送数据时，web服务器将使用什么方法压缩数据以使其更小。</p>
 <p><strong>答题</strong></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230328001000917.png"
-                      alt="image-20230328001000917"
+                     data-src="/../articleimg/image-20221119173812275.png"
+                      alt="image-20221119173812275"
                 ></p>
-<h2 id="DNS记录类型"><a href="#DNS记录类型" class="headerlink" title="DNS记录类型"></a>DNS记录类型</h2><p>我们已经知道DNS可用于寻找目标网站，此外，还存在多种类型的DNS记录，接下来我们将介绍一些常见的DNS记录类型。</p>
-<p><strong>A 记录</strong></p>
-<p>此类DNS记录将被解析为IPv4地址，例如：<code>104.26.10.229</code></p>
-<p><strong>AAAA 记录</strong></p>
-<p>此类DNS记录将被解析为IPv6地址，例如：<code>2606:4700:20::681a:be5</code></p>
-<p><strong>CNAME 记录</strong></p>
-<p>此类DNS记录将被解析到另一个域名，例如，TryHackMe的在线商店有一个子域名store.tryhackme.com，它能返回一个CNAME记录shops.shopify.com，然后再向shops.shopify.com发出另一个DNS请求，就能计算出相关的IP地址。</p>
-<p><strong>MX 记录</strong></p>
-<p>此类DNS记录将被解析为 处理你正在查询的域的电子邮件服务器地址，例如 tryhackme.com 的MX记录响应可能为 alt1.aspmx.l.google.com ；这类记录还会带有一个优先级值，此值将告诉客户端以什么顺序来尝试访问电子邮件服务器，如果主电子邮件服务器宕机，则可以将电子邮件发送到备份电子邮件服务器。</p>
-<p><strong>TXT 记录</strong></p>
-<p>TXT记录是自由文本字段，任何基于文本的数据都可以存储在其中。TXT记录有多种用途，一些常见的用途是 列出有权代表域发送电子邮件的服务器(这可以帮助对抗垃圾邮件和钓鱼邮件)，TXT记录还可用于 在注册第三方服务时验证域名的所有权。</p>
+<h2 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h2><p>Cookie是存储在你的计算机上的一小段数据。 当你从web服务器收到“Set-Cookie”标头时，对应的Cookie信息将被浏览器保存，然后，你发出的每一个进一步请求，都会将 Cookie 数据发送回web服务器。 由于 HTTP 是无状态的（不跟踪你之前的请求），所以 Cookie 可用于提醒web服务器你的身份、网站的一些个人设置或者你以前是否访问过该网站。 </p>
+<p>让我们看一下下面这个 HTTP 请求示例：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../articleimg/image-20221119181012864.png"
+                      alt="image-20221119181012864"  
+                >
+
+<p>Cookie 可用于多种用途，但最常用于网站身份验证。 cookie 值通常不会是一个可以让你直接看到密码的明文字符串，而会是一个令牌-token（具有不容易被猜到的唯一密码）。</p>
+<p><strong>查看你的 Cookie</strong></p>
+<p>你可以使用浏览器中的开发者工具查看你的浏览器向网站发送了哪些 cookie。 </p>
+<p>打开开发人员工具后，单击“网络”选项卡。 此选项卡将向你显示你的浏览器已请求的所有资源的列表，你可以单击每一个子项以查看请求和响应的详细分类信息。 如果你的浏览器发送了 cookie，你将在请求消息的“Cookie”选项卡上看到具体的cookie内容。</p>
 <p><strong>答题</strong></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230328003618226.png"
-                      alt="image-20230328003618226"
+                     data-src="/../articleimg/image-20221119223656762.png"
+                      alt="image-20221119223656762"
                 ></p>
-<h2 id="发出DNS请求"><a href="#发出DNS请求" class="headerlink" title="发出DNS请求"></a>发出DNS请求</h2><p><strong>当你发出DNS请求时会发生什么？</strong></p>
-<ol>
-<li>当你请求一个域名时，你的计算机首先会检查它自身的本地缓存，看看你最近是否查询过这个地址(即查看缓存中是否已经为目标网站存储了一个相关的 IP 地址)，如果发现本地缓存中无相关记录，你的计算机则将向递归(<em><strong>recursive</strong></em>)DNS服务器发送DNS请求。</li>
-<li>递归DNS服务器通常会由你的Internet 服务提供商(即ISP，在中国是移动、联通等)提供，但你也可以选择一些其他的递归DNS服务器。递归DNS服务器会带有一个关于“最近查找过的域名”的本地缓存，如果在此缓存中找到结果，则相关的信息将被发送回你的计算机，你的DNS请求也会在这里结束(这种域名请求情况对于谷歌、Facebook、Twitter等受欢迎以及域名请求频率很高的网站服务来说很常见)。如果在递归DNS服务器的本地缓存中无法找到域名请求的结果，接下来就会开始从互联网的根DNS服务器尝试寻找关于域名请求的正确答案。</li>
-<li>根DNS服务器是互联网的DNS主干，它们的工作是将域名请求重定向到正确的顶级域服务器，重定向的结果取决于你的域名请求内容：例如，如果你请求<a class="link"   target="_blank" rel="noopener" href="http://www.tryhackme.com,那么根dns服务器将识别到.com的顶级域名,并会将你指向处理.com地址的正确tld(顶级域)服务器./" >www.tryhackme.com，那么根DNS服务器将识别到.com的顶级域名，并会将你指向处理.com地址的正确TLD(顶级域)服务器。 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
-<li>TLD服务器会保存“在哪里能找到响应DNS请求的权威服务器”的记录。权威服务器通常也被称为域的名称服务器，例如<a class="link"   target="_blank" rel="noopener" href="http://www.tryhackme.com/" >www.tryhackme.com <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 的名称服务器是<code>kip.ns.cloudflare.com</code>和<code>uma.ns.cloudflare.com</code>，一个域名可能会有多个域名服务器，这是为了形成备份以防宕机。（简而言之：当 TLD 服务器收到我们的域名请求时，TLD服务器会将域名请求信息传递给适当的权威名称服务器，而权威名称服务器主要用于直接存储域的 DNS 记录）</li>
-<li>权威DNS服务器是负责存储特定域名的DNS记录的服务器，并且能对所存储的DNS记录进行及时更新。基于DNS记录的不同类型会有多条DNS记录内容，而这些与你的域名请求相关的DNS记录都存储在权威DNS服务器中，当域名请求到达权威DNS服务器之后，权威DNS服务器会将这些与你的域名请求相关的DNS记录 发送回递归DNS服务器，递归DNS服务器将会为这些DNS记录缓存一个本地副本 以备将来的请求所需，然后这些DNS记录将被转发回 发出域名请求的原始客户端机器。</li>
-</ol>
+<h2 id="发送请求-练习"><a href="#发送请求-练习" class="headerlink" title="发送请求-练习"></a>发送请求-练习</h2><p><strong>答题</strong></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230328113758899.png"
-                      alt="image-20230328113758899"
+                     data-src="/../articleimg/image-20221119231104215.png"
+                      alt="image-20221119231104215"
                 ></p>
-<p>Tips：每个DNS记录都会带有一个TTL（Time To Live-生存时间）值，这个值是一个以秒表示的数字，所有不超过TTL时间的DNS记录都会持续存储在计算机的本地缓存中，如果本地缓存中的DNS记录过期，那么在下次请求域名时，你可能需要再次获取相关的DNS记录（这将重复上述过程）。通过使用计算机本地缓存中的DNS记录——可以节省每次与目标服务器进行通信时 所消耗的DNS请求响应时间。</p>
-<p><strong>答题</strong></p>
+<p>问题一：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230328003958971.png"
-                      alt="image-20230328003958971"
+                     data-src="/../articleimg/image-20221119231159570.png"
+                      alt="image-20221119231159570"
                 ></p>
-<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><p>在和本文相关的TryHackMe实验房间中部署实验环境并回答问题。</p>
-<p><em>tips：在模拟界面构建请求以进行DNS查询并查看结果。</em></p>
-<p>查询 shop.website.thm 的CNAME记录：<code>nslookup --type=CNAME shop.website.thm</code></p>
+<p>问题二：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230327232336558.png"
-                      alt="image-20230327232336558"
+                     data-src="/../articleimg/image-20221119231302404.png"
+                      alt="image-20221119231302404"
                 ></p>
-<blockquote>
-<p>shop.website.thm 的CNAME记录是：shops.myshopify.com 。</p>
-</blockquote>
-<p>查询 website.thm 的TXT记录：<code>nslookup --type=TXT website.thm</code></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230327232618617.png"
-                      alt="image-20230327232618617"
+                     data-src="/./../articleimg/image-20221119231321822.png"
+                      alt="image-20221119231321822"
                 ></p>
-<blockquote>
-<p>website.thm 的TXT记录是：THM{7012BBA60997F35A9516C2E16D2944FF} 。</p>
-</blockquote>
-<p>查看 website.thm 的MX记录的数字优先级值：<code>nslookup --type=MX website.thm</code></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230327232832550.png"
-                      alt="image-20230327232832550"
+                     data-src="/../articleimg/image-20221119231429010.png"
+                      alt="image-20221119231429010"
                 ></p>
-<blockquote>
-<p>website.thm 的MX记录的数字优先级值为：30 。</p>
-</blockquote>
-<p>查看 website.thm 的A记录的IP地址：<code>nslookup --type=A website.thm</code></p>
+<p>问题三：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230327233114182.png"
-                      alt="image-20230327233114182"
+                     data-src="/../articleimg/image-20221119231552049.png"
+                      alt="image-20221119231552049"
                 ></p>
-<blockquote>
-<p>website.thm 的A记录的IP地址为：10.10.10.10 。</p>
-</blockquote>
+<p>问题四：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/articleimg/image-20230327233202973.png"
-                      alt="image-20230327233202973"
+                     data-src="/../articleimg/image-20221119231713945.png"
+                      alt="image-20221119231713945"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119231851305.png"
+                      alt="image-20221119231851305"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119231940989.png"
+                      alt="image-20221119231940989"
+                ></p>
+<p>问题五：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119232113263.png"
+                      alt="image-20221119232113263"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119232238841.png"
+                      alt="image-20221119232238841"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119232319559.png"
+                      alt="image-20221119232319559"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221119230941300.png"
+                      alt="image-20221119230941300"
                 ></p>
 
         </div>
@@ -627,18 +753,18 @@
             <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
                 <div class="article-copyright-info-container">
     <ul>
-        <li><strong>Title:</strong> THM-DNS in detail(DNS基础详解)-学习</li>
+        <li><strong>Title:</strong> THM-HTTP in detail(HTTP协议介绍)-学习</li>
         <li><strong>Author:</strong> Hekeatsll</li>
         <li><strong>Created at
-                :</strong> 2024-01-21 23:34:55</li>
+                :</strong> 2024-01-27 09:33:55</li>
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-01-21 23:38:55
+                    :</strong> 2024-01-27 09:33:21
             </li>
         
         <li>
-            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/21/THM-DNS in detail(DNS基础详解)-学习/
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-HTTP in detail(HTTP协议介绍)-学习/
         </li>
         <li>
             <strong>
@@ -675,29 +801,14 @@
         
             <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
                 
-                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-                        <a class="prev"
-                        rel="prev"
-                        href="/2024/01/27/THM-HTTP%20in%20detail(HTTP%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/"
-                        >
-                            <span class="left arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">THM-HTTP in detail(HTTP协议介绍)-学习</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2024/01/18/THM-Extending%20Your%20Network(%E7%BD%91%E7%BB%9C%E6%89%A9%E5%B1%95%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/"
+                        href="/2024/01/21/THM-DNS%20in%20detail(DNS%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3)-%E5%AD%A6%E4%B9%A0/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">THM-Extending Your Network(网络扩展基础介绍)-学习</span>
+                                <span class="post-nav-title-item">THM-DNS in detail(DNS基础详解)-学习</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -760,8 +871,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title">THM-DNS in detail(DNS基础详解)-学习</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFDNS%EF%BC%9F"><span class="nav-text">什么是DNS？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%9F%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-text">域层次结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS%E8%AE%B0%E5%BD%95%E7%B1%BB%E5%9E%8B"><span class="nav-text">DNS记录类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%87%BADNS%E8%AF%B7%E6%B1%82"><span class="nav-text">发出DNS请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="nav-text">简单示例</span></a></li></ol>
+        <div class="page-title">THM-HTTP in detail(HTTP协议介绍)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-HTTP-S"><span class="nav-text">什么是 HTTP(S)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94"><span class="nav-text">请求和响应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP%E6%96%B9%E6%B3%95"><span class="nav-text">HTTP方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP%E7%8A%B6%E6%80%81%E4%BB%A3%E7%A0%81"><span class="nav-text">HTTP状态代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%A0%87%E5%A4%B4%E5%92%8C%E5%93%8D%E5%BA%94%E6%A0%87%E5%A4%B4"><span class="nav-text">请求标头和响应标头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookies"><span class="nav-text">Cookies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82-%E7%BB%83%E4%B9%A0"><span class="nav-text">发送请求-练习</span></a></li></ol>
 
     </div>
 </div>
