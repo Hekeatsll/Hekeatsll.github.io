@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-idor(不安全的直接对象引用)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解如何查找和利用web应用程序中的IDOR漏洞，该漏洞能够让我们尝试访问我们本不应该查看的数据。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-IDOR(不安全的直接对象引用)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-IDOR(%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E7%9B%B4%E6%8E%A5%E5%AF%B9%E8%B1%A1%E5%BC%95%E7%94%A8)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解如何查找和利用web应用程序中的IDOR漏洞，该漏洞能够让我们尝试访问我们本不应该查看的数据。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20220930172013720.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003202133070.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003202232197.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003202306195.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003202350604.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003204915428.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003204755309.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003205826455.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003210442797.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003221623986.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003223722040.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003223516515.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003223856699.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003223611587.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221003221723685.png">
+<meta property="article:published_time" content="2024-01-27T03:59:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T04:00:43.455Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20220930172013720.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-IDOR(不安全的直接对象引用)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5efe36fb68daf465530ca761/room-content/03376575e888fd097280c51469c29fbc.png" alt="THM-IDOR(不安全的直接对象引用)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-IDOR(不安全的直接对象引用)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 11:59:55</span>
+        <span class="mobile">2024-01-27 11:59:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 12:43</span>
+            <span class="mobile">2024-01-27 12:43</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Web%E5%AE%89%E5%85%A8/">Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>5 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/idor" >https://tryhackme.com/room/idor <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解如何查找和利用web应用程序中的IDOR漏洞，该漏洞能够让我们尝试访问我们本不应该查看的数据。</p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><strong>什么是IDOR</strong></p>
+<p> IDOR 代表不安全的直接对象引用，是访问控制漏洞的一种类型（IDOR越权漏洞，属于授权逻辑型漏洞）。</p>
+<p>当 Web 服务器接收用户提供的输入来检索对象(文件、数据、文档)时，如果对用户输入数据的信任度过高，且在服务器端没有进行验证来确认”所请求的对象”是否属于”有权请求它的用户”，那么这种类型的漏洞就有可能会发生:使你能够访问不应该拥有的文件、数据、文档等对象。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20220930172013720.png"
+                      alt="image-20220930172013720"
+                ></p>
+<h2 id="IDOR示例"><a href="#IDOR示例" class="headerlink" title="IDOR示例"></a>IDOR示例</h2><p> 假设你刚刚注册了一项在线服务，你现在想要更改你的个人资料信息，你点击的链接会进入 <a class="link"   target="_blank" rel="noopener" href="http://online-service.thm/profile?user_id=1305" >http://online-service.thm/profile?user_id=1305 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 页面，你可以看到你的个人资料信息。</p>
+<p> 你的好奇心占了上风，于是你尝试将 user _ id 值更改为1000( <a class="link"   target="_blank" rel="noopener" href="http://online-service.thm/profile?user_id=1000" >http://online-service.thm/profile?user_id=1000 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>) ，令你惊讶的是，你现在可以看到ID为1000的用户的个人信息，你现在已经发现了 一个IDOR 漏洞！在理想情况下，网站上应该有一个检查机制，以确认某个ID相关的一些信息 只有当前所登录的 对应ID的用户才能访问。</p>
+<p><strong>答题</strong></p>
+<p>利用你上面学到的知识，点击查看TryHackMe网站在本页面所提供的站点按钮，通过发现和利用 IDOR 漏洞（修改url中的数值）来尝试接收一个标志。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003202133070.png"
+                      alt="image-20221003202133070"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003202232197.png"
+                      alt="image-20221003202232197"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003202306195.png"
+                      alt="image-20221003202306195"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003202350604.png"
+                      alt="image-20221003202350604"
+                ></p>
+<h2 id="在编码后的IDs中寻找IDOR漏洞"><a href="#在编码后的IDs中寻找IDOR漏洞" class="headerlink" title="在编码后的IDs中寻找IDOR漏洞"></a>在编码后的IDs中寻找IDOR漏洞</h2><p><strong>编码过的IDs（Encoded IDs）</strong></p>
+<p>将数据从一个页面传递到另一个页面，或者发布数据、查询字符串或 cookie的时候，网页开发人员通常会首先获取原始数据并对其进行编码处理，编码能确保接收到信息的web服务器能够理解收到的内容（不经过编码处理的数据 是web服务器理解不了的）。</p>
+<p>编码技术通常使用<code>a-z, A-Z, 0-9 and =</code>字符进行填充，将二进制数据更改为 ASCII 字符串形式。Web 上最常用的编码技术是 base64编码，这种编辑方式通常很容易识别。</p>
+<p>你可以使用像<a class="link"   target="_blank" rel="noopener" href="https://www.base64decode.org/" >https://www.base64decode.org/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 的网站来解码base64字符串，然后重新编辑数据并使用<a class="link"   target="_blank" rel="noopener" href="https://www.base64encode.org/" >https://www.base64encode.org/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 网站再重新进行一次base64编码，然后重新提交 Web 请求，看看响应消息中是否有变化。</p>
+<p>下图是解码并重新编码过程的一个图形示例:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003204915428.png"
+                      alt="image-20221003204915428"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003204755309.png"
+                      alt="image-20221003204755309"
+                ></p>
+<h2 id="在hash加密的IDs中寻找IDOR漏洞"><a href="#在hash加密的IDs中寻找IDOR漏洞" class="headerlink" title="在hash加密的IDs中寻找IDOR漏洞"></a>在hash加密的IDs中寻找IDOR漏洞</h2><p><strong>哈希加密过的IDs（Hashed IDs）</strong> </p>
+<p>处理哈希加密之后的ID 要比 处理编码后的ID稍微复杂一些，但它们可能遵循一种可预测的模式，例如整数值的hash版本，例如，如果使用 md5散列(哈希)算法，ID 号123将变成202cb962ac59075b964b07152d234b70 。</p>
+<p>你可以将你发现的哈希值放入在线网站，如<a class="link"   target="_blank" rel="noopener" href="https://crackstation.net/" >https://crackstation.net/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> (它有一个数十亿散列值结果的数据库) 看看能不能找到匹配的。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003205826455.png"
+                      alt="image-20221003205826455"
+                ></p>
+<h2 id="在不可预测的ID中寻找IDOR漏洞"><a href="#在不可预测的ID中寻找IDOR漏洞" class="headerlink" title="在不可预测的ID中寻找IDOR漏洞"></a>在不可预测的ID中寻找IDOR漏洞</h2><p><strong>不可预测的IDs</strong></p>
+<p>如果使用上述方法无法检测到 Id，那么检测IDOR漏洞的一个很好的方法是创建两个帐户并交换它们的 Id 号。</p>
+<p>如果你可以直接使用其他用户的 ID 号查看其他用户的内容，同时仍然在使用 “非此ID对应的帐户” 登录(或者根本没有登录) ，那么你就发现了一个IDOR 漏洞。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003210442797.png"
+                      alt="image-20221003210442797"
+                ></p>
+<h2 id="IDOR漏洞一般位于哪里？"><a href="#IDOR漏洞一般位于哪里？" class="headerlink" title="IDOR漏洞一般位于哪里？"></a>IDOR漏洞一般位于哪里？</h2><p>你所针对的易受攻击的点 可能并不总是你在地址栏中看到的东西，它可以是浏览器通过 AJAX 请求加载的内容，也可以是 JavaScript 文件中引用的内容。</p>
+<p>有时，易受攻击的点可能有一个未引用的参数，这个参数在开发期间可能有用，并被推到生产环境中。</p>
+<p>例如，你可能会注意到显示用户信息时调用的是**&#x2F;user&#x2F;details**  (通过你的会话验证)，但是，通过名为参数挖掘的攻击，也许能够发现一个名为<strong>user_id</strong>的未引用参数，你可以使用该参数显示其他用户的信息，如**&#x2F;user&#x2F;details?user_id&#x3D;123** 。</p>
+<h2 id="一个实际的IDOR示例"><a href="#一个实际的IDOR示例" class="headerlink" title="一个实际的IDOR示例"></a>一个实际的IDOR示例</h2><p>打开TryHackMe网站在该知识点页面 提供的链接。</p>
+<p>首先你需要登录，为此，单击客户部分并创建一个帐户。登录后，单击“你的帐户”选项卡。</p>
+<p>Your Account 部分允许你更改用户名、电子邮件地址和密码等信息。你会注意到用户名和电子邮件字段预先填写了你注册账户时填的信息。</p>
+<p>我们先调查一下这些信息是如何预先填写的，如果打开浏览器开发人员工具（F12），选择网络（network）选项卡，然后刷新页面，你将看到一个对端点的调用，路径为&#x2F;api&#x2F;v1&#x2F;customer?id&#x3D;<code>&#123;user_id&#125;</code>。</p>
+<p> 此页面以 JSON 格式返回你的用户 ID、用户名和电子邮件地址。我们可以从路径中看到，所显示的用户信息来自查询字符串的 id 参数(见下图)</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003221623986.png"
+                      alt="image-20221003221623986"
+                ></p>
+<p>你可以通过将 id 更改为另一个用户的 id 来测试这个 id 参数是否存在 IDOR 漏洞，尝试选择 ID 为1和3的用户，然后回答下面的问题。</p>
+<p><strong>答题</strong></p>
+<p>建议使用火狐浏览器，使用TryHackMe网站提供的Attack Box即可。</p>
+<p>选中有效记录修改并重新发送：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003223722040.png"
+                      alt="image-20221003223722040"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003223516515.png"
+                      alt="image-20221003223516515"
+                ></p>
+<p>双击有效记录，进入对应的页面并直接修改url：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003223856699.png"
+                      alt="image-20221003223856699"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003223611587.png"
+                      alt="image-20221003223611587"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221003221723685.png"
+                      alt="image-20221003221723685"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-IDOR(不安全的直接对象引用)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 11:59:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 12:00:43
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-IDOR(不安全的直接对象引用)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Web%E5%AE%89%E5%85%A8/">#Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-File%20Inclusion(%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-File Inclusion(文件包含漏洞)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Authentication%20Bypass(%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Authentication Bypass(身份验证绕过)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-IDOR(不安全的直接对象引用)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDOR%E7%A4%BA%E4%BE%8B"><span class="nav-text">IDOR示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E7%BC%96%E7%A0%81%E5%90%8E%E7%9A%84IDs%E4%B8%AD%E5%AF%BB%E6%89%BEIDOR%E6%BC%8F%E6%B4%9E"><span class="nav-text">在编码后的IDs中寻找IDOR漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8hash%E5%8A%A0%E5%AF%86%E7%9A%84IDs%E4%B8%AD%E5%AF%BB%E6%89%BEIDOR%E6%BC%8F%E6%B4%9E"><span class="nav-text">在hash加密的IDs中寻找IDOR漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E4%B8%8D%E5%8F%AF%E9%A2%84%E6%B5%8B%E7%9A%84ID%E4%B8%AD%E5%AF%BB%E6%89%BEIDOR%E6%BC%8F%E6%B4%9E"><span class="nav-text">在不可预测的ID中寻找IDOR漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDOR%E6%BC%8F%E6%B4%9E%E4%B8%80%E8%88%AC%E4%BD%8D%E4%BA%8E%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="nav-text">IDOR漏洞一般位于哪里？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%AE%9E%E9%99%85%E7%9A%84IDOR%E7%A4%BA%E4%BE%8B"><span class="nav-text">一个实际的IDOR示例</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

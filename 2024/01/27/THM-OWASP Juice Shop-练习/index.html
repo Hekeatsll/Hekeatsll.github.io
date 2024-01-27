@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-owasp juice shop-练习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="基于易受攻击的 Web 应用程序 Juice Shop，学习如何识别和利用常见的 Web 应用程序漏洞。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-OWASP Juice Shop-练习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-OWASP%20Juice%20Shop-%E7%BB%83%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="基于易受攻击的 Web 应用程序 Juice Shop，学习如何识别和利用常见的 Web 应用程序漏洞。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20221208214237151.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221208220727163.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210181526625.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210181910676.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210181735273.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210182108260.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210182428085.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210182607421.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210182631463.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210182829023.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210182933730.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210183523271.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210190416125.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210191030455.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210190334439.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210192553974.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210192702269.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210200503102.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210193042910.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210201414273.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210202141223.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210202359233.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210202420466.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210205147392.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210204524852.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210204736340.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210204838869.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210204934107.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210210518209.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210211837847.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210211959256.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210212026875.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210212928635.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210212443775.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210212528545.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210212635865.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210212753459.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210212836933.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210213237975.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210214237801.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210214326687.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210214624771.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210214719502.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210214807968.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210215200468.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210215341034.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210221014132.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210221103738.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210221605624.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210221726421.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210222240373.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210222224161.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210223103652.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210223624952.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210224427073.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211185152085.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211182647790.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211183254858.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211182819067.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211184207274.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211184945260.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211185101249.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211191009253.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211190631857.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211190724073.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211190847609.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211191139272.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211192033307.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211191837902.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211191940560.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211204425039.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211203130320.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211203417837.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211204319635.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211210357475.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211210506830.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211210540469.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211213606372.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211214658568.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211215007054.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211220959120.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211215258168.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211215606014.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211215831384.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211203130320.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221211220922027.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221208221153945.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221208221225637.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221210183807295.png">
+<meta property="article:published_time" content="2024-01-27T05:40:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T05:49:53.512Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20221208214237151.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-OWASP Juice Shop-练习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://i.imgur.com/JaX5W2u.png" alt="THM-OWASP Juice Shop-练习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-OWASP Juice Shop-练习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 13:40:55</span>
+        <span class="mobile">2024-01-27 13:40:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 13:49:53</span>
+            <span class="mobile">2024-01-27 13:49:53</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Web%E5%AE%89%E5%85%A8/">Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>5.6k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>20 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/owaspjuiceshop" >https://tryhackme.com/room/owaspjuiceshop <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>通过学习相关知识点：基于易受攻击的 Web 应用程序 Juice Shop，学习如何识别和利用常见的 Web 应用程序漏洞。</p>
+<h2 id="Task-1-部署实验环境-前期准备"><a href="#Task-1-部署实验环境-前期准备" class="headerlink" title="Task 1 部署实验环境&amp;前期准备"></a>Task 1 部署实验环境&amp;前期准备</h2><p>OWASP-TOP10项目介绍：<a class="link"   target="_blank" rel="noopener" href="https://owasp.org/www-project-top-ten/" >https://owasp.org/www-project-top-ten/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>Juice Shop 是一个大型应用程序，它并不会涵盖OWASP-TOP10中的每个主题，此应用程序和OWASP相关的主题如下：</p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection" >Injection <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（注入类漏洞）</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A2-Broken_Authentication" >Broken Authentication <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（损坏的身份验证机制-身份验证失效漏洞）</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A3-Sensitive_Data_Exposure" >Sensitive Data Exposure <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（敏感信息泄露）</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A5-Broken_Access_Control" >Broken Access Control <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（损坏的访问控制机制-越权漏洞）</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" >Cross-Site Scripting XSS <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（跨站点脚本漏洞-XSS）</li>
+</ul>
+<p>注意：</p>
+<p>从【Task3】开始都需要获得flag以完成任务要求，flag所对应的内容会在相关任务完成后自动显示在网页上。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221208214237151.png"
+                      alt="image-20221208214237151"
+                ></p>
+<p>故障排除事项：</p>
+<p>目标web应用程序在加载时大约需要 2-5 分钟，请耐心等待！</p>
+<p>如果使用了Burpsuite工具，则每次完成任务时 需要先在当前浏览器的代理设置中暂时禁用burp，然后再刷新页面，页面上才会显示相关的flag内容。（这不是应用程序本身的问题，而是burp工具在拦截流量时 会自动阻止flag的内容显示）</p>
+<p>如果你正在执行XSS任务，但是发现相关页面无法产生XSS本该有的执行效果，此时你可以尝试先清除 cookie 和网站相关数据，然后再次执行XSS Payload。</p>
+<p>如果你确定已完成对应的任务要求 但仍然无法获得flag，你可以转到【Task8】相关页面，该页面将允许你检查所有任务的完成情况。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221208220727163.png"
+                      alt="image-20221208220727163"
+                ></p>
+<p>启动目标机器，访问目标站点：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210181526625.png"
+                      alt="image-20221210181526625"
+                ></p>
+<h2 id="Task-2-遍历目标应用程序"><a href="#Task-2-遍历目标应用程序" class="headerlink" title="Task 2 遍历目标应用程序"></a>Task 2 遍历目标应用程序</h2><p>在我们进入实际的渗透操作之前，最好先遍历一下目标。 打开BurpSuite，在Burp中，将拦截模式设置为关闭，然后直接浏览目标站点，这将允许Burp记录来自服务器的不同请求，这些请求信息稍后可能对我们的渗透操作有所帮助。</p>
+<p>以上过程被称为遍历目标应用程序，这也是侦察形式的一种！</p>
+<p><strong>答题</strong></p>
+<p><strong>Question #1: What’s the Administrator’s email address?</strong>–管理员的电子邮件地址是什么？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210181910676.png"
+                      alt="image-20221210181910676"
+                ></p>
+<p>相关产品的评论将显示每个用户的电子邮件地址，通过单击 Apple Juice 产品，我们可以看到管理员的电子邮件地址！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210181735273.png"
+                      alt="image-20221210181735273"
+                ></p>
+<blockquote>
+<p><a class="link"   href="mailto:&#x61;&#x64;&#109;&#105;&#110;&#64;&#106;&#117;&#105;&#99;&#101;&#45;&#115;&#x68;&#46;&#x6f;&#x70;" >&#x61;&#x64;&#109;&#105;&#110;&#64;&#106;&#117;&#105;&#99;&#101;&#45;&#115;&#x68;&#46;&#x6f;&#x70; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p><strong>Question #2: What parameter is used for searching?</strong>–用于搜索的参数是什么？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210182108260.png"
+                      alt="image-20221210182108260"
+                ></p>
+<p>单击应用程序右上角的放大镜将弹出一个搜索栏；然后我们可以输入一些文本，按回车键将在网站的产品页面 搜索刚刚输入的文本内容。</p>
+<p>注意浏览器地址栏的URL：它现在将更新为包含我们刚刚输入的文本，我们可以在 &#x2F;#&#x2F;search? 之后看到搜索参数为字母q。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210182428085.png"
+                      alt="image-20221210182428085"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210182607421.png"
+                      alt="image-20221210182607421"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210182631463.png"
+                      alt="image-20221210182631463"
+                ></p>
+<blockquote>
+<p>q</p>
+</blockquote>
+<p><strong>Question #3: What show does Jim reference in his review?</strong> –吉姆在他的评论中提到了什么节目？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210182829023.png"
+                      alt="image-20221210182829023"
+                ></p>
+<p>吉姆对 Green Smoothie 产品进行了评论。 我们可以看到他提到了<em>replicator</em>。</p>
+<p>我们用谷歌搜索引擎搜索“replicator”，得到的结果表明它来自一部名为《星际迷航》的电视节目。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210182933730.png"
+                      alt="image-20221210182933730"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210183523271.png"
+                      alt="image-20221210183523271"
+                ></p>
+<blockquote>
+<p>Star Trek</p>
+</blockquote>
+<h2 id="Task-3-注入漏洞-实验"><a href="#Task-3-注入漏洞-实验" class="headerlink" title="Task 3 注入漏洞-实验"></a>Task 3 注入漏洞-实验</h2><p>此任务将侧重于注入类型的漏洞，注入漏洞对企业来说非常危险，因为注入攻击可能会导致目标服务器停机、数据丢失等严重后果。识别目标 Web 应用程序中的注入点通常非常简单，因为大多数注入点都会返回一个错误提示，注入攻击有很多种：</p>
+<ul>
+<li>SQL Injection：SQL注入–指攻击者输入恶意或格式错误的查询以从目标数据库中检索或篡改数据，在某些情况下，这常常发生在登录框界面。</li>
+<li>Command Injection：命令注入–指 Web 应用程序获取了“用户输入”或用户所控制的数据并将它们作为系统命令运行，攻击者可能会篡改输入数据以执行他们自己想要的系统命令，例如，某个目标应用程序能够执行配置错误的ping命令。</li>
+<li>Email Injection：电子邮件注入–是一种安全漏洞，允许恶意用户在未经电子邮件服务器事先授权的情况下向受害者发送垃圾电子邮件，攻击者可以通过向邮件头字段添加额外数据来完成攻击行为；这种攻击的主要原因是不适当的用户输入验证或者目标应用程序根本没有验证、过滤机制。</li>
+</ul>
+<p>在接下来的例子中，我们将关注于<em><strong>SQL 注入漏洞</strong></em>。</p>
+<p><strong>答题</strong></p>
+<p><strong>Question #1: Log into the administrator account!</strong>–尝试登录管理员帐户！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210190416125.png"
+                      alt="image-20221210190416125"
+                ></p>
+<p>在我们导航到登录页面后，在电子邮件和密码字段中输入一些数据。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210191030455.png"
+                      alt="image-20221210191030455"
+                ></p>
+<p>在单击提交登录表单之前，请确保Burp的拦截模式已打开。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210190334439.png"
+                      alt="image-20221210190334439"
+                ></p>
+<p>这将使得我们能够在BurpSuite中看到 将要发送到目标服务器的数据！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210192553974.png"
+                      alt="image-20221210192553974"
+                ></p>
+<p>将电子邮件字段“a”更改为 <strong>‘ or 1&#x3D;1–</strong> ，点击Burp中的Forward转发数据到目标服务器(直到Burp中的Proxy界面所有数据都转发完毕)，实现目标站点的登陆操作。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210192702269.png"
+                      alt="image-20221210192702269"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210200503102.png"
+                      alt="image-20221210200503102"
+                ></p>
+<p><em>为什么这能够成功实现登陆操作？</em></p>
+<ol>
+<li>字符 <strong>‘</strong> 将关闭 SQL 查询中的语句。</li>
+<li>以上SQL语句插入了“<strong>or</strong>”操作符，如果SQL语句中的任何一方（or操作符前的语句和后面的语句）为真，则整个SQL语句将返回true；由于 1&#x3D;1 始终为真，因此整个语句的结果将为true，这将告诉目标服务器 刚才输入的电子邮件字段是有效的，然后我们就能登录到用户ID为0的账户，也就是管理员帐户。</li>
+<li>字符“**–**”在SQL语句中用于注释数据，注释符之后的 任何对登录的限制手段都将不再起作用，这类似于 python 和 javascript 中的 <strong>#</strong> 和 <strong>&#x2F;&#x2F;</strong> 注释符。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210193042910.png"
+                      alt="image-20221210193042910"
+                ></p>
+<blockquote>
+<p>32a5e0f21372bcc1000a6088b93b458e41f0e02a</p>
+</blockquote>
+<p><strong>Question #2: Log into the Bender account!</strong>–登录 Bender 帐户！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210201414273.png"
+                      alt="image-20221210201414273"
+                ></p>
+<p>与问题 #1 中的操作类似，我们现在将登录 Bender 帐户！ 再次使用Burp捕获登录请求，但这次我们将把：<strong><a class="link"   href="mailto:&#98;&#x65;&#x6e;&#100;&#x65;&#114;&#64;&#106;&#117;&#x69;&#x63;&#x65;&#45;&#x73;&#x68;&#46;&#x6f;&#112;" >&#98;&#x65;&#x6e;&#100;&#x65;&#114;&#64;&#106;&#117;&#x69;&#x63;&#x65;&#45;&#x73;&#x68;&#46;&#x6f;&#112; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>‘–</strong> 作为修改之后的 电子邮件字段内容（该有效电子邮件地址是我们通过遍历目标应用程序才得知的）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210202141223.png"
+                      alt="image-20221210202141223"
+                ></p>
+<p>然后，将修改之后的数据转发到目标服务器！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210202359233.png"
+                      alt="image-20221210202359233"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210202420466.png"
+                      alt="image-20221210202420466"
+                ></p>
+<p>此处为什么不注入1&#x3D;1？这是因为我们在此处输入的电子邮件地址是有效的（相关的SQL查询将自动返回 true），所以我们不需要强制SQL查询结果为 true。我们可以在电子邮件字段之后添加 <strong>‘–</strong> 来绕过登录系统的验证机制。 注意，只有当电子邮件或用户名未知、无效时，才需要尝试使用 1&#x3D;1。</p>
+<blockquote>
+<p>fb364762a3c102b2db932069c0e6b78e738d4066</p>
+</blockquote>
+<h2 id="Task-4-身份验证失效漏洞-实验"><a href="#Task-4-身份验证失效漏洞-实验" class="headerlink" title="Task 4 身份验证失效漏洞-实验"></a>Task 4 身份验证失效漏洞-实验</h2><p>在此任务中，我们将研究通过不同的漏洞来利用身份验证机制，此处在谈论身份验证机制中的缺陷时，也包括了一些易受攻击者操纵的机制，下面列出的这些机制是我们将要利用的：</p>
+<ul>
+<li><p>高权限帐户的弱密码</p>
+</li>
+<li><p>忘记密码页面</p>
+</li>
+</ul>
+<p><strong>答题</strong></p>
+<p><strong>Question #1: Bruteforce the Administrator account’s password!</strong>–暴力破解管理员帐户的密码！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210205147392.png"
+                      alt="image-20221210205147392"
+                ></p>
+<p>在上一个任务中，我们已经成功利用 SQL Injection 登录到 Administrator 帐户，但我们仍然不知道相关的密码明文内容，所以我们接下来将尝试使用暴力破解攻击 以得到管理员账户密码！在登录表单输入以下字段：</p>
+<blockquote>
+<p><a class="link"   href="mailto:&#x61;&#x64;&#109;&#105;&#x6e;&#x40;&#106;&#117;&#105;&#x63;&#101;&#x2d;&#x73;&#104;&#x2e;&#111;&#112;" >&#x61;&#x64;&#109;&#105;&#x6e;&#x40;&#106;&#117;&#105;&#x63;&#101;&#x2d;&#x73;&#104;&#x2e;&#111;&#112; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>a</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210204524852.png"
+                      alt="image-20221210204524852"
+                ></p>
+<p>使用Burp捕获上图所对应的登录请求，但此次不是通过Burp中的Proxy界面修改、发送数据，而是将捕获到的表单数据先转发给Burp中的Intruder界面（通过此界面完成暴力破解攻击）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210204736340.png"
+                      alt="image-20221210204736340"
+                ></p>
+<p>在Intruder界面点击Positions，然后选择<strong>clear §</strong> 按钮，在密码字段中，将两个<strong>§</strong>符号放在引号内；注意：此处的<strong>§§</strong>不是指代两个单独的输入字符，而是 Burp 中的引用符号的实现，类似于**””**符号。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210204838869.png"
+                      alt="image-20221210204838869"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210204934107.png"
+                      alt="image-20221210204934107"
+                ></p>
+<p>对于爆破攻击所使用的有效载荷，我们将选择来自于 Seclists 项目中的 best1050.txt列表。（Seclists 可以通过以下方式安装：<code>apt-get install seclists</code>）          </p>
+<p>你可以从以下位置 加载所需列表：<code>/usr/share/secLists/Passwords/Common-Credentials/best1050.txt</code>  </p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210210518209.png"
+                      alt="image-20221210210518209"
+                ></p>
+<p>将字典文件加载到 Burp 后，开始爆破攻击，你可以按状态码来判断请求所对应的结果：失败的请求将收到 401 Unauthorized，成功的请求将返回 200 OK。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210211837847.png"
+                      alt="image-20221210211837847"
+                ></p>
+<p>成功完成爆破攻击之后，我们可以使用刚才得到的明文密码登录管理员帐户，以获取对应的flag。</p>
+<blockquote>
+<p><a class="link"   href="mailto:&#97;&#x64;&#x6d;&#x69;&#110;&#64;&#x6a;&#x75;&#105;&#x63;&#101;&#x2d;&#115;&#104;&#x2e;&#111;&#112;" >&#97;&#x64;&#x6d;&#x69;&#110;&#64;&#x6a;&#x75;&#105;&#x63;&#101;&#x2d;&#115;&#104;&#x2e;&#111;&#112; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>admin123</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210211959256.png"
+                      alt="image-20221210211959256"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210212026875.png"
+                      alt="image-20221210212026875"
+                ></p>
+<blockquote>
+<p>c2110d06dc6f81c67cd8099ff0ba601241f1ac0e</p>
+</blockquote>
+<p><strong>Question #2:</strong> <strong>Reset Jim’s password!</strong>–重置Jim的密码！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210212928635.png"
+                      alt="image-20221210212928635"
+                ></p>
+<p>重置密码机制也可以被利用！ 当我们在“忘记密码”页面的电子邮件字段中输入Jim的Email（<a class="link"   href="mailto:&#106;&#105;&#109;&#64;&#x6a;&#x75;&#105;&#99;&#101;&#45;&#115;&#x68;&#46;&#x6f;&#112;" >&#106;&#105;&#109;&#64;&#x6a;&#x75;&#105;&#99;&#101;&#45;&#115;&#x68;&#46;&#x6f;&#112; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>）时，可以看到Jim 的密码安全问题被设置为“你最年长的兄弟姐妹的中间名是什么？”。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210212443775.png"
+                      alt="image-20221210212443775"
+                ></p>
+<p>在任务 2 中，我们已经发现Jim可能与星际迷航有关，所以我们通过谷歌搜索“Jim Star Trek”这为我们提供了来自 Star Trek 的关于 Jame T. Kirk 的维基百科页面；翻阅相关维基百科页面 我们发现他有一个哥哥，Jim哥哥的中间名为<strong>Samuel</strong>，所以我们可以将其输入到“忘记密码”页面中并尝试更改Jim账户的密码。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210212528545.png"
+                      alt="image-20221210212528545"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210212635865.png"
+                      alt="image-20221210212635865"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210212753459.png"
+                      alt="image-20221210212753459"
+                ></p>
+<p>成功修改密码之后，可以获得一个flag。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210212836933.png"
+                      alt="image-20221210212836933"
+                ></p>
+<blockquote>
+<p>094fbc9b48e525150ba97d05b942bbf114987257</p>
+</blockquote>
+<p>使用修改之后的密码登录Jim的账户（<a class="link"   href="mailto:&#106;&#105;&#109;&#x40;&#106;&#117;&#x69;&#99;&#101;&#x2d;&#x73;&#104;&#x2e;&#111;&#x70;" >&#106;&#105;&#109;&#x40;&#106;&#117;&#x69;&#99;&#101;&#x2d;&#x73;&#104;&#x2e;&#111;&#x70; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>），也能得到一个flag（本文中的任务并未要求获得该flag）</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210213237975.png"
+                      alt="image-20221210213237975"
+                ></p>
+<blockquote>
+<p>da36b345cb3d661cf985428df8c2d8756c362e56</p>
+</blockquote>
+<h2 id="Task-5-敏感信息泄露-实验"><a href="#Task-5-敏感信息泄露-实验" class="headerlink" title="Task 5 敏感信息泄露-实验"></a>Task 5 敏感信息泄露-实验</h2><p>Web 应用程序应该安全可靠地存储和传输敏感数据，但在某些情况下，开发人员可能没有正确保护好这些敏感数据，从而使其容易被泄露。</p>
+<p>大多数时候，数据保护并未在整个 Web 应用程序中得到一致应用，这就使得某些页面能够直接被公众所访问，所以一些敏感信息可能会在开发人员不知情的情况下已经泄露给公众访问人员，从而可能导致目标Web应用程序容易受到非法攻击。</p>
+<p><strong>答题</strong></p>
+<p><strong>Question #1:</strong> <strong>Access the Confidential Document!</strong>–访问机密文件！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210214237801.png"
+                      alt="image-20221210214237801"
+                ></p>
+<p>导航至“About Us-关于我们”页面，将鼠标悬停在“查看我们的使用条款”上。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210214326687.png"
+                      alt="image-20221210214326687"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210214624771.png"
+                      alt="image-20221210214624771"
+                ></p>
+<p>点击上图中的链接将跳转到 <a class="link"   target="_blank" rel="noopener" href="http://10.10.102.75/ftp/legal.md" >http://10.10.102.75/ftp/legal.md <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 页面（这将自动执行文件下载操作），在此页面修改url以导航到&#x2F;ftp&#x2F; 目录，你会发现该目录是一个公开的可访问页面！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210214719502.png"
+                      alt="image-20221210214719502"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210214807968.png"
+                      alt="image-20221210214807968"
+                ></p>
+<p>我们尝试在&#x2F;ftp&#x2F;页面中 下载包含敏感信息的 <em><strong>acquisitions.md</strong></em>文件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210215200468.png"
+                      alt="image-20221210215200468"
+                ></p>
+<p>下载完成后，我们可以导航到之前的页面以接收对应的flag。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210215341034.png"
+                      alt="image-20221210215341034"
+                ></p>
+<blockquote>
+<p>edf9281222395a1c5fee9b89e32175f1ccf50c5b</p>
+</blockquote>
+<p><strong>Question #2:</strong> <strong>Log into MC SafeSearch’s account!</strong>–登录 MC SafeSearch 的帐户！</p>
+<p>TryHackMe在此提供了一个YouTube视频链接，当我们看完对应的歌曲MV视频后，我们可以得到一些关键信息：目标用户的密码本应是“<em><strong>Mr. Noodles</strong></em>”，但他已经将一些“元音字母替换为零”，这意味着将字母<code>o</code>替换为<code>0</code>，所以我们可知<code>mc.safesearch@juice-sh.op</code>帐户的密码是“<em><strong>Mr. N00dles</strong></em>”</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210221014132.png"
+                      alt="image-20221210221014132"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210221103738.png"
+                      alt="image-20221210221103738"
+                ></p>
+<p>tips：以上两个截图中所显示的字幕 是自动生成的字幕（不一定非常准确）。</p>
+<p>使用已知的密码登录MC SafeSearch的帐户（<code>mc.safesearch@juice-sh.op</code>、<code>Mr. N00dles</code>），并获得一个flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210221605624.png"
+                      alt="image-20221210221605624"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210221726421.png"
+                      alt="image-20221210221726421"
+                ></p>
+<blockquote>
+<p>66bdcffad9e698fd534003fbb3cc7e2b7b55d7f0</p>
+</blockquote>
+<p><strong>Question #3:</strong> <strong>Download the Backup file!</strong>–下载备份文件！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210222240373.png"
+                      alt="image-20221210222240373"
+                ></p>
+<p>我们现在返回至之前所提到的 <a class="link"   target="_blank" rel="noopener" href="http://10.10.102.75/ftp/" >http://10.10.102.75/ftp/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 页面并尝试下载 <code>package.json.bak</code>文件，但我们接收到了一个403状态码提示，该提示告诉我们只允许下载 <code>.md</code> 和 <code>.pdf</code> 格式的文件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210222224161.png"
+                      alt="image-20221210222224161"
+                ></p>
+<p>为了解决这个问题，我们将使用一个名为“Poison Null Byte”的字符来进行绕过，该空字节内容如下所示：<code>%00</code>。</p>
+<p>注意：由于我们在此处是使用 url 来下载文件，因此我们需要将空字节也编码为 url 编码格式；经过url编码处理的Poison Null Byte 将变为：<code>%2500</code>。</p>
+<p>我们在url（ <a class="link"   target="_blank" rel="noopener" href="http://10.10.102.75/ftp/package.json.bak" >http://10.10.102.75/ftp/package.json.bak <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ）末尾添加空字节以及 <code>.md</code> ，就能绕过403 错误提示以完成文件下载操作！</p>
+<div class="highlight-container" data-rel="Http"><figure class="iseeu highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.10.102.75/ftp/package.json.bak%2500.md</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210223103652.png"
+                      alt="image-20221210223103652"
+                ></p>
+<p>原理：Poison Null Byte 实际上是一个 NULL 终止符，在字符串中的某个字节处放置一个 NULL 字符，那么该字符串将告诉目标服务器在NULL字符处终止读取，然后字符串的其余部分将被置为空。</p>
+<p>返回主页面以获得一个flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210223624952.png"
+                      alt="image-20221210223624952"
+                ></p>
+<blockquote>
+<p>bfc1e6b4a16579e85e06fee4c36ff8c02fb13795</p>
+</blockquote>
+<h2 id="Task-6-损坏的访问控制-越权-实验"><a href="#Task-6-损坏的访问控制-越权-实验" class="headerlink" title="Task 6 损坏的访问控制(越权)-实验"></a>Task 6 损坏的访问控制(越权)-实验</h2><p>现代系统将允许多个用户访问不同的页面，其中管理员用户可以使用管理页面以方便编辑、添加和删除网站的不同元素，当你使用 Weebly 或 Wix 等程序构建网站时，你就可能会用到管理员页面来辅助建站。</p>
+<p>当发现损坏的访问控制漏洞或错误时，它将被归类为以下两种类型之一：</p>
+<ul>
+<li>水平（横向）越权：当用户可以执行 操作或访问具有<em><strong>相同权限级别</strong></em>的另一个用户的数据时发生。</li>
+<li>垂直（纵向）越权：当用户可以执行 操作或访问具有<em><strong>更高权限级别</strong></em>的另一个用户的数据时发生。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210224427073.png"
+                      alt="image-20221210224427073"
+                ></p>
+<p><strong>答题</strong></p>
+<p><strong>Question #1:</strong> <strong>Access the administration page!</strong>–访问管理页面！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211185152085.png"
+                      alt="image-20221211185152085"
+                ></p>
+<p>首先，我们将在Firefox浏览器中打开<strong>Debugger</strong>（调试器）或者在谷歌浏览器中打开<strong>Sources</strong>，Debugger可以通过在浏览器中打开Web开发者工具找到，找到Debugger之后再刷新页面，找到并查看main-es2015.js文件，要将其内容转换为我们可以阅读的格式，单击 { } 按钮即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211182647790.png"
+                      alt="image-20221211182647790"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211183254858.png"
+                      alt="image-20221211183254858"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211182819067.png"
+                      alt="image-20221211182819067"
+                ></p>
+<p>现在在上图的js文件内容中 搜索关键词“admin”，你可以找到几个包含“admin”的不同代码段，最终我们所发现的是“path: administration”，它指代了一个名为“&#x2F;#&#x2F;administration”的页面路径，但是在未登录的情况下无法进入该路径相关页面。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211184207274.png"
+                      alt="image-20221211184207274"
+                ></p>
+<p>由于这是一个管理员页面，因此我们需要在管理员帐户中才能查看它。阻止普通用户访问管理员界面的一个好方法是 只加载普通用户所需要使用的部分应用程序，这可以防止泄露一些敏感信息或阻止查看管理页面等。</p>
+<p>接下来根据前文所得的信息，我们先登录到管理员账户，再访问“&#x2F;#&#x2F;administration”页面，获取对应的flag：</p>
+<blockquote>
+<p><a class="link"   href="mailto:&#97;&#x64;&#x6d;&#x69;&#x6e;&#x40;&#106;&#117;&#x69;&#x63;&#101;&#45;&#x73;&#x68;&#46;&#111;&#x70;" >&#97;&#x64;&#x6d;&#x69;&#x6e;&#x40;&#106;&#117;&#x69;&#x63;&#101;&#45;&#x73;&#x68;&#46;&#111;&#x70; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>admin123</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211184945260.png"
+                      alt="image-20221211184945260"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211185101249.png"
+                      alt="image-20221211185101249"
+                ></p>
+<blockquote>
+<p>946a799363226a24822008503f5d1324536629a0</p>
+</blockquote>
+<p><strong>Question #2:</strong> <strong>View another user’s shopping basket!</strong>–查看其他用户的购物篮！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211191009253.png"
+                      alt="image-20221211191009253"
+                ></p>
+<p>开启BurpSuite，在管理员帐户登录后的界面中单击“你的购物篮”，然后在Burp页面转发捕获到的请求，直到你看到<code>GET /rest/basket/1 HTTP/1.1</code> ，接着使用Burp将<code>/basket/</code>之后的数字 1 更改为 2，现在和该请求所对应的页面 就可以显示 UserID为2 的用户购物篮！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211190631857.png"
+                      alt="image-20221211190631857"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211190724073.png"
+                      alt="image-20221211190724073"
+                ></p>
+<p>使用Burp转发所有请求，然后在浏览器中 查看修改之后的请求所对应的页面以便得到一个flag。</p>
+<p><em><strong>UserID为2 的用户购物篮（下图是通过Burp修改请求才得到的界面）：</strong></em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211190847609.png"
+                      alt="image-20221211190847609"
+                ></p>
+<p><em><strong>UserID为1 的用户购物篮（admin用户的原始购物车界面）：</strong></em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211191139272.png"
+                      alt="image-20221211191139272"
+                ></p>
+<blockquote>
+<p>41b997a36cc33fbe4f0ba018474e19ae5ce52121</p>
+</blockquote>
+<p><strong>Question #3: Remove all 5-star reviews!</strong>–删除所有 5 星评论！</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211192033307.png"
+                      alt="image-20221211192033307"
+                ></p>
+<p>在管理员账户下：再次导航到  <a class="link"   target="_blank" rel="noopener" href="http://10.10.103.124/#/administration" >http://10.10.103.124/#/administration <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>  页面，然后单击带有 5 星评论旁边的垃圾桶图标！这将删除所有5星评论。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211191837902.png"
+                      alt="image-20221211191837902"
+                ></p>
+<p>完成上述操作之后，得到一个flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211191940560.png"
+                      alt="image-20221211191940560"
+                ></p>
+<blockquote>
+<p>50c97bcce0b895e446d61c83a21df371ac2266ef</p>
+</blockquote>
+<h2 id="Task-7-跨站点脚本-XSS漏洞-实验"><a href="#Task-7-跨站点脚本-XSS漏洞-实验" class="headerlink" title="Task 7 跨站点脚本(XSS漏洞)-实验"></a>Task 7 跨站点脚本(XSS漏洞)-实验</h2><p>XSS 或跨站点脚本是一种允许攻击者在 Web 应用程序中运行 恶意javascript脚本 的漏洞，是 Web 应用程序中最常见的漏洞类型之一；XSS的复杂度从简单到极其困难都有所包含，因为每个 Web 应用程序可能会以不同的方式来解析具有查询功能的js代码。</p>
+<p>XSS攻击主要分为三种类型：</p>
+<p><strong>基于DOM的XSS（特殊的反射型XSS）</strong>：基于DOM的XSS (Document Object Model-based Cross-site Scripting) 可以利用 HTML 环境执行恶意 javascript代码，这种类型的XSS攻击通常会使用 <code>&lt;script&gt;&lt;/script&gt;</code> HTML 标记然后结合 <em><strong>支持动态代码执行的接收器</strong></em> 来构造Payload，此外，这种类型的XSS攻击还可以通过直接修改DOM元素来构造Payload。</p>
+<p>一些常见的接收器：</p>
+<div class="highlight-container" data-rel="Txt"><figure class="iseeu highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">document.write()</span><br><span class="line">document.writeln()</span><br><span class="line">document.domain</span><br><span class="line">someDOMElement.innerHTML</span><br><span class="line">someDOMElement.outerHTML</span><br><span class="line">someDOMElement.insertAdjacentHTML</span><br><span class="line">someDOMElement.onevent</span><br></pre></td></tr></table></figure></div>
+
+<p>例子:利用innerHTML篡改页面</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-handlebars"><span class="language-xml">document.body.innerHTML=&quot;<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">visibility:visible;</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>This is DOM XSS<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>&quot;;</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>持久型(存储型)XSS（服务器端）</strong>：持久型XSS 是在服务器加载包含它的页面时才会运行的 恶意javascript脚本（js脚本已插入到网站数据库中），当服务器在将用户所输入的数据上传（upload）到网站页面 而未对用户数据进行正确过滤时，就可能会发生这种XSS攻击，此类攻击手段在博客文章页面很常见。</p>
+<p><strong>反射型XSS（客户端）</strong>：反射型XSS 是在 Web 应用程序的客户端运行的恶意javascript脚本（因受害者点击恶意链接而导致恶意js脚本运行），常见于目标服务器未正确过滤搜索（search）数据时。</p>
+<p><strong>答题</strong></p>
+<p><strong>Question #1:</strong> <strong>Perform a DOM XSS!</strong>–执行基于DOM的XSS攻击</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211204425039.png"
+                      alt="image-20221211204425039"
+                ></p>
+<p>我们将利用带有 javascript 警告标记(alert tag)的 iframe 元素来构造攻击载荷（以下payload中包含xss单词的符号是反引号而不是单引号）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211203130320.png"
+                      alt="image-20221211203130320"
+                ></p>
+<p><em><strong>注意</strong></em>：我们在此处利用的是<code>iframe</code>元素，它是Web应用程序中常见的 HTML 元素之一，还有其他能够产生相同攻击效果的HTML元素；使用以上这种Payload类型的XSS也可称为XFS（跨框架脚本-Cross-Frame Scripting），XFS是能够在 Web 应用程序中被检测到的 XSS 的最常见形式之一，一个允许用户修改 <code>iframe</code> 或者其他DOM元素的网站很容易受到XSS攻击。</p>
+<p><em><strong>原理</strong></em>：当用户在搜索栏中输入关键字进行搜索时，这通常会导致客户端向服务器发送相关的请求，然后服务器将根据搜索栏中的关键字来返回一些相关信息；如果web应用程序没有做一些正确的“用户输入”过滤，那么我们就能够利用搜索栏来执行 XSS 攻击。</p>
+<p>将XSS Payload输入到搜索栏并按下回车键，这将触发并弹出一个警告框并将显示对应的flag内容。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211203417837.png"
+                      alt="image-20221211203417837"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211204319635.png"
+                      alt="image-20221211204319635"
+                ></p>
+<blockquote>
+<p>9aaf4bbea5c30d00a1f5bbcfce4db6d4b0efe0bf</p>
+</blockquote>
+<p><strong>Question #2:</strong> <strong>Perform a persistent XSS!</strong>–执行持久型(存储型)XSS攻击</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211210357475.png"
+                      alt="image-20221211210357475"
+                ></p>
+<p>首先，登录到管理员帐户，然后导航到“Last Login IP”页面。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211210506830.png"
+                      alt="image-20221211210506830"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211210540469.png"
+                      alt="image-20221211210540469"
+                ></p>
+<p>我们可以从上图看到，最后登陆的ip地址显示为0.0.0.0 ，现在我们注销此次登陆，这样就能记录一个新的“最后登陆ip”，同时还要确保打开 Burp 拦截，以便我们捕获这个注销登陆的请求。</p>
+<p>然后我们在Burp中转到Headers 选项卡，在其中添加一个新的header项。（以下payload中包含xss单词的符号是反引号而不是单引号）</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211213606372.png"
+                      alt="image-20221211213606372"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211214658568.png"
+                      alt="image-20221211214658568"
+                ></p>
+<p>修改完成之后，在Burp中将请求转发给目标服务器即可。<br>当我们重新登录管理员帐户并再次导航到“Last Login IP”页面时，我们就能看到一个 XSS 警告框，并能获取对应的flag。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211215007054.png"
+                      alt="image-20221211215007054"
+                ></p>
+<blockquote>
+<p>149aa8ce13d7a4a8a931472308e269c94dc5f156</p>
+</blockquote>
+<p><strong>Question #3:</strong> <strong>Perform a reflected XSS!</strong>–执行反射型XSS攻击</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211220959120.png"
+                      alt="image-20221211220959120"
+                ></p>
+<p>首先，我们需要在正确的页面上执行反射型XSS！所以我们需要登录到管理员帐户并导航至“订单历史记录”页面。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211215258168.png"
+                      alt="image-20221211215258168"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211215606014.png"
+                      alt="image-20221211215606014"
+                ></p>
+<p>在上图，你可以看到一个“Truck-卡车”图标，点击图标将会导航至订单的追踪结果页面，在该追踪结果界面你还能看到一个与订单配对的 ID。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211215831384.png"
+                      alt="image-20221211215831384"
+                ></p>
+<p>我们可以用以下Payload代替上图url栏中的id值。（以下payload中包含xss单词的符号是反引号而不是单引号）</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211203130320.png"
+                      alt="image-20221211203130320"
+                ></p>
+<p>提交 URL 后，刷新页面，你将收到一个 XSS 警告框，并能获取到对应的flag。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221211220922027.png"
+                      alt="image-20221211220922027"
+                ></p>
+<blockquote>
+<p>23cefee1527bde039295b2616eeb29e1edc660a0</p>
+</blockquote>
+<h2 id="Task-8-计分板"><a href="#Task-8-计分板" class="headerlink" title="Task 8 计分板"></a>Task 8 计分板</h2><p>如果你想尝试本文未涵盖的一些更难的挑战，请查看 Juice-shop 上的**&#x2F;#&#x2F;score-board&#x2F;**部分，在该部分你可以看到你已经完成的任务 以及 其他本文未涵盖的不同难度的任务。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221208221153945.png"
+                      alt="image-20221208221153945"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221208221225637.png"
+                      alt="image-20221208221225637"
+                ></p>
+<p>使用攻击机访问&#x2F;#&#x2F;score-board&#x2F;页面，获取对应的flag内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221210183807295.png"
+                      alt="image-20221210183807295"
+                ></p>
+<blockquote>
+<p>7efd3174f9dd5baa03a7882027f2824d2f72d86e</p>
+</blockquote>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-OWASP Juice Shop-练习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 13:40:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 13:49:53
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-OWASP Juice Shop-练习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Web%E5%AE%89%E5%85%A8/">#Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Upload%20Vulnerabilities(%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Upload Vulnerabilities(文件上传漏洞)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-OWASP%20Top%2010(2021%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-OWASP Top 10(2021版)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-OWASP Juice Shop-练习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-1-%E9%83%A8%E7%BD%B2%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83-%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="nav-text">Task 1 部署实验环境&amp;前期准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-2-%E9%81%8D%E5%8E%86%E7%9B%AE%E6%A0%87%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="nav-text">Task 2 遍历目标应用程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-3-%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E-%E5%AE%9E%E9%AA%8C"><span class="nav-text">Task 3 注入漏洞-实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-4-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E5%A4%B1%E6%95%88%E6%BC%8F%E6%B4%9E-%E5%AE%9E%E9%AA%8C"><span class="nav-text">Task 4 身份验证失效漏洞-实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-5-%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2-%E5%AE%9E%E9%AA%8C"><span class="nav-text">Task 5 敏感信息泄露-实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-6-%E6%8D%9F%E5%9D%8F%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6-%E8%B6%8A%E6%9D%83-%E5%AE%9E%E9%AA%8C"><span class="nav-text">Task 6 损坏的访问控制(越权)-实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-7-%E8%B7%A8%E7%AB%99%E7%82%B9%E8%84%9A%E6%9C%AC-XSS%E6%BC%8F%E6%B4%9E-%E5%AE%9E%E9%AA%8C"><span class="nav-text">Task 7 跨站点脚本(XSS漏洞)-实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-8-%E8%AE%A1%E5%88%86%E6%9D%BF"><span class="nav-text">Task 8 计分板</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

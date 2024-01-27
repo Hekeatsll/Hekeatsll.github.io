@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-burp suite：repeater(burp suite重放器·更新版)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="学习如何使用 Repeater 在 Burp Suite 中重发请求。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Burp Suite：Repeater(Burp Suite重放器·更新版)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Burp%20Suite%EF%BC%9ARepeater(Burp%20Suite%E9%87%8D%E6%94%BE%E5%99%A8%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="学习如何使用 Repeater 在 Burp Suite 中重发请求。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20231224200822040.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231224202015697.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231224202722399.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409100210962.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230408220445196.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230408221137800.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230408221756766.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231225111241724.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230408223350493.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231225113129733.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231226080707519.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231226081340441.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231226083558838.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409104131423.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231226184055553.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409104237418.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409104256498.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231226184138807.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409112618299.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409112658835.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409114826258.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409123224633.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231226185617703.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409124842773.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231226184352285.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231226184406727.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409124948001.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231226184454227.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409125205636.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231226184624007.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409135153789.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409135543209.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409140821331.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409140750939.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409140503109.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231226184843113.png">
+<meta property="article:published_time" content="2024-01-27T04:29:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T04:38:18.258Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="工具使用">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20231224200822040.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Burp Suite：Repeater(Burp Suite重放器·更新版)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://assets.tryhackme.com/room-banners/burpsuite.svg" alt="THM-Burp Suite：Repeater(Burp Suite重放器·更新版)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Burp Suite：Repeater(Burp Suite重放器·更新版)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 12:29:55</span>
+        <span class="mobile">2024-01-27 12:29:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 12:38:18</span>
+            <span class="mobile">2024-01-27 12:38:18</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>4.4k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>16 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/burpsuiterepeater" >https://tryhackme.com/room/burpsuiterepeater <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：学习如何使用 Repeater 在 Burp Suite 中重发请求。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在本文中，我们将重点关注Burp Suite Repeater模块以探索Burp Suite框架的高级功能，我们将学习如何使用该模块来操作和重新发送已经捕获的请求，并且将探索这个特殊模块中可用的各种选项和功能；此外，本文还会提供几个练习案例，从而巩固我们对于本文所讨论的概念的理解。</p>
+<p><strong>前置学习基础</strong></p>
+<p>在学习本文内容之前，建议先阅读并理解以下博客文章内容：</p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/Hekeats-L/p/17924223.html" >【THM】Burp Suite：The Basics(Burp Suite基础·更新版)-学习 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+<p><strong>实验环境部署</strong></p>
+<p>我们可以在与本文相关的Tryhackme实验房间中一键部署目标虚拟机，并且我们还能在相关的THM实验房间中使用THM官方所提供的AttackBox来作为自己的攻击机，当然使用自己的本地kali机器作为攻击机也是可以的。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231224200822040.png"
+                      alt="image-20231224200822040"
+                ></p>
+<h2 id="什么是Repeater？"><a href="#什么是Repeater？" class="headerlink" title="什么是Repeater？"></a>什么是Repeater？</h2><p>在开始使用Burp Suite Repeater之前，让我们先来熟悉一下它的用途和功能。</p>
+<p>简而言之，Burp Suite的Repeater模块允许我们修改Burp Proxy所拦截的请求并将其转发到目标服务器；这意味着我们可以通过Repeater获取在Burp Proxy中已捕获的请求，然后对请求的内容进行编辑，并能根据渗透测试需要多次重复发送相同的请求到目标服务器。</p>
+<p>tips：当然，我们也可以选择手动创建请求消息，就像我们在CLI(命令行界面)中所做的那样，使用诸如<a class="link"   target="_blank" rel="noopener" href="https://curl.se/" >cURL <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>之类的工具可以手动构建和发送请求消息到目标站点。</p>
+<p>这种能够多次编辑和重发请求消息的能力，使得Repeater模块适合任何类型的端点手工测试操作，Repeater为我们提供了一个图形用户界面(GUI)，这个GUI包含了可供我们编写请求消息和响应消息的多个视图区域，以便我们可以清楚地看到我们手工操作的结果。</p>
+<p>Repeater界面由六个主要部分组成：</p>
+<ol>
+<li><p>请求列表：在Repeater选项卡界面的左上方，会显示所有Repeater请求列表，每当我们发送一个新的请求消息到Repeater中时，此处的请求列表就会增加。</p>
+</li>
+<li><p>请求控件：在请求列表的正下方，有一些可以控制当前请求消息的控件，这些控件允许我们发送请求、取消挂起的请求以及浏览历史请求记录。</p>
+</li>
+<li><p>请求和响应视图：在Repeater选项卡界面左边的大部分区域，可以看到请求视图和响应视图，我们可以在request视图中编辑请求消息，然后点击Send发送请求到目标站点，随后与请求消息相对应的响应消息就会显示在response视图中。</p>
+</li>
+<li><p>布局选项：在request&amp;response视图的右上角处，有一组设置选项，能够允许我们更改请求视图和响应视图的布局；在默认情况下，请求视图和响应视图通常是并排显示(水平布局)，但是我们也可以选择将这两个视图上下排列显示(垂直布局)，或者将请求视图和响应视图组合在单独的选项卡中(组合视图)。</p>
+</li>
+<li><p>检查器：在Repeater选项卡界面的右侧，有一个Inspector界面，Inspector允许我们将请求消息(以及响应消息)分解，从而以一种更直观的方式来分析和编辑请求消息的内容。</p>
+</li>
+<li><p>目标：最后，在Inspector的上方，我们可以找到Target部分，Target就是我们所要发送的请求的目标IP地址或目标域，当我们从Burp Suite的其他部分发送请求消息到Repeater中时，Target中的字段将会自动填充。</p>
+</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231224202015697.png"
+                      alt="image-20231224202015697"
+                ></p>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>阅读本小节内容，并回答以下问题：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231224202722399.png"
+                      alt="image-20231224202722399"
+                ></p>
+<h2 id="Repeater的基础用法"><a href="#Repeater的基础用法" class="headerlink" title="Repeater的基础用法"></a>Repeater的基础用法</h2><p>我们现在知道了Repeater选项卡的界面是什么样子，但是我们该如何使用它呢?</p>
+<p>虽然我们可以选择手动创建请求消息，但是更常见的方法是使用Burp Proxy功能模块来捕获请求，然后将被捕获的请求消息发送到Repeater中进行编辑和重发。</p>
+<p>在Burp Proxy中捕获到请求后，我们可以通过右键单击请求消息并选择“Send to Repeater”或者按下<code>Ctrl + R</code>快捷键将请求消息发送到Repeater中：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409100210962.png"
+                      alt="image-20230409100210962"
+                ></p>
+<p>现在，当我们切换到Repeater界面时，就可以在Repeater界面的请求视图中看到可用的请求消息：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230408220445196.png"
+                      alt="image-20230408220445196"
+                ></p>
+<p>如上图所示，我们可以看到Target区域和Inspector界面也显示了相关信息，但是我们还没有看到响应消息，所以我们可以选择点击”Send”按钮，然后响应视图部分就会被响应消息的内容快速填充：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230408221137800.png"
+                      alt="image-20230408221137800"
+                ></p>
+<p>如果我们想要修改请求消息的内容，我们可以直接在请求视图中进行信息修改，然后再次点击”Send”按钮，这将更新响应视图中的内容。例如，我们可以将上图请求中的”Connection”报头的值修改为”<code>open</code>“而不是”<code>close</code>“，然后发送该请求，这样会导致响应消息中的”Connection”报头的值变为”<code>keep-alive</code>“：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230408221756766.png"
+                      alt="image-20230408221756766"
+                ></p>
+<p>tips：我们还可以使用”Send”按钮一栏最右侧的两个翻页按钮——向前或者向后浏览我们修改请求的历史记录。</p>
+<h3 id="答题-1"><a href="#答题-1" class="headerlink" title="答题"></a>答题</h3><p>阅读本小节内容，并回答以下问题：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231225111241724.png"
+                      alt="image-20231225111241724"
+                ></p>
+<h2 id="消息显示选项栏"><a href="#消息显示选项栏" class="headerlink" title="消息显示选项栏"></a>消息显示选项栏</h2><p>Repeater为我们提供了各种选项来呈现请求消息与响应消息。</p>
+<p>以响应消息为例，我们可以通过点击响应视图顶部的四个选项按钮来切换可用的消息显示格式：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230408223350493.png"
+                      alt="image-20230408223350493"
+                ></p>
+<p>我们有以下四个显示选项，它们可以决定响应消息的显示格式(这些选项同样适用于请求消息)：</p>
+<ol>
+<li>Pretty(美化)：这是默认选项，它会基于原始的响应消息而略微美化其内容格式，这将使得响应消息更容易被阅读；</li>
+<li>Raw(原始)：此选项会显示来自于目标服务器的纯粹的、未经美化的响应消息；</li>
+<li>Hex(十六进制)：该选项将以字节格式呈现原始的响应消息，这个选项在处理二进制文件时特别有用；</li>
+<li>Render(渲染)：如果选择该选项，则会将响应消息渲染成一个可视化页面，这就像我们在浏览器中查看响应页面一样。</li>
+</ol>
+<p>tips：对于大多数场景，使用Pretty选项通常就足够了，然而，熟悉其他三个选项的用法对于我们而言也是有益的。</p>
+<p>在上述的”Render”选项右边有一个<code>\n</code>按钮，<code>\n</code>按钮的含义是”显示不可打印字符”，它允许我们显示通常不会在Pretty格式(或者Raw格式)的视图中显示的字符；例如，如果我们在Pretty格式的响应视图中点击<code>\n</code>按钮，那么响应消息中的每一行结尾都会显示<code>\r\n</code> 字符——即一个回车符后面跟着一个换行符，这些字符在HTTP头的解释中起着重要的作用。</p>
+<h3 id="答题-2"><a href="#答题-2" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>阅读本小节内容，并回答以下问题：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231225113129733.png"
+                      alt="image-20231225113129733"
+                ></p>
+<h2 id="Inspector界面"><a href="#Inspector界面" class="headerlink" title="Inspector界面"></a>Inspector界面</h2><p>在很多时候，Inspector是对Repeater模块中的Request视图和Response视图的补充，如果你足够了解如何阅读和编辑HTTP请求，那么你可能会发现你很少需要用到Inspector界面。</p>
+<p>Inspector可以在Proxy模块和Repeater模块中使用，在这两种情况下，它都位于对应模块窗口的最右侧，并能为我们提供关于请求消息和响应消息的组件列表：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231226080707519.png"
+                      alt="image-20231226080707519"
+                ></p>
+<p>在上图所示的组件中，与请求消息相关的部分通常可以被修改，通过操作Inspector界面，我们可以添加、编辑和删除一个请求消息分解之后所产生的组件项目；例如，在请求消息的Request Attributes(请求属性)部分，我们可以编辑请求的Path、Method和Protocol——从而可以更改我们所要检索的资源、将GET方法更改为另一种HTTP方法、将协议从HTTP&#x2F;1切换到HTTP&#x2F;2：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231226081340441.png"
+                      alt="image-20231226081340441"
+                ></p>
+<p>在Inspector界面中，除了上面所介绍的Request Attributes部分之外，其他可供我们查看和编辑的部分还包括：</p>
+<ul>
+<li>Request Query Parameters：”请求查询参数”，此处会引用通过URL发送到服务器的数据；如在<code>https://admin.tryhackme.com/?redirect=false</code> 之类的GET请求中，有一个名为”redirect”的”请求查询参数”，其值为”false”。</li>
+<li>Request Body Parameters：”请求主体参数”，它的功能与”请求查询参数”类似，但它特定用于POST请求，我们在POST请求中作为数据发送的内容都将显示在这个”请求主体参数”中，我们可以在重新发送请求之前修改参数。</li>
+<li>Request Cookies：”请求cookies”，此部分会包含一个伴随每个请求而被发送的可修改的cookie的列表。</li>
+<li>Request Headers：”请求标头”，此部分允许我们查看、访问和修改(包括添加或删除)与我们的请求一起被发送的任何标头；在检查Web服务器会如何响应意外的标头信息时，编辑”请求标头”的内容非常有用。</li>
+<li>Response Headers：”响应标头”，此部分将显示Web服务器在响应我们的请求时所发回的标头信息，这部分内容不能被编辑(因为我们不能控制目标服务器将返回给我们什么标头)；请注意，”响应标头”的内容仅在我们向目标Web服务器发送请求并且收到响应后才会显示。</li>
+</ul>
+<p>tips：虽然Inspector界面中组件的文本表示也可以在请求视图和响应视图中找到，但是Inspector的表格格式为我们提供了一种方便的方式来可视化“消息组件”并与其进行交互；通过使用Inspector，我们可以针对请求消息的相关组件执行字段修改、添加和删除操作，并能查看原始的响应消息会发生什么变化。</p>
+<h3 id="答题-3"><a href="#答题-3" class="headerlink" title="答题"></a>答题</h3><p>阅读本小节内容，并回答以下问题：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231226083558838.png"
+                      alt="image-20231226083558838"
+                ></p>
+<p>tips：Request Body Parameters-“请求主体参数”。</p>
+<h2 id="简单示例练习"><a href="#简单示例练习" class="headerlink" title="简单示例练习"></a>简单示例练习</h2><p>Repeater允许我们多次发送类似的请求(通常需要对请求进行少量修改)到目标服务器，通过使用Repeater：可以手动测试SQL注入漏洞、尝试绕过Web应用程序的防火墙过滤器、在提交表单时调整相关的参数……</p>
+<p>现在，让我们从一个简单的示例开始练习：使用Repeater更改请求消息的标头并发送给目标站点。</p>
+<h3 id="答题-4"><a href="#答题-4" class="headerlink" title="答题"></a>答题</h3><p>首先在和本文相关的TryHackMe实验房间中启动目标机器。</p>
+<p>在本地Kali机上启动Burp Suite，激活Burp代理插件(浏览器插件)并启用Burp Proxy的拦截功能，然后在浏览器中访问目标站点——在成功抓取到相关请求包之后，我们再将其发送给Repeater模块：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409104131423.png"
+                      alt="image-20230409104131423"
+                ></p>
+<p>使用Repeater模块的Inspector界面(或者直接在请求视图中手动操作)，在请求消息中添加一个名为FlagAuthorised的标头，并将其值设置为True：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231226184055553.png"
+                      alt="image-20231226184055553"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Headers with FlagAuthorised Added</span></span><br><span class="line">GET / HTTP/1.1</span><br><span class="line">Host: 10.10.7.11</span><br><span class="line">User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">FlagAuthorised: True</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409104237418.png"
+                      alt="image-20230409104237418"
+                ></p>
+<p>点击上图中的Send按钮，然后查看响应消息中的flag信息：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409104256498.png"
+                      alt="image-20230409104256498"
+                ></p>
+<blockquote>
+<p>flag内容为：THM{Yzg2MWI2ZDhlYzdlNGFiZTUzZTIzMzVi} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231226184138807.png"
+                      alt="image-20231226184138807"
+                ></p>
+<h2 id="挑战任务练习"><a href="#挑战任务练习" class="headerlink" title="挑战任务练习"></a>挑战任务练习</h2><p>停用Burp代理，访问目标网站页面<code>http://10.10.107.186/products/</code>，并尝试点击”See More”链接：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409112618299.png"
+                      alt="image-20230409112618299"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409112658835.png"
+                      alt="image-20230409112658835"
+                ></p>
+<p>从上图可以看到，我们会被重定向到一个数字端点(如<code>/products/3</code>)，这个端点通常需要验证，以确保我们所尝试导航到的端点是存在的，并且端点所对应的数字需要是一个有效整数；如果目标服务器并没有对数字端点进行充分验证，那么目标网站就可能存在安全风险。</p>
+<h3 id="答题-5"><a href="#答题-5" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>tips：本小节的思路是输入意外的端点值以查看服务器将如何响应，例如，我们可以输入一段文字或符号作为端点值，也可以尝试输入一个大于可用产品数量的数字作为端点值，或者输入一个小于或等于 0 的数字作为端点值。</p>
+<p>激活Burp代理插件并开启Burp Proxy拦截功能，尝试捕获一个针对目标站点的<code>products</code>页面的包含端点的请求，然后将其转发给Repeater进行修改，我们将请求消息中的端点数值修改为-1，然后点击Send按钮继续发送请求消息：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409114826258.png"
+                      alt="image-20230409114826258"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409123224633.png"
+                      alt="image-20230409123224633"
+                ></p>
+<blockquote>
+<p>flag的内容为：THM{N2MzMzFhMTA1MmZiYjA2YWQ4M2ZmMzhl} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231226185617703.png"
+                      alt="image-20231226185617703"
+                ></p>
+<h2 id="综合练习-测试SQLi漏洞"><a href="#综合练习-测试SQLi漏洞" class="headerlink" title="综合练习-测试SQLi漏洞"></a>综合练习-测试SQLi漏洞</h2><p><strong>本小节任务：</strong></p>
+<p>目标网站的<code>/about/ID</code>端点页面中的ID参数存在联合SQL注入漏洞，我们需要使用Burp Suite找到此SQL漏洞，然后执行SQLi攻击以检索一个存储在数据库中的关于CEO的注释。</p>
+<h3 id="答题-6"><a href="#答题-6" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>激活Burp代理插件并开启Burp Proxy拦截功能，在攻击机上的浏览器中访问 <a class="link"   target="_blank" rel="noopener" href="http://10.10.107.186/about/2" >http://10.10.107.186/about/2 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ，捕获相关请求并将其发送给Repeater：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409124842773.png"
+                      alt="image-20230409124842773"
+                ></p>
+<p>现在我们可以对请求消息进行修改测试，为了验证目标页面是否存在SQLi漏洞，我们在端点参数后添加<code>&#39;</code>符号，如果服务器响应”500 Internal Server Error”，则表明我们成功中断了SQL查询：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231226184352285.png"
+                      alt="image-20231226184352285"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231226184406727.png"
+                      alt="image-20231226184406727"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Request Headers</span></span><br><span class="line">GET /about/2&#x27; HTTP/1.1</span><br><span class="line">Host: 10.10.107.186</span><br><span class="line">User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Response Headers from the Server</span></span><br><span class="line">HTTP/1.1 500 INTERNAL SERVER ERROR</span><br><span class="line">Server: nginx/1.18.0 (Ubuntu)</span><br><span class="line">Date: Mon, 16 Aug 2021 23:05:21 GMT</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line">Content-Length: 3101</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409124948001.png"
+                      alt="image-20230409124948001"
+                ></p>
+<p>我们可以查看并分析目标服务器所响应的消息内容，在第 40 行左右，我们可以看到目标服务器返回了过多的提示信息(关于错误的SQL查询)：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231226184454227.png"
+                      alt="image-20231226184454227"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Overly verbose error message showing the query</span></span><br><span class="line">&lt;h2&gt;</span><br><span class="line">    &lt;code&gt;Invalid statement: </span><br><span class="line">        &lt;code&gt;SELECT firstName, lastName, pfpLink, role, bio FROM people WHERE id = 2&#x27;&lt;/code&gt;</span><br><span class="line">    &lt;/code&gt;</span><br><span class="line">&lt;/h2&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409125205636.png"
+                      alt="image-20230409125205636"
+                ></p>
+<p>通过上图中的提示信息，我们可以获取到以下关键点：</p>
+<ol>
+<li>与上述页面相关的SQL查询将基于服务器数据库中的<code>people</code>表进行查询；</li>
+<li>该SQL查询在<code>people</code>表中选中了五列：<code>firstName</code>、<code>lastName</code>、<code>pfpLink</code>、<code>role</code>以及<code>bio</code>；</li>
+</ol>
+<p>有了以上这些信息，我们就可以跳过枚举表名和查询部分列名的步骤，但是我们仍然需要找到我们的目标列的名称(以上五列并非是people表的全部列)。</p>
+<p>我们可以使用联合查询——选择在默认数据库<code>information_schema</code>的<code>columns</code>表中查询列名，并指定我们要查询的列属于<code>people</code>表。</p>
+<p>相关查询语句如下：</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/about/0 UNION ALL SELECT column_name,null,null,null,null FROM information_schema.columns WHERE table_name=&quot;people&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p>上面的SQL语句将创建一个联合查询，这将选择我们所指定的列然后是四个空列(因为<code>UNION</code>关键字前后所查询的列数必须相同，添加空列可避免查询出错)。</p>
+<p>tips：在上面的查询语句中，我们还将ID值由 2 更改为 0(将ID设置为无效值)，这可以确保目标服务器只对<code>UNION</code>关键字后面的查询进行响应。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231226184624007.png"
+                      alt="image-20231226184624007"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">The <span class="string">&quot;id&quot;</span> column name <span class="keyword">in</span> the title of the response</span></span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.18.0 (Ubuntu)</span><br><span class="line">Date: Mon, 16 Aug 2021 22:12:36 GMT</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line">Connection: close</span><br><span class="line">Front-End-Https: on</span><br><span class="line">Content-Length: 3360</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=en&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;</span><br><span class="line">            About | id None</span><br><span class="line">        &lt;/title&gt;</span><br><span class="line">-----</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409135153789.png"
+                      alt="image-20230409135153789"
+                ></p>
+<p>我们成功地从数据库中取出了第一个列名，但是现在页面只显示第一个匹配项——我们需要看到所有匹配项；因此接下来我们可以使用<code>group_concat()</code>函数，这能够将所有列名合并为一个输出：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/about/0 UNION ALL SELECT group_concat(column_name),null,null,null,null FROM information_schema.columns WHERE table_name=&quot;people&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409135543209.png"
+                      alt="image-20230409135543209"
+                ></p>
+<p>我们成功地识别了<code>people</code>表中的八列：<code>id</code>, <code>firstName</code>, <code>lastName</code>, <code>pfpLink</code>, <code>role</code>, <code>shortRole</code>, <code>bio</code>和<code>notes</code>。</p>
+<p>考虑到我们在本小节中的任务要求，我们想找的目标列应该是<code>notes</code>。</p>
+<p>最后，我们要从服务器数据库中提取flag值——我们现在已经有了所需要的全部信息：</p>
+<ul>
+<li><p>表名：<code>people</code>；</p>
+</li>
+<li><p>目标列的名称：<code>notes</code>；</p>
+</li>
+<li><p>CEO对应的ID值应该为：<code>1</code> (这可以通过在<code>/about/</code>页中点击Jameson Wolfe的个人资料，并检查URL中的ID找到)。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409140821331.png"
+                      alt="image-20230409140821331"
+                ></p>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409140750939.png"
+                      alt="image-20230409140750939"
+                ></p>
+<p>让我们构建一个完整的payload来提取flag内容：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 UNION ALL SELECT notes,null,null,null,null FROM people WHERE id = 1</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409140503109.png"
+                      alt="image-20230409140503109"
+                ></p>
+<blockquote>
+<p>flag的内容为：THM{ZGE3OTUyZGMyMzkwNjJmZjg3Mzk1NjJh} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231226184843113.png"
+                      alt="image-20231226184843113"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Burp Suite：Repeater(Burp Suite重放器·更新版)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 12:29:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 12:38:18
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Burp Suite：Repeater(Burp Suite重放器·更新版)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">#工具使用</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Burp%20Suite%EF%BC%9AIntruder(Burp%20Suite%E6%94%BB%E5%87%BB%E5%99%A8%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Burp Suite：Intruder(Burp Suite攻击器·更新版)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Burp%20Suite%EF%BC%9AThe%20Basics(Burp%20Suite%E5%9F%BA%E7%A1%80%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Burp Suite：The Basics(Burp Suite基础·更新版)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Burp Suite：Repeater(Burp Suite重放器·更新版)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFRepeater%EF%BC%9F"><span class="nav-text">什么是Repeater？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Repeater%E7%9A%84%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95"><span class="nav-text">Repeater的基础用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-1"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E6%98%BE%E7%A4%BA%E9%80%89%E9%A1%B9%E6%A0%8F"><span class="nav-text">消息显示选项栏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-2"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inspector%E7%95%8C%E9%9D%A2"><span class="nav-text">Inspector界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-3"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B%E7%BB%83%E4%B9%A0"><span class="nav-text">简单示例练习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-4"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%91%E6%88%98%E4%BB%BB%E5%8A%A1%E7%BB%83%E4%B9%A0"><span class="nav-text">挑战任务练习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-5"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E7%BB%83%E4%B9%A0-%E6%B5%8B%E8%AF%95SQLi%E6%BC%8F%E6%B4%9E"><span class="nav-text">综合练习-测试SQLi漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-6"><span class="nav-text">答题</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

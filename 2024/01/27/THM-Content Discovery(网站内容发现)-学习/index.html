@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-content discovery(网站内容发现)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解在网络服务器上发现可能导致漏洞的隐藏或私人内容的各种方法（网站内容发现也属于信息收集的范畴）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Content Discovery(网站内容发现)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Content%20Discovery(%E7%BD%91%E7%AB%99%E5%86%85%E5%AE%B9%E5%8F%91%E7%8E%B0)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解在网络服务器上发现可能导致漏洞的隐藏或私人内容的各种方法（网站内容发现也属于信息收集的范畴）。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112180045286.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112182302289.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112184112691.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112184212745.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112184943441.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112185000859.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112185530148.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112184943441.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112185858253.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112185750144.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112190525546.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112190723611.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112191437605.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112191620475.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112192819557.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112192923204.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112193105657.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112193244988.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112193401044.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112194042224.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112194824729.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112195208423.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112195513239.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112195607052.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112201149334.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112212602677.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112213507581.png">
+<meta property="article:published_time" content="2024-01-27T03:23:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T03:54:33.827Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="信息收集">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20221112180045286.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Content Discovery(网站内容发现)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5efe36fb68daf465530ca761/room-content/03376575e888fd097280c51469c29fbc.png" alt="THM-Content Discovery(网站内容发现)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Content Discovery(网站内容发现)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 11:23:55</span>
+        <span class="mobile">2024-01-27 11:23:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 11:54:33</span>
+            <span class="mobile">2024-01-27 11:54:33</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.4k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>12 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/contentdiscovery" >https://tryhackme.com/room/contentdiscovery <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>通过学习相关知识点：了解在网络服务器上发现可能导致漏洞的隐藏或私人内容的各种方法（网站内容发现也属于信息收集的范畴）。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>首先，我们应该问，在 Web 应用安全的背景下，什么是网站内容？ 网站内容可以是很多东西：文件、视频、图片、备份、网站功能等。 当我们谈论网站内容发现时，我们不是在谈论我们可以在网站上看到的显而易见的东西，而是指那些网站并没有立即呈现给我们、并不总是供公众使用的网站内容。</p>
+<p>例如，该网站内容可以是供员工使用的页面或门户、网站的旧版本、备份文件、配置文件、管理面板等。</p>
+<p>我们将介绍在网站上发现内容的三种主要方式：手动发现、自动发现和 OSINT（开源情报）。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112180045286.png"
+                      alt="image-20221112180045286"
+                ></p>
+<h2 id="手动发现网站内容-Robots-txt"><a href="#手动发现网站内容-Robots-txt" class="headerlink" title="手动发现网站内容 - Robots.txt"></a>手动发现网站内容 - Robots.txt</h2><p>我们可以在网站上手动检查多个位置以开始发现更多网站内容。</p>
+<p><strong>Robots.txt（在现实环境下该文件可能无法提供信息）</strong></p>
+<p>robots.txt 是一个文件，它将告诉搜索引擎哪些页面可以显示在搜索引擎结果中，哪些页面不允许显示在搜索引擎结果中，或者禁止特定搜索引擎完全抓取该网站所有资源。 通常的做法是使用robots.txt 限制该网站的某些区域，使其不会显示在搜索引擎结果中。 </p>
+<p>被限制搜索的页面可能是网站客户的管理门户或文件等区域。 robots.txt文件为我们提供了一个网站所有者不希望我们发现的关于网站资源位置的列表。</p>
+<p>查看 Acme IT Support 网站（目标示例站点）上的 robots.txt 文件 - 为此，请在 AttackBox 上打开 Firefox，然后输入网址：<a class="link"   target="_blank" rel="noopener" href="http://machine_ip/robots.txt" >http://MACHINE_IP&#x2F;robots.txt <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（此 URL 将在你启动目标机器后 2 分钟更新）</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112182302289.png"
+                      alt="image-20221112182302289"
+                ></p>
+<p>查看目标站点的robots.txt文件：</p>
+<div class="highlight-container" data-rel="Http"><figure class="iseeu highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://MACHINE_IP/robots.txt</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112184112691.png"
+                      alt="image-20221112184112691"
+                ></p>
+<h2 id="手动发现网站内容-Favicon"><a href="#手动发现网站内容-Favicon" class="headerlink" title="手动发现网站内容-Favicon"></a>手动发现网站内容-Favicon</h2><p><strong>Favicon</strong></p>
+<p>favicon 是一个小图标，显示在浏览器的地址栏或选项卡中，用于品牌化网站。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112184212745.png"
+                      alt="image-20221112184212745"
+                ></p>
+<p>有时，当使用网站框架构建网站时，框架自带的图标会作为安装的一部分而留下，如果网站开发人员没有用自定义图标替换它，这就可以让我们了解当前网站正在使用的框架。</p>
+<p> OWASP 托管了一个常见网站框架图标的数据库，你可以使用它来检查目标的favicon（图标）以查看该图标对应的网站框架是什么：</p>
+<blockquote>
+<p> <a class="link"   target="_blank" rel="noopener" href="https://wiki.owasp.org/index.php/OWASP_favicon_database" >https://wiki.owasp.org/index.php/OWASP_favicon_database <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p>一旦我们知道了网站当前使用的框架堆栈，我们就可以使用外部资源来发现更多关于它的信息。</p>
+<p><strong>实践练习</strong></p>
+<p>在 AttackBox 上，打开 firefox 并输入URL <a class="link"   target="_blank" rel="noopener" href="https://static-labs.tryhackme.cloud/sites/favicon/" >https://static-labs.tryhackme.cloud/sites/favicon/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 在这里你会看到一个基本的网站，上面写着“网站即将推出……”，在浏览器的地址选项卡上，你会注意到一个图标，你可以确认该站点正在使用一个网站图标。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112184943441.png"
+                      alt="image-20221112184943441"
+                ></p>
+<p>查看该网页源代码，你会看到源代码第六行包含一个指向 <code>images/favicon.ico</code> 文件的链接。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112185000859.png"
+                      alt="image-20221112185000859"
+                ></p>
+<p>在 AttackBox 上运行以下命令，它将下载目标网页相关的 favicon 并获取其 md5 哈希值，然后你可以通过上面给出的<a class="link"   target="_blank" rel="noopener" href="https://wiki.owasp.org/index.php/OWASP_favicon_database" >在线网站 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>查找该图标对应的网站框架：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@machine$ </span><span class="language-bash">curl https://static-labs.tryhackme.cloud/sites/favicon/images/favicon.ico | <span class="built_in">md5sum</span></span></span><br></pre></td></tr></table></figure></div>
+
+<p>注意：如果你得到的哈希值以 427e 结尾，那么代表你的 curl命令 失败了，你可能需要再试一次。 </p>
+<p>你也可以在 Windows 上的 Powershell 中运行命令，如下所示：</p>
+<div class="highlight-container" data-rel="Powershell"><figure class="iseeu highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\&gt; <span class="built_in">curl</span> https://<span class="keyword">static</span><span class="literal">-labs</span>.tryhackme.cloud/sites/favicon/images/favicon.ico <span class="literal">-UseBasicParsing</span> <span class="literal">-o</span> favicon.ico</span><br><span class="line"><span class="built_in">PS</span> C:\&gt; <span class="built_in">Get-FileHash</span> .\favicon.ico <span class="literal">-Algorithm</span> MD5 </span><br></pre></td></tr></table></figure></div>
+
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112185530148.png"
+                      alt="image-20221112185530148"
+                ></p>
+<p>查看目标站点图标：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112184943441.png"
+                      alt="image-20221112184943441"
+                ></p>
+<p>下载目标网页相关的 favicon 并获取其 md5 哈希值：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112185858253.png"
+                      alt="image-20221112185858253"
+                ></p>
+<blockquote>
+<p>f276b19aabcb4ae8cda4d22625c6735f</p>
+</blockquote>
+<p>使用 <a class="link"   target="_blank" rel="noopener" href="https://wiki.owasp.org/index.php/OWASP_favicon_database" >https://wiki.owasp.org/index.php/OWASP_favicon_database <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 查找图标hash值对应的网站框架</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112185750144.png"
+                      alt="image-20221112185750144"
+                ></p>
+<h2 id="手动发现网站内容-Sitemap-xml"><a href="#手动发现网站内容-Sitemap-xml" class="headerlink" title="手动发现网站内容-Sitemap.xml"></a>手动发现网站内容-Sitemap.xml</h2><p><strong>Sitemap.xml</strong></p>
+<p>与限制搜索引擎爬虫查看范围的 robots.txt 文件不同，sitemap.xml 文件提供了网站所有者希望在搜索引擎上列出的每个文件的列表。 sitemap.xml 文件有时也可能会包含网站中难以导航的区域，甚至会列出当前网站不再使用但仍在幕后工作的一些旧网页。</p>
+<p>查看 Acme IT Support 网站（目标示例站点）上的 sitemap.xml 文件，查看是否有我们尚未发现的网站新内容： <a class="link"   target="_blank" rel="noopener" href="http://10.10.190.47/sitemap.xml" >http://10.10.190.47/sitemap.xml <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> （在 AttackBox 上的 FireFox 浏览器中打开它 ）。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112190525546.png"
+                      alt="image-20221112190525546"
+                ></p>
+<p>访问目标站点的sitemap文件： <a class="link"   target="_blank" rel="noopener" href="http://10.10.190.47/sitemap.xml" >http://10.10.190.47/sitemap.xml <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112190723611.png"
+                      alt="image-20221112190723611"
+                ></p>
+<h2 id="手动发现网站内容-HTTP-Headers（HTTP标头）"><a href="#手动发现网站内容-HTTP-Headers（HTTP标头）" class="headerlink" title="手动发现网站内容-HTTP Headers（HTTP标头）"></a>手动发现网站内容-HTTP Headers（HTTP标头）</h2><p><strong>HTTP标头</strong></p>
+<p>当我们向 Web 服务器发出请求时，服务器会返回各种 HTTP 标头。 这些标头有时可能会包含一些有用的信息，例如web服务器软件，可能还有网站 当前正在使用的编程&#x2F;脚本语言。 </p>
+<p>在下面的示例中，我们可以看到web服务器是 <strong>NGINX</strong> 版本为 <strong>1.18.0</strong> ，运行的 <strong>PHP</strong> 版本是 <strong>7.4.3</strong>。 通过这些信息，我们可以找到正在使用的易受攻击的相关软件版本。 现在尝试对 Web 服务器运行 curl 命令，使用 <code>-v</code> 开关开启详细模式，这将输出HTTP标头的详细信息（可能会有一些有趣的东西！）。</p>
+<p>具体命令和执行结果如下：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@machine$ </span><span class="language-bash">curl http://10.10.190.47 -v</span></span><br><span class="line">* Trying 10.10.190.47:80...</span><br><span class="line">* TCP_NODELAY set</span><br><span class="line">* Connected to 10.10.190.47 (MACHINE_IP) port 80 (#0)</span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">GET / HTTP/1.1</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Host: MACHINE_IP</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">User-Agent: curl/7.68.0</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">Accept: */*</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">* Mark bundle as not supporting multiuse</span></span><br><span class="line">&lt; HTTP/1.1 200 OK</span><br><span class="line">&lt; Server: nginx/1.18.0 (Ubuntu)</span><br><span class="line">&lt; X-Powered-By: PHP/7.4.3</span><br><span class="line">&lt; Date: Mon, 19 Jul 2021 14:39:09 GMT</span><br><span class="line">&lt; Content-Type: text/html; charset=UTF-8</span><br><span class="line">&lt; Transfer-Encoding: chunked</span><br><span class="line">&lt; Connection: keep-alive</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112191437605.png"
+                      alt="image-20221112191437605"
+                ></p>
+<p>在攻击机上输入以下命令：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://10.10.190.47 -v</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112191620475.png"
+                      alt="image-20221112191620475"
+                ></p>
+<blockquote>
+<p>THM{HEADER_FLAG}</p>
+</blockquote>
+<h2 id="手动发现网站内容-Framework-Stack（框架堆栈）"><a href="#手动发现网站内容-Framework-Stack（框架堆栈）" class="headerlink" title="手动发现网站内容-Framework Stack（框架堆栈）"></a>手动发现网站内容-Framework Stack（框架堆栈）</h2><p><strong>框架堆栈</strong></p>
+<p>一旦你确认了目标网站正在使用的网站框架，无论是从上面的 favicon 示例中，还是通过在页面源码中寻找诸如comments、版权声明或credits等线索，你可以尝试找到关于网站框架的来源网站，然后我们就可以了解有关该框架的更多信息，以便我们发现更多关于目标网站的内容。</p>
+<p>查看我们的 Acme IT Support 网站 (示例目标站点) 的页面源码，你会在末尾看到一条评论，其中包含了该页面加载时间以及一个指向框架来源网站的链接。 让我们查看框架的来源网站。 框架来源网站的文档页面为我们提供了关于框架管理门户的路径，我们可以在Acme IT Support 网站上访问该路径，从而帮助我们在本次实验环境下获取一个flag。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112192819557.png"
+                      alt="image-20221112192819557"
+                ></p>
+<p>查看目标站点的页面源代码，获取指向框架来源网站的链接：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112192923204.png"
+                      alt="image-20221112192923204"
+                ></p>
+<blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://static-labs.tryhackme.cloud/sites/thm-web-framework" >https://static-labs.tryhackme.cloud/sites/thm-web-framework <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p>访问框架来源网站，得知关于框架管理门户的路径：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112193105657.png"
+                      alt="image-20221112193105657"
+                ></p>
+<p>访问框架管理门户路径，登录并获取flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112193244988.png"
+                      alt="image-20221112193244988"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112193401044.png"
+                      alt="image-20221112193401044"
+                ></p>
+<blockquote>
+<p>THM{CHANGE_DEFAULT_CREDENTIALS}</p>
+</blockquote>
+<h2 id="OSINT-开源情报-Google-Hacking-Dorking"><a href="#OSINT-开源情报-Google-Hacking-Dorking" class="headerlink" title="OSINT(开源情报)-Google Hacking &#x2F; Dorking"></a>OSINT(开源情报)-Google Hacking &#x2F; Dorking</h2><p>还有一些外部资源可以帮助你发现有关目标网站的信息，这些资源通常被称为 OSINT 或开源情报，因为它们是收集信息的免费工具。</p>
+<p><strong>Google Hacking &#x2F; Dorking（谷歌Hack语法）</strong></p>
+<p>Google hacking &#x2F; Dorking (谷歌Hack语法)能够利用 Google 的高级搜索引擎功能，从而允许你搜索一些自定义内容。 </p>
+<p>你可以通过使用谷歌Hack语法<code>site: </code>从某个域名中筛选搜索结果，例如 (<code>site:tryhackme.com</code>) ；你也可以将该语法与某些搜索词进行匹配，例如 <code>admin</code> (<code>site:tryhackme.com admin</code>) ，这会返回来自 tryhackme.com 网站且内容中包含单词<code>admin</code>的搜索结果。 </p>
+<p>你也可以组合多个过滤器（filters）语法，以下是关于更多过滤器（filters ）使用的示例：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112194042224.png"
+                      alt="image-20221112194042224"
+                ></p>
+<p>更多关于谷歌Hacking的信息可以在这里找到： <a class="link"   target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Google_hacking" >https://en.wikipedia.org/wiki/Google_hacking <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112194824729.png"
+                      alt="image-20221112194824729"
+                ></p>
+<h2 id="OSINT-开源情报-Wappalyzer"><a href="#OSINT-开源情报-Wappalyzer" class="headerlink" title="OSINT(开源情报)-Wappalyzer"></a>OSINT(开源情报)-Wappalyzer</h2><p><strong>Wappalyzer</strong></p>
+<p>Wappalyzer ( <a class="link"   target="_blank" rel="noopener" href="https://www.wappalyzer.com/" >https://www.wappalyzer.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ) 是一个在线工具和浏览器扩展程序，可以帮助识别当前网站正在使用的IT技术，例如网站框架、内容管理系统 (CMS)、支付处理器等等，它也可以发现网站当前运行的应用程序的版本号。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112195208423.png"
+                      alt="image-20221112195208423"
+                ></p>
+<h2 id="OSINT-开源情报-Wayback-Machine"><a href="#OSINT-开源情报-Wayback-Machine" class="headerlink" title="OSINT(开源情报)- Wayback Machine"></a>OSINT(开源情报)- Wayback Machine</h2><p><strong>Wayback Machine</strong></p>
+<p>Wayback Machine ( <a class="link"   target="_blank" rel="noopener" href="https://archive.org/web/" >https://archive.org/web/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> )是一个可追溯到 90 年代后期的网站历史档案，你可以在该网站上搜索一个域名，它会显示该网站服务抓取网页并保存内容的所有历史时间。该网站服务可以帮助我们发现在当前网站上可能仍处于活动状态的一些旧页面。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112195513239.png"
+                      alt="image-20221112195513239"
+                ></p>
+<h2 id="OSINT-开源情报-GitHub"><a href="#OSINT-开源情报-GitHub" class="headerlink" title="OSINT(开源情报)- GitHub"></a>OSINT(开源情报)- GitHub</h2><p><strong>GitHub</strong></p>
+<p>要了解 GitHub，首先需要了解 Git。 </p>
+<p>Git 是一个版本控制系统（<strong>version control system</strong>），用于跟踪项目中文件的更改情况。 这使得团队工作变得更容易，因为你可以看到每个团队成员正在编辑的内容以及他们对文件所做的一些更改。 当 Git 用户完成文件更改后，他们会通过一条消息提交它们，然后将它们推送回项目中心位置（存储库），以供其他用户将这些更改拉到他们的本地计算机上。</p>
+<p>GitHub 是托管在互联网上的 Git 版本。 GitHub 上的存储库可以设置为公共或私有，并具有各种访问控制功能。 你可以使用 GitHub 的搜索功能来查找公司名称或网站名称，以尝试找到属于目标网站的存储库。 一旦有所发现，你就可以访问你尚未找到的目标网站或者目标框架的源代码、目标可能使用的默认密码或其他内容。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112195607052.png"
+                      alt="image-20221112195607052"
+                ></p>
+<h2 id="OSINT-开源情报-S3-Buckets（S3存储桶）"><a href="#OSINT-开源情报-S3-Buckets（S3存储桶）" class="headerlink" title="OSINT(开源情报)- S3 Buckets（S3存储桶）"></a>OSINT(开源情报)- S3 Buckets（S3存储桶）</h2><p><strong>S3 Buckets（S3存储桶）</strong></p>
+<p>S3 Buckets 是 Amazon AWS 提供的一种存储服务，它允许人们将文件或者静态网站内容保存在云中，然后可以通过 HTTP 和 HTTPS 进行访问操作。 文件的所有者可以设置访问权限以使文件公开、私有甚至可写。 有时这些访问权限设置并不正确，文件所有者可能在无意中设置 允许访客访问不应向公众提供的文件。</p>
+<p>S3 存储桶的格式为 <code>http(s)://&#123;name&#125;.s3.amazonaws.com </code>，其中<code>&#123;name&#125;</code>由所有者自己决定，例如<code>tryhackme-assets.s3.amazonaws.com</code>。 </p>
+<p>我们可以通过多种方式发现 S3 存储桶，例如在网站的页面源码中、在GitHub 存储库中查找目标URL，我们甚至能够自动化进行发现S3 存储桶的过程。</p>
+<p>一种常见的自动化发现S3 Buckets的方法是：使用公司名称后跟常用术语自行拼接url，例如 <code>&#123;name&#125;-assets</code>、<code>&#123;name&#125;-www</code>、<code>&#123;name&#125;-public</code>、<code>&#123;name&#125;-private</code> 等，后面跟上<code>.s3.amazonaws.com</code>进行url拼接即可。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112201149334.png"
+                      alt="image-20221112201149334"
+                ></p>
+<h2 id="自动发现网站内容"><a href="#自动发现网站内容" class="headerlink" title="自动发现网站内容"></a>自动发现网站内容</h2><p><strong>什么是自动发现？</strong></p>
+<p>自动发现是一个使用工具发现网站内容而不是手动发现网站内容的过程。 </p>
+<p>此过程是自动化的，因为它通常会发送针对目标 Web 服务器的数百、数千甚至数百万个请求，这些请求会检查目标网站上是否存在某些文件或某些目录，以便让我们能够访问我们之前未知其存在的相关资源。 这个过程需要通过使用一种叫做wordlists（字典）的资源来实现。</p>
+<p><strong>什么是wordlists（字典）？</strong></p>
+<p>字典是包含一长串常用词的文本文件，它们可以涵盖许多不同的用例，例如，密码字典将包括最常用的密码列表；而在本例中我们需要一个包含最常用目录和文件名的字典。 </p>
+<p>预装在 THM AttackBox 上的字典资源是 <a class="link"   target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists" >https://github.com/danielmiessler/SecLists <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 该字典项目由Daniel Miessler维护。</p>
+<p><strong>自动化工具</strong></p>
+<p>有许多不同的网站内容发现工具可用，它们都有各自的功能和缺陷，我们将介绍三种预装在我们的 AttackBox 上的工具：ffuf、dirb 和 gobuster。</p>
+<p>在 AttackBox 上执行以下三个命令，针对的目标为 Acme IT Support 网站，看看你会得到什么结果。</p>
+<p><strong>使用ffuf进行网站内容发现:</strong></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@machine$ </span><span class="language-bash">ffuf -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt -u http://MACHINE_IP/FUZZ</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>使用dirb进行网站内容发现：</strong></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@machine$ </span><span class="language-bash">dirb http://MACHINE_IP/ /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>使用Gobuster进行网站内容发现：</strong></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@machine$ </span><span class="language-bash">gobuster <span class="built_in">dir</span> --url http://MACHINE_IP/ -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112212602677.png"
+                      alt="image-20221112212602677"
+                ></p>
+<p>使用上面介绍的三个工具之一，回答问题：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir --url http://10.10.166.98/ -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112213507581.png"
+                      alt="image-20221112213507581"
+                ></p>
+<blockquote>
+<p>&#x2F;monthly</p>
+<p>&#x2F;development.log</p>
+</blockquote>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Content Discovery(网站内容发现)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 11:23:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 11:54:33
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Content Discovery(网站内容发现)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">#信息收集</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Subdomain%20Enumeration(%E5%AD%90%E5%9F%9F%E5%90%8D%E6%9E%9A%E4%B8%BE)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Subdomain Enumeration(子域名枚举)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Walking%20An%20Application(%E9%81%8D%E5%8E%86web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Walking An Application(遍历web应用程序)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Content Discovery(网站内容发现)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%8F%91%E7%8E%B0%E7%BD%91%E7%AB%99%E5%86%85%E5%AE%B9-Robots-txt"><span class="nav-text">手动发现网站内容 - Robots.txt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%8F%91%E7%8E%B0%E7%BD%91%E7%AB%99%E5%86%85%E5%AE%B9-Favicon"><span class="nav-text">手动发现网站内容-Favicon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%8F%91%E7%8E%B0%E7%BD%91%E7%AB%99%E5%86%85%E5%AE%B9-Sitemap-xml"><span class="nav-text">手动发现网站内容-Sitemap.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%8F%91%E7%8E%B0%E7%BD%91%E7%AB%99%E5%86%85%E5%AE%B9-HTTP-Headers%EF%BC%88HTTP%E6%A0%87%E5%A4%B4%EF%BC%89"><span class="nav-text">手动发现网站内容-HTTP Headers（HTTP标头）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%8F%91%E7%8E%B0%E7%BD%91%E7%AB%99%E5%86%85%E5%AE%B9-Framework-Stack%EF%BC%88%E6%A1%86%E6%9E%B6%E5%A0%86%E6%A0%88%EF%BC%89"><span class="nav-text">手动发现网站内容-Framework Stack（框架堆栈）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSINT-%E5%BC%80%E6%BA%90%E6%83%85%E6%8A%A5-Google-Hacking-Dorking"><span class="nav-text">OSINT(开源情报)-Google Hacking &#x2F; Dorking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSINT-%E5%BC%80%E6%BA%90%E6%83%85%E6%8A%A5-Wappalyzer"><span class="nav-text">OSINT(开源情报)-Wappalyzer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSINT-%E5%BC%80%E6%BA%90%E6%83%85%E6%8A%A5-Wayback-Machine"><span class="nav-text">OSINT(开源情报)- Wayback Machine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSINT-%E5%BC%80%E6%BA%90%E6%83%85%E6%8A%A5-GitHub"><span class="nav-text">OSINT(开源情报)- GitHub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSINT-%E5%BC%80%E6%BA%90%E6%83%85%E6%8A%A5-S3-Buckets%EF%BC%88S3%E5%AD%98%E5%82%A8%E6%A1%B6%EF%BC%89"><span class="nav-text">OSINT(开源情报)- S3 Buckets（S3存储桶）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8F%91%E7%8E%B0%E7%BD%91%E7%AB%99%E5%86%85%E5%AE%B9"><span class="nav-text">自动发现网站内容</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

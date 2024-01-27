@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-burp suite：extensions(burp suite扩展·更新版)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解如何使用Extensions模块来扩展Burp Suite的功能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Burp Suite：Extensions(Burp Suite扩展·更新版)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Burp%20Suite%EF%BC%9AExtensions(Burp%20Suite%E6%89%A9%E5%B1%95%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解如何使用Extensions模块来扩展Burp Suite的功能。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20240104232728890.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240105002720430.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240105185235030.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240105190255315.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240105191823762.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240105192516511.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240105195340091.png">
+<meta property="article:published_time" content="2024-01-27T04:32:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T04:44:57.201Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="工具使用">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20240104232728890.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Burp Suite：Extensions(Burp Suite扩展·更新版)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://assets.tryhackme.com/room-banners/burpsuite.svg" alt="THM-Burp Suite：Extensions(Burp Suite扩展·更新版)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Burp Suite：Extensions(Burp Suite扩展·更新版)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 12:32:55</span>
+        <span class="mobile">2024-01-27 12:32:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 12:44:57</span>
+            <span class="mobile">2024-01-27 12:44:57</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.4k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>8 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/burpsuiteextensions" >https://tryhackme.com/room/burpsuiteextensions <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解如何使用Extensions模块来扩展Burp Suite的功能。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在本文中，我们将学习Burp Suite的Extensions(扩展)功能模块，该功能允许开发人员为Burp框架创建附加模块。</p>
+<p>虽然在本文中并未深入探讨如何编写Burp模块，但是我们将在下文中简要地检查API文档，并讨论如何使用Burp Suite BApp Store来添加新的Burp模块。</p>
+<h2 id="Extensions-主界面"><a href="#Extensions-主界面" class="headerlink" title="Extensions-主界面"></a>Extensions-主界面</h2><p>Burp Suite中的Extensions默认界面为我们提供了关于已经加载到Extensions模块中的Burp扩展的概述，让我们来看看这个默认主界面中的不同组件：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240104232728890.png"
+                      alt="image-20240104232728890"
+                ></p>
+<ol>
+<li>扩展列表：上图界面的顶部框体会显示Burp Suite为当前项目所安装的Burp扩展列表，该列表允许我们激活或停用单个Burp扩展。</li>
+<li>管理扩展：在上图Extensions默认界面的左侧，会有一些用于管理Burp扩展的选项。<ul>
+<li>Add：我们可以使用此按钮选择本地磁盘上的文件来安装新扩展，这些扩展可以是自定义编写的Burp扩展，也可以是从官方BApp商店中获取的Burp扩展，还可以是从互联网获取的第三方Burp扩展。</li>
+<li>Remove：此按钮允许我们从Burp Suite中卸载所选定的Burp扩展。</li>
+<li>Up&#x2F;Down：我们可以使用”Up&#x2F;Down”按钮来控制已安装的扩展在列表中的顺序，Burp扩展将基于扩展列表按降序调用，所有通过Burp的流量都将根据扩展列表自上而下地通过每个扩展，在我们调用与修改请求相关的Burp扩展时，这一点非常重要，因为有些Burp扩展可能会相互冲突或干扰。</li>
+</ul>
+</li>
+<li>详细信息、输出和错误：在上图窗口的底部，会显示一些与当前所选定的Burp扩展相关的内容。<ul>
+<li>Details(详细信息)：Details部分会提供关于所选定的Burp扩展的信息，例如Burp扩展的名称、版本和描述等。</li>
+<li>Output(输出)：Burp扩展在执行过程中可能会产生一些输出，Output部分将显示所有与选定的Burp扩展相关的输出或结果。</li>
+<li>Errors(错误)：如果选定的Burp扩展在执行过程中遇到任何错误，那么错误信息将显示在Errors部分中，这对于调试和排除Burp扩展相关问题非常有用。</li>
+</ul>
+</li>
+</ol>
+<p>总之，Burp Suite中的Extensions界面允许用户管理和监控已经安装的Burp扩展，并能为特定项目选择激活或停用某些Burp扩展，还能让用户查看与每个Burp扩展相关的重要详细信息、输出和错误提示。通过使用Extensions，Burp Suite能够成为一个强大且可定制的平台，以便用于各种安全测试和Web应用程序评估任务。</p>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>阅读本小节内容并回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240105002720430.png"
+                      alt="image-20240105002720430"
+                ></p>
+<h2 id="BApp-Store-Burp扩展商店"><a href="#BApp-Store-Burp扩展商店" class="headerlink" title="BApp Store(Burp扩展商店)"></a>BApp Store(Burp扩展商店)</h2><p>在Burp Suite中，Burp App Store(或简称BApp Store)将为我们列出官方的Burp扩展，并能允许我们将官方的Burp扩展与Burp Suite无缝集成；这些官方Burp扩展可以用多种语言编写，最常见的是使用Java或Python来编写Burp扩展，其中Java所编写的Burp扩展可以自动与Burp框架集成，而Python所编写的Burp扩展则需要配合Jython解释器才能在Burp框架中被使用。</p>
+<p>为了更好地了解BApp商店，我们可以从安装Java所编写的Burp扩展开始。</p>
+<p>我们可以切换到Extensions中的”BApp Store”子选项卡并搜索关键字”Request Timer”，然后我们就能找到名为”Request Timer”的Burp扩展，最后我们点击该扩展并选择”安装”即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240105185235030.png"
+                      alt="image-20240105185235030"
+                ></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/portswigger/request-timer" >Request Timer <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>扩展是一个由Java语言编写的Burp扩展，它允许我们记录每个请求所对应的响应时间，这对于识别和利用基于时间的漏洞特别有用；例如，如果登录表单处理包含有效用户名的请求所需的响应时间要比处理包含无效用户名的请求所需的响应时间多一秒或几秒，那么我们就可以使用用户名单词列表来暴力攻击登录表单，并根据响应时间的差异来判断哪些用户名是有效的。</p>
+<p>tips：请求计时器扩展在各种场景中都很有价值，特别是在评估Web应用程序的安全性以及识别潜在的基于时间的漏洞时。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240105190255315.png"
+                      alt="image-20240105190255315"
+                ></p>
+<p>成功安装上述扩展后，我们可以注意到Burp Suite界面顶部的主菜单中出现了一个新的选项卡名为”Request Timer”；不同的Burp扩展可能有不同的行为，有些扩展可能会向右键单击上下文菜单中添加新项目，而另一些扩展可能会在Burp Suite的主菜单栏中创建全新的选项卡。</p>
+<h2 id="Jython"><a href="#Jython" class="headerlink" title="Jython"></a>Jython</h2><p>如果我们想在Burp Suite中使用由Python所编写的Burp扩展，那么我们就需要下载并包含Jython Interpreter(解释器) JAR文件。</p>
+<p>tips：Jython解释器是Python的Java实现，它使我们能够在Burp Suite中运行由Python语言所编写的Burp扩展。</p>
+<p>我们可以按照以下步骤来将Jython集成到本地计算机上的Burp Suite中：</p>
+<ol>
+<li><p>下载Jython JAR：访问<a class="link"   target="_blank" rel="noopener" href="https://www.jython.org/download" >Jython官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>并下载独立的JAR存档，为此我们需要在Jython下载页面中先找到Jython Standalone选项，然后将相关的JAR文件保存到计算机磁盘中的某个位置即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240105191823762.png"
+                      alt="image-20240105191823762"
+                ></p>
+</li>
+<li><p>准备在Burp Suite中配置Jython：打开Burp Suite并切换到Extensions功能模块，然后转到Extensions settings子选项卡。</p>
+</li>
+<li><p>查看Python环境：现在我们已经处于Extensions settings子选项卡界面，我们需要向下滚动到“Python environment”部分。</p>
+</li>
+<li><p>设置Jython JAR位置：在”Location of Jython standalone JAR file”字段下方的选项栏中，设置我们刚才已经下载的Jython JAR文件的路径。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240105192516511.png"
+                      alt="image-20240105192516511"
+                ></p>
+</li>
+</ol>
+<p>完成上述这些步骤之后，Jython就会被集成到Burp框架中，从而允许我们在Burp Suite中使用由Python所编写的Burp扩展；这种集成显著地增加了可用的Burp扩展的数量，并能增强我们执行各种安全测试和Web应用程序评估任务的能力。</p>
+<p>tips：完成Jython集成之后，我们就可以从BApp商店安装由Python所编写的Burp扩展模块了。</p>
+<p>注意：将Jython添加到Burp Suite的过程对于所有操作系统都是相同的，因为Java是一种跨平台技术。</p>
+<p>在处理由Ruby语言编写的Burp扩展时我们还需要在Burp Suite中集成JRuby，但是在此我们不必展开讨论如何集成JRuby，因为：</p>
+<ol>
+<li>由Python语言所编写的Burp扩展模块更为常见；</li>
+<li>集成JRuby与集成Jython的过程完全相同，无需赘述。</li>
+</ol>
+<p>我们可以通过访问以下链接来下载JRuby JAR归档文件的最新副本： <a class="link"   target="_blank" rel="noopener" href="https://www.jruby.org/download" >https://www.jruby.org/download <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="Burp-Suite-API"><a href="#Burp-Suite-API" class="headerlink" title="Burp Suite API"></a>Burp Suite API</h2><p>在Burp Suite的Extensions模块中，我们可以访问各种API端点，这些API端点允许我们创建自定义模块并能将其与Burp Suite集成；Extensions模块中的APIs公开了各种功能，从而使得我们可以扩展Burp Suite框架以满足一些特定需求。</p>
+<p>为了查看可用的API端点，我们可以导航至Extensions模块中的APIs子选项卡，在该子选项卡界面的左侧面板中所列出的每个项目都代表一个可以从Burp扩展内部访问的不同API端点。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240105195340091.png"
+                      alt="image-20240105195340091"
+                ></p>
+<p>在编写自定义Burp扩展时，Extensions APIs能够为开发人员提供强大的功能和灵活性。我们可以使用这些APIs与Burp Suite的现有功能进行无缝交互，并能定制我们的Burp扩展以执行特定任务。</p>
+<p>Burp Suite支持使用多种语言来编写Burp扩展，例如：</p>
+<ol>
+<li>Java(本机)：我们可以直接使用Java语言为Burp Suite编写Burp扩展，在实际编写扩展时我们可以利用上述所提及的可用的、强大的APIs；</li>
+<li>Python(通过Jython解释器)：我们可以基于Python语言来编写扩展，但是在Burp Suite中我们将使用Jython(Python的Java实现)来创建Burp扩展。</li>
+<li>Ruby(通过JRuby解释器)：我们可以基于Ruby语言来编写扩展，但是在Burp Suite中我们将利用JRuby(Ruby的Java实现)来构建Burp扩展。</li>
+</ol>
+<p>tips：我们可以使用Burp Suite所支持的编程语言与Extensions模块中的API端点交互，进而编写功能强大的Burp扩展；</p>
+<p>需要注意的是，为Burp Suite编写扩展可能是一项复杂的任务，如果对编写自定义的Burp扩展感兴趣，可以查看PortSwigger官方所提供的参考示例：</p>
+<blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://portswigger.net/burp/extender/writing-your-first-burp-suite-extension" >https://portswigger.net/burp/extender/writing-your-first-burp-suite-extension <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<h2 id="小结-Pro版下载链接"><a href="#小结-Pro版下载链接" class="headerlink" title="小结&amp;Pro版下载链接"></a>小结&amp;Pro版下载链接</h2><p>本文主要介绍了Burp Suite的Extensions模块，我们不仅可以从BApp商店中安装许多强大的Burp扩展，还可以使用Java、Python或Ruby来编写Burp扩展(在实际编写Burp扩展时，将会涉及到API端点的调用) 。</p>
+<p>到目前为止，我们已经完成了Burp Suite工具的整个学习模块，我们主要介绍的是Burp Suite社区版的使用，其他的版本还有Burp Suite专业版以及Burp Suite企业版。</p>
+<p>关于Burp Suite专业版的第三方获取链接如下(验证：52pj)：</p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.123pan.com/s/F2W5Vv-Rk7Vv.html" >https://www.123pan.com/s/F2W5Vv-Rk7Vv.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://pan.baidu.com/s/1J_CUxLKqC0h3Ypg4sQV0_g#list/path=%2F" >https://pan.baidu.com/s/1J_CUxLKqC0h3Ypg4sQV0_g#list/path=%2F <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Burp Suite：Extensions(Burp Suite扩展·更新版)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 12:32:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 12:44:57
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Burp Suite：Extensions(Burp Suite扩展·更新版)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">#工具使用</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-OWASP%20Top%2010(2017%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-OWASP Top10(2017版)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Burp%20Suite%EF%BC%9AOther%20Modules(Burp%20Suite%E5%85%B6%E4%BB%96%E6%A8%A1%E5%9D%97%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Burp Suite：Other Modules(Burp Suite其他模块·更新版)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Burp Suite：Extensions(Burp Suite扩展·更新版)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extensions-%E4%B8%BB%E7%95%8C%E9%9D%A2"><span class="nav-text">Extensions-主界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BApp-Store-Burp%E6%89%A9%E5%B1%95%E5%95%86%E5%BA%97"><span class="nav-text">BApp Store(Burp扩展商店)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jython"><span class="nav-text">Jython</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Burp-Suite-API"><span class="nav-text">Burp Suite API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-Pro%E7%89%88%E4%B8%8B%E8%BD%BD%E9%93%BE%E6%8E%A5"><span class="nav-text">小结&amp;Pro版下载链接</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

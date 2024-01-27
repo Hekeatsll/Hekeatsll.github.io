@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-walking an application(遍历web应用程序)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="仅使用你的浏览器开发工具手动检查 Web 应用程序的安全问题，仅使用你的浏览器进行攻击，而无需工具或脚本。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Walking An Application(遍历web应用程序)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Walking%20An%20Application(%E9%81%8D%E5%8E%86web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="仅使用你的浏览器开发工具手动检查 Web 应用程序的安全问题，仅使用你的浏览器进行攻击，而无需工具或脚本。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111232410243.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112100241526.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112102307094.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112103931186.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112104157944.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112104223634.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112104334672.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112104437721.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112104644170.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112104710153.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112104743468.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112105144595.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112105234523.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112105446889.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112105644716.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112110846518.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112110913058.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112110940413.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112111002516.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112111034014.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112111110269.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112111930439.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112112220176.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112113111494.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112113834680.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112113904472.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112114012933.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112114237841.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112120411788.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112120857186.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112121123899.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112121312210.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112121700362.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112121748837.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112122434790.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112122641084.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112123858951.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112124109287.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221112124445374.png">
+<meta property="article:published_time" content="2024-01-27T03:17:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T03:22:25.273Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="网络安全基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20221111232410243.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Walking An Application(遍历web应用程序)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/61add44b3c6be8004802cc37/room-content/81fd0f1489dee88a42970f69e7c50e30.svg" alt="THM-Walking An Application(遍历web应用程序)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Walking An Application(遍历web应用程序)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 11:17:55</span>
+        <span class="mobile">2024-01-27 11:17:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 11:22:25</span>
+            <span class="mobile">2024-01-27 11:22:25</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>4.6k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>16 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/walkinganapplication" >https://tryhackme.com/room/walkinganapplication <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>通过学习相关知识点：仅使用你的浏览器开发工具手动检查 Web 应用程序的安全问题，仅使用你的浏览器进行攻击，而无需工具或脚本。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在本文中，你将学习如何仅使用浏览器中的内置工具手动检查 Web 应用程序的安全问题。 通常情况下，自动化安全工具和脚本会遗漏许多潜在的漏洞和有用的信息。</p>
+<p>以下是你将在本文中使用的浏览器内置工具的简要分类：</p>
+<ul>
+<li><strong>View Source</strong> - 查看源代码 - 使用你的浏览器查看网站页面的人工可读源代码。</li>
+<li><strong>Inspector</strong> - 检查器 - 了解如何检查网站页面元素并进行更改以便查看通常会被阻止的内容。</li>
+<li><strong>Debugger</strong> - 调试器 - 检查和控制网站页面 JavaScript 的流程</li>
+<li><strong>Network</strong> - 网络 - 查看网站页面发出的所有网络请求。</li>
+</ul>
+<p>在此知识点对应的TryHackMe房间内启动目标虚拟机，等待 2 分钟，然后访问以下 URL：<a class="link"   target="_blank" rel="noopener" href="https://lab_web_url.p.thmlabs.com(此/" >https://LAB_WEB_URL.p.thmlabs.com（此 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> URL 将在你启动目标机的 2 分钟后更新）</p>
+<h2 id="探索目标网站"><a href="#探索目标网站" class="headerlink" title="探索目标网站"></a>探索目标网站</h2><p>作为渗透测试人员，你在审查网站或 Web 应用程序时的职责是发现可能存在漏洞的功能并尝试利用，以此来评估它们是否存在漏洞。 这些功能通常是网站的一部分，需要与用户进行一些交互。</p>
+<p>查找网站的交互部分就像发现登录表单然后手动查看网站的 JavaScript 一样简单。 一个很好的起点是使用你的浏览器访问目标网站，了解该网站的各个页面&#x2F;区域&#x2F;功能，并为每个页面&#x2F;区域&#x2F;功能做简单的信息记录。</p>
+<p>Acme IT Support 示例站点的审查如下所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111232410243.png"
+                      alt="image-20221111232410243"
+                ></p>
+<div class="highlight-container" data-rel="Txt"><figure class="iseeu highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">此页面包含 Acme IT Support 对其员工的公司照片所做处理的摘要。</span><br><span class="line"></span><br><span class="line">此页面包含公司最近发布的新闻文章列表，每篇新闻文章都有一个带有id号的链接，即/news/article?id=1</span><br><span class="line"></span><br><span class="line">显示单个新闻文章。有些文章似乎被阻止并且仅为高级客户保留访问权限。</span><br><span class="line"></span><br><span class="line">此页面包含客户联系公司的表格。它包含姓名、电子邮件和消息输入字段以及一个发送按钮。</span><br><span class="line"></span><br><span class="line">此链接重定向到 /customers/login。</span><br><span class="line"></span><br><span class="line">此页面包含一个带有用户名和密码字段的登录表单。</span><br><span class="line"></span><br><span class="line">此页面包含一个用户注册表单，其中包含用户名、电子邮件、密码和密码确认输入字段。</span><br><span class="line"></span><br><span class="line">带有电子邮件地址输入字段的密码重置表单。</span><br><span class="line"></span><br><span class="line">此页面包含提交给 IT Support 公司的用户工单列表和“创建工单”按钮。</span><br><span class="line"></span><br><span class="line">此页面包含一个带有用于输入 IT 问题的文本框的表单和一个用于创建 IT Support业务票据的文件上传选项。</span><br><span class="line"></span><br><span class="line">此页面允许用户编辑他们的用户名、电子邮件和密码。</span><br><span class="line"></span><br><span class="line">此链接将允许用户从客户区注销（登出）。</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="查看网页源代码"><a href="#查看网页源代码" class="headerlink" title="查看网页源代码"></a>查看网页源代码</h2><p>网页源代码是每次我们发出请求时从 Web 服务器返回给我们的浏览器&#x2F;客户端的可读代码。</p>
+<p>返回的代码由 HTML（超文本标记语言）、CSS（级联样式表）和 JavaScript 组成，它告诉我们的浏览器要显示什么内容，以及如何显示它并添加与 JavaScript 交互的元素。</p>
+<p>查看网页源代码可以帮助我们发现有关 Web 应用程序的更多信息。</p>
+<p><strong>如何查看网页源代码？</strong></p>
+<ol>
+<li><p>在浏览网站时，你可以右键单击当前网页，然后你会在菜单上看到一个显示“查看页面源”的选项。</p>
+</li>
+<li><p>大多数浏览器都支持将 <code>view-source:</code> 放在 URL 前面以显示网页源码，例如 <code>view-source:https://www.google.com/</code></p>
+</li>
+<li><p>在你的浏览器菜单中，你可以找到一个查看页面源代码的选项，此选项有时可以在子菜单中显示，例如开发者工具或更多工具。</p>
+</li>
+</ol>
+<p><strong>让我们查看一些网页源代码！</strong></p>
+<p>尝试查看 Acme IT Support 网站（目标站点）主页的页面源代码。 不幸的是，解释你在这里看到的一切都超出了本文的范围，你需要研究网站设计&#x2F;开发课程才能完全理解它。 我们能做的，就是挑选一些对我们很重要的信息。</p>
+<p>在源代码页面的顶部，你会注意到一些以 <code>&lt; !- -</code>开头并以<code>- - &gt;</code>  结尾的代码，这些是注释。 源代码中的评论是网站开发者留下的信息，通常是为了向其他程序员解释代码中的某些内容，甚至是给自己的注释&#x2F;提醒，这些评论不会显示在实际网页上。 我们可以看到此评论描述了开发者在开发新主页时是如何选择临时主页的，在本次实验环境下，你可以查看此评论中的网页以获得<strong>第一个flag</strong>。</p>
+<p>HTML 中不同页面的链接会写在锚标记中（以 <code>&lt;a</code> 开头的 HTML 元素），你将被定向到 存储在<code>href</code>属性中的链接。</p>
+<p>例如，你将在网页源码的第 31 行看到contact 页面链接：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112100241526.png"
+                      alt="image-20221112100241526"
+                ></p>
+<p>（在本次实验环境下）如果你进一步查看网页源代码，则能发现一个以“<code>secr</code>”开头的页面的隐藏链接，你可以查看此链接以获取<strong>第二个flag</strong>。 你显然不会在现实环境下获得flag，但通过查看隐藏链接 你可能会发现一些企业用于存储公司&#x2F;员工&#x2F;客户信息的私人区域。</p>
+<p>在网页源代码中可以使用 HTML 代码包含一些外部文件，如 CSS、JavaScript 和图像。在此示例中，你会注意到这些外部文件都存储在同一个目录中。如果你可以在 Web 浏览器中查看此目录，则意味着目标网站出现了配置错误。因为正常情况下，此目录页面应该显示为空白页面或 403 禁止页面，还将显示一个你无权访问该目录的错误提示。</p>
+<p>我们可以看到示例中的目标站点已启用目录列表功能，并且我们可以看到 相关页面已经列出了目录中的每个文件。有时候目录中的所有文件都可以安全地被公众查看，但在某些情况下，备份文件、源代码或其他机密信息（这类文件不应该被公众查看到）也可能会存储在该目录中。</p>
+<p>在本例中，我们能够在目录中发现 flag.txt 文件，并可查看其内容以获取<strong>第三个flag</strong>。</p>
+<p>如今，许多网站都不是从零开始制作的，而是使用所谓的框架来进行网站开发。 网站框架是预制代码的集合，开发人员可以轻松地使用网站框架包含网站所需的常见功能，例如博客、用户管理、表单处理等，从而节省开发人员数小时或数天的开发时间。</p>
+<p>查看网页源代码通常可以为我们提供有关网站所使用框架的线索，如果使用了框架，那么是使用哪个框架，框架版本又是什么。目标网站所使用的框架及其版本可能是一个重要的信息，因为目标网站可能没有使用最新版本的框架，而当前使用的框架版本中可能存在一些已经公开的漏洞。</p>
+<p>（在本次实验环境下）查看源码页面底部，你会找到有关目标站点正在使用的框架和版本的评论以及指向该框架网站的链接。 查看框架相关的网站，你会发现我们的目标网站使用的框架实际上已经过时了，阅读更新通知并使用你找到的信息来发现<strong>第四个flag</strong>。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112102307094.png"
+                      alt="image-20221112102307094"
+                ></p>
+<p>启动目标机器，然后访问目标站点，并完成答题：<a class="link"   target="_blank" rel="noopener" href="https://10-10-37-231.p.thmlabs.com/" >https://10-10-37-231.p.thmlabs.com <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> </p>
+<p>右键单击目标站点主页页面，在菜单上点击“查看页面源”选项，浏览网页源代码页面顶部，查看注释评论中的网页以获得<strong>第一个flag</strong>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112103931186.png"
+                      alt="image-20221112103931186"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112104157944.png"
+                      alt="image-20221112104157944"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112104223634.png"
+                      alt="image-20221112104223634"
+                ></p>
+<blockquote>
+<p>THM{HTML_COMMENTS_ARE_DANGEROUS}</p>
+</blockquote>
+<p>进一步查看网页源代码，发现一个以“<code>secr</code>”开头的页面的隐藏链接，查看此链接以获取<strong>第二个flag</strong>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112104334672.png"
+                      alt="image-20221112104334672"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112104437721.png"
+                      alt="image-20221112104437721"
+                ></p>
+<blockquote>
+<p>THM{NOT_A_SECRET_ANYMORE}</p>
+</blockquote>
+<p>外部文件都存储在同一个目录中，你可以尝试在 Web 浏览器中查看此目录，在目录中发现 flag.txt 文件，查看其内容以获取<strong>第三个flag</strong>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112104644170.png"
+                      alt="image-20221112104644170"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112104710153.png"
+                      alt="image-20221112104710153"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112104743468.png"
+                      alt="image-20221112104743468"
+                ></p>
+<blockquote>
+<p>THM{INVALID_DIRECTORY_PERMISSIONS}</p>
+</blockquote>
+<p>查看源码页面底部，找到有关目标站点正在使用的框架和版本的评论以及指向该框架网站的链接。 查看框架相关的网站，阅读更新通知找到<strong>第四个flag</strong>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112105144595.png"
+                      alt="image-20221112105144595"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112105234523.png"
+                      alt="image-20221112105234523"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112105446889.png"
+                      alt="image-20221112105446889"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112105644716.png"
+                      alt="image-20221112105644716"
+                ></p>
+<blockquote>
+<p>THM{KEEP_YOUR_SOFTWARE_UPDATED}</p>
+</blockquote>
+<h2 id="Developer-Tools-Inspector（检查器）"><a href="#Developer-Tools-Inspector（检查器）" class="headerlink" title="Developer Tools - Inspector（检查器）"></a>Developer Tools - Inspector（检查器）</h2><p><strong>Developer Tools（开发者工具）</strong></p>
+<p>每个现代浏览器都包含开发者工具，这是一个工具包，能用于帮助 Web 开发人员调试 Web 应用程序，并帮助你窥视网站的底层，以了解网站正在发生的事情。 作为一名渗透测试者，我们可以利用这些工具来更好地理解 Web 应用程序。 我们主要关注开发者工具包的三个功能点：Inspector、Debugger 和 Network。</p>
+<p><strong>Opening Developer Tools（打开开发者工具）</strong></p>
+<p>每个浏览器访问开发者工具的方式都不同。 </p>
+<p><em>Firefox</em></p>
+<p>要在 Firefox 中打开开发者工具，请单击浏览器右上角的 Firefox 菜单，然后选择 Web Developer，然后在子菜单中选择 Web Developer Tools 即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112110846518.png"
+                      alt="image-20221112110846518"
+                ></p>
+<p><em>Chrome</em></p>
+<p>要在 Chrome 中打开开发者工具，请单击浏览器右侧的 Chrome 菜单，然后选择更多工具，然后选择开发者工具即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112110913058.png"
+                      alt="image-20221112110913058"
+                ></p>
+<p><em>Safari</em></p>
+<p>要在 Safari 中打开开发人员工具，你首先需要启用开发菜单。在 Safari 打开首选项中，单击高级选项卡，然后勾选底部标记为在菜单栏中显示开发菜单的复选框。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112110940413.png"
+                      alt="image-20221112110940413"
+                ></p>
+<p>在Safari 浏览器顶部，你现在将拥有“开发”菜单，单击“显示 Web 检查器”以打开开发者工具即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112111002516.png"
+                      alt="image-20221112111002516"
+                ></p>
+<p><em>Edge</em></p>
+<p>要在 Microsoft Edge 中打开开发人员工具，请单击浏览器右侧的 Edge 菜单，然后选择更多工具，然后选择开发人员工具即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112111034014.png"
+                      alt="image-20221112111034014"
+                ></p>
+<p><em>Internet Explorer</em></p>
+<p>要在 Internet Explorer 中打开开发人员工具，请单击浏览器右侧的 cog 菜单，然后选择 F12 Developer Tools即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112111110269.png"
+                      alt="image-20221112111110269"
+                ></p>
+<p><strong>Inspector（检查器）</strong></p>
+<p>页面源代码并不总是代表网页上将显示的内容，这是因为 CSS、JavaScript 和用户交互可以改变网页页面的内容和样式，这意味着我们需要一种方法来查看此时浏览器窗口中显示的内容，而 Element 检查器可以通过为我们提供当前网站网页上的实时显示内容来协助我们。</p>
+<p>除了查看实时视图，我们还可以编辑页面元素并与之交互，这有助于 Web 开发人员调试问题。在 Acme IT Support 网站上（目标示例站点），单击新闻部分，你将在其中看到三篇新闻文章。</p>
+<p>前两篇文章是可读的，但第三篇被阻止阅读，其内容上方有一条浮动通知，提示你必须是高级客户才能查看该文章。 这些阻止页面内容的浮动框通常被称为付费墙，因为该网站在你希望看到的内容前面设置了一堵隐喻性的墙，直到你付费为止。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112111930439.png"
+                      alt="image-20221112111930439"
+                ></p>
+<p>右键单击高级通知 ( 高级通知即paywall )，你应该能够从菜单中选择 Inspect 选项，这将根据你使用浏览器种类或偏好在底部或右侧打开开发者工具，然后你将看到构成网站的elements(元素)&#x2F;HTML（类似于下面的屏幕截图）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112112220176.png"
+                      alt="image-20221112112220176"
+                ></p>
+<p>找到具有<code>premium-customer-blocker</code>类 的 <code>DIV</code> 元素并单击它。你将在样式框中看到适用于该元素的所有 CSS 样式，例如<code>margin-top: 60px</code>和<code>text-align: center</code>。</p>
+<p>我们感兴趣的样式是<code>display: block</code>。 如果我们单击单词<code>block</code>，则可以键入自己选择的值，尝试输入 <code>none</code>，这将使得之前的浮动框消失，并显示其下方的内容和<strong>一个flag</strong> 。如果该元素没有显示字段，你可以在最后一个样式下方单击并添加自己的样式。</p>
+<p>试一试元素检查器，你会发现你可以更改网站上的任何信息，包括内容。请记住，这仅在你的浏览器窗口中进行编辑，当你按下刷新时，你在浏览器中正在查看的网页的一切内容都会恢复正常。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112113111494.png"
+                      alt="image-20221112113111494"
+                ></p>
+<p>启动目标机器，然后访问目标站点，并完成答题：<a class="link"   target="_blank" rel="noopener" href="https://10-10-125-101.p.thmlabs.com/" >https://10-10-125-101.p.thmlabs.com <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> </p>
+<p>浏览目标示例站点，单击新闻部分，第三篇被阻止阅读，其内容上方有一条浮动通知。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112113834680.png"
+                      alt="image-20221112113834680"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112113904472.png"
+                      alt="image-20221112113904472"
+                ></p>
+<p>右键单击浮动通知，从菜单中选择 Inspect 选项，你将看到构成网站的elements(元素)&#x2F;HTML。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112114012933.png"
+                      alt="image-20221112114012933"
+                ></p>
+<p>修改<code>block</code>的值为<code>none</code>，查看第三篇新闻文章的内容并获取flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112114237841.png"
+                      alt="image-20221112114237841"
+                ></p>
+<blockquote>
+<p>THM{NOT_SO_HIDDEN}</p>
+</blockquote>
+<h2 id="Developer-Tools-Debugger（调试器）"><a href="#Developer-Tools-Debugger（调试器）" class="headerlink" title="Developer Tools - Debugger（调试器）"></a>Developer Tools - Debugger（调试器）</h2><p><strong>Debugger（调试器）</strong></p>
+<p>开发者工具中的这个面板是用来调试 JavaScript 的，对于想要弄清楚为什么有些东西可能不工作的 Web 开发者来说，这是一个很好的功能；但作为渗透测试人员，它为我们提供了深入挖掘 JavaScript 代码的选项。在 Firefox 和 Safari 中，此功能称为<code>Debugger</code>，但在 Google Chrome 中，它被称为<code>Sources</code>。</p>
+<p>在 Acme IT Support 网站（目标站点）上，单击 contact 页面，每次加载页面时，你可能会注意到屏幕上会有快速闪烁的红色。 我们将使用调试器来确定这个红色闪光是什么以及它是否包含任何有趣的内容。调试这个红点并不会是你在现实世界中作为渗透测试人员会做的事情，该示例只是允许我们了解<code>Debugger</code>功能。</p>
+<p>在浏览器的左侧，你会看到当前网页正在使用的所有资源的列表。单击资产（assets ）文件夹，你将看到一个名为 <code>flash.min.js</code> 的文件，继续单击此文件将显示此 JavaScript 文件的内容。</p>
+<p>在浏览器中查看 javascript 文件时，你可能会注意到所有内容都在一行上，因为它已被最小化，这意味着所有格式（制表符、间距和换行符）都已被删除以使文件更小。 这个js文件也不例外，而且它被混淆了，这使得它很难被阅读，以保证它不能被其他开发者轻易复制。</p>
+<p>我们可以通过使用“Pretty Print”选项对js的内容应用格式，这个功能选项的标志像两个大括号 <code>&#123; &#125;</code> ，它能使js文件更具可读性。滚动到 <code>flash.min.js</code> 文件的底部，你将看到以下行：<code>flash[&#39;remove&#39;]();</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112120411788.png"
+                      alt="image-20221112120411788"
+                ></p>
+<p>这行JS代码就是当前网页会出现红色闪烁的原因。 我们可以利用调试器的另一个特性，这个特性被称为断点，我们可以利用断点 强制浏览器停止执行 JavaScript 并暂停至当前已经执行到的的代码点。</p>
+<p>单击上述关键js代码的行号，你会注意到它变为蓝色，这表示你现在已经在这一行插入了一个断点。 现在尝试刷新页面，你会注意到红色框停留在页面上而不是消失，并且其中还包含一个flag。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112120857186.png"
+                      alt="image-20221112120857186"
+                ></p>
+<p>浏览目标站点，进入contact 页面，打开调试器：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112121123899.png"
+                      alt="image-20221112121123899"
+                ></p>
+<p>使用“Pretty Print”选项对js的内容应用格式，这个功能选项的标志像两个大括号 <code>&#123; &#125;</code> ，它能使js文件更具可读性：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112121312210.png"
+                      alt="image-20221112121312210"
+                ></p>
+<p>滚动到 <code>flash.min.js</code> 文件的底部，在<code>flash[&#39;remove&#39;]();</code>处设置一个断点（点击该代码的行号即可设置断点）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112121700362.png"
+                      alt="image-20221112121700362"
+                ></p>
+<p>刷新网页页面，查看flag内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112121748837.png"
+                      alt="image-20221112121748837"
+                ></p>
+<blockquote>
+<p>THM{CATCH_ME_IF_YOU_CAN}</p>
+</blockquote>
+<h2 id="Developer-Tools-Network（网络）"><a href="#Developer-Tools-Network（网络）" class="headerlink" title="Developer Tools - Network（网络）"></a>Developer Tools - Network（网络）</h2><p><strong>Network（网络）</strong></p>
+<p>开发者工具上的网络选项卡可用于跟踪网页发出的每个外部请求。 如果你在开发者工具栏中单击“网络”选项卡，然后刷新页面，你将看到有关该页面请求的所有文件。</p>
+<p>尝试在目标站点的 contact 页面上执行此操作，如果列表的内容有点繁杂，你可以按垃圾桶图标清除列表。</p>
+<p>在网络选项卡打开的情况下，尝试在网页上填写联系表格并按下发送消息按钮，你会注意到网络选项卡中会出现一个相关的事件，该事件会包含一个在后台使用称为 AJAX 的方法提交的表单。 AJAX 是一种在 Web 应用程序后台发送和接收网络数据的方法，通过更改当前网页无法进行干扰。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112122434790.png"
+                      alt="image-20221112122434790"
+                ></p>
+<p>当使用网页创建并发送contact 表单之后，检查在网络选项卡中出现的新的相关条目，通过查看数据发送之后的响应消息以显示flag。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112122641084.png"
+                      alt="image-20221112122641084"
+                ></p>
+<p>浏览目标站点的 contact 页面，打开开发者工具的网络选项卡，清除列表内容，创建新的contact 表单并点击发送：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112123858951.png"
+                      alt="image-20221112123858951"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112124109287.png"
+                      alt="image-20221112124109287"
+                ></p>
+<p>查看在网络选项卡中出现的和contact 表单相关的新条目，查看响应消息以获取flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221112124445374.png"
+                      alt="image-20221112124445374"
+                ></p>
+<blockquote>
+<p>THM{GOT_AJAX_FLAG}</p>
+</blockquote>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Walking An Application(遍历web应用程序)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 11:17:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 11:22:25
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Walking An Application(遍历web应用程序)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">#网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Content%20Discovery(%E7%BD%91%E7%AB%99%E5%86%85%E5%AE%B9%E5%8F%91%E7%8E%B0)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Content Discovery(网站内容发现)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Windows%20Fundamentals%203(Windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%863)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Windows Fundamentals  3(Windows基础知识3)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Walking An Application(遍历web应用程序)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2%E7%9B%AE%E6%A0%87%E7%BD%91%E7%AB%99"><span class="nav-text">探索目标网站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%BD%91%E9%A1%B5%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="nav-text">查看网页源代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Developer-Tools-Inspector%EF%BC%88%E6%A3%80%E6%9F%A5%E5%99%A8%EF%BC%89"><span class="nav-text">Developer Tools - Inspector（检查器）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Developer-Tools-Debugger%EF%BC%88%E8%B0%83%E8%AF%95%E5%99%A8%EF%BC%89"><span class="nav-text">Developer Tools - Debugger（调试器）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Developer-Tools-Network%EF%BC%88%E7%BD%91%E7%BB%9C%EF%BC%89"><span class="nav-text">Developer Tools - Network（网络）</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

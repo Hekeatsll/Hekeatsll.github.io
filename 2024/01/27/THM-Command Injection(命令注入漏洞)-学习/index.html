@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-command injection(命令注入漏洞)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解允许你通过易受攻击的应用程序执行命令的漏洞及其补救措施。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Command Injection(命令注入漏洞)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Command%20Injection(%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解允许你通过易受攻击的应用程序执行命令的漏洞及其补救措施。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126170333914.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126180641012.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126181711140.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126224528451.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126231134868.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126233729080.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126235110547.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221126235707461.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127201043929.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127203232018.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127203514803.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221127204825987.png">
+<meta property="article:published_time" content="2024-01-27T04:16:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T04:18:47.154Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20221126170333914.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Command Injection(命令注入漏洞)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5efe36fb68daf465530ca761/room-content/03376575e888fd097280c51469c29fbc.png" alt="THM-Command Injection(命令注入漏洞)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Command Injection(命令注入漏洞)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 12:16:55</span>
+        <span class="mobile">2024-01-27 12:16:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 12:18:47</span>
+            <span class="mobile">2024-01-27 12:18:47</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Web%E5%AE%89%E5%85%A8/">Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>11 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/oscommandinjection" >https://tryhackme.com/room/oscommandinjection <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>通过学习相关知识点：了解允许你通过易受攻击的应用程序执行命令的漏洞及其补救措施。</p>
+<h2 id="什么是命令注入"><a href="#什么是命令注入" class="headerlink" title="什么是命令注入?"></a>什么是命令注入?</h2><p>在本文中，我们将讨论一类Web漏洞–命令注入漏洞，我们需要了解这个漏洞是什么，并会展示它的影响以及它给web应用程序带来的一些风险。</p>
+<p>然后，你还能够将这些知识付诸实践，即：</p>
+<ul>
+<li>如何发现命令注入漏洞</li>
+<li>如何为不同操作系统构建payload进行测试以及利用命令注入漏洞</li>
+<li>如何在web应用程序中防护命令注入攻击</li>
+<li>最后，将相关理论应用于练习中。</li>
+</ul>
+<p>首先，让我们先了解什么是命令注入。 命令注入是滥用web应用程序的行为从而实现在操作系统上执行命令，在执行系统命令时将获得与OS设备上的web应用程序运行时相同的权限。 例如，在以名为 joe 的用户身份运行的 Web 服务器上实现命令注入将在对应的操作系统用户 joe 权限下执行命令——从而获得用户 joe 所拥有的任何系统权限。</p>
+<p>命令注入漏洞也可被称为“远程代码执行”(RCE)，因为攻击者通过命令注入漏洞 可以尝试诱使web应用程序执行他们所提供的一系列有效载荷（在web应用程序中远程执行代码），而无需直接访问目标机器本身（例如：通过交互式 shell的方式）。Web 服务器将在运行该web应用程序的用户的权限下以及相关访问控制级别下  处理并执行 攻击者所提供的payload代码。</p>
+<p>RCE意味着攻击者可以直接与易受攻击的目标操作系统进行交互，因此攻击者可能会尝试读取目标系统或用户的文件、数据以及类似的东西。例如，滥用web应用程序以执行命令 <code>whoami</code> 以列出应用程序正在运行的用户帐户信息就是利用命令注入漏洞的一个例子。</p>
+<p>命令注入是 2019 年 Contrast Security 的 AppSec 情报报告中的十大漏洞之一（ <a class="link"   target="_blank" rel="noopener" href="https://www.contrastsecurity.com/security-influencers/insights-appsec-intelligence-report" >Contrast Security AppSec.，2019 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ）；此外，OWASP 框架也在不断将这种性质的漏洞列为 Web 应用程序的十大漏洞之一（ <a class="link"   target="_blank" rel="noopener" href="https://owasp.org/www-project-top-ten/" >OWASP 框架 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ）。</p>
+<h2 id="发现命令注入漏洞"><a href="#发现命令注入漏洞" class="headerlink" title="发现命令注入漏洞"></a>发现命令注入漏洞</h2><p>此漏洞的存在是因为应用程序经常使用编程语言（如 PHP、Python 和 NodeJS）中的函数来向计算机操作系统传递数据并在操作系统上进行系统调用操作。 例如，从字段中获取输入信息并在系统文件中搜索相关条目。 以下面的代码片段为例：</p>
+<p>在此代码片段中，web应用程序会获取用户在名为 <code>$title</code> 的输入字段中所输入的数据，然后在操作系统上的文件目录中搜索对应的歌曲名称，我们可以将其分解为几个简单的步骤。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126170333914.png"
+                      alt="image-20221126170333914"
+                ></p>
+<ol>
+<li>该web应用程序将 MP3 文件存储在指定的操作系统目录下。</li>
+<li>用户输入他们想要搜索的歌曲名称，web应用程序将此输入存储到 <code>$title</code> 变量中。</li>
+<li>此 <code>$title</code> 变量中的数据被传递给命令 <code>grep</code> –从名为<em>songtitle.txt</em>的文本文件中搜索以找到用户希望搜索的歌曲条目。</li>
+<li>从<em>songtitle.txt</em> 文件中搜索得到的最终查找结果将决定该web应用程序通知用户目标歌曲存在与否。</li>
+</ol>
+<p>在现实环境下，以上文件通常会存储在数据库中；所以上图代码片段只是应用程序从用户处获取输入信息 并 以此与应用程序所对应的操作系统发生交互的一个示例。</p>
+<p>攻击者可以通过注入他们自己选择的命令并让应用程序执行该命令 来滥用此web应用程序，攻击者可以要求web应用程序从一些敏感的文件中读取数据，而不是简单地使用<code>grep</code>来搜索 songtitle.txt 中的条目。</p>
+<p>无论web应用程序使用何种编程语言，都可能以这种方式滥用应用程序，只要web应用程序处理并执行攻击者所构造的payload，就会导致命令注入。 例如，下面的代码片段是一个用 Python 编写的应用程序。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126180641012.png"
+                      alt="image-20221126180641012"
+                ></p>
+<p>请注意，你不需要了解这些应用程序背后的语法，此处适当概述了这个 Python 应用程序的工作步骤。</p>
+<ol>
+<li>“<em><strong>flask</strong></em>”包用于设置网络服务器</li>
+<li>定义函数，该函数使用“<em><strong>subprocess</strong></em>”包在设备上执行命令</li>
+<li>在web服务器中使用一个路由来执行所提供的任何内容。 例如，如果要执行<code>whoami</code>命令，我们需要访问<code>http://flaskapp.thm/whoami</code></li>
+</ol>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126181711140.png"
+                      alt="image-20221126181711140"
+                ></p>
+<h2 id="利用命令注入漏洞"><a href="#利用命令注入漏洞" class="headerlink" title="利用命令注入漏洞"></a>利用命令注入漏洞</h2><p>你通常可以通过应用程序的行为来确定是否能够发生命令注入攻击。</p>
+<p>使用用户输入的数据来填充系统命令的应用程序，通常可以和意想不到的应用程序行为进行结合。例如，shell 运算符 <code>;</code>、 <code>&amp;</code> 和 <code>&amp;&amp;</code> 将组合两个（或多个）系统命令并同时执行它们。</p>
+<p>命令注入主要可以通过以下两种方式进行检测：</p>
+<ol>
+<li>盲注类型的命令注入（无回显）</li>
+<li>详细的命令注入（有回显）</li>
+</ol>
+<p>下面中定义了这两种方法，第四、五小节将更详细地解释这些方法。</p>
+<div class="highlight-container" data-rel="Txt"><figure class="iseeu highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Blind（盲注类型）   这种类型的命令注入 在你测试 payload 时应用程序并没有直接输出结果;因此你将必须调查应用程序的行为以确定你的 payload 是否成功执行。</span><br><span class="line"></span><br><span class="line">Verbose（详细类型） 这种类型的命令注入，在你测试 payload 时能够从应用程序获得直接反馈；</span><br><span class="line">                  例如，当你运行 whoami 命令以查看应用程序在哪个用户下运行时，Web 应用程序将直接在页面上输出具体的用户名信息。</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>检测盲注类型的命令注入（无回显）</strong></p>
+<p>盲注类型的命令注入在发生命令注入攻击时，并没有可见的输出显示，因此不会立即引起注意。 例如，当你执行了一条命令，但 Web 应用程序并没有输出任何消息。</p>
+<p>对于这种类型的命令注入，我们需要使用会导致一些时间延迟的payload；例如，ping 和 sleep 命令。以 ping命令 为例，根据你指定的 ping 次数，应用程序将挂起 x 秒。</p>
+<p>另一种检测盲注类型-命令注入的方法是强制输出一些结果，这可以通过使用诸如 <code>&gt;</code> 之类的重定向运算符来完成，如果你对此不熟悉，建议查看 Linux 基础模块知识点。 例如，我们可以告诉 Web 应用程序执行诸如 <code>whoami</code> 之类的命令并将其重定向到一个新建文件中；然后我们可以使用诸如 <code>cat</code> 之类的命令来读取这个新创建的文件的内容。</p>
+<p>测试命令注入通常很复杂，可能需要经过多次尝试，尤其是 Linux 和 Windows 两种操作系统所使用的命令语法还存在不同之处。</p>
+<p>使用<code>curl</code>命令也是测试命令注入的好方法，这是因为你可以使用<code>curl</code> 命令在payload中向应用程序传递数据。 以下面的代码片段为例，通过一个简单的 curl payload 传递数据到web应用程序就可以进行命令注入攻击。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl http://vulnerable.app/process.php%3Fsearch%3DThe%20Beatles%3B%20whoami</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">curl http://vulnerable.app/process.php?search=The Beatles; <span class="built_in">whoami</span></span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>检测详细类型的命令注入（有回显）</strong></p>
+<p>检测此种类型的命令注入通常可以用很简单的方法，详细类型的命令注入是指应用程序会向我们提供有关正在发生或正在执行的payload的反馈或输出。</p>
+<p>例如，包含<code>ping</code> 或 <code>whoami</code> 等命令的payload的执行结果会直接显示在 Web 应用程序的页面上。</p>
+<p><strong>有用的payload</strong></p>
+<p> 以下是Linux 和 Windows两种操作系统中的一些有价值的有效载荷（payload）。</p>
+<p><em><strong>Linux</strong></em></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">whoami          查看应用程序在哪个用户下运行。</span><br><span class="line"></span><br><span class="line">ls              列出当前目录下的内容，你可能会找到配置文件、环境文件（令牌和应用程序密钥）等文件。</span><br><span class="line"></span><br><span class="line">ping            此命令将调用web应用程序并挂起，这将有助于测试web应用程序是否存在盲注类型的命令注入漏洞。</span><br><span class="line"></span><br><span class="line">sleep           这是测试web应用程序是否存在盲注类型的命令注入漏洞的另一个有用的payload。</span><br><span class="line"></span><br><span class="line">nc              Netcat可用于在易受攻击的web应用程序上生成反向shell，你可以使用此立足点围绕目标机进行导航以获取其他服务、文件或潜在的提权方法。</span><br></pre></td></tr></table></figure></div>
+
+<p><em><strong>Windows</strong></em></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">whoami          查看应用程序在哪个用户下运行。</span><br><span class="line"></span><br><span class="line">dir	            列出当前目录下的内容，你可能会找到配置文件、环境文件（令牌和应用程序密钥）等文件。</span><br><span class="line"></span><br><span class="line">ping            此命令将调用web应用程序并挂起，这将有助于测试web应用程序是否存在盲注类型的命令注入漏洞。</span><br><span class="line"></span><br><span class="line">timeout         此命令也能调用web应用程序并挂起，如果未安装 ping 命令，它对于测试 web应用程序 是否存在盲注类型的命令注入漏洞也很有用。</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126224528451.png"
+                      alt="image-20221126224528451"
+                ></p>
+<h2 id="防护命令注入攻击"><a href="#防护命令注入攻击" class="headerlink" title="防护命令注入攻击"></a>防护命令注入攻击</h2><p>可以通过多种方式防止命令注入，从尽可能少地使用编程语言中具有潜在危险的函数或库，到不依赖用户输入并过滤用户输入；下面的示例是在 PHP 编程语言环境下，但是，相同的原则也可以扩展到其他编程语言环境。</p>
+<p><strong>减少使用易受攻击的函数</strong></p>
+<p>在 PHP 中，有许多函数可以与操作系统发生交互，并通过 shell 执行命令，包括：</p>
+<ul>
+<li>Exec–执行一个外部程序</li>
+<li>Passthru–执行外部程序并且显示原始输出</li>
+<li>System–执行外部程序并且显示输出</li>
+</ul>
+<p>以下面的代码片段为例，在此处，web应用程序将只接受和处理输入到表单中的数字，这意味着不会处理任何输入的命令，例如 whoami。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126231134868.png"
+                      alt="image-20221126231134868"
+                ></p>
+<ol>
+<li>该web应用程序将只接受特定的字符格式（数字 0-9）</li>
+<li>然后该web应用程序将继续执行这个全是数字的数据。</li>
+</ol>
+<p>在默认情况下，类似的函数会接受字符串内容或者用户的数据输入，并将执行 在目标系统上被提供的任何内容，因此任何未经适当检查而使用这些函数的web应用程序都容易受到命令注入攻击的影响。</p>
+<p><strong>对输入数据进行净化（sanitisation）</strong></p>
+<p>清理web应用程序所使用的用户输入是防止命令注入的好方法。 这是指定用户可以提交的数据格式或类型的过程。 例如，可以指定仅接受数字数据或删除任何特殊字符（如 &gt;、&amp; 和 &#x2F;）的输入字段。</p>
+<p>在下面的代码片段中，PHP 函数<a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/en/function.filter-input.php" >filter_input <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>用于检查通过输入表单提交的任何数据是否为数字，如果不是数字，则视为无效输入。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126233729080.png"
+                      alt="image-20221126233729080"
+                ></p>
+<p><strong>绕过过滤器</strong></p>
+<p>web应用程序可以采用多种技术来过滤和清理从用户输入中获取的数据，这些过滤器将限制你使用特定的有效载荷； 但是，我们可以滥用web应用程序背后的逻辑来绕过这些过滤器。 </p>
+<p>例如，web应用程序可能会去掉我们所使用的payload中的引号，我们此时可以尝试改用引号的十六进制值来替代payload中的引号；虽然最终使用的payload数据格式与预期的不同，但仍然可以得到该payload成功执行的对应结果。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126235110547.png"
+                      alt="image-20221126235110547"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221126235707461.png"
+                      alt="image-20221126235707461"
+                ></p>
+<h2 id="命令注入漏洞-练习"><a href="#命令注入漏洞-练习" class="headerlink" title="命令注入漏洞-练习"></a>命令注入漏洞-练习</h2><p>启动目标机器，在分屏中可见的网站上所托管的web应用程序上测试一些有效载荷，以测试命令注入漏洞。 如果你遇到困难或者希望探索一些更复杂的有效载荷，请参阅此备忘单： <a class="link"   target="_blank" rel="noopener" href="https://github.com/payloadbox/command-injection-payload-list" >https://github.com/payloadbox/command-injection-payload-list <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>在<code>/home/tryhackme/flag.txt</code>中找到flag的内容，你可以使用有效载荷来实现这一点——建议尝试多种有效载荷。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127201043929.png"
+                      alt="image-20221127201043929"
+                ></p>
+<p>启动目标机器，并查看分屏中的web应用程序：</p>
+<p>通过在下面的字段中输入设备的 IP 地址，使用这个简易的 Web 应用程序来测试目标设备的可用性。 例如，127.0.0.1</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127203232018.png"
+                      alt="image-20221127203232018"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127203514803.png"
+                      alt="image-20221127203514803"
+                ></p>
+<blockquote>
+<p>www-data</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221127204825987.png"
+                      alt="image-20221127204825987"
+                ></p>
+<blockquote>
+<p>THM{COMMAND_INJECTION_COMPLETE}</p>
+</blockquote>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Command Injection(命令注入漏洞)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 12:16:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 12:18:47
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Command Injection(命令注入漏洞)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Web%E5%AE%89%E5%85%A8/">#Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-SQL%20Injection(SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-SQL Injection(SQL注入漏洞)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Cross-site%20Scripting(XSS%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%BC%8F%E6%B4%9E)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Cross-site Scripting(XSS跨站脚本漏洞)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Command Injection(命令注入漏洞)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5"><span class="nav-text">什么是命令注入?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E7%8E%B0%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">发现命令注入漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">利用命令注入漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B2%E6%8A%A4%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB"><span class="nav-text">防护命令注入攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E-%E7%BB%83%E4%B9%A0"><span class="nav-text">命令注入漏洞-练习</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

