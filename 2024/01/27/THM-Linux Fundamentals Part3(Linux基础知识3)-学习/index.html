@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-linux fundamentals part3(linux基础知识3)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="进一步提升你的Linux使用技能，了解一些Linux系统常见的实用程序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Linux Fundamentals Part3(Linux基础知识3)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Linux%20Fundamentals%20Part3(Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%863)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="进一步提升你的Linux使用技能，了解一些Linux系统常见的实用程序。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403214825176.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403230557870.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403230208035.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403230317863.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404095742155.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404100122129.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404100230199.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404110917497.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404112406775.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404120541306.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404183329221.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404190321839.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404192831824.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404194127042.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404195229427.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404195245222.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404202323290.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404202348522.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404202407739.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404202510832.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404214102711.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404220822701.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404230933785.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404230914685.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404231038141.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404232002556.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230405000525903.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230405000715814.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404204023732.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404204753923.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404210233373.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230404210347221.png">
+<meta property="article:published_time" content="2024-01-27T02:34:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T02:35:55.698Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="网络安全基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20230403214825176.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Linux Fundamentals Part3(Linux基础知识3)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">25</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/61add44b3c6be8004802cc37/room-content/184dc7fb5b1d816f4005d59f36a0e484.svg" alt="THM-Linux Fundamentals Part3(Linux基础知识3)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Linux Fundamentals Part3(Linux基础知识3)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 10:34:55</span>
+        <span class="mobile">2024-01-27 10:34:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 10:35:55</span>
+            <span class="mobile">2024-01-27 10:35:55</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>6.8k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>25 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/linuxfundamentalspart3" >https://tryhackme.com/room/linuxfundamentalspart3 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：进一步提升你的Linux使用技能，了解一些Linux系统常见的实用程序。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>欢迎来到“Linux基础”系列的第三部分(也是最后一部分)。到目前为止，在本系列文章中，你已经学习了一些基本概念并使用了一些重要的命令；接下来，本文将展示一些你可能经常会用到的实用工具和应用程序，你还将通过了解Linux中的自动化任务、包管理、服务日志及应用程序日志来提高你的Linux技能。</p>
+<p><strong>环境准备</strong></p>
+<p>在TryHackMe攻击机或者你的本地Kali机上，使用以下凭据 通过SSH远程访问TryHackMe实验房间所提供的Linux目标机器：</p>
+<ul>
+<li>IP Address：MACHINE_IP（在与本文相关的TryHackMe实验房间中部署目标机器，即可得到一个对应的目标IP地址）</li>
+<li>Username：tryhackme</li>
+<li>Password：tryhackme</li>
+</ul>
+<p>tips：语法示例——<code>ssh tryhackme@MACHINE_IP</code>。</p>
+<h2 id="终端文本编辑器"><a href="#终端文本编辑器" class="headerlink" title="终端文本编辑器"></a>终端文本编辑器</h2><p>到目前为止（在本系列的文章中），我们使用过<code>echo</code>命令与操作符(<code>&gt;</code>和<code>&gt;&gt;</code>)的组合，实现了写入文本内容到指定文件中；但是当我们处理具有多行内容的文件时，前述写入方式并不是一种有效的处理数据的方法，此时我们就需要使用文本编辑器来处理文件内容。</p>
+<p>有很多文本编辑器可供Linux终端使用，它们都有各种各样的友好性和实用性，接下来我们将简单介绍以下两种终端文本编辑器：</p>
+<ul>
+<li>nano编辑器</li>
+<li>vim编辑器</li>
+</ul>
+<p><strong>Nano编辑器简介</strong></p>
+<p>Nano很容易上手，如果要使用nano创建或编辑文件，我们只需输入<code>nano filename</code>命令（在实际执行时，将”filename”替换为你所希望编辑的文件名即可）。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Introducing Nano 终端界面示例</span></span><br><span class="line">tryhackme@linux3:/tmp# nano myfile</span><br><span class="line">  GNU nano 4.8                                             myfile                                                       </span><br><span class="line"></span><br><span class="line">^G Get Help    ^O Write Out   ^W Where Is    ^K Cut Text    ^J Justify     ^C Cur Pos     M-U Undo       M-A Mark Text</span><br><span class="line">^X Exit        ^R Read File   ^\ Replace     ^U Paste Text  ^T To Spell    ^_ Go To Line  M-E Redo       M-6 Copy Text</span><br></pre></td></tr></table></figure></div>
+
+<p>一旦我们按下回车键执行nano命令，nano编辑器将会被启动，然后我们就可以开始输入或修改文件的文本内容；我们可以使用“向上”和“向下”方向键浏览文本的每一行，也可以使用键盘上的“Enter”键开始新的一行。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Using Nano to write text 终端界面示例</span></span><br><span class="line">tryhackme@linux3:/tmp# nano myfile</span><br><span class="line">  GNU nano 4.8                                             myfile                                             Modified  </span><br><span class="line"></span><br><span class="line">Hello TryHackMe</span><br><span class="line">I can write things into &quot;myfile&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">^G Get Help    ^O Write Out   ^W Where Is    ^K Cut Text    ^J Justify     ^C Cur Pos     M-U Undo       M-A Mark Text</span><br><span class="line">^X Exit        ^R Read File   ^\ Replace     ^U Paste Text  ^T To Spell    ^_ Go To Line  M-E Redo       M-6 Copy Text</span><br></pre></td></tr></table></figure></div>
+
+<p>Nano编辑器有一些很容易记住的功能，包括以下内容：</p>
+<ul>
+<li>搜索文本</li>
+<li>复制和粘贴</li>
+<li>跳转到某行号对应的行</li>
+<li>找出你当前所在行的行号</li>
+</ul>
+<p>你可以通过按“Ctrl”键(在Linux上会被表示为<code>^</code>)并结合相应的字母来使用nano编辑器的功能；例如，如果我们要退出编辑器界面，我们可以按“Ctrl”+“X”退出Nano编辑器。</p>
+<p><strong>VIM编辑器简介</strong></p>
+<p>VIM是一个更高级的文本编辑器，虽然你不需要知道VIM的所有高级特性，但是使用VIM编辑器特性 对于提高你的Linux技能有很大帮助。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403214825176.png"
+                      alt="image-20230403214825176"
+                ></p>
+<p>尽管需要更长的时间来熟悉，但是VIM编辑器有很多优点，包括以下内容：</p>
+<ul>
+<li>可自定义——你可以自主选择修改键盘快捷键；</li>
+<li>语法高亮显示——如果你正在编写或维护代码，这可能非常有用，VIM编辑器是软件开发人员的流行选择之一；</li>
+<li>VIM编辑器可以在没有安装nano的所有终端上工作（VIM编辑器可以完全替代nano编辑器）；</li>
+<li>有很多VIM资源可供你使用，如<a class="link"   target="_blank" rel="noopener" href="https://vim.rtorr.com/" >VIM备忘单 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-vim.html" >VIM教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>等。</li>
+</ul>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403230557870.png"
+                      alt="image-20230403230557870"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403230208035.png"
+                      alt="image-20230403230208035"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403230317863.png"
+                      alt="image-20230403230317863"
+                ></p>
+<h2 id="Linux常见实用程序介绍"><a href="#Linux常见实用程序介绍" class="headerlink" title="Linux常见实用程序介绍"></a>Linux常见实用程序介绍</h2><p><strong>下载文件-wget</strong></p>
+<p>计算机设备的一个相当基本的特征是具有传输文件的能力，例如，你可能想要从网上下载一个程序、一个脚本或者一张图片。</p>
+<p>在本小节我们将介绍<code>wget</code>命令的使用，这个命令允许我们通过HTTP从网络上下载文件——就像你在浏览器中访问文件一样；在使用<code>wget</code>命令下载文件时，我们还需要提供所希望下载的资源的地址，例如，如果我们想下载一个名为“myfile.txt”的文件到本地Linux机器上，假设我们已经知道了目标资源文件的网址，我们所使用的命令看起来会是下面这样：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://assets.tryhackme.com/additional/linux-fundamentals/part3/myfile.txt</span><br></pre></td></tr></table></figure></div>
+
+<p>**传输文件-scp **</p>
+<p>SCP（secure copy）是一种能够安全复制文件的方法，与常规的<code>cp</code>复制命令不同，使用<code>scp</code>命令可以在两台计算机之间传输文件，并且该命令将使用SSH协议来提供身份验证和数据加密功能。</p>
+<p>基于SOURCE（源）和DESTINATION（目的地），SCP能够允许你：</p>
+<ul>
+<li>将文件和目录从当前系统中复制到远程系统；</li>
+<li>从远程系统中复制文件和目录到当前系统。</li>
+</ul>
+<p>使用<code>scp</code>命令的前提是：我们已经知道当前的本地系统和远程系统上有效用户的名称及其密码。</p>
+<p>接下来我们要将一个示例文件从我们的本地机器复制到远程机器，假设我们已经知道如下信息：</p>
+<ul>
+<li>远程系统的IP地址——192.168.1.30；</li>
+<li>远程系统上的有效用户名称——ubuntu；</li>
+<li>本地系统上的文件名——important.txt；</li>
+<li>我们希望将文件存储在远程系统上所使用的新文件名称——transferred.txt。</li>
+</ul>
+<p>有了以上这些信息，我们就可以编写<code>scp</code>命令将文件从本地系统中复制到远程系统：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在本地系统的终端界面输入以下命令</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在需要提供密码的时候：请输入密码进行身份验证</span></span><br><span class="line">scp important.txt ubuntu@192.168.1.30:/home/ubuntu/transferred.txt</span><br></pre></td></tr></table></figure></div>
+
+<p>现在，让我们颠倒过来，让我们使用<code>scp</code>命令从远程计算机上复制文件到本地计算机。</p>
+<p>同样，我们需要事先知道以下信息：</p>
+<ul>
+<li>远程系统的IP地址——192.168.1.30；</li>
+<li>远程系统上的有效用户名称——ubuntu；</li>
+<li>远程系统上的文件名——documents.txt；</li>
+<li>我们希望将文件存储在本地系统上所使用的新文件名称——notes.txt</li>
+</ul>
+<p>有了以上这些信息，我们就可以编写<code>scp</code>命令从远程系统上复制文件到本地计算机：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在本地系统的终端界面输入以下命令</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在需要提供密码的时候：请输入密码进行身份验证</span></span><br><span class="line">scp ubuntu@192.168.1.30:/home/ubuntu/documents.txt notes.txt </span><br></pre></td></tr></table></figure></div>
+
+<p><strong>托管文件到web服务器</strong></p>
+<p>Ubuntu机器预先打包了python3，而Python能够提供了一个轻量级且易于使用的web模块，称为“HTTPServer”；该模块能够将你的计算机变成一个快捷和简易的web服务器，你可以使用它来托管你本地计算机上的文件，然后就可以通过其他计算机设备使用<code>curl</code>和<code>wget</code>等命令进行文件下载操作。</p>
+<p>Python3的“HTTPServer”默认将托管你当前运行命令时所在的目录中的文件，但这可以通过添加在手册页中找到的参数选项来更改。</p>
+<p>我们可以直接在本地计算机的终端中运行<code>python3 -m http.server</code>命令以启动“HTTPServer”模块，如下例所示（没有指定端口则会使用8000端口）：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Using Python to start a web server 终端界面示例</span></span><br><span class="line">tryhackme@linux3:/tmp# python3 -m http.server</span><br><span class="line">Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...</span><br></pre></td></tr></table></figure></div>
+
+<p>tips：如果需要指定该简易web服务器所绑定的端口，则可以使用像 <code>python3 -m http.server 1234</code>这样的命令（其中的1234为指定的端口号）。 </p>
+<p>现在，我们就可以在其他计算机设备上使用<code>wget</code>并通过指定本地计算机的IP地址和文件名来下载文件。Python3所提供的这个“HTTPServer”模块的一个缺陷是无法编制索引，因此必须知道我们所希望下载的文件的确切名称和位置。</p>
+<p>除了Python3所提供的“HTTPServer”模块之外，你还可以使用Updog来托管文件，Updog能提供一个更高级但仍属于轻量级的web服务器以便你托管本地计算机上的文件。</p>
+<p>Updog的GitHub项目链接：<a class="link"   target="_blank" rel="noopener" href="https://github.com/sc0tfree/updog" >https://github.com/sc0tfree/updog <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>下面是通过Python3的”HTTPServer”模块下载所托管的文件的示例（承接前面的本地文件托管示例）：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Downloading a file from our webserver using wget 终端界面示例</span></span><br><span class="line">tryhackme@linux3:/tmp# wget http://127.0.0.1:8000/file</span><br><span class="line"></span><br><span class="line">2021-05-04 14:26:16  http://127.0.0.1:8000/file</span><br><span class="line">Connecting to http://127.0.0.1:8000... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 51095 (50K) [text]</span><br><span class="line">Saving to: ‘file’</span><br><span class="line"></span><br><span class="line">file                    100%[=================================================&gt;]  49.90K  --.-KB/s    in 0.04s</span><br><span class="line"></span><br><span class="line">2021-05-04 14:26:16 (1.31 MB/s) - ‘file’ saved [51095/51095]</span><br></pre></td></tr></table></figure></div>
+
+<p>在上面的示例中，我们可以看到<code>wget</code>命令成功地将名为“file”的文件下载到我们的机器上，这个http请求会被HTTPServer记录(就像任何web服务器一样)：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Using Python to start a web server 终端界面示例</span></span><br><span class="line">tryhackme@linux3:/tmp# python3 -m http.server</span><br><span class="line">Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...</span><br><span class="line">127.0.0.1 - - [04/May/2021/14:26:09] &quot;GET /file HTTP/1.1&quot; 200 -</span><br></pre></td></tr></table></figure></div>
+
+<p>tips： 关于Python3”HTTPServer”模块的文档—— <a class="link"   target="_blank" rel="noopener" href="https://docs.python.org/3/library/http.server.html" >https://docs.python.org/3/library/http.server.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 。</p>
+<h3 id="答题-1"><a href="#答题-1" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p>使用 Python3 的“HTTPServer”模块在目标机器的“tryhackme”用户的主目录中启动 Web 服务器。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404095742155.png"
+                      alt="image-20230404095742155"
+                ></p>
+<p>在本地攻击机上下载刚才启动的简易web服务器所托管的文件。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">wget http://MACHINE_IP:8000/.flag.txt</span> </span><br><span class="line">wget http://10.10.85.109:8000/.flag.txt </span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404100122129.png"
+                      alt="image-20230404100122129"
+                ></p>
+<blockquote>
+<p>flag为：THM{WGET_WEBSERVER} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404100230199.png"
+                      alt="image-20230404100230199"
+                ></p>
+<h2 id="Linux进程基础"><a href="#Linux进程基础" class="headerlink" title="Linux进程基础"></a>Linux进程基础</h2><p>进程（Process）是指在你的计算机中正在运行的程序，它们由操作系统内核进行管理，并且每个进程都会有一个与之关联的ID，这个ID被称为PID。PID会根据进程启动的顺序而递增，也就是说，第60个进程的PID即为60。</p>
+<p><strong>查看进程(Viewing Processes)</strong></p>
+<p>Linux <code>ps</code>（英文全拼：process status）命令用于显示当前进程的状态，类似于 windows 的任务管理器。</p>
+<p>我们可以使用<code>ps</code>命令来列出正在运行的进程的一个列表，该列表将提供一些附加信息，如进程的PID、进程的状态码、进程相关的CPU占用情况、正在执行的实际程序或命令的名称等。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404110917497.png"
+                      alt="image-20230404110917497"
+                ></p>
+<p>从上图中我们可以看到：我们第一次执行<code>ps</code>命令时，<code>ps</code>本身的进程PID是204，然后当我们再次执行<code>ps</code>命令时，<code>ps</code>本身的进程PID增加到了205（这说明PID确实会根据进程启动的顺序而递增）。</p>
+<p>如果我们要查看由其他用户运行的进程和那些不在会话中运行的进程(即系统进程)，我们需要为<code>ps</code>命令提供<code>aux</code>参数：<code>ps aux</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404112406775.png"
+                      alt="image-20230404112406775"
+                ></p>
+<p>从上图中我们可以看到现在总共有5个进程，相关的用户名称为“root”和“cmnatic”。</p>
+<p>另一个非常有用的命令是<code>top</code>命令，此命令能为你提供有关系统上正在运行的进程的实时统计信息，而不仅是一次性视图；<code>top</code>命令所提供的统计信息将每几秒钟刷新一次，但是每当你使用方向键浏览各行信息时也会进行刷新。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404120541306.png"
+                      alt="image-20230404120541306"
+                ></p>
+<p>关于ps命令的使用参考：<a class="link"   target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-ps.html" >https://www.runoob.com/linux/linux-comm-ps.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><strong>终止进程(Managing Processes)</strong></p>
+<p>我们可以通过发送一些信号来终止进程，这些终止进程的信号有多种类型，这主要与系统内核如何“干净”地处理进程有关。</p>
+<p>如果我们要终止一个命令(在Linux中，我们可以把进程理解为正在运行的命令)，我们可以使用适当命名的<code>kill</code>命令与我们所希望kill的相关PID组合在一起；例如，我们想要kill一个PID为1337的进程，我们可以使用以下命令：<code>kill 1337</code></p>
+<p>下面是当进程被杀死时我们可以发送给进程的一些信号（使用<code>kill -l</code>可列出当前所支持的所有信号类型）：</p>
+<ul>
+<li>SIGTERM（<code>kill -15</code>）：终止进程，但允许它事先执行一些清理任务；</li>
+<li>SIGKILL（<code>kill -9</code>）：默认信号，<code>-9</code>参数可以省略，表示终止进程并且不做任何事后清理；</li>
+<li>SIGSTOP（<code>kill -19</code>）：停止或者挂起进程；</li>
+<li>SIGHUP（<code>kill -1</code>）：重启进程；</li>
+<li>SIGCONT（<code>kill -18</code>）：继续进程。</li>
+</ul>
+<p><strong>进程如何启动</strong></p>
+<p>操作系统(OS)使用名称空间并最终能将计算机上的可用资源分配给(如CPU、RAM和高优先级)进程，你可以把这个过程想象成将你的计算机资源分成几片——类似于切割一块蛋糕；在切片内的进程将拥有一定的计算机资源，然而，这部分资源也只是所有进程实际可用的一小部分。</p>
+<p>名称空间对于安全性非常重要，因为它是将一个进程与其他进程隔离的方式——只有相同名称空间中的进程才能相互看到。</p>
+<p>我们之前讨论过PID是如何工作的，这就是名称空间可发挥作用的地方；PID为1的进程为系统启动时会自动运行的进程，这个进程在Ubuntu中是系统的初始化(init)进程，比如<code>systemd</code>，它能够用于提供一种在操作系统和用户之间管理用户进程的方法。</p>
+<p>一旦系统启动并初始化，<code>systemd</code>就会成为首先自动运行的进程之一，而我们想要运行的任何程序或软件都将作为<code>systemd</code>进程的子进程启动；虽然这些子进程由<code>systemd</code>控制，但仍将作为单独的进程运行(尽管会共享来自<code>systemd</code>的资源)，这能使我们更容易识别各个进程。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404183329221.png"
+                      alt="image-20230404183329221"
+                ></p>
+<p><strong>在系统启动时启动进程&#x2F;服务</strong></p>
+<p>一些应用程序可以在我们的计算机系统启动时启动，例如，web服务器、数据库服务器或文件传输服务器等，这些软件通常很关键，因而经常被管理员告知在系统启动期间启动。</p>
+<p>为了在系统启动时启动进程&#x2F;服务，我们可以使用<code>systemctl</code>命令，该命令允许我们与<code>systemd</code> 进程（守护进程）交互；<code>systemctl</code>是一个易于使用的命令，它采用以下语法格式：<code>systemctl [option] [service]</code></p>
+<p>如果我们要让apache服务启动，我们可以使用<code>systemctl start apache2</code>，如果想让apache服务停止，我们只需将<code>[option]</code>替换成<code>stop</code>即可。</p>
+<p>我们可以为<code>systemctl</code>命令设置以下四个选项：</p>
+<ul>
+<li>Start</li>
+<li>Stop</li>
+<li>Enable</li>
+<li>Disable</li>
+</ul>
+<p><strong>Linux前台和后台介绍</strong></p>
+<p>进程可以以两种状态运行：在前台运行、在后台运行。</p>
+<p>你在Linux终端中运行的命令，如“echo”将在终端的前台运行，<code>echo</code>命令是一个很好的例子，因为<code>echo</code>命令的输出将在前台返回，并且无法在后台返回：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404190321839.png"
+                      alt="image-20230404190321839"
+                ></p>
+<p>如上图所示：当我们运行<code>echo &quot;Hi THM&quot;</code>命令时，我们能在终端前台看到命令的输出；但当我们在<code>echo &quot;Hi THM&quot;</code>之后添加<code>&amp;</code>操作符之后，我们只能在终端前台看到<code>echo</code>进程的ID（而不是命令的输出）——因为此时<code>echo</code>命令正在后台运行。</p>
+<p>前后台机制对于复制文件之类的命令非常有用，因为这将允许我们同时在终端前台和终端后台执行不同的命令；以使用复制文件命令为例，后台化此命令意味着——我们不必等待文件复制命令执行完成，就能同时执行其他命令。</p>
+<p>当我们在执行脚本之类的程序文件时，我们也可以让这个进程后台化，此处不依赖于<code>&amp;</code>操作符，而是需要我们在键盘上使用<code>Ctrl + Z</code>来设置进程的后台化，这也是一种“暂停”脚本运行或命令执行的有效方法，如下图所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404192831824.png"
+                      alt="image-20230404192831824"
+                ></p>
+<p>由上图可知：示例脚本会持续输出内容 “This will keep on looping until I stop!”，直到我们停止或者挂起与该脚本对应的进程，我们可以通过在键盘上使用Ctrl + Z(在终端界面由T^Z表示)来停止示例脚本的运行。</p>
+<p><strong>前台化进程</strong></p>
+<p>假设现在有一个进程（”background.sh”脚本）在后台运行，我们可以通过使用<code>ps aux</code>命令来确认这一点：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404194127042.png"
+                      alt="image-20230404194127042"
+                ></p>
+<p>我们已经知道，在键盘上使用<code>Ctrl + Z</code>或者在命令中添加<code>&amp;</code>操作符能够使进程后台化；同样，我们还可以通过使用<code>fg</code>命令将后台进程重新前台化。</p>
+<p>如下所示：在我们使用<code>fg</code>命令之后，”background.sh”脚本所对应的进程能够重新回到终端前台（此时的”background.sh”脚本仍将处于运行状态）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404195229427.png"
+                      alt="image-20230404195229427"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404195245222.png"
+                      alt="image-20230404195245222"
+                ></p>
+<h3 id="答题-2"><a href="#答题-2" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><em>tips：阅读本小节的内容以帮助回答以下问题</em></p>
+<p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux </span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404202323290.png"
+                      alt="image-20230404202323290"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404202348522.png"
+                      alt="image-20230404202348522"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404202407739.png"
+                      alt="image-20230404202407739"
+                ></p>
+<blockquote>
+<p>隐藏的flag为：THM{PROCESSES} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404202510832.png"
+                      alt="image-20230404202510832"
+                ></p>
+<h2 id="Linux定时任务"><a href="#Linux定时任务" class="headerlink" title="Linux定时任务"></a>Linux定时任务</h2><p>用户可能希望设置某个操作或任务在系统启动后得到执行，例如：运行一些命令、备份指定文件、启动某个程序等等。</p>
+<p>为了对操作或任务的执行进行定时设置，我们接下来将讨论<code>cron</code>进程，更具体地说：我们将学习如何通过<code>crontab</code>与<code>cron</code>进程进行交互，<code>crontab</code>是在系统引导期间所启动的进程之一，它负责促进和管理cron jobs（定时任务）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404214102711.png"
+                      alt="image-20230404214102711"
+                ></p>
+<p>crontab是一个特殊的文件，其格式可被<code>cron</code>进程识别以逐步执行crontab的每一行，crontab需要具有以下 6 个特定字段值：</p>
+<ul>
+<li>MIN：每多少分钟（minute ）执行；</li>
+<li>HOUR：每多少小时（hour）执行 ；</li>
+<li>DOM：在一个月的每哪一天（Day Of the Month）执行 ；</li>
+<li>MON：在一年的每哪个月（Month of the year）执行；</li>
+<li>DOW：在一个星期的每哪一天（Day Of the Week）执行；</li>
+<li>CMD：实际上将被执行的命令（command）。</li>
+</ul>
+<p>以备份文件为例，你可能希望每12小时备份一次”cmnatic”用户的”Documents”，我们将为此使用以下格式命令：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 *12 * * * cp -R /home/cmnatic/Documents /var/backups/</span><br></pre></td></tr></table></figure></div>
+
+<p>crontab的一个有趣特性是支持通配符(<code>*</code>)，如果我们不希望为某个特定的字段提供一个值，我们就可以用<code>*</code>代替；如上面的定时任务示例（备份文件），我们不关心这个任务执行的月份、日期以及年份——我们只关心它做到每12小时执行一次，所以我们只需放置星号来代替我们所不关心的值。</p>
+<p>我们可以使用在线的“<a class="link"   target="_blank" rel="noopener" href="https://crontab-generator.org/" >Crontab Generator <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>”工具，它可以帮助生成符合格式的crontab命令；我们还可以使用“<a class="link"   target="_blank" rel="noopener" href="https://crontab.guru/" >Cron Guru <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>”工具，它会分析crontab执行的时间点。</p>
+<p>我们可以通过使用<code>crontab -e</code>命令并且选择一个编辑器(比如Nano)来编辑crontab文件的内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404220822701.png"
+                      alt="image-20230404220822701"
+                ></p>
+<p>tips：我们通过<code>crontab</code>命令可以添加、删除、编辑自动化任务（定时任务）。</p>
+<h3 id="答题-3"><a href="#答题-3" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404230933785.png"
+                      alt="image-20230404230933785"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404230914685.png"
+                      alt="image-20230404230914685"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404231038141.png"
+                      alt="image-20230404231038141"
+                ></p>
+<h2 id="Linux软件包管理"><a href="#Linux软件包管理" class="headerlink" title="Linux软件包管理"></a>Linux软件包管理</h2><p><strong>介绍软件包和软件存储库</strong></p>
+<p>当开发人员希望向Linux社区提交软件时，他们会将其提交到“apt”存储库，如果获得Linux官方批准，那么他们所提交的程序和工具将被发布到公共区域。</p>
+<p>Linux最可取的两个特性在这里脱颖而出：具有用户可访问性、能够发挥开源工具的优点。</p>
+<p>当我们在 Ubuntu 20.04 Linux 机器上的&#x2F;etc&#x2F;apt目录中使用 <code>ls</code> 命令时，能够看到以下文件，这些文件可用作网关&#x2F;注册表。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404232002556.png"
+                      alt="image-20230404232002556"
+                ></p>
+<p>虽然操作系统供应商将维护他们自己的存储库，但你也可以选择将一些社区存储库添加到你的源列表中，这将允许你扩展Linux操作系统的功能。</p>
+<p>例如：我们可以使用<code>add-apt-repository</code>命令添加其他存储库到我们的系统，在实际使用这个命令时，我们可以择优添加系统资源供应商所提供的存储库（一些系统资源供应商会拥有一个更接近我们机器的地理位置的存储库）。</p>
+<p><strong>管理存储库(添加和删除)</strong></p>
+<p>通常我们可以使用<code>apt</code>命令将软件安装到我们的Linux系统中，<code>apt</code>命令是apt包管理软件的一部分；apt包管理软件（即包管理器）包含了一整套工具，这些工具允许我们管理软件包和软件源，同时还能帮助我们安装软件或者删除软件。</p>
+<p>添加存储库的一种方法是使用我们上面提到的<code>add-apt-repository</code>命令，但是我们也可以手动添加和删除存储库。</p>
+<p>虽然你也可以选择使用其他包安装程序(如<code>dpkg</code>)来安装软件，但是使用apt包管理器的好处是：每当我们更新系统时，它都会检查包含我们添加的软件的存储库是否有更新。</p>
+<p>在接下来的示例中，我们将把Sublime text文本编辑器作为一个存储库添加到Ubuntu机器中(这个文本编辑器并不是默认的Ubuntu存储库的一部分)；在我们添加软件时，我们所下载的软件的完整性是通过使用所谓的GPG (Gnu Privacy Guard)密钥来保证的，这些密钥本质上是开发人员所提供的安全检查，能够表明“这是我们的软件”，如果当前密钥与操作系统所信任的密钥（即开发人员使用的密钥）不匹配，那么计算机就不会执行下载软件的操作。</p>
+<p>因此，我们首先需要添加Sublime Text 3开发人员所使用的GPG密钥。(此过程需要访问互联网)</p>
+<p>添加存储库的示例：</p>
+<p>1.下载GPG密钥并使用apt-key信任这个密钥：<code>wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -</code></p>
+<p>2.现在我们已经将密钥添加到我们的可信列表中，我们可以开始将Sublime Text 3的存储库添加到我们的apt源列表中；一个好的做法是为我们添加的每个不同的社区&#x2F;第三方存储库都分配一个单独的文件。</p>
+<p>2.1让我们在 &#x2F;etc&#x2F;apt&#x2F;sources.list.d目录中创建一个名为sublime-text.list的文件：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230405000525903.png"
+                      alt="image-20230405000525903"
+                ></p>
+<p>2.2使用Nano或其他文本编辑器，添加并保存Sublime text 3存储库到刚才新创建的文件中：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230405000715814.png"
+                      alt="image-20230405000715814"
+                ></p>
+<p>2.3在我们添加了以上条目之后，我们需要更新apt包以识别这个新条目——这是通过使用<code>apt update</code>命令完成的。</p>
+<p>2.4成功更新apt包之后，我们现在可以继续安装我们所信任的并且已经添加到apt包中的软件——<code>apt install sublime-text</code></p>
+<p>删除软件包的方法很简单，我们可以使用<code>add-apt-repository --remove ppa:PPA_Name/ppa</code>命令来完成，也可以通过手动删除之前添加的文件来完成。</p>
+<p>当我们成功删除了软件包之后，我们还需要使用<code>apt remove [software-name-here]</code>来清理apt包，例如：<code>apt remove sublime-text</code> 。</p>
+<p>tips：在删除软件包时，我们要将上述示例命令中的<code>PPA_Name</code>替换为我们期望删掉的<code>PPA</code>的名称（该名称在以上示例中为“sublime-text”）。</p>
+<h2 id="Linux日志"><a href="#Linux日志" class="headerlink" title="Linux日志"></a>Linux日志</h2><p>我们在 Linux 基础知识第一部分中简要介绍了日志文件以及它们所在的位置，现在，让我们快速回顾一下：这些包含日志信息的文件和文件夹位于<code>/var/log</code>目录中，主要包含了在系统上所运行的应用程序、服务的日志记录信息。 </p>
+<p>操作系统 (OS) 擅长通过一个被称为“轮换-rotating”的过程来自动管理日志信息。</p>
+<p>以下是Linux机器上正在运行的三个服务以及和这些服务相关的日志信息（此处仅为示例）：</p>
+<ul>
+<li>Apache2 web服务器；</li>
+<li>fail2ban服务（此服务的日志信息可用于监视攻击者所尝试的暴力操作）；</li>
+<li>UFW服务，用作防火墙；</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404204023732.png"
+                      alt="image-20230404204023732"
+                ></p>
+<p>通过查看这些服务日志，能够很好地监视系统运行状况以及保护系统的安全；而且，像web server这样的服务所对应的日志文件，还包含了关于每个请求的信息——这将允许网站开发人员或网站管理员诊断web服务的性能，并且有助于调查网络入侵者的活动。</p>
+<p>关于web服务，下面两种类型的日志文件是值得我们注意的：</p>
+<ul>
+<li>access log</li>
+<li>error log</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404204753923.png"
+                      alt="image-20230404204753923"
+                ></p>
+<p>tips：日志文件会存储关于操作系统如何运行的信息，还会存储用户所执行的操作，例如身份验证尝试。</p>
+<h3 id="答题-4"><a href="#答题-4" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404210233373.png"
+                      alt="image-20230404210233373"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404210347221.png"
+                      alt="image-20230404210347221"
+                ></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>欢迎来到Linux基础模块的末尾，随着你与Linux交互时间的增加，你对Linux的熟悉程度也将会得到提高。</p>
+<p>本文主要介绍了以下内容：</p>
+<ul>
+<li>关于两种终端文本编辑器（nano和vim）的简介；</li>
+<li>了解Linux中的一般实用程序，如下载文件、传输文件、使用python web服务器托管本地内容；</li>
+<li>了解Linux中的进程；</li>
+<li>通过学习crontab定时任务、软件包管理和日志检查来维护和自动化你的Linux系统。</li>
+</ul>
+<p>可参考的Linux中文学习资源：</p>
+<ul>
+<li>Linux中文教程：<a class="link"   target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-tutorial.html" >https://www.runoob.com/linux/linux-tutorial.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li>Linux 命令大全：<a class="link"   target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-command-manual.html" >https://www.runoob.com/linux/linux-command-manual.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li>Linux 常用命令英文全拼：<a class="link"   target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/linux-command-full-fight.html" >https://www.runoob.com/w3cnote/linux-command-full-fight.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+<p>你可以通过以下TryHackMe实验房间继续扩展你的Linux基础学习：</p>
+<ul>
+<li>Bash Scripting（Bash脚本基础） - <a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/bashscripting" >https://tryhackme.com/room/bashscripting <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li>Regular Expressions（正则表达式基础） - <a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/catregex" >https://tryhackme.com/room/catregex <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Linux Fundamentals Part3(Linux基础知识3)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 10:34:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 10:35:55
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Linux Fundamentals Part3(Linux基础知识3)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">#网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Windows%20Fundamentals%201(Windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%861)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Windows Fundamentals 1(Windows基础知识1)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Linux%20Fundamentals%20Part2(Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%862)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Linux Fundamentals Part2(Linux基础知识2)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Linux Fundamentals Part3(Linux基础知识3)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8"><span class="nav-text">终端文本编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E5%B8%B8%E8%A7%81%E5%AE%9E%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%BB%8B%E7%BB%8D"><span class="nav-text">Linux常见实用程序介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-1"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80"><span class="nav-text">Linux进程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-2"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="nav-text">Linux定时任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-3"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86"><span class="nav-text">Linux软件包管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E6%97%A5%E5%BF%97"><span class="nav-text">Linux日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%94%E9%A2%98-4"><span class="nav-text">答题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

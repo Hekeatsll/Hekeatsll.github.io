@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-linux fundamentals part2(linux基础知识2)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="继续你的 Linux 学习之旅，你将学习如何使用 SSH 登录到 Linux 机器，以及了解更多Linux命令。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Linux Fundamentals Part2(Linux基础知识2)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Linux%20Fundamentals%20Part2(Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%862)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="继续你的 Linux 学习之旅，你将学习如何使用 SSH 登录到 Linux 机器，以及了解更多Linux命令。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403100313265.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403102459672.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403201425288.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403103507715.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403104338287.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403104754236.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403110008841.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403201750642.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403201800338.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403112406458.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403112648611.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403113006915.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403113305603.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403113944078.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403114529729.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403205420231.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403205330825.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403115704554.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403181030326.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403181356768.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403205736563.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403205844076.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403185401761.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403190816800.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403191227461.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403192005422.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230403205931526.png">
+<meta property="article:published_time" content="2024-01-27T02:32:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T02:36:30.527Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="网络安全基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20230403100313265.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Linux Fundamentals Part2(Linux基础知识2)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">25</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/61add44b3c6be8004802cc37/room-content/184dc7fb5b1d816f4005d59f36a0e484.svg" alt="THM-Linux Fundamentals Part2(Linux基础知识2)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Linux Fundamentals Part2(Linux基础知识2)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 10:32:55</span>
+        <span class="mobile">2024-01-27 10:32:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 10:36:30</span>
+            <span class="mobile">2024-01-27 10:36:30</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>4.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>15 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/linuxfundamentalspart2" >https://tryhackme.com/room/linuxfundamentalspart2 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：继续你的 Linux 学习之旅，你将学习如何使用 SSH 登录到 Linux 机器，以及了解更多Linux命令。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>欢迎来到“Linux基础”系列的第二部分，在本文中我们将开始了解能够登录和控制远程Linux机器终端的基本技能，并且，我们还将学习以下内容：</p>
+<ul>
+<li>介绍参数标志和参数开关以便我们更高效地使用Linux命令；</li>
+<li>通过学习更多命令，如复制文件和移动文件等，加强我们对Linux文件系统的了解；</li>
+<li>介绍访问权限控制机制，并且了解如何识别当前用户是否具有相关的访问权限，以确保文件和文件夹的安全；</li>
+<li>介绍一些Linux中的常见目录。</li>
+</ul>
+<h2 id="使用-SSH-访问-Linux-机器"><a href="#使用-SSH-访问-Linux-机器" class="headerlink" title="使用 SSH 访问 Linux 机器"></a>使用 SSH 访问 Linux 机器</h2><p>SSH协议是Secure Shell的简称，使用该协议是连接到远程Linux机器的常用方法，通过SSH我们可以使用命令行来与远程Linux机器进行交互。</p>
+<p>我们将部署两台机器：</p>
+<ul>
+<li>TryHackMe所提供的Linux目标虚拟机</li>
+<li>TryHackMe所提供的攻击机或者你的本地Kali虚拟机</li>
+</ul>
+<p><strong>什么是SSH &amp;它是如何工作的?（简单了解）</strong></p>
+<p>Secure Shell或SSH 是一种能够对计算机设备之间的通信数据进行加密的协议。使用了SSH协议之后，计算机设备之间需要通过网络传输的数据将被加密处理，一旦加密数据到达远程机器，就会开始解密过程，如下图所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403100313265.png"
+                      alt="image-20230403100313265"
+                ></p>
+<p>在本文中我们只需要对SSH有一个基础了解即可：</p>
+<ul>
+<li>SSH能够允许我们通过本地设备上针对另一个设备远程执行命令。</li>
+<li>使用了SSH协议之后，设备之间所发送的任何数据 在通过网络传输时都会经过加密处理。</li>
+</ul>
+<p><strong>使用SSH登录Linux机器</strong></p>
+<p>SSH的语法非常简单，我们只需要提供以下内容：</p>
+<ol>
+<li><p>远程计算机的IP地址；</p>
+</li>
+<li><p>远程计算机上可用于登录的有效帐户及凭据。</p>
+</li>
+</ol>
+<p>在本文中，我们将以”tryhackme”用户帐户登录到远程Linux机器，相关的登录密码是”tryhackme”。</p>
+<p>首先，我们需要在TryHackMe攻击机（或者你的本地Kali虚拟机）上打开一个终端；我们要在攻击机终端输入的SSH命令类似于<code>ssh tryhackme@MACHINE_IP</code>，在实际执行SSH命令时，我们需要将示例中的<code>MACHINE_IP</code>替换为Linux目标机的实际IP地址；当输入SSH命令并按下回车键之后，我们会被询问是否信任主机（输入”yes”即可），然后还要为”tryhackme”帐户提供密码（输入”tryhackme”即可）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403102459672.png"
+                      alt="image-20230403102459672"
+                ></p>
+<p>现在我们应该成功通过SSH连接到远程Linux机器，我们接下来所输入的任何命令都将在远程机器上执行——而不会在我们自己的机器上执行。</p>
+<p>注意：当你在ssh登录提示中输入密码时，并没有可见的反馈——你将无法在键入密码时看到任何文本或符号出现，我们只需输入密码并按enter即可。</p>
+<p><strong>实践操作</strong></p>
+<p>输入命令：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh tryhackme@10.10.241.39</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403201425288.png"
+                      alt="image-20230403201425288"
+                ></p>
+<h2 id="Linux命令的参数标志和参数开关"><a href="#Linux命令的参数标志和参数开关" class="headerlink" title="Linux命令的参数标志和参数开关"></a>Linux命令的参数标志和参数开关</h2><p>大多数Linux命令都允许提供参数，这些参数将由连字符以及被称为标志或开关的特定关键字标识。</p>
+<p>接下来我们将讨论如何识别哪些命令允许提供参数，以及如何理解这些命令的具体功能。</p>
+<p>在使用Linux命令时，除非另有指定，否则它将执行默认行为；例如，<code>ls</code>命令能够列出工作目录下的内容，但是，这并不会显示隐藏文件；所以，我们有时候需要使用参数标志和参数开关来扩展命令的行为。</p>
+<p>以<code>ls</code>为例，<code>ls</code>能够告诉我们当前目录下只有一个名为“folder1”的文件夹（请注意，下面截图中的内容仅为示例）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403103507715.png"
+                      alt="image-20230403103507715"
+                ></p>
+<p>然而，在使用<code>-a</code>参数(<code>--all</code>的缩写)对<code>ls</code>命令进行扩展之后，我们会得到一个包含更多文件和文件夹内容的输出结果，例如下图中的”<code>.hiddenfolder</code>“。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403104338287.png"
+                      alt="image-20230403104338287"
+                ></p>
+<p>tips：名称中带”<code>.</code>“表示隐藏文件或者隐藏文件夹，带”<code>.</code>“的文件、文件夹无法通过简单的<code>ls</code>命令被列出。</p>
+<p>允许提供参数的命令还可以使用<code>--help</code>选项，该选项会列出此Linux命令能够使用的参数信息（并会提供相关的简要描述和示例）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403104754236.png"
+                      alt="image-20230403104754236"
+                ></p>
+<p>事实上，<code>--help</code>选项也是man page (manual page的缩写)的格式化输出，man page是关于Linux系统命令和应用程序的使用文档。</p>
+<p><strong>The Man(ual) Page</strong></p>
+<p>man page(手册页)是了解Linux机器上可用的系统命令和应用程序的重要信息来源，我们可以在Linux上访问man page，也可以通过网络<a class="link"   target="_blank" rel="noopener" href="https://linux.die.net/man/" >在线访问man page <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p>如果要在Linux上访问man page文档，我们可以使用<code>man</code>并将其与具体的Linux命令组合，以<code>ls</code>为例，我们可以使用<code>man ls</code>来查看<code>ls</code>命令的手册页：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403110008841.png"
+                      alt="image-20230403110008841"
+                ></p>
+<p><strong>答题</strong></p>
+<p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403201750642.png"
+                      alt="image-20230403201750642"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403201800338.png"
+                      alt="image-20230403201800338"
+                ></p>
+<h2 id="可与文件系统交互的更多命令"><a href="#可与文件系统交互的更多命令" class="headerlink" title="可与文件系统交互的更多命令"></a>可与文件系统交互的更多命令</h2><p>在“Linux基础”系列的第一部分，我们介绍了与Linux机器上的文件系统进行交互的一些基本命令。</p>
+<p>在本小节中，我们将学习更多可以与文件系统交互的命令，以允许我们：</p>
+<ul>
+<li>创建文件和文件夹</li>
+<li>移动文件和文件夹</li>
+<li>删除文件和文件夹</li>
+</ul>
+<p>更具体地说，我们将学习以下命令：</p>
+<ul>
+<li>touch（全称为-touch）：创建文件；</li>
+<li>mkdir（全称为-make directory）：创建目录，即创建文件夹；</li>
+<li>cp（全称为-copy）：复制文件或者文件夹；</li>
+<li>mv（全称为-move）：移动文件或者文件夹；</li>
+<li>rm（全称为-remove）：移除文件或者文件夹，即删除文件或者文件夹；</li>
+<li>file（全称为-file）：确定文件类型。</li>
+</ul>
+<p>tips：与使用<code>cat</code>命令类似，我们可以为以上这些命令指定一个完整的文件路径，比如，directory1&#x2F;directory2&#x2F;note 。</p>
+<p><strong>创建文件和文件夹(touch, mkdir)</strong></p>
+<p>在Linux上创建文件和文件夹是一个简单的过程。首先，我们将介绍如何创建一个文件，<code>touch</code>命令只接受一个参数——我们想要给我们创建的文件所赋予的名称；例如，我们可以使用<code>touch note</code>创建“note”文件。值得注意的是，使用<code>touch</code>只会创建一个空白文件，你还需要使用<code>echo</code>之类的命令或<code>nano</code>之类的文本编辑器来向空白文件添加内容。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403112406458.png"
+                      alt="image-20230403112406458"
+                ></p>
+<p>创建文件夹与创建文件的过程类似，我们只需要使用<code>mkdir</code>命令并提供我们想要赋予给目录的名称即可；例如，我们可以使用<code>mkdir mydirectory</code>创建一个目录“mydirectory”。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403112648611.png"
+                      alt="image-20230403112648611"
+                ></p>
+<p><strong>删除文件和文件夹(rm)</strong></p>
+<p>我们可以使用<code>rm</code>命令简单地删除文件，但是，如果我们希望删除一个文件夹（目录）的话，我们就需要使用<code>-R</code>参数开关。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403113006915.png"
+                      alt="image-20230403113006915"
+                ></p>
+<p><strong>复制和移动文件、文件夹(cp, mv)</strong></p>
+<p>复制和移动文件是Linux机器上的重要功能，<code>cp</code>命令可以结合以下两个参数使用：</p>
+<ol>
+<li><p>现有文件的名称；</p>
+</li>
+<li><p>复制时希望分配给新文件的名称。</p>
+</li>
+</ol>
+<p>使用<code>cp</code>命令能够将现有文件的全部内容复制到新文件中，在下图的示例中，我们将“note”文件复制到“note2”文件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403113305603.png"
+                      alt="image-20230403113305603"
+                ></p>
+<p>移动文件所使用的<code>mv</code>命令也需要两个参数，就像<code>cp</code>命令一样；然而，<code>mv</code>命令不会复制并创建一个新文件，而是合并或修改我们作为参数提供的第二个文件。</p>
+<p>我们不仅可以使用<code>mv</code>命令将文件移动到新文件夹下，还可以使用<code>mv</code>命令重命名文件或文件夹；例如，在下图的示例中，我们使用<code>mv</code>将文件“note2”重命名为“note3”，现在“note3”文件将拥有“note2”文件的全部内容（“note2”文件会消失）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403113944078.png"
+                      alt="image-20230403113944078"
+                ></p>
+<p><strong>确定文件类型(file)</strong></p>
+<p>一个文件通常会有所谓的扩展名，例如，文本文件的扩展名通常是“.txt”，但是文件扩展名并不是文件所必要的（一个文本文件的名称也可以不带.txt）。</p>
+<p>我们可以使用<code>file</code>命令来确定一个文件的类型，例如，我们可以使用<code>file</code>来确认“note”文件是否确实是一个文本文件：<code>file note</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403114529729.png"
+                      alt="image-20230403114529729"
+                ></p>
+<p><strong>答题</strong></p>
+<p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403205420231.png"
+                      alt="image-20230403205420231"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403205330825.png"
+                      alt="image-20230403205330825"
+                ></p>
+<h2 id="访问权限介绍"><a href="#访问权限介绍" class="headerlink" title="访问权限介绍"></a>访问权限介绍</h2><p>在Linux机器上，某些用户可能无权访问一些文件或文件夹，我们之前已经探讨了一些命令，这些命令可用于确定与文件或文件夹相关的访问权限。</p>
+<p>在前面的知识点小节中，我们已经学习了如何通过参数标志和参数开关来扩展命令的使用；当我们使用<code>ls</code>命令结合<code>-lh</code>参数开关时，我们可以看到如下示例内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403115704554.png"
+                      alt="image-20230403115704554"
+                ></p>
+<p>如上图所示，我们使用<code>ls -lh</code>命令列出了当前目录下的文件和文件夹的权限分配情况。</p>
+<p>tips：<code>-l</code> 使用长列表格式列出内容；<code>-h</code> 全称为–human-readable（顾名思义，以可读形式列出内容） 。</p>
+<p>以上输出结果对于确定文件或文件夹的某些特征以及我们是否有权访问它们非常重要，一个文件或文件夹可以有几个特征，这些特征决定了允许执行哪些操作以及哪些用户或组有能力执行给定的操作，例如：</p>
+<ul>
+<li>Read（读取）：对应的权限标志为“r”；</li>
+<li>Write（写入）：对应的权限标志为“w”；</li>
+<li>Execute（执行）：对应的权限标志为“x”。</li>
+</ul>
+<p>假设现在有一个文件名称为“cmnatic. pem”，它的文件权限分配情况如下是”-rw——-“，我们对“cmnatic. pem”文件进行分析：</p>
+<ul>
+<li>“-”表示“cmnatic. pem”的类型是一个文件；</li>
+<li>“rw——-”表示只有“cmnatic.pem”文件的所有者才能读写该文件，并且此文件所有者无权执行该文件。</li>
+</ul>
+<p>关于权限分配指示符的说明：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">例子：-rwxrwxrwx</span><br><span class="line"></span><br><span class="line">0-9位指示符的说明</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第0位 用于确定文件类型(-,l,d,c,b)</span></span><br><span class="line">- 是文件</span><br><span class="line">l 是链接（link），相当于windows 的快捷方式</span><br><span class="line">d 是目录，相当于windows的文件夹</span><br><span class="line">c 是字符设备文件，鼠标，键盘</span><br><span class="line">b 是块设备，比如硬盘</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第1-3位 用于确定文件所有者（该文件的所有者）拥有该文件的权限情况 —User</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第4-6位 用于确定文件所在组（同用户组的用户）拥有该文件的权限情况 —Group</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第7-9位 用于确定其他用户拥有该文件的权限情况 —Other</span></span><br><span class="line">rwx分别代表的是可读、可写、可执行（如果没有取得对应权限，则会使用&quot;-&quot;符号表示没有该权限）</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">rwx作用到文件和rwx作用到目录（权限作用到文件和作用到目录有所不同）</span></span><br><span class="line">r: 如果对一个文件有r权限但对其所在文件夹没有r权限，那么使用ls和ll命令则会提示权限不足，但是可以通过cat来读取该文件内容</span><br><span class="line">w：对一个文件有w权限代表可以对该文件进行修改，但不可以删除该文件，删除一个文件的前提是对该文件所在的目录有w权限</span><br><span class="line">x：x作用到文件表示可以执行，x作用到目录表示可以进入该目录，如果对一个目录没有x权限，使用cd命令想进入该目录时则会提示权限不足</span><br></pre></td></tr></table></figure></div>
+
+<p>修改权限：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">chmod(修改文件权限)</span><br><span class="line"></span><br><span class="line">u=user,g=group,o=other</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">chmod</span> u=rwx,g=r-x,o=--x 文件名</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">chmod</span> g+w 文件名</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">chmod</span> o-x 文件名</span></span><br><span class="line"></span><br><span class="line">r=4,w=2,x=1</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">chmod</span> 751 文件名</span></span><br><span class="line"></span><br><span class="line">chown(修改所有者)</span><br><span class="line"></span><br><span class="line">chgrp(修改所在组)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>简述用户和组之间的区别</strong></p>
+<p>我们在Linux基础知识第一部分(即普通用户和系统用户之间的区别)中简要地探讨了这一点。Linux的伟大之处在于，Linux系统中的权限可以划分得很细致，从技术上讲，在一个用户拥有一个文件的同时，如果对权限进行设置，那么另一组用户也可以对同一文件拥有相同或不同的权限集，而不会影响文件所有者本身。</p>
+<p>让我们把权限划分的概念放到现实世界中，我们知道运行web服务器的系统用户必须具有有效的针对web应用程序的文件读写权限；然而，类似于提供网络托管服务的公司 将不得不允许他们的客户在不成为web服务器系统用户的情况下 就能为他们的网站上传自己的文件——而这可能会危及所有其他客户的安全。</p>
+<p>下面我们将学习在用户之间进行切换所需的命令。</p>
+<p><strong>切换用户</strong></p>
+<p>由于有<code>su</code>命令，所以在Linux中切换用户变得非常简单。除非你是root用户(或者通过sudo使用root权限)，否则你需要知道以下内容来完成用户帐户的切换：</p>
+<ol>
+<li>我们希望切换到的有效用户名称；</li>
+<li>有效用户的密码。</li>
+</ol>
+<p>在实际使用<code>su</code>命令时，我们可以将其与参数开关相结合以扩展命令的使用，例如，我们可以指定用户切换后执行命令或指定用户切换后要使用的特定shell。你可以通过阅读<code>su</code>的手册页（<code>man su</code>）以了解更多信息。</p>
+<p>简单地说，通过向<code>su</code>命令提供<code>-l</code>（或者<code>--login</code>）参数开关，我们可以启动一个更类似于实际用户登录系统的shell——我们可以继承新用户的更多属性，如环境变量等。</p>
+<p>我们可以使用简单的<code>su</code>命令切换到user2用户：<code>su user2</code>，此时我们得到的新会话会将我们放置到前一个用户的主目录中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403181030326.png"
+                      alt="image-20230403181030326"
+                ></p>
+<p>我们也可以使用<code>su</code>命令结合参数开关<code>-l</code>切换到user2用户：<code>su -l user2</code>，此时我们的新会话会自动将我们放到新用户的主目录中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403181356768.png"
+                      alt="image-20230403181356768"
+                ></p>
+<p><strong>答题</strong></p>
+<p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403205736563.png"
+                      alt="image-20230403205736563"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403205844076.png"
+                      alt="image-20230403205844076"
+                ></p>
+<h2 id="Linux中的常用目录"><a href="#Linux中的常用目录" class="headerlink" title="Linux中的常用目录"></a>Linux中的常用目录</h2><p><strong>&#x2F;etc目录</strong></p>
+<p>这个目录是Linux系统上最重要的目录之一，”&#x2F;etc”文件夹(目录)是存储操作系统所使用的系统文件的常见位置。</p>
+<p>例如，下图显示的etc&#x2F;sudoers文件包含了 能够以root用户权限运行<code>sudo</code>命令或其他Linux命令的用户和组的列表；下图还显示了etc&#x2F;passwd和etc&#x2F;shadow文件，这两个文件对于Linux也是特殊的，因为它们显示了系统如何以被称为sha512的加密格式存储每个用户的密码。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403185401761.png"
+                      alt="image-20230403185401761"
+                ></p>
+<p>tips：etc是etcetera的缩写，etcetera的意思是——“等等；附加物”。</p>
+<p><strong>&#x2F;var目录</strong></p>
+<p>接下来我们要介绍的是”&#x2F;var”目录，其中”var”是” variable data”（可变数据）的缩写，此目录是Linux系统中的主要目录之一，存储着在系统中运行的服务、应用程序所频繁访问或写入的数据；例如，来自于服务和应用程序运行时的日志文件将被写入到此目录下(<code>/var/log</code>)，其他不一定与特定用户相关联的数据(如数据库等)也会被存储到”&#x2F;var”目录下。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403190816800.png"
+                      alt="image-20230403190816800"
+                ></p>
+<p>&#x2F;<strong>root目录</strong></p>
+<p>与”&#x2F;home”目录不同，”&#x2F;root”文件夹实际上是”root”系统用户的主目录；除了理解这是”root”用户的主目录之外，这个文件夹没有其他内容。基于逻辑上的假设，用户会将其数据默认保存在”&#x2F;home&#x2F;root”目录中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403191227461.png"
+                      alt="image-20230403191227461"
+                ></p>
+<p><strong>&#x2F;tmp目录</strong></p>
+<p>该目录是Linux中的唯一目录，”&#x2F;tmp”目录中的”tmp”是”temporary”（临时）的缩写，它是不稳定的，可用于存储只需要被访问一次或两次的数据；”&#x2F;tmp”在存储数据时与计算机上的内存类似，一旦计算机重新启动，”&#x2F;tmp”文件夹中的内容则将会被自动清除。</p>
+<p>我们要知道的是：在默认情况下，任何用户都可以写入内容到这个”&#x2F;tmp”文件夹，这意味着一旦我们访问了一台机器，”&#x2F;tmp”就可以作为存储脚本等内容的极佳选择。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403192005422.png"
+                      alt="image-20230403192005422"
+                ></p>
+<p><strong>答题</strong></p>
+<p>通过阅读本小节的内容回答以下问题：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403205931526.png"
+                      alt="image-20230403205931526"
+                ></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文涵盖了相当多的Linux基础知识，让我们简单回顾一下本文所包含的学习内容：</p>
+<ul>
+<li>学习使用SSH远程连接到Linux机器；</li>
+<li>通过了解参数标志、参数开关以及每个命令的相关信息(手册页)来加强对Linux命令的使用；</li>
+<li>学习使用一些常用命令与文件系统及其内容进行交互；</li>
+<li>简要介绍了文件权限和怎样切换当前用户；</li>
+<li>介绍Ubuntu Linux在默认情况下的常用目录，了解我们应该如何使用存储在这些常用目录中的数据。</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Linux Fundamentals Part2(Linux基础知识2)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 10:32:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 10:36:30
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Linux Fundamentals Part2(Linux基础知识2)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">#网络安全基础</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Linux%20Fundamentals%20Part3(Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%863)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Linux Fundamentals Part3(Linux基础知识3)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Linux%20Fundamentals%20Part1(Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%861)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Linux Fundamentals Part1(Linux基础知识1)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Linux Fundamentals Part2(Linux基础知识2)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-SSH-%E8%AE%BF%E9%97%AE-Linux-%E6%9C%BA%E5%99%A8"><span class="nav-text">使用 SSH 访问 Linux 机器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E5%91%BD%E4%BB%A4%E7%9A%84%E5%8F%82%E6%95%B0%E6%A0%87%E5%BF%97%E5%92%8C%E5%8F%82%E6%95%B0%E5%BC%80%E5%85%B3"><span class="nav-text">Linux命令的参数标志和参数开关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%B8%8E%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BA%A4%E4%BA%92%E7%9A%84%E6%9B%B4%E5%A4%9A%E5%91%BD%E4%BB%A4"><span class="nav-text">可与文件系统交互的更多命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BB%8B%E7%BB%8D"><span class="nav-text">访问权限介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E4%B8%AD%E7%9A%84%E5%B8%B8%E7%94%A8%E7%9B%AE%E5%BD%95"><span class="nav-text">Linux中的常用目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

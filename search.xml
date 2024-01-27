@@ -3158,4 +3158,3275 @@
         <tag>网络安全基础</tag>
       </tags>
   </entry>
+  <entry>
+    <title>THM-How websites work(网站运行基础)-学习</title>
+    <url>/2024/01/27/THM-How%20websites%20work(%E7%BD%91%E7%AB%99%E8%BF%90%E8%A1%8C%E5%9F%BA%E7%A1%80)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/howwebsiteswork" >https://tryhackme.com/room/howwebsiteswork <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：要对网站进行漏洞利用，你首先需要知道网站是如何被创建的，本文将涉及HTML&amp;JS以及一些Web安全基础问题。</p>
+<h2 id="网站是如何运行的？"><a href="#网站是如何运行的？" class="headerlink" title="网站是如何运行的？"></a>网站是如何运行的？</h2><p>本文将介绍如何创建网站，并介绍关于网站的一些基本的安全问题。</p>
+<p>当你访问一个网站时，你的浏览器(如Safari或谷歌Chrome)会向web服务器发出请求，这将询问有关你正在访问的页面的信息，然后web服务器将以“用来显示页面的数据”响应你的浏览器；web服务器是一些位置在世界上其他地方的 并且 能够处理你的请求的专用计算机。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230328120422537.png"
+                      alt="image-20230328120422537"
+                ></p>
+<p>一个网站有两个主要组成部分：</p>
+<ol>
+<li>前端(客户端)-你的浏览器呈现(渲染)网站的方式。</li>
+<li>后端(服务器端)-处理你的请求消息并返回响应消息的服务器。</li>
+</ol>
+<p>在你的浏览器向web服务器发出请求的过程中 还涉及许多其他过程，但现在，我们只需要了解：我们能够向web服务器发出请求，web服务器将响应我们的浏览器以提供一些用于向我们呈现信息的数据。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230328121129257.png"
+                      alt="image-20230328121129257"
+                ></p>
+<h2 id="用于网站运行的HTML"><a href="#用于网站运行的HTML" class="headerlink" title="用于网站运行的HTML"></a>用于网站运行的HTML</h2><p>网站的网页内容主要使用以下内容创建：</p>
+<ul>
+<li>HTML：用于构建网站并定义其结构；</li>
+<li>CSS：通过添加样式选项使网站看起来更漂亮；</li>
+<li>JavaScript： 使用交互性脚本在网站页面上实现复杂的功能。</li>
+</ul>
+<p>超文本标记语言(HTML-HyperText Markup Language)是专门用于编写网站的网页内容的语言，元素-Elements (也被称为标签-Tags)是HTML页面的构建模块，它能告诉浏览器如何显示网页内容。下面的代码片段显示了一个简单的HTML文档，HTML的结构对于每个网站来说都是一样的：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230328232057953.png"
+                      alt="image-20230328232057953"
+                ></p>
+<p>示例中的HTML结构(如上图所示)包含了以下组件:</p>
+<ul>
+<li><code>&lt;!DOCTYPE html&gt;</code>定义了此页面是HTML5文档，这有助于在不同浏览器之间实现标准化，并告诉浏览器使用HTML5来解释页面。</li>
+<li><code>&lt;html&gt;</code>元素是是HTML页面的根元素——所有其他元素都在这个元素之后。</li>
+<li><code>&lt;head&gt;</code>元素包含了关于页面的信息(例如页面标题)。</li>
+<li><code>&lt;body&gt;</code>元素定义了HTML文档的正文，浏览器中只显示body(主体)内部的内容。</li>
+<li><code>&lt;h1&gt;</code>元素定义了一个大标题（heading）。</li>
+<li><code>&lt;p&gt;</code>元素定义了一个段落（paragraph）。</li>
+</ul>
+<p>还有许多可用于不同目的的其他HTML元素(标签)，例如，按钮(<code>&lt;button&gt;</code>)、图像(<code>&lt;img&gt;</code>)、列表等标签。</p>
+<p>元素(标签)可以包含一些属性，比如class属性可以用来设置一个元素的样式(例如设置段落标签的颜色)–<code>&lt;p class=&quot;bold-text&quot;&gt;</code>，还有src属性可用于在图像标签中指定图像的位置–<code>&lt;img src=&quot;img/cat.jpg&quot;&gt;</code>。</p>
+<p>一个元素(标签)可以有多个属性，并且每个属性都有自己独特的用途，例如<code>&lt;p attribute1=&quot;value1&quot; attribute2=&quot;value2&quot;&gt;</code></p>
+<p>元素可以有id属性(例如<code>&lt;p id=&quot;example&quot;&gt;</code>)，id在元素的属性中具有唯一性。id属性不同于class属性(多个元素可以使用同一个class属性)，不同的元素会有不同的id来唯一地标识它们，元素的id属性主要用于样式化以及提供给JavaScript脚本识别。</p>
+<p>你可以通过右键单击网页并选择“查看页面源代码”(Chrome)选项 或者选择“显示页面源代码”(Safari)选项，以此来查看任何网站网页的HTML页面。</p>
+<p>tips：本小节只是简单介绍一下用于网站运行的HTML，关于HTML的更多教程请参考—— <a class="link"   href="https://www.runoob.com/html/html-tutorial.html" >https://www.runoob.com/html/html-tutorial.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 。</p>
+<p><strong>答题</strong></p>
+<p>使用和本文相关的TryHackMe实验房间中的模拟界面 并回答问题。</p>
+<p>补充图像文件的扩展名：<code>&lt;img src=&#39;img/cat-2.jpg&#39;&gt;</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230328235728518.png"
+                      alt="image-20230328235728518"
+                ></p>
+<p>修复图像显示后，在网页中会显示一张带有字符内容的图像：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230328235902146.png"
+                      alt="image-20230328235902146"
+                ></p>
+<blockquote>
+<p>修复显示的图像内容中的字符为：HTMLHERO</p>
+</blockquote>
+<p>在网页中添加一张新图片：<code>&lt;img src=&#39;img/dog-1.png&#39;&gt;</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329000308629.png"
+                      alt="image-20230329000308629"
+                ></p>
+<blockquote>
+<p>新添加的图像中的字符内容为：DOGHTML</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230328235613254.png"
+                      alt="image-20230328235613254"
+                ></p>
+<h2 id="用于网站运行的JS"><a href="#用于网站运行的JS" class="headerlink" title="用于网站运行的JS"></a>用于网站运行的JS</h2><p>JavaScript (JS)是世界上最流行的编码语言之一，它允许网站的页面变得具有交互性。HTML用于创建网站的结构和内容，而JavaScript用于控制网页的功能——没有JavaScript，页面就不会有交互元素，将永远是静态的；在网站页面上发生特定事件时，JS可以对应地实时动态更新网站页面，比如我们可以使用JS来设置——每当用户单击按钮，则动态改变按钮的样式或者动态显示移动动画等等。</p>
+<p>JavaScript可以被添加到网站的页面源代码中，JS代码可以通过以下两种方式进行加载：</p>
+<ul>
+<li>可以通过<code>&lt;script&gt;&lt;/script&gt;</code>标签直接进行加载，将具体的JS代码包含在<code>script</code>标签之间即可；</li>
+<li>通过src属性远程包含js脚本文件：<code>&lt;script src=&quot;/location/of/javascript_file.js&quot;&gt;&lt;/script&gt;</code>。</li>
+</ul>
+<p>下面的JavaScript代码能够在网站的页面上找到id为“demo”的HTML元素，并能将元素内容更改为“Hack The Planet”：</p>
+<p><code>document.getElementById(&quot;demo&quot;).innerHTML = &quot;Hack the Planet&quot;;</code></p>
+<p>通过HTML元素也可以设置事件，如“onclick”或“onhover”，当事件发生时则会自动执行和事件对应的JS代码；例如，下面的代码能够将带有“demo”ID的元素的文本内容更改为“Button Clicked”:</p>
+<p><code>&lt;button onclick=&#39;document.getElementById(&quot;demo&quot;).innerHTML = &quot;Button Clicked&quot;;&#39;&gt;Click Me!&lt;/button&gt;</code></p>
+<p>在实际情况中，“onclick”事件一般会在JavaScript脚本标签中定义，而不是直接通过HTML元素定义。</p>
+<p>tips：本小节只是简单介绍一下用于网站运行的JS，关于JavaScript的更多教程请参考——  <a class="link"   href="https://www.runoob.com/js/js-tutorial.html" >https://www.runoob.com/js/js-tutorial.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 。</p>
+<p><strong>答题</strong></p>
+<p>使用和本文相关的TryHackMe实验房间中的模拟界面 并回答问题。</p>
+<p>将以下内容添加到模拟编辑器界面的第 9 行，然后单击“渲染 HTML+JS 代码”按钮：</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span> = <span class="string">&quot;Hack the Planet&quot;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>添加代码前：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329003439859.png"
+                      alt="image-20230329003439859"
+                ></p>
+<p>添加代码并渲染后：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329003413451.png"
+                      alt="image-20230329003413451"
+                ></p>
+<p>将以下内容放在 HTML 编辑器中（第 7 行和第 8 行之间）：</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&#x27;document.getElementById(&quot;demo&quot;).innerHTML = &quot;Hack the Planet&quot;;&#x27;</span>&gt;</span>Click Me!<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329173108490.png"
+                      alt="image-20230329173108490"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329173148889.png"
+                      alt="image-20230329173148889"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329003029466.png"
+                      alt="image-20230329003029466"
+                ></p>
+<h2 id="敏感数据泄露介绍"><a href="#敏感数据泄露介绍" class="headerlink" title="敏感数据泄露介绍"></a>敏感数据泄露介绍</h2><p>敏感数据泄露是指网站没有正确保护(或删除)用户的敏感明文信息（通常是在站点的前端源代码中找到一些敏感数据）。</p>
+<p>我们知道，网站是用许多HTML元素(标签)构建的，所有这些元素我们都可以通过浏览器中的“viewing the page source”选项来查看，而网站开发人员可能会忘记删除登录凭据、网站隐私部分的隐藏链接或其他以HTML&#x2F;JavaScript形式显示的敏感数据——也就是说，我们可以尝试通过浏览器的“viewing the page source”选项来发现一些敏感数据。</p>
+<p>敏感信息可能会被潜在地利用，从而进一步扩大攻击者对web应用程序不同部分的访问权限；例如，网站的页面源代码中可能存在带有临时登录凭据的HTML注释，当你查看页面的源代码时就可能发现这一点，这使得你可以使用所发现的凭据在应用程序的其他地方实现登录(或者更糟，将凭据用于访问站点的其他后端组件)。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329174411351.png"
+                      alt="image-20230329174411351"
+                ></p>
+<p>无论何时评估web应用程序的安全性问题，首先应该做的事情之一就是检查网站的页面源代码，看看是否可以找到任何暴露的登录凭据或隐藏的链接。</p>
+<p><strong>答题</strong></p>
+<p>使用和本文相关的TryHackMe实验房间中的模拟界面 并回答问题。</p>
+<p>通过查看页面源代码发现以及泄露的敏感信息（右键单击以下页面并选择查看框架的源代码）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329174717883.png"
+                      alt="image-20230329174717883"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329175056256.png"
+                      alt="image-20230329175056256"
+                ></p>
+<blockquote>
+<p>隐藏在源代码中的密码是：testpasswd 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329175143632.png"
+                      alt="image-20230329175143632"
+                ></p>
+<h2 id="HTML注入介绍"><a href="#HTML注入介绍" class="headerlink" title="HTML注入介绍"></a>HTML注入介绍</h2><p>HTML注入是一种漏洞(发生在客户端侧)，这会将未经过滤的用户输入直接显示在网站页面上。如果一个网站未能过滤用户输入(过滤用户输入到网站的任何“恶意”文本)，并且该输入能被显示在网站页面上，那么攻击者就可以针对易受攻击的网站实现HTML代码注入操作。</p>
+<p>输入消毒(即过滤恶意输入)对于保持网站安全性非常重要，因为用户输入到网站的信息通常会用于其他前端或者后端的功能实现；比如，有一类漏洞是数据库注入漏洞，如果存在这种漏洞——你就可以通过控制SQL查询的输入来操作数据库并查找其中的数据，从而实现以另一个用户的身份登录网站。</p>
+<p>当用户可以控制如何显示他们的输入内容时，用户就可以向网站提交HTML(或JavaScript)代码，而浏览器就可能在网站页面中使用这些代码，从而允许用户能够控制网站页面的外观和功能。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329181051842.png"
+                      alt="image-20230329181051842"
+                ></p>
+<p>上图显示了表单如何将文本输出到网站页面：无论用户在“What’s your name”的输入框中输入什么，用户所输入的内容都将传递给网站的JavaScript函数，然后输出结果将被显示在网站页面上；这意味着用户能够在输入框中添加自己构造的HTML或JavaScript代码，而这些代码将生效并能附加相关结果以显示在网站页面上。</p>
+<p>一般的安全规则是“永远不要相信用户输入”。为了防止用户的恶意输入影响网站的正常功能，网站开发人员应该在使用JavaScript函数之前对用户所输入的所有内容进行消毒（即过滤），在这种情况下，网站开发人员应该删除“用户输入内容”中的HTML标签。</p>
+<p><strong>答题</strong></p>
+<p>使用和本文相关的TryHackMe实验房间中的模拟界面 并回答问题。</p>
+<p>利用模拟页面注入HTML，让页面显示一个恶意链接：<code>&lt;a href=&quot;http://hacker.com&quot;&gt;hacker link&lt;/a&gt;</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329183033723.png"
+                      alt="image-20230329183033723"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329183134511.png"
+                      alt="image-20230329183134511"
+                ></p>
+<blockquote>
+<p>得到的answer为：HTML_INJ3CTI0N 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329183220725.png"
+                      alt="image-20230329183220725"
+                ></p>
+]]></content>
+      <categories>
+        <category>TryHackMe笔记</category>
+      </categories>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-Putting it all together(网站组件协同工作介绍)-学习</title>
+    <url>/2024/01/27/THM-Putting%20it%20all%20together(%E7%BD%91%E7%AB%99%E7%BB%84%E4%BB%B6%E5%8D%8F%E5%90%8C%E5%B7%A5%E4%BD%9C%E4%BB%8B%E7%BB%8D)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/puttingitalltogether" >https://tryhackme.com/room/puttingitalltogether <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：了解Web服务的所有单独组件如何协同工作，这种协同工作能让我们可以访问自己喜欢的网站。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>当我们在浏览器中请求网页信息时，幕后还发生了很多事情。在请求一个网站时，我们的计算机需要知道它需要与之通信的Web服务器的 IP 地址，为此，本地计算机需要使用DNS，然后，我们的计算机将使用一组被称为 HTTP 协议的特殊命令与 Web 服务器进行通信， Web 服务器随后将返回 HTML 、JavaScript 、CSS、图像文件等资源，最后，我们本地计算机的浏览器将使用这些资源 并通过正确格式化来向我们呈现网站的相关网页内容。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230328122449214.png"
+                      alt="image-20230328122449214"
+                ></p>
+<p>此外，还有一些其他组件可以帮助web服务更有效地运行，并提供额外的功能。</p>
+<h2 id="Web服务的其他组件"><a href="#Web服务的其他组件" class="headerlink" title="Web服务的其他组件"></a>Web服务的其他组件</h2><p><strong>负载均衡器（Load Balancers）</strong></p>
+<p>当一个网站的流量开始变得相当大，或者正在运行一个需要高可用性的应用程序时，一个web服务器也许不再能够胜任工作——此时我们就需要使用负载均衡器。</p>
+<p>负载均衡器能提供两个主要功能：确保高流量网站可以处理负载(load)；在服务器变得无响应时提供故障转移功能。</p>
+<p>当你请求一个使用了负载均衡器的网站时，负载均衡器将首先接收到你的请求，然后它会将请求转发到它后面的多个服务器之一；在此过程中，负载均衡器会使用不同的算法来帮助决定哪台服务器最适合处理请求消息，这些算法的两个例子是：轮询(round-robin)和加权(weighted)——前者会依次将请求发送到每个服务器，后者会检查服务器当前正在处理多少请求，再将请求发送到最不繁忙的服务器。</p>
+<p>负载均衡器还会对每个服务器执行定期检查，以确保它们能够正常运行，这被称为健康检查（<strong>health check</strong>）；如果服务器没有正确响应或无响应，负载均衡器将停止向服务器发送流量，直到服务器再次正确响应为止。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329194420901.png"
+                      alt="image-20230329194420901"
+                ></p>
+<p><strong>CDN (Content Delivery Networks)</strong></p>
+<p>CDN是一个很好的资源，它可以帮助降低“繁忙网站”的流量压力。CND允许网站管理者托管网站的一些静态文件，如JavaScript, CSS，图像，视频等，使用CDN能将网站静态文件托管在世界各地的数千台服务器上。每当用户请求一个被托管的文件时，CDN就会计算出最近的服务器的物理位置，并将用户的请求发送到那里，而不是发送到遥远的世界另一端。</p>
+<p><strong>数据库（Databases）</strong></p>
+<p>每个网站通常都需要一种为用户存储信息的方法，这就需要使用数据库。</p>
+<p>web服务器可以与数据库进行通信，从而能将数据存储到数据库中以及能从数据库中提取数据。数据库可以是简单的纯文本文件，也可以是 由能够提供速度和弹性的多台服务器组成的复杂集群，一些常见的数据库有：MySQL，MSSQL，MongoDB，GraphQL，Postgres等，每一种数据库都有其具体的特性。</p>
+<p><strong>WAF (Web Application Firewall)</strong></p>
+<p>Web应用程序防火墙(WAF-Web Application Firewall)位于你的web请求和web服务器之间，它的主要目的是保护web服务器免受黑客攻击或拒绝服务(DoS)攻击。</p>
+<p>WAF能够分析带有常见攻击技术的恶意web请求，无论这些恶意请求是来自何处；WAF还会利用速率限制来检查是否有过多的网络请求正在被发送，这将只允许一个IP每秒发送一定数量的请求消息。</p>
+<p>如果一个请求被认为是潜在的攻击载荷，那么此请求将被WAF拦截以及丢弃，这意味着此请求将永远不会被发送到web服务器。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329194500670.png"
+                      alt="image-20230329194500670"
+                ></p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329194637044.png"
+                      alt="image-20230329194637044"
+                ></p>
+<h2 id="Web服务器如何工作"><a href="#Web服务器如何工作" class="headerlink" title="Web服务器如何工作"></a>Web服务器如何工作</h2><p><strong>什么是Web服务器?</strong></p>
+<p>web服务器是一种软件，它会监听传入的请求连接，然后利用HTTP协议将web内容传递给客户端浏览器。</p>
+<p>常见的web服务器软件有：Apache，Nginx，IIS，NodeJS等。Web服务器将从根目录下(在服务器软件的设置中定义)开始传输文件，例如，Nginx和Apache在Linux操作系统中有相同的默认根目录路径<code>/var/www/html</code>，而IIS在Windows操作系统中的默认根目录路径是<code>C:\inetpub\wwwroot</code>。</p>
+<p>如果你向web服务器请求文件- <a class="link"   href="http://www.example.com/picture.jpg" >http://www.example.com/picture.jpg <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ，web服务器将从它的本地硬盘驱动器中发送文件<code>/var/www/html/picture.jpg</code>。</p>
+<p><strong>Virtual Hosts（虚拟主机）</strong></p>
+<p>Web服务器可以托管多个具有不同域名的网站，为了实现这一点，Web服务器需要使用虚拟主机。web服务器软件会检查HTTP请求头中的主机名，并将其与虚拟主机进行匹配(虚拟主机只是基于文本的配置文件)。如果HTTP请求中的主机名和虚拟主机成功匹配，web服务器就会向浏览器用户提供一个正确的网站；如果没有找到匹配项，则将提供一个默认网站给浏览器用户。</p>
+<p>虚拟主机可以将其根目录映射到web服务器的硬盘驱动器上的不同位置：</p>
+<ul>
+<li><code>one.com</code>可能被映射到web服务器中的<code>/var/www/website_one</code> ；</li>
+<li><code>two.com</code>可能被映射到web服务器中的<code>/var/www/website_two</code> 。</li>
+</ul>
+<p>你能在一个web服务器上托管不同网站的数量没有限制。</p>
+<p><strong>Static Vs Dynamic Content（静态与动态内容）</strong></p>
+<p>静态内容，顾名思义，是网站中永不改变的内容，常见的例子是网站的图片、javascript代码、CSS代码等，也可以包括永不更改的HTML内容。此外，静态内容文件是直接由web服务器所提供的文件，web服务器在提供这些静态文件时，无需对这些文件的内容进行任何更改。</p>
+<p>另一方面，动态内容是网站中可以随不同的HTTP请求而发生变化的内容。以博客为例，在你的博客主页上会展示文章条目，如果你创建了一个新条目，那么博客主页就会向你显示最新的文章条目，或者以博客上的搜索页面为例，根据你搜索的单词不同，博客网站将会向你显示不同的搜索结果。</p>
+<p>你最终看到的网站动态内容都是在所谓的后端中使用编程和脚本语言来完成的，之所以被称为后端，是因为它们所做的一切都是在幕后完成的。你不能查看网站的全部HTML源代码，也不能看到网站的后端具体发生了什么（HTML是后端处理的结果）；你在浏览器中能看到的所有东西都被称为前端。</p>
+<p><strong>脚本和后端语言</strong></p>
+<p>服务器对后端语言所能实现的功能并没有多少限制，而这些功能的实现正是使网站与用户能够互动的原因。</p>
+<p>常见的后端语言包括：PHP，Python，Ruby，NodeJS，Perl等；这些后端语言可以与数据库交互、调用外部服务、处理来自用户的数据……</p>
+<p>一个非常基本的PHP示例是：你可以通过访问服务器上的PHP脚本来获得一个网站页面—— <a href="http://example.com/index.php?name=adam">http://example.com/index.php?name=adam</a> 。</p>
+<p>如果index.php的内容如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;html&gt;&lt;body&gt;Hello &lt;?php echo $_GET[&quot;name&quot;]; ?&gt;&lt;/body&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>它将向客户端输出以下内容：</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span><span class="tag">&lt;<span class="name">body</span>&gt;</span>Hello adam<span class="tag">&lt;/<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>你能注意到在客户端看不到任何PHP代码，因为PHP代码位于后端，而后端代码所提供的交互性功能 将为(未安全创建的)web应用程序带来更多的安全问题。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329194949800.png"
+                      alt="image-20230329194949800"
+                ></p>
+<h2 id="示例练习"><a href="#示例练习" class="headerlink" title="示例练习"></a>示例练习</h2><p>进入本文相关的TryHackMe实验房间，展开由实验房间所提供的模拟页面，在模拟页面中将磁贴拖放到正确的网站请求顺序中，最后将得到一个flag。</p>
+<p><strong>注意</strong>：当磁贴被放置在正确位置时，它会以绿色标注显示，当磁贴位于错误的位置时，它将以红色标注显示；请<strong>不要</strong>随意刷新模拟页面，因为这将重置模拟环境。</p>
+<p>正确的网站请求顺序如下所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329200155133.png"
+                      alt="image-20230329200155133"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329201018085.png"
+                      alt="image-20230329201018085"
+                ></p>
+<p>得到flag：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329200657201.png"
+                      alt="image-20230329200657201"
+                ></p>
+<blockquote>
+<p>得到的flag内容为：THM{YOU_GOT_THE_ORDER} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230329200737830.png"
+                      alt="image-20230329200737830"
+                ></p>
+]]></content>
+      <categories>
+        <category>TryHackMe笔记</category>
+      </categories>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-Linux Fundamentals Part2(Linux基础知识2)-学习</title>
+    <url>/2024/01/27/THM-Linux%20Fundamentals%20Part2(Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%862)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/linuxfundamentalspart2" >https://tryhackme.com/room/linuxfundamentalspart2 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：继续你的 Linux 学习之旅，你将学习如何使用 SSH 登录到 Linux 机器，以及了解更多Linux命令。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>欢迎来到“Linux基础”系列的第二部分，在本文中我们将开始了解能够登录和控制远程Linux机器终端的基本技能，并且，我们还将学习以下内容：</p>
+<ul>
+<li>介绍参数标志和参数开关以便我们更高效地使用Linux命令；</li>
+<li>通过学习更多命令，如复制文件和移动文件等，加强我们对Linux文件系统的了解；</li>
+<li>介绍访问权限控制机制，并且了解如何识别当前用户是否具有相关的访问权限，以确保文件和文件夹的安全；</li>
+<li>介绍一些Linux中的常见目录。</li>
+</ul>
+<h2 id="使用-SSH-访问-Linux-机器"><a href="#使用-SSH-访问-Linux-机器" class="headerlink" title="使用 SSH 访问 Linux 机器"></a>使用 SSH 访问 Linux 机器</h2><p>SSH协议是Secure Shell的简称，使用该协议是连接到远程Linux机器的常用方法，通过SSH我们可以使用命令行来与远程Linux机器进行交互。</p>
+<p>我们将部署两台机器：</p>
+<ul>
+<li>TryHackMe所提供的Linux目标虚拟机</li>
+<li>TryHackMe所提供的攻击机或者你的本地Kali虚拟机</li>
+</ul>
+<p><strong>什么是SSH &amp;它是如何工作的?（简单了解）</strong></p>
+<p>Secure Shell或SSH 是一种能够对计算机设备之间的通信数据进行加密的协议。使用了SSH协议之后，计算机设备之间需要通过网络传输的数据将被加密处理，一旦加密数据到达远程机器，就会开始解密过程，如下图所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403100313265.png"
+                      alt="image-20230403100313265"
+                ></p>
+<p>在本文中我们只需要对SSH有一个基础了解即可：</p>
+<ul>
+<li>SSH能够允许我们通过本地设备上针对另一个设备远程执行命令。</li>
+<li>使用了SSH协议之后，设备之间所发送的任何数据 在通过网络传输时都会经过加密处理。</li>
+</ul>
+<p><strong>使用SSH登录Linux机器</strong></p>
+<p>SSH的语法非常简单，我们只需要提供以下内容：</p>
+<ol>
+<li><p>远程计算机的IP地址；</p>
+</li>
+<li><p>远程计算机上可用于登录的有效帐户及凭据。</p>
+</li>
+</ol>
+<p>在本文中，我们将以”tryhackme”用户帐户登录到远程Linux机器，相关的登录密码是”tryhackme”。</p>
+<p>首先，我们需要在TryHackMe攻击机（或者你的本地Kali虚拟机）上打开一个终端；我们要在攻击机终端输入的SSH命令类似于<code>ssh tryhackme@MACHINE_IP</code>，在实际执行SSH命令时，我们需要将示例中的<code>MACHINE_IP</code>替换为Linux目标机的实际IP地址；当输入SSH命令并按下回车键之后，我们会被询问是否信任主机（输入”yes”即可），然后还要为”tryhackme”帐户提供密码（输入”tryhackme”即可）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403102459672.png"
+                      alt="image-20230403102459672"
+                ></p>
+<p>现在我们应该成功通过SSH连接到远程Linux机器，我们接下来所输入的任何命令都将在远程机器上执行——而不会在我们自己的机器上执行。</p>
+<p>注意：当你在ssh登录提示中输入密码时，并没有可见的反馈——你将无法在键入密码时看到任何文本或符号出现，我们只需输入密码并按enter即可。</p>
+<p><strong>实践操作</strong></p>
+<p>输入命令：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">ssh tryhackme@10.10.241.39</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403201425288.png"
+                      alt="image-20230403201425288"
+                ></p>
+<h2 id="Linux命令的参数标志和参数开关"><a href="#Linux命令的参数标志和参数开关" class="headerlink" title="Linux命令的参数标志和参数开关"></a>Linux命令的参数标志和参数开关</h2><p>大多数Linux命令都允许提供参数，这些参数将由连字符以及被称为标志或开关的特定关键字标识。</p>
+<p>接下来我们将讨论如何识别哪些命令允许提供参数，以及如何理解这些命令的具体功能。</p>
+<p>在使用Linux命令时，除非另有指定，否则它将执行默认行为；例如，<code>ls</code>命令能够列出工作目录下的内容，但是，这并不会显示隐藏文件；所以，我们有时候需要使用参数标志和参数开关来扩展命令的行为。</p>
+<p>以<code>ls</code>为例，<code>ls</code>能够告诉我们当前目录下只有一个名为“folder1”的文件夹（请注意，下面截图中的内容仅为示例）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403103507715.png"
+                      alt="image-20230403103507715"
+                ></p>
+<p>然而，在使用<code>-a</code>参数(<code>--all</code>的缩写)对<code>ls</code>命令进行扩展之后，我们会得到一个包含更多文件和文件夹内容的输出结果，例如下图中的”<code>.hiddenfolder</code>“。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403104338287.png"
+                      alt="image-20230403104338287"
+                ></p>
+<p>tips：名称中带”<code>.</code>“表示隐藏文件或者隐藏文件夹，带”<code>.</code>“的文件、文件夹无法通过简单的<code>ls</code>命令被列出。</p>
+<p>允许提供参数的命令还可以使用<code>--help</code>选项，该选项会列出此Linux命令能够使用的参数信息（并会提供相关的简要描述和示例）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403104754236.png"
+                      alt="image-20230403104754236"
+                ></p>
+<p>事实上，<code>--help</code>选项也是man page (manual page的缩写)的格式化输出，man page是关于Linux系统命令和应用程序的使用文档。</p>
+<p><strong>The Man(ual) Page</strong></p>
+<p>man page(手册页)是了解Linux机器上可用的系统命令和应用程序的重要信息来源，我们可以在Linux上访问man page，也可以通过网络<a class="link"   href="https://linux.die.net/man/" >在线访问man page <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p>如果要在Linux上访问man page文档，我们可以使用<code>man</code>并将其与具体的Linux命令组合，以<code>ls</code>为例，我们可以使用<code>man ls</code>来查看<code>ls</code>命令的手册页：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403110008841.png"
+                      alt="image-20230403110008841"
+                ></p>
+<p><strong>答题</strong></p>
+<p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403201750642.png"
+                      alt="image-20230403201750642"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403201800338.png"
+                      alt="image-20230403201800338"
+                ></p>
+<h2 id="可与文件系统交互的更多命令"><a href="#可与文件系统交互的更多命令" class="headerlink" title="可与文件系统交互的更多命令"></a>可与文件系统交互的更多命令</h2><p>在“Linux基础”系列的第一部分，我们介绍了与Linux机器上的文件系统进行交互的一些基本命令。</p>
+<p>在本小节中，我们将学习更多可以与文件系统交互的命令，以允许我们：</p>
+<ul>
+<li>创建文件和文件夹</li>
+<li>移动文件和文件夹</li>
+<li>删除文件和文件夹</li>
+</ul>
+<p>更具体地说，我们将学习以下命令：</p>
+<ul>
+<li>touch（全称为-touch）：创建文件；</li>
+<li>mkdir（全称为-make directory）：创建目录，即创建文件夹；</li>
+<li>cp（全称为-copy）：复制文件或者文件夹；</li>
+<li>mv（全称为-move）：移动文件或者文件夹；</li>
+<li>rm（全称为-remove）：移除文件或者文件夹，即删除文件或者文件夹；</li>
+<li>file（全称为-file）：确定文件类型。</li>
+</ul>
+<p>tips：与使用<code>cat</code>命令类似，我们可以为以上这些命令指定一个完整的文件路径，比如，directory1&#x2F;directory2&#x2F;note 。</p>
+<p><strong>创建文件和文件夹(touch, mkdir)</strong></p>
+<p>在Linux上创建文件和文件夹是一个简单的过程。首先，我们将介绍如何创建一个文件，<code>touch</code>命令只接受一个参数——我们想要给我们创建的文件所赋予的名称；例如，我们可以使用<code>touch note</code>创建“note”文件。值得注意的是，使用<code>touch</code>只会创建一个空白文件，你还需要使用<code>echo</code>之类的命令或<code>nano</code>之类的文本编辑器来向空白文件添加内容。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403112406458.png"
+                      alt="image-20230403112406458"
+                ></p>
+<p>创建文件夹与创建文件的过程类似，我们只需要使用<code>mkdir</code>命令并提供我们想要赋予给目录的名称即可；例如，我们可以使用<code>mkdir mydirectory</code>创建一个目录“mydirectory”。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403112648611.png"
+                      alt="image-20230403112648611"
+                ></p>
+<p><strong>删除文件和文件夹(rm)</strong></p>
+<p>我们可以使用<code>rm</code>命令简单地删除文件，但是，如果我们希望删除一个文件夹（目录）的话，我们就需要使用<code>-R</code>参数开关。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403113006915.png"
+                      alt="image-20230403113006915"
+                ></p>
+<p><strong>复制和移动文件、文件夹(cp, mv)</strong></p>
+<p>复制和移动文件是Linux机器上的重要功能，<code>cp</code>命令可以结合以下两个参数使用：</p>
+<ol>
+<li><p>现有文件的名称；</p>
+</li>
+<li><p>复制时希望分配给新文件的名称。</p>
+</li>
+</ol>
+<p>使用<code>cp</code>命令能够将现有文件的全部内容复制到新文件中，在下图的示例中，我们将“note”文件复制到“note2”文件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403113305603.png"
+                      alt="image-20230403113305603"
+                ></p>
+<p>移动文件所使用的<code>mv</code>命令也需要两个参数，就像<code>cp</code>命令一样；然而，<code>mv</code>命令不会复制并创建一个新文件，而是合并或修改我们作为参数提供的第二个文件。</p>
+<p>我们不仅可以使用<code>mv</code>命令将文件移动到新文件夹下，还可以使用<code>mv</code>命令重命名文件或文件夹；例如，在下图的示例中，我们使用<code>mv</code>将文件“note2”重命名为“note3”，现在“note3”文件将拥有“note2”文件的全部内容（“note2”文件会消失）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403113944078.png"
+                      alt="image-20230403113944078"
+                ></p>
+<p><strong>确定文件类型(file)</strong></p>
+<p>一个文件通常会有所谓的扩展名，例如，文本文件的扩展名通常是“.txt”，但是文件扩展名并不是文件所必要的（一个文本文件的名称也可以不带.txt）。</p>
+<p>我们可以使用<code>file</code>命令来确定一个文件的类型，例如，我们可以使用<code>file</code>来确认“note”文件是否确实是一个文本文件：<code>file note</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403114529729.png"
+                      alt="image-20230403114529729"
+                ></p>
+<p><strong>答题</strong></p>
+<p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403205420231.png"
+                      alt="image-20230403205420231"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403205330825.png"
+                      alt="image-20230403205330825"
+                ></p>
+<h2 id="访问权限介绍"><a href="#访问权限介绍" class="headerlink" title="访问权限介绍"></a>访问权限介绍</h2><p>在Linux机器上，某些用户可能无权访问一些文件或文件夹，我们之前已经探讨了一些命令，这些命令可用于确定与文件或文件夹相关的访问权限。</p>
+<p>在前面的知识点小节中，我们已经学习了如何通过参数标志和参数开关来扩展命令的使用；当我们使用<code>ls</code>命令结合<code>-lh</code>参数开关时，我们可以看到如下示例内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403115704554.png"
+                      alt="image-20230403115704554"
+                ></p>
+<p>如上图所示，我们使用<code>ls -lh</code>命令列出了当前目录下的文件和文件夹的权限分配情况。</p>
+<p>tips：<code>-l</code> 使用长列表格式列出内容；<code>-h</code> 全称为–human-readable（顾名思义，以可读形式列出内容） 。</p>
+<p>以上输出结果对于确定文件或文件夹的某些特征以及我们是否有权访问它们非常重要，一个文件或文件夹可以有几个特征，这些特征决定了允许执行哪些操作以及哪些用户或组有能力执行给定的操作，例如：</p>
+<ul>
+<li>Read（读取）：对应的权限标志为“r”；</li>
+<li>Write（写入）：对应的权限标志为“w”；</li>
+<li>Execute（执行）：对应的权限标志为“x”。</li>
+</ul>
+<p>假设现在有一个文件名称为“cmnatic. pem”，它的文件权限分配情况如下是”-rw——-“，我们对“cmnatic. pem”文件进行分析：</p>
+<ul>
+<li>“-”表示“cmnatic. pem”的类型是一个文件；</li>
+<li>“rw——-”表示只有“cmnatic.pem”文件的所有者才能读写该文件，并且此文件所有者无权执行该文件。</li>
+</ul>
+<p>关于权限分配指示符的说明：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">例子：-rwxrwxrwx</span><br><span class="line"></span><br><span class="line">0-9位指示符的说明</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第0位 用于确定文件类型(-,l,d,c,b)</span></span><br><span class="line">- 是文件</span><br><span class="line">l 是链接（link），相当于windows 的快捷方式</span><br><span class="line">d 是目录，相当于windows的文件夹</span><br><span class="line">c 是字符设备文件，鼠标，键盘</span><br><span class="line">b 是块设备，比如硬盘</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第1-3位 用于确定文件所有者（该文件的所有者）拥有该文件的权限情况 —User</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第4-6位 用于确定文件所在组（同用户组的用户）拥有该文件的权限情况 —Group</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第7-9位 用于确定其他用户拥有该文件的权限情况 —Other</span></span><br><span class="line">rwx分别代表的是可读、可写、可执行（如果没有取得对应权限，则会使用&quot;-&quot;符号表示没有该权限）</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">rwx作用到文件和rwx作用到目录（权限作用到文件和作用到目录有所不同）</span></span><br><span class="line">r: 如果对一个文件有r权限但对其所在文件夹没有r权限，那么使用ls和ll命令则会提示权限不足，但是可以通过cat来读取该文件内容</span><br><span class="line">w：对一个文件有w权限代表可以对该文件进行修改，但不可以删除该文件，删除一个文件的前提是对该文件所在的目录有w权限</span><br><span class="line">x：x作用到文件表示可以执行，x作用到目录表示可以进入该目录，如果对一个目录没有x权限，使用cd命令想进入该目录时则会提示权限不足</span><br></pre></td></tr></table></figure></div>
+
+<p>修改权限：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">chmod(修改文件权限)</span><br><span class="line"></span><br><span class="line">u=user,g=group,o=other</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">chmod</span> u=rwx,g=r-x,o=--x 文件名</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">chmod</span> g+w 文件名</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">chmod</span> o-x 文件名</span></span><br><span class="line"></span><br><span class="line">r=4,w=2,x=1</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">chmod</span> 751 文件名</span></span><br><span class="line"></span><br><span class="line">chown(修改所有者)</span><br><span class="line"></span><br><span class="line">chgrp(修改所在组)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>简述用户和组之间的区别</strong></p>
+<p>我们在Linux基础知识第一部分(即普通用户和系统用户之间的区别)中简要地探讨了这一点。Linux的伟大之处在于，Linux系统中的权限可以划分得很细致，从技术上讲，在一个用户拥有一个文件的同时，如果对权限进行设置，那么另一组用户也可以对同一文件拥有相同或不同的权限集，而不会影响文件所有者本身。</p>
+<p>让我们把权限划分的概念放到现实世界中，我们知道运行web服务器的系统用户必须具有有效的针对web应用程序的文件读写权限；然而，类似于提供网络托管服务的公司 将不得不允许他们的客户在不成为web服务器系统用户的情况下 就能为他们的网站上传自己的文件——而这可能会危及所有其他客户的安全。</p>
+<p>下面我们将学习在用户之间进行切换所需的命令。</p>
+<p><strong>切换用户</strong></p>
+<p>由于有<code>su</code>命令，所以在Linux中切换用户变得非常简单。除非你是root用户(或者通过sudo使用root权限)，否则你需要知道以下内容来完成用户帐户的切换：</p>
+<ol>
+<li>我们希望切换到的有效用户名称；</li>
+<li>有效用户的密码。</li>
+</ol>
+<p>在实际使用<code>su</code>命令时，我们可以将其与参数开关相结合以扩展命令的使用，例如，我们可以指定用户切换后执行命令或指定用户切换后要使用的特定shell。你可以通过阅读<code>su</code>的手册页（<code>man su</code>）以了解更多信息。</p>
+<p>简单地说，通过向<code>su</code>命令提供<code>-l</code>（或者<code>--login</code>）参数开关，我们可以启动一个更类似于实际用户登录系统的shell——我们可以继承新用户的更多属性，如环境变量等。</p>
+<p>我们可以使用简单的<code>su</code>命令切换到user2用户：<code>su user2</code>，此时我们得到的新会话会将我们放置到前一个用户的主目录中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403181030326.png"
+                      alt="image-20230403181030326"
+                ></p>
+<p>我们也可以使用<code>su</code>命令结合参数开关<code>-l</code>切换到user2用户：<code>su -l user2</code>，此时我们的新会话会自动将我们放到新用户的主目录中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403181356768.png"
+                      alt="image-20230403181356768"
+                ></p>
+<p><strong>答题</strong></p>
+<p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403205736563.png"
+                      alt="image-20230403205736563"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403205844076.png"
+                      alt="image-20230403205844076"
+                ></p>
+<h2 id="Linux中的常用目录"><a href="#Linux中的常用目录" class="headerlink" title="Linux中的常用目录"></a>Linux中的常用目录</h2><p><strong>&#x2F;etc目录</strong></p>
+<p>这个目录是Linux系统上最重要的目录之一，”&#x2F;etc”文件夹(目录)是存储操作系统所使用的系统文件的常见位置。</p>
+<p>例如，下图显示的etc&#x2F;sudoers文件包含了 能够以root用户权限运行<code>sudo</code>命令或其他Linux命令的用户和组的列表；下图还显示了etc&#x2F;passwd和etc&#x2F;shadow文件，这两个文件对于Linux也是特殊的，因为它们显示了系统如何以被称为sha512的加密格式存储每个用户的密码。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403185401761.png"
+                      alt="image-20230403185401761"
+                ></p>
+<p>tips：etc是etcetera的缩写，etcetera的意思是——“等等；附加物”。</p>
+<p><strong>&#x2F;var目录</strong></p>
+<p>接下来我们要介绍的是”&#x2F;var”目录，其中”var”是” variable data”（可变数据）的缩写，此目录是Linux系统中的主要目录之一，存储着在系统中运行的服务、应用程序所频繁访问或写入的数据；例如，来自于服务和应用程序运行时的日志文件将被写入到此目录下(<code>/var/log</code>)，其他不一定与特定用户相关联的数据(如数据库等)也会被存储到”&#x2F;var”目录下。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403190816800.png"
+                      alt="image-20230403190816800"
+                ></p>
+<p>&#x2F;<strong>root目录</strong></p>
+<p>与”&#x2F;home”目录不同，”&#x2F;root”文件夹实际上是”root”系统用户的主目录；除了理解这是”root”用户的主目录之外，这个文件夹没有其他内容。基于逻辑上的假设，用户会将其数据默认保存在”&#x2F;home&#x2F;root”目录中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403191227461.png"
+                      alt="image-20230403191227461"
+                ></p>
+<p><strong>&#x2F;tmp目录</strong></p>
+<p>该目录是Linux中的唯一目录，”&#x2F;tmp”目录中的”tmp”是”temporary”（临时）的缩写，它是不稳定的，可用于存储只需要被访问一次或两次的数据；”&#x2F;tmp”在存储数据时与计算机上的内存类似，一旦计算机重新启动，”&#x2F;tmp”文件夹中的内容则将会被自动清除。</p>
+<p>我们要知道的是：在默认情况下，任何用户都可以写入内容到这个”&#x2F;tmp”文件夹，这意味着一旦我们访问了一台机器，”&#x2F;tmp”就可以作为存储脚本等内容的极佳选择。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403192005422.png"
+                      alt="image-20230403192005422"
+                ></p>
+<p><strong>答题</strong></p>
+<p>通过阅读本小节的内容回答以下问题：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403205931526.png"
+                      alt="image-20230403205931526"
+                ></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文涵盖了相当多的Linux基础知识，让我们简单回顾一下本文所包含的学习内容：</p>
+<ul>
+<li>学习使用SSH远程连接到Linux机器；</li>
+<li>通过了解参数标志、参数开关以及每个命令的相关信息(手册页)来加强对Linux命令的使用；</li>
+<li>学习使用一些常用命令与文件系统及其内容进行交互；</li>
+<li>简要介绍了文件权限和怎样切换当前用户；</li>
+<li>介绍Ubuntu Linux在默认情况下的常用目录，了解我们应该如何使用存储在这些常用目录中的数据。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>TryHackMe笔记</category>
+      </categories>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-Linux Fundamentals Part1(Linux基础知识1)-学习</title>
+    <url>/2024/01/27/THM-Linux%20Fundamentals%20Part1(Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%861)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/linuxfundamentalspart1" >https://tryhackme.com/room/linuxfundamentalspart1 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：踏上学习 Linux 基础知识的旅程，学习在交互式终端上运行一些最基本的Linux命令。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>欢迎来到“Linux 基础”系列的第一部分。你很可能使用的是 Windows 或 Mac 机器，这两者在视觉设计和操作方式上都有很多不同，就像 Windows、iOS 和 MacOS 一样，Linux只是另一种操作系统，也是世界上最流行的操作系统之一，Linux系统正在为智能汽车、安卓设备、超级计算机、家用电器、企业服务器等提供动力。</p>
+<p>本文将为你提供以下Linux基础内容：</p>
+<ul>
+<li>在交互式Linux机器中运行你的第一个命令</li>
+<li>介绍一些用于与文件系统交互的基本Linux命令</li>
+<li>向你介绍用户和组如何在Linux上工作（以及这对渗透测试人员意味着什么）</li>
+</ul>
+<h2 id="Linux的一些背景知识"><a href="#Linux的一些背景知识" class="headerlink" title="Linux的一些背景知识"></a>Linux的一些背景知识</h2><p><strong>Linux在哪里使用?</strong></p>
+<p>相比于Windows系统，Linux操作系统要轻量级得多，你会惊讶地发现，你每天都有机会以某种形式使用Linux系统，Linux能够支持以下功能：</p>
+<ul>
+<li><p>用于搭建用户访问的网站</p>
+</li>
+<li><p>用于车载娱乐信息系统和相关控制面板</p>
+</li>
+<li><p>销售点(PoS-Point of Sale)系统，如商店的收银台</p>
+</li>
+<li><p>关键基础设施，如交通灯控制器或工业传感器</p>
+</li>
+</ul>
+<p><strong>Linux的特色</strong></p>
+<p>“Linux”这个名字实际上是基于UNIX(另一种操作系统)的多个操作系统的总称，由于UNIX是开源的，所以Linux的变体也各种各样——操作系统的不同用途催生出了不同的Linux变体。</p>
+<p>例如，Ubuntu和Debian是比较常见的Linux发行版，Linux的可扩展非常强，也就是说，你可以把Ubuntu作为服务器(比如网站和web应用程序)运行，也可以把它作为一个成熟的个人操作系统运行。在本文中，我们将使用Ubuntu系统进行练习。</p>
+<p>tips：Ubuntu服务器可以在只有512MB内存的系统上运行。</p>
+<p>tips：类似于不同版本的Windows(7、8和10)，Linux也有许多不同的版本以及发行版。</p>
+<p><strong>答题</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402214844561.png"
+                      alt="image-20230402214844561"
+                ></p>
+<h2 id="运行简单的Linux命令"><a href="#运行简单的Linux命令" class="headerlink" title="运行简单的Linux命令"></a>运行简单的Linux命令</h2><p>正如我们之前所讨论的那样，使用 Ubuntu 等Linux操作系统的关键原因是由于Linux操作系统的轻量级，但是，这并非意味着Linux并非没有缺点，例如，如果我们没有为Linux系统安装GUI，那么在Linux操作系统中通常就没有 GUI（图形用户界面，能提供与机器交互的桌面环境）可供我们使用。</p>
+<p>如果我们想要与没有GUI的Linux操作系统发生交互，我们就必须通过“终端”来完成（即使系统安装了GUI，还是免不了依赖于“终端”来和Linux系统进行交互）。</p>
+<p>“终端”是纯粹基于文本的，Linux操作系统的“终端”（Terminal）界面类似于下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402220603219.png"
+                      alt="image-20230402220603219"
+                ></p>
+<p>我们可以通过终端命令来实现一些基本的操作，如导航到文件、输出文件内容以及创建文件等，这些命令的含义有时候是不言自明的。</p>
+<p>让我们先了解以下两个基本命令：</p>
+<ul>
+<li><code>echo</code>：输出我们所提供的任何文本内容；</li>
+<li><code>whoami</code>：显示我们当前登录的用户名。</li>
+</ul>
+<p>以下是相关命令的示例：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402221322991.png"
+                      alt="image-20230402221322991"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402221333903.png"
+                      alt="image-20230402221333903"
+                ></p>
+<p><strong>答题</strong></p>
+<p>使用和本文相关的实验房间所提供的Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402221632147.png"
+                      alt="image-20230402221632147"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402221505119.png"
+                      alt="image-20230402221505119"
+                ></p>
+<h2 id="使用Linux命令与文件系统交互"><a href="#使用Linux命令与文件系统交互" class="headerlink" title="使用Linux命令与文件系统交互"></a>使用Linux命令与文件系统交互</h2><p>我们只介绍了“ echo”和“ whoami”命令，这还不能帮助我们实现导航到文件系统、读取文件内容以及写入内容到文件等操作；所以我们还需要学习更多的命令。</p>
+<p><strong>与文件系统交互</strong></p>
+<p>如前所述，能够在不依赖桌面环境的情况下浏览所登录的Linux机器是非常重要的，我们可以使用以下命令：</p>
+<ul>
+<li><code>ls</code>：该命令的全名是“listing”；</li>
+<li><code>cd</code>：该命令的全名是“change directory”；</li>
+<li><code>cat</code>：该命令的全名是“concatenate”；</li>
+<li><code>pwd</code>：该命令的全名是“print working directory”。</li>
+</ul>
+<p>tips：上述四个命令是不言自明的，我们可以从上面四个命令的全名中猜测出各个命令的用途。</p>
+<p><strong>列出当前目录中的文件(ls)</strong></p>
+<p>在我们查找任何文件或文件夹的内容之前，我们需要知道Linux机器的当前目录下存在什么，我们可以使用<code>ls</code>命令(ls是listing的缩写)来列出当前目录中的文件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402225034052.png"
+                      alt="image-20230402225034052"
+                ></p>
+<p>在上面的截图中，我们可以看到当前有以下目录&#x2F;文件夹：</p>
+<ul>
+<li>Important Files</li>
+<li>My Documents</li>
+<li>Notes</li>
+<li>Pictures</li>
+</ul>
+<p>根据以上文件夹的名称，你可能会猜测到这些文件夹将包含什么内容。</p>
+<p>tips：你可以直接列出某个目录(文件夹)下的内容，而无需事先导航到对应目录，如使用<code>ls Pictures</code>命令将直接列出Pictures目录下的内容。</p>
+<p><strong>更改当前目录(cd)</strong></p>
+<p>现在我们知道当前目录下存在哪些文件夹，我们可以使用<code>cd</code>命令(change directory的简称)来切换到对应目录中；例如，如果我们想打开“Pictures”目录，就可以执行<code>cd Pictures</code>命令来切换目录，然后再使用<code>ls</code>命令——即可列出“Pictures”目录下的内容。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402230130734.png"
+                      alt="image-20230402230130734"
+                ></p>
+<p>如上图所示，在Pictures目录下有四个jpg图像文件。</p>
+<p><strong>查看文件内容(cat)</strong></p>
+<p>当我们知道文件的存在之后，我们还可能想要查看文件的具体内容，此时我们可以使用<code>cat</code>命令，该命令可以简单地查看文本文件(或其他文件)的内容。</p>
+<p>“<code>cat</code>”是concatating的缩写，该命令可用于输出文件的具体内容(不仅仅是文本文件)。</p>
+<p>在下面的截图中，我们可以看到如何使用<code>ls</code>和<code>cat</code>来查看“Documents”目录下的文件具体内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402230319216.png"
+                      alt="image-20230402230319216"
+                ></p>
+<p>让我们来分析一下上图内容：</p>
+<ol>
+<li>我们首先使用了<code>ls</code>命令，这让我们知道这台机器的“Documents”文件夹中有哪些文件可用，如上图中的“todo.txt”文件；</li>
+<li>然后，我们使用<code>cat todo.txt</code>命令来输出这个“todo.txt”文件的内容，随后显示的内容为“Here’s something important for me to do later!”</li>
+</ol>
+<p>tips：我们也可以使用<code>cat /home/ubuntu/Documents/todo.txt</code>命令直接输出目标文本文件的内容。</p>
+<p>用户名、密码、配置设置等敏感信息有时候也可能会存储在文件中，因此，我们可以尝试使用<code>cat</code>命令来查看一些可能包含敏感信息的文件的具体内容。</p>
+<p><strong>查找当前工作目录的完整路径(pwd)</strong></p>
+<p>在你使用终端浏览Linux机器的过程中，你当前的工作目录名称可以通过终端提示符得知；但是我们很容易忘记我们当前在文件系统中的确切位置（即当前工作目录的完整路径），这时我们就可以使用<code>pwd</code>命令来进行查看，<code>pwd</code>表示打印工作目录的完整路径（<strong>p</strong>rint <strong>w</strong>orking <strong>d</strong>irectory）。</p>
+<p>假设我们目前在“Documents”文件夹中——但是该文件夹在Linux机器文件系统的哪个具体位置呢?</p>
+<p>我们可以使用<code>pwd</code>命令进行查看，如下图所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402223817265.png"
+                      alt="image-20230402223817265"
+                ></p>
+<p>让我们来分析一下上图内容：</p>
+<ol>
+<li>根据当前的终端提示符，我们已经知道我们在“Documents”目录中，假设我们不知道“Documents”在系统中的具体位置。</li>
+<li>我们可以使用<code>pwd</code>(打印工作目录)命令找到这个“Documents”文件夹的完整路径。</li>
+<li>在输入<code>pwd</code>命令之后，Linux会告诉我们这个“Documents”目录存储在当前机器上的“&#x2F;home&#x2F;ubuntu&#x2F;Documents”路径。</li>
+<li>现在，如果我们发现自己在其他目录中，我们就可以使用<code>cd /home/ubuntu/Documents</code>将当前工作目录重新更改为“Documents”目录。</li>
+</ol>
+<p><strong>答题</strong></p>
+<p>使用和本文相关的实验房间所提供的Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402224702955.png"
+                      alt="image-20230402224702955"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402224506668.png"
+                      alt="image-20230402224506668"
+                ></p>
+<h2 id="查找文件"><a href="#查找文件" class="headerlink" title="查找文件"></a>查找文件</h2><p>Linux的一个可取之处是使用它可能会帮助我们提高工作效率，话虽如此，你的效率当然取决于你对Linux命令的熟悉程度；随着时间的推移，当你习惯与操作系统(如Ubuntu)进行交互时，那些常用的Linux命令将开始变成你的肌肉记忆。</p>
+<p>在Linux终端界面中，我们可以使用一组命令来快速搜索用户（在整个系统中）可以访问的文件，而不只是一直使用<code>cd</code>和<code>ls</code>来查找文件位置。</p>
+<p><strong>使用“find”命令</strong></p>
+<p>find命令既可以非常简单地使用，也可以和其他参数或命令组合使用，这取决于你具体想要做什么。</p>
+<p>假设我们可以看到如下的一个可用目录列表：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403080111411.png"
+                      alt="image-20230403080111411"
+                ></p>
+<ol>
+<li>Desktop</li>
+<li>Documents</li>
+<li>Pictures</li>
+<li>folder1</li>
+</ol>
+<p>一个目录可以包含更多的目录或文件，当我们为了寻找特定的文件而不得不查看每一个目录时，这就变得令人头疼了，所以我们可以使用find命令来简化上述过程。</p>
+<p>假设我们已经知道我们正在寻找的文件的名称-但我们不知道它的确切位置，比如，我们想找到”password.txt”文件。</p>
+<p>如果我们已经知道文件名，我们就可以简单地使用<code>find -name password .txt</code>命令，这将在当前目录下的每个文件夹中查找指定的文件，如下所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403080529617.png"
+                      alt="image-20230403080529617"
+                ></p>
+<p>如上图所示，find命令已经设法找到目标文件——相关路径是folder1&#x2F;passwords.txt；但是，如果我们不知道文件的具体名称或者想要搜索每个具有相同扩展名(如“.txt”)的文件，我们应该怎么做？</p>
+<p>我们可以简单地使用通配符(<code>*</code>)来搜索任何以“.txt”（或者其他扩展名）结尾的文件和目录。</p>
+<p>假设我们希望找到当前目录中的每个.txt文件，我们就可以构造<code>find -name *.txt</code>命令，这样我们就能够找到当前目录下的每个.txt文件以及它们的具体位置：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403081402271.png"
+                      alt="image-20230403081402271"
+                ></p>
+<p>如上图所示，我们已经成功找到了：</p>
+<ol>
+<li>位于.&#x2F;folder1目录下的passwords.txt文件；</li>
+<li>位于.&#x2F;Document目录下的todo.txt文件。</li>
+</ol>
+<p><strong>使用“grep”命令</strong></p>
+<p>另一个值得学习的实用程序是<code>grep</code>命令的使用，<code>grep</code>命令能够允许我们在文件的内容中搜索我们正在寻找的特定值。</p>
+<p>以web服务器的访问日志为例，假设某个web服务器的access.log有244条日志记录。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403082019508.png"
+                      alt="image-20230403082019508"
+                ></p>
+<p>在此处，使用像<code>cat</code>这样的命令并不能很好地解决内容查找问题，例如，如果我们想搜索这个日志文件，以查看某个用户&#x2F;IP地址访问了哪些内容，考虑到我们想要找到一个特定的值，所以用<code>cat</code>命令直接查看这个包含244个条目的日志文件内容并不是那么有效。</p>
+<p>我们可以尝试使用<code>grep</code>来搜索一个文件的全部内容，以找到我们想要查找的特定值；以上述的访问日志文件为例，假设我们希望找到IP地址“81.143.211.90”访问过的所有内容(注意，这是虚构的)，我们可以如下操作：使用<code>grep &quot;81.143.211.90&quot; access.log</code>命令。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403082642585.png"
+                      alt="image-20230403082642585"
+                ></p>
+<p>如上图所示，我们已经使用<code>grep</code>命令搜索了access.log文件，然后终端界面向我们显示了一些条目，这些条目都是在access.log日志文件中与目标IP相关的内容。</p>
+<p>tips：“grep”的全称为Global search REgular expression and Print out the line（全局搜索正则表达式并打印成行）</p>
+<p><strong>答题</strong></p>
+<p>使用和本文相关的实验房间所提供的Linux虚拟机进行操作：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">grep &quot;THM&quot; access.log</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403084038773.png"
+                      alt="image-20230403084038773"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403084117471.png"
+                      alt="image-20230403084117471"
+                ></p>
+<h2 id="Shell操作符介绍"><a href="#Shell操作符介绍" class="headerlink" title="Shell操作符介绍"></a>Shell操作符介绍</h2><p>学习Linux操作符能够加强你对Linux命令的了解，有一些重要的操作符值得我们注意。</p>
+<p>本小节将简单介绍以下几个基础操作符：</p>
+<ul>
+<li><code>&amp;</code>：此操作符允许你在终端的后台运行命令。</li>
+<li><code>&amp;&amp;</code>：此操作符允许你在终端的一行中组合多个命令。</li>
+<li><code>&gt;</code>：这个操作符是一个重定向器——这意味着我们可以从命令中获取输出(例如使用cat输出一个文件)并将其定向到其他地方，当我们将输出重定向到一个有内容的文本文件时，原文件的文本内容会被自动覆盖。</li>
+<li><code>&gt;&gt;</code>：此操作符执行与<code>&gt;</code>操作符相同的功能，但最终效果是附加输出内容到原文件内容的结尾而不是直接替换(这意味着不会覆盖任何内容)。</li>
+</ul>
+<p>接下来，让我们简单地介绍一下以上四种操作符。</p>
+<p><strong>操作符 “&amp;”</strong></p>
+<p>这个操作符允许我们在后台执行命令。</p>
+<p>假设我们现在想复制一个大文件，这将花费很长时间，并且在复制文件期间我们无法做任何其他事情；因此，我们可以选择使用”&amp;”操作符将命令后台化，该操作符的作用是允许我们执行一个命令并将其放置在后台，而当命令在后台执行时，我们就可以继续利用终端来做其他事情。</p>
+<p><strong>操作符”&amp;&amp;”</strong></p>
+<p>我们可以使用”&amp;&amp;”操作符来组合我们要执行的命令列表，并且使用该操作符组合的每个有效命令都会得到执行，例如<code>command1 &amp;&amp; command2</code>，但是要注意的一点是：只有在<code>command1</code>命令执行成功时，<code>command2</code>命令才会随后得到执行。</p>
+<p><strong>操作符 “&gt;”</strong></p>
+<p>这个操作符就是所谓的重定向器。使用该操作符时，我们可以从命令中获取输出内容，并能将该输出内容发送到其他地方。</p>
+<p>一个很好的例子是使用”&gt;”操作符重定向<code>echo</code>命令的输出，假设我们想要创建一个名为，并且要求它的内容为“hey”，我们就可以使用以下命令：<code>echo hey &gt; welcome</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403090231983.png"
+                      alt="image-20230403090231983"
+                ></p>
+<p>tips：如果上图例子中的“welcome”文件本身就有内容，那么使用上述之后，“welcome”文件的原内容将被“hey”所覆盖。</p>
+<p><strong>操作符 “&gt;&gt;”</strong></p>
+<p>这个操作符其实也是一个输出重定向器，就像我们前面所讨论的操作符(“&gt;”)一样；然而， “&gt;&gt;”操作符的不同之处在于：它不会覆盖原文件中的任何内容，而是会将输出内容附加到原文件内容的最后。</p>
+<p>在前面的例子中，我们有一个包含“hey”内容的文件“welcome”，如果我们使用<code>echo</code>命令组合 “&gt;”操作符向文件中添加“hello”，那么“welcome”文件的内容将只有“hello”而没有“hey”（因为使用”&gt;”操作符会覆盖原文件的内容）。</p>
+<p>当我们使用 “&gt;&gt;”操作符时，重定向的输出内容将附加到原文件内容的末尾，而不会直接替换（覆盖）原文件的内容：<code>echo hello &gt;&gt; welcome</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403090722301.png"
+                      alt="image-20230403090722301"
+                ></p>
+<p><strong>答题</strong></p>
+<p>阅读本小节的内容，并且使用和本文相关的实验房间所提供的Linux虚拟机进行操作。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403092012788.png"
+                      alt="image-20230403092012788"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403092433553.png"
+                      alt="image-20230403092433553"
+                ></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文所介绍的内容是你在与 Linux 机器交互时将要使用的最基本功能，只要你经常使用这些Linux命令，你将能够很快熟悉这些Linux基础内容。</p>
+<p>现在快速回顾一下，本文简单介绍了以下内容：</p>
+<ul>
+<li>了解关于Linux的一些简单背景知识。</li>
+<li>与Linux机器进行简单交互。</li>
+<li>运行一些最基本的Linux命令。</li>
+<li>介绍如何简单地与Linux中的文件系统进行交互，使用<code>find</code>和<code>grep</code>等命令来更有效地查找目标文件。</li>
+<li>通过了解一些 shell 操作符来增强你的命令使用基础。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>TryHackMe笔记</category>
+      </categories>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-Linux Fundamentals Part3(Linux基础知识3)-学习</title>
+    <url>/2024/01/27/THM-Linux%20Fundamentals%20Part3(Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%863)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/linuxfundamentalspart3" >https://tryhackme.com/room/linuxfundamentalspart3 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文相关内容：进一步提升你的Linux使用技能，了解一些Linux系统常见的实用程序。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>欢迎来到“Linux基础”系列的第三部分(也是最后一部分)。到目前为止，在本系列文章中，你已经学习了一些基本概念并使用了一些重要的命令；接下来，本文将展示一些你可能经常会用到的实用工具和应用程序，你还将通过了解Linux中的自动化任务、包管理、服务日志及应用程序日志来提高你的Linux技能。</p>
+<p><strong>环境准备</strong></p>
+<p>在TryHackMe攻击机或者你的本地Kali机上，使用以下凭据 通过SSH远程访问TryHackMe实验房间所提供的Linux目标机器：</p>
+<ul>
+<li>IP Address：MACHINE_IP（在与本文相关的TryHackMe实验房间中部署目标机器，即可得到一个对应的目标IP地址）</li>
+<li>Username：tryhackme</li>
+<li>Password：tryhackme</li>
+</ul>
+<p>tips：语法示例——<code>ssh tryhackme@MACHINE_IP</code>。</p>
+<h2 id="终端文本编辑器"><a href="#终端文本编辑器" class="headerlink" title="终端文本编辑器"></a>终端文本编辑器</h2><p>到目前为止（在本系列的文章中），我们使用过<code>echo</code>命令与操作符(<code>&gt;</code>和<code>&gt;&gt;</code>)的组合，实现了写入文本内容到指定文件中；但是当我们处理具有多行内容的文件时，前述写入方式并不是一种有效的处理数据的方法，此时我们就需要使用文本编辑器来处理文件内容。</p>
+<p>有很多文本编辑器可供Linux终端使用，它们都有各种各样的友好性和实用性，接下来我们将简单介绍以下两种终端文本编辑器：</p>
+<ul>
+<li>nano编辑器</li>
+<li>vim编辑器</li>
+</ul>
+<p><strong>Nano编辑器简介</strong></p>
+<p>Nano很容易上手，如果要使用nano创建或编辑文件，我们只需输入<code>nano filename</code>命令（在实际执行时，将”filename”替换为你所希望编辑的文件名即可）。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Introducing Nano 终端界面示例</span></span><br><span class="line">tryhackme@linux3:/tmp# nano myfile</span><br><span class="line">  GNU nano 4.8                                             myfile                                                       </span><br><span class="line"></span><br><span class="line">^G Get Help    ^O Write Out   ^W Where Is    ^K Cut Text    ^J Justify     ^C Cur Pos     M-U Undo       M-A Mark Text</span><br><span class="line">^X Exit        ^R Read File   ^\ Replace     ^U Paste Text  ^T To Spell    ^_ Go To Line  M-E Redo       M-6 Copy Text</span><br></pre></td></tr></table></figure></div>
+
+<p>一旦我们按下回车键执行nano命令，nano编辑器将会被启动，然后我们就可以开始输入或修改文件的文本内容；我们可以使用“向上”和“向下”方向键浏览文本的每一行，也可以使用键盘上的“Enter”键开始新的一行。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Using Nano to write text 终端界面示例</span></span><br><span class="line">tryhackme@linux3:/tmp# nano myfile</span><br><span class="line">  GNU nano 4.8                                             myfile                                             Modified  </span><br><span class="line"></span><br><span class="line">Hello TryHackMe</span><br><span class="line">I can write things into &quot;myfile&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">^G Get Help    ^O Write Out   ^W Where Is    ^K Cut Text    ^J Justify     ^C Cur Pos     M-U Undo       M-A Mark Text</span><br><span class="line">^X Exit        ^R Read File   ^\ Replace     ^U Paste Text  ^T To Spell    ^_ Go To Line  M-E Redo       M-6 Copy Text</span><br></pre></td></tr></table></figure></div>
+
+<p>Nano编辑器有一些很容易记住的功能，包括以下内容：</p>
+<ul>
+<li>搜索文本</li>
+<li>复制和粘贴</li>
+<li>跳转到某行号对应的行</li>
+<li>找出你当前所在行的行号</li>
+</ul>
+<p>你可以通过按“Ctrl”键(在Linux上会被表示为<code>^</code>)并结合相应的字母来使用nano编辑器的功能；例如，如果我们要退出编辑器界面，我们可以按“Ctrl”+“X”退出Nano编辑器。</p>
+<p><strong>VIM编辑器简介</strong></p>
+<p>VIM是一个更高级的文本编辑器，虽然你不需要知道VIM的所有高级特性，但是使用VIM编辑器特性 对于提高你的Linux技能有很大帮助。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403214825176.png"
+                      alt="image-20230403214825176"
+                ></p>
+<p>尽管需要更长的时间来熟悉，但是VIM编辑器有很多优点，包括以下内容：</p>
+<ul>
+<li>可自定义——你可以自主选择修改键盘快捷键；</li>
+<li>语法高亮显示——如果你正在编写或维护代码，这可能非常有用，VIM编辑器是软件开发人员的流行选择之一；</li>
+<li>VIM编辑器可以在没有安装nano的所有终端上工作（VIM编辑器可以完全替代nano编辑器）；</li>
+<li>有很多VIM资源可供你使用，如<a class="link"   href="https://vim.rtorr.com/" >VIM备忘单 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>、<a class="link"   href="https://www.runoob.com/linux/linux-vim.html" >VIM教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>等。</li>
+</ul>
+<h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403230557870.png"
+                      alt="image-20230403230557870"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403230208035.png"
+                      alt="image-20230403230208035"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230403230317863.png"
+                      alt="image-20230403230317863"
+                ></p>
+<h2 id="Linux常见实用程序介绍"><a href="#Linux常见实用程序介绍" class="headerlink" title="Linux常见实用程序介绍"></a>Linux常见实用程序介绍</h2><p><strong>下载文件-wget</strong></p>
+<p>计算机设备的一个相当基本的特征是具有传输文件的能力，例如，你可能想要从网上下载一个程序、一个脚本或者一张图片。</p>
+<p>在本小节我们将介绍<code>wget</code>命令的使用，这个命令允许我们通过HTTP从网络上下载文件——就像你在浏览器中访问文件一样；在使用<code>wget</code>命令下载文件时，我们还需要提供所希望下载的资源的地址，例如，如果我们想下载一个名为“myfile.txt”的文件到本地Linux机器上，假设我们已经知道了目标资源文件的网址，我们所使用的命令看起来会是下面这样：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://assets.tryhackme.com/additional/linux-fundamentals/part3/myfile.txt</span><br></pre></td></tr></table></figure></div>
+
+<p>**传输文件-scp **</p>
+<p>SCP（secure copy）是一种能够安全复制文件的方法，与常规的<code>cp</code>复制命令不同，使用<code>scp</code>命令可以在两台计算机之间传输文件，并且该命令将使用SSH协议来提供身份验证和数据加密功能。</p>
+<p>基于SOURCE（源）和DESTINATION（目的地），SCP能够允许你：</p>
+<ul>
+<li>将文件和目录从当前系统中复制到远程系统；</li>
+<li>从远程系统中复制文件和目录到当前系统。</li>
+</ul>
+<p>使用<code>scp</code>命令的前提是：我们已经知道当前的本地系统和远程系统上有效用户的名称及其密码。</p>
+<p>接下来我们要将一个示例文件从我们的本地机器复制到远程机器，假设我们已经知道如下信息：</p>
+<ul>
+<li>远程系统的IP地址——192.168.1.30；</li>
+<li>远程系统上的有效用户名称——ubuntu；</li>
+<li>本地系统上的文件名——important.txt；</li>
+<li>我们希望将文件存储在远程系统上所使用的新文件名称——transferred.txt。</li>
+</ul>
+<p>有了以上这些信息，我们就可以编写<code>scp</code>命令将文件从本地系统中复制到远程系统：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在本地系统的终端界面输入以下命令</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在需要提供密码的时候：请输入密码进行身份验证</span></span><br><span class="line">scp important.txt ubuntu@192.168.1.30:/home/ubuntu/transferred.txt</span><br></pre></td></tr></table></figure></div>
+
+<p>现在，让我们颠倒过来，让我们使用<code>scp</code>命令从远程计算机上复制文件到本地计算机。</p>
+<p>同样，我们需要事先知道以下信息：</p>
+<ul>
+<li>远程系统的IP地址——192.168.1.30；</li>
+<li>远程系统上的有效用户名称——ubuntu；</li>
+<li>远程系统上的文件名——documents.txt；</li>
+<li>我们希望将文件存储在本地系统上所使用的新文件名称——notes.txt</li>
+</ul>
+<p>有了以上这些信息，我们就可以编写<code>scp</code>命令从远程系统上复制文件到本地计算机：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在本地系统的终端界面输入以下命令</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在需要提供密码的时候：请输入密码进行身份验证</span></span><br><span class="line">scp ubuntu@192.168.1.30:/home/ubuntu/documents.txt notes.txt </span><br></pre></td></tr></table></figure></div>
+
+<p><strong>托管文件到web服务器</strong></p>
+<p>Ubuntu机器预先打包了python3，而Python能够提供了一个轻量级且易于使用的web模块，称为“HTTPServer”；该模块能够将你的计算机变成一个快捷和简易的web服务器，你可以使用它来托管你本地计算机上的文件，然后就可以通过其他计算机设备使用<code>curl</code>和<code>wget</code>等命令进行文件下载操作。</p>
+<p>Python3的“HTTPServer”默认将托管你当前运行命令时所在的目录中的文件，但这可以通过添加在手册页中找到的参数选项来更改。</p>
+<p>我们可以直接在本地计算机的终端中运行<code>python3 -m http.server</code>命令以启动“HTTPServer”模块，如下例所示（没有指定端口则会使用8000端口）：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Using Python to start a web server 终端界面示例</span></span><br><span class="line">tryhackme@linux3:/tmp# python3 -m http.server</span><br><span class="line">Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...</span><br></pre></td></tr></table></figure></div>
+
+<p>tips：如果需要指定该简易web服务器所绑定的端口，则可以使用像 <code>python3 -m http.server 1234</code>这样的命令（其中的1234为指定的端口号）。 </p>
+<p>现在，我们就可以在其他计算机设备上使用<code>wget</code>并通过指定本地计算机的IP地址和文件名来下载文件。Python3所提供的这个“HTTPServer”模块的一个缺陷是无法编制索引，因此必须知道我们所希望下载的文件的确切名称和位置。</p>
+<p>除了Python3所提供的“HTTPServer”模块之外，你还可以使用Updog来托管文件，Updog能提供一个更高级但仍属于轻量级的web服务器以便你托管本地计算机上的文件。</p>
+<p>Updog的GitHub项目链接：<a class="link"   href="https://github.com/sc0tfree/updog" >https://github.com/sc0tfree/updog <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>下面是通过Python3的”HTTPServer”模块下载所托管的文件的示例（承接前面的本地文件托管示例）：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Downloading a file from our webserver using wget 终端界面示例</span></span><br><span class="line">tryhackme@linux3:/tmp# wget http://127.0.0.1:8000/file</span><br><span class="line"></span><br><span class="line">2021-05-04 14:26:16  http://127.0.0.1:8000/file</span><br><span class="line">Connecting to http://127.0.0.1:8000... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 51095 (50K) [text]</span><br><span class="line">Saving to: ‘file’</span><br><span class="line"></span><br><span class="line">file                    100%[=================================================&gt;]  49.90K  --.-KB/s    in 0.04s</span><br><span class="line"></span><br><span class="line">2021-05-04 14:26:16 (1.31 MB/s) - ‘file’ saved [51095/51095]</span><br></pre></td></tr></table></figure></div>
+
+<p>在上面的示例中，我们可以看到<code>wget</code>命令成功地将名为“file”的文件下载到我们的机器上，这个http请求会被HTTPServer记录(就像任何web服务器一样)：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Using Python to start a web server 终端界面示例</span></span><br><span class="line">tryhackme@linux3:/tmp# python3 -m http.server</span><br><span class="line">Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...</span><br><span class="line">127.0.0.1 - - [04/May/2021/14:26:09] &quot;GET /file HTTP/1.1&quot; 200 -</span><br></pre></td></tr></table></figure></div>
+
+<p>tips： 关于Python3”HTTPServer”模块的文档—— <a class="link"   href="https://docs.python.org/3/library/http.server.html" >https://docs.python.org/3/library/http.server.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 。</p>
+<h3 id="答题-1"><a href="#答题-1" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p>使用 Python3 的“HTTPServer”模块在目标机器的“tryhackme”用户的主目录中启动 Web 服务器。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">python3 -m http.server</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404095742155.png"
+                      alt="image-20230404095742155"
+                ></p>
+<p>在本地攻击机上下载刚才启动的简易web服务器所托管的文件。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">wget http://MACHINE_IP:8000/.flag.txt</span> </span><br><span class="line">wget http://10.10.85.109:8000/.flag.txt </span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404100122129.png"
+                      alt="image-20230404100122129"
+                ></p>
+<blockquote>
+<p>flag为：THM{WGET_WEBSERVER} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404100230199.png"
+                      alt="image-20230404100230199"
+                ></p>
+<h2 id="Linux进程基础"><a href="#Linux进程基础" class="headerlink" title="Linux进程基础"></a>Linux进程基础</h2><p>进程（Process）是指在你的计算机中正在运行的程序，它们由操作系统内核进行管理，并且每个进程都会有一个与之关联的ID，这个ID被称为PID。PID会根据进程启动的顺序而递增，也就是说，第60个进程的PID即为60。</p>
+<p><strong>查看进程(Viewing Processes)</strong></p>
+<p>Linux <code>ps</code>（英文全拼：process status）命令用于显示当前进程的状态，类似于 windows 的任务管理器。</p>
+<p>我们可以使用<code>ps</code>命令来列出正在运行的进程的一个列表，该列表将提供一些附加信息，如进程的PID、进程的状态码、进程相关的CPU占用情况、正在执行的实际程序或命令的名称等。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404110917497.png"
+                      alt="image-20230404110917497"
+                ></p>
+<p>从上图中我们可以看到：我们第一次执行<code>ps</code>命令时，<code>ps</code>本身的进程PID是204，然后当我们再次执行<code>ps</code>命令时，<code>ps</code>本身的进程PID增加到了205（这说明PID确实会根据进程启动的顺序而递增）。</p>
+<p>如果我们要查看由其他用户运行的进程和那些不在会话中运行的进程(即系统进程)，我们需要为<code>ps</code>命令提供<code>aux</code>参数：<code>ps aux</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404112406775.png"
+                      alt="image-20230404112406775"
+                ></p>
+<p>从上图中我们可以看到现在总共有5个进程，相关的用户名称为“root”和“cmnatic”。</p>
+<p>另一个非常有用的命令是<code>top</code>命令，此命令能为你提供有关系统上正在运行的进程的实时统计信息，而不仅是一次性视图；<code>top</code>命令所提供的统计信息将每几秒钟刷新一次，但是每当你使用方向键浏览各行信息时也会进行刷新。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404120541306.png"
+                      alt="image-20230404120541306"
+                ></p>
+<p>关于ps命令的使用参考：<a class="link"   href="https://www.runoob.com/linux/linux-comm-ps.html" >https://www.runoob.com/linux/linux-comm-ps.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><strong>终止进程(Managing Processes)</strong></p>
+<p>我们可以通过发送一些信号来终止进程，这些终止进程的信号有多种类型，这主要与系统内核如何“干净”地处理进程有关。</p>
+<p>如果我们要终止一个命令(在Linux中，我们可以把进程理解为正在运行的命令)，我们可以使用适当命名的<code>kill</code>命令与我们所希望kill的相关PID组合在一起；例如，我们想要kill一个PID为1337的进程，我们可以使用以下命令：<code>kill 1337</code></p>
+<p>下面是当进程被杀死时我们可以发送给进程的一些信号（使用<code>kill -l</code>可列出当前所支持的所有信号类型）：</p>
+<ul>
+<li>SIGTERM（<code>kill -15</code>）：终止进程，但允许它事先执行一些清理任务；</li>
+<li>SIGKILL（<code>kill -9</code>）：默认信号，<code>-9</code>参数可以省略，表示终止进程并且不做任何事后清理；</li>
+<li>SIGSTOP（<code>kill -19</code>）：停止或者挂起进程；</li>
+<li>SIGHUP（<code>kill -1</code>）：重启进程；</li>
+<li>SIGCONT（<code>kill -18</code>）：继续进程。</li>
+</ul>
+<p><strong>进程如何启动</strong></p>
+<p>操作系统(OS)使用名称空间并最终能将计算机上的可用资源分配给(如CPU、RAM和高优先级)进程，你可以把这个过程想象成将你的计算机资源分成几片——类似于切割一块蛋糕；在切片内的进程将拥有一定的计算机资源，然而，这部分资源也只是所有进程实际可用的一小部分。</p>
+<p>名称空间对于安全性非常重要，因为它是将一个进程与其他进程隔离的方式——只有相同名称空间中的进程才能相互看到。</p>
+<p>我们之前讨论过PID是如何工作的，这就是名称空间可发挥作用的地方；PID为1的进程为系统启动时会自动运行的进程，这个进程在Ubuntu中是系统的初始化(init)进程，比如<code>systemd</code>，它能够用于提供一种在操作系统和用户之间管理用户进程的方法。</p>
+<p>一旦系统启动并初始化，<code>systemd</code>就会成为首先自动运行的进程之一，而我们想要运行的任何程序或软件都将作为<code>systemd</code>进程的子进程启动；虽然这些子进程由<code>systemd</code>控制，但仍将作为单独的进程运行(尽管会共享来自<code>systemd</code>的资源)，这能使我们更容易识别各个进程。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404183329221.png"
+                      alt="image-20230404183329221"
+                ></p>
+<p><strong>在系统启动时启动进程&#x2F;服务</strong></p>
+<p>一些应用程序可以在我们的计算机系统启动时启动，例如，web服务器、数据库服务器或文件传输服务器等，这些软件通常很关键，因而经常被管理员告知在系统启动期间启动。</p>
+<p>为了在系统启动时启动进程&#x2F;服务，我们可以使用<code>systemctl</code>命令，该命令允许我们与<code>systemd</code> 进程（守护进程）交互；<code>systemctl</code>是一个易于使用的命令，它采用以下语法格式：<code>systemctl [option] [service]</code></p>
+<p>如果我们要让apache服务启动，我们可以使用<code>systemctl start apache2</code>，如果想让apache服务停止，我们只需将<code>[option]</code>替换成<code>stop</code>即可。</p>
+<p>我们可以为<code>systemctl</code>命令设置以下四个选项：</p>
+<ul>
+<li>Start</li>
+<li>Stop</li>
+<li>Enable</li>
+<li>Disable</li>
+</ul>
+<p><strong>Linux前台和后台介绍</strong></p>
+<p>进程可以以两种状态运行：在前台运行、在后台运行。</p>
+<p>你在Linux终端中运行的命令，如“echo”将在终端的前台运行，<code>echo</code>命令是一个很好的例子，因为<code>echo</code>命令的输出将在前台返回，并且无法在后台返回：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404190321839.png"
+                      alt="image-20230404190321839"
+                ></p>
+<p>如上图所示：当我们运行<code>echo &quot;Hi THM&quot;</code>命令时，我们能在终端前台看到命令的输出；但当我们在<code>echo &quot;Hi THM&quot;</code>之后添加<code>&amp;</code>操作符之后，我们只能在终端前台看到<code>echo</code>进程的ID（而不是命令的输出）——因为此时<code>echo</code>命令正在后台运行。</p>
+<p>前后台机制对于复制文件之类的命令非常有用，因为这将允许我们同时在终端前台和终端后台执行不同的命令；以使用复制文件命令为例，后台化此命令意味着——我们不必等待文件复制命令执行完成，就能同时执行其他命令。</p>
+<p>当我们在执行脚本之类的程序文件时，我们也可以让这个进程后台化，此处不依赖于<code>&amp;</code>操作符，而是需要我们在键盘上使用<code>Ctrl + Z</code>来设置进程的后台化，这也是一种“暂停”脚本运行或命令执行的有效方法，如下图所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404192831824.png"
+                      alt="image-20230404192831824"
+                ></p>
+<p>由上图可知：示例脚本会持续输出内容 “This will keep on looping until I stop!”，直到我们停止或者挂起与该脚本对应的进程，我们可以通过在键盘上使用Ctrl + Z(在终端界面由T^Z表示)来停止示例脚本的运行。</p>
+<p><strong>前台化进程</strong></p>
+<p>假设现在有一个进程（”background.sh”脚本）在后台运行，我们可以通过使用<code>ps aux</code>命令来确认这一点：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404194127042.png"
+                      alt="image-20230404194127042"
+                ></p>
+<p>我们已经知道，在键盘上使用<code>Ctrl + Z</code>或者在命令中添加<code>&amp;</code>操作符能够使进程后台化；同样，我们还可以通过使用<code>fg</code>命令将后台进程重新前台化。</p>
+<p>如下所示：在我们使用<code>fg</code>命令之后，”background.sh”脚本所对应的进程能够重新回到终端前台（此时的”background.sh”脚本仍将处于运行状态）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404195229427.png"
+                      alt="image-20230404195229427"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404195245222.png"
+                      alt="image-20230404195245222"
+                ></p>
+<h3 id="答题-2"><a href="#答题-2" class="headerlink" title="答题"></a><strong>答题</strong></h3><p><em>tips：阅读本小节的内容以帮助回答以下问题</em></p>
+<p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">ps aux </span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404202323290.png"
+                      alt="image-20230404202323290"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404202348522.png"
+                      alt="image-20230404202348522"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404202407739.png"
+                      alt="image-20230404202407739"
+                ></p>
+<blockquote>
+<p>隐藏的flag为：THM{PROCESSES} 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404202510832.png"
+                      alt="image-20230404202510832"
+                ></p>
+<h2 id="Linux定时任务"><a href="#Linux定时任务" class="headerlink" title="Linux定时任务"></a>Linux定时任务</h2><p>用户可能希望设置某个操作或任务在系统启动后得到执行，例如：运行一些命令、备份指定文件、启动某个程序等等。</p>
+<p>为了对操作或任务的执行进行定时设置，我们接下来将讨论<code>cron</code>进程，更具体地说：我们将学习如何通过<code>crontab</code>与<code>cron</code>进程进行交互，<code>crontab</code>是在系统引导期间所启动的进程之一，它负责促进和管理cron jobs（定时任务）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404214102711.png"
+                      alt="image-20230404214102711"
+                ></p>
+<p>crontab是一个特殊的文件，其格式可被<code>cron</code>进程识别以逐步执行crontab的每一行，crontab需要具有以下 6 个特定字段值：</p>
+<ul>
+<li>MIN：每多少分钟（minute ）执行；</li>
+<li>HOUR：每多少小时（hour）执行 ；</li>
+<li>DOM：在一个月的每哪一天（Day Of the Month）执行 ；</li>
+<li>MON：在一年的每哪个月（Month of the year）执行；</li>
+<li>DOW：在一个星期的每哪一天（Day Of the Week）执行；</li>
+<li>CMD：实际上将被执行的命令（command）。</li>
+</ul>
+<p>以备份文件为例，你可能希望每12小时备份一次”cmnatic”用户的”Documents”，我们将为此使用以下格式命令：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">0 *12 * * * cp -R /home/cmnatic/Documents /var/backups/</span><br></pre></td></tr></table></figure></div>
+
+<p>crontab的一个有趣特性是支持通配符(<code>*</code>)，如果我们不希望为某个特定的字段提供一个值，我们就可以用<code>*</code>代替；如上面的定时任务示例（备份文件），我们不关心这个任务执行的月份、日期以及年份——我们只关心它做到每12小时执行一次，所以我们只需放置星号来代替我们所不关心的值。</p>
+<p>我们可以使用在线的“<a class="link"   href="https://crontab-generator.org/" >Crontab Generator <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>”工具，它可以帮助生成符合格式的crontab命令；我们还可以使用“<a class="link"   href="https://crontab.guru/" >Cron Guru <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>”工具，它会分析crontab执行的时间点。</p>
+<p>我们可以通过使用<code>crontab -e</code>命令并且选择一个编辑器(比如Nano)来编辑crontab文件的内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404220822701.png"
+                      alt="image-20230404220822701"
+                ></p>
+<p>tips：我们通过<code>crontab</code>命令可以添加、删除、编辑自动化任务（定时任务）。</p>
+<h3 id="答题-3"><a href="#答题-3" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404230933785.png"
+                      alt="image-20230404230933785"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404230914685.png"
+                      alt="image-20230404230914685"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404231038141.png"
+                      alt="image-20230404231038141"
+                ></p>
+<h2 id="Linux软件包管理"><a href="#Linux软件包管理" class="headerlink" title="Linux软件包管理"></a>Linux软件包管理</h2><p><strong>介绍软件包和软件存储库</strong></p>
+<p>当开发人员希望向Linux社区提交软件时，他们会将其提交到“apt”存储库，如果获得Linux官方批准，那么他们所提交的程序和工具将被发布到公共区域。</p>
+<p>Linux最可取的两个特性在这里脱颖而出：具有用户可访问性、能够发挥开源工具的优点。</p>
+<p>当我们在 Ubuntu 20.04 Linux 机器上的&#x2F;etc&#x2F;apt目录中使用 <code>ls</code> 命令时，能够看到以下文件，这些文件可用作网关&#x2F;注册表。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404232002556.png"
+                      alt="image-20230404232002556"
+                ></p>
+<p>虽然操作系统供应商将维护他们自己的存储库，但你也可以选择将一些社区存储库添加到你的源列表中，这将允许你扩展Linux操作系统的功能。</p>
+<p>例如：我们可以使用<code>add-apt-repository</code>命令添加其他存储库到我们的系统，在实际使用这个命令时，我们可以择优添加系统资源供应商所提供的存储库（一些系统资源供应商会拥有一个更接近我们机器的地理位置的存储库）。</p>
+<p><strong>管理存储库(添加和删除)</strong></p>
+<p>通常我们可以使用<code>apt</code>命令将软件安装到我们的Linux系统中，<code>apt</code>命令是apt包管理软件的一部分；apt包管理软件（即包管理器）包含了一整套工具，这些工具允许我们管理软件包和软件源，同时还能帮助我们安装软件或者删除软件。</p>
+<p>添加存储库的一种方法是使用我们上面提到的<code>add-apt-repository</code>命令，但是我们也可以手动添加和删除存储库。</p>
+<p>虽然你也可以选择使用其他包安装程序(如<code>dpkg</code>)来安装软件，但是使用apt包管理器的好处是：每当我们更新系统时，它都会检查包含我们添加的软件的存储库是否有更新。</p>
+<p>在接下来的示例中，我们将把Sublime text文本编辑器作为一个存储库添加到Ubuntu机器中(这个文本编辑器并不是默认的Ubuntu存储库的一部分)；在我们添加软件时，我们所下载的软件的完整性是通过使用所谓的GPG (Gnu Privacy Guard)密钥来保证的，这些密钥本质上是开发人员所提供的安全检查，能够表明“这是我们的软件”，如果当前密钥与操作系统所信任的密钥（即开发人员使用的密钥）不匹配，那么计算机就不会执行下载软件的操作。</p>
+<p>因此，我们首先需要添加Sublime Text 3开发人员所使用的GPG密钥。(此过程需要访问互联网)</p>
+<p>添加存储库的示例：</p>
+<p>1.下载GPG密钥并使用apt-key信任这个密钥：<code>wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -</code></p>
+<p>2.现在我们已经将密钥添加到我们的可信列表中，我们可以开始将Sublime Text 3的存储库添加到我们的apt源列表中；一个好的做法是为我们添加的每个不同的社区&#x2F;第三方存储库都分配一个单独的文件。</p>
+<p>2.1让我们在 &#x2F;etc&#x2F;apt&#x2F;sources.list.d目录中创建一个名为sublime-text.list的文件：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230405000525903.png"
+                      alt="image-20230405000525903"
+                ></p>
+<p>2.2使用Nano或其他文本编辑器，添加并保存Sublime text 3存储库到刚才新创建的文件中：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230405000715814.png"
+                      alt="image-20230405000715814"
+                ></p>
+<p>2.3在我们添加了以上条目之后，我们需要更新apt包以识别这个新条目——这是通过使用<code>apt update</code>命令完成的。</p>
+<p>2.4成功更新apt包之后，我们现在可以继续安装我们所信任的并且已经添加到apt包中的软件——<code>apt install sublime-text</code></p>
+<p>删除软件包的方法很简单，我们可以使用<code>add-apt-repository --remove ppa:PPA_Name/ppa</code>命令来完成，也可以通过手动删除之前添加的文件来完成。</p>
+<p>当我们成功删除了软件包之后，我们还需要使用<code>apt remove [software-name-here]</code>来清理apt包，例如：<code>apt remove sublime-text</code> 。</p>
+<p>tips：在删除软件包时，我们要将上述示例命令中的<code>PPA_Name</code>替换为我们期望删掉的<code>PPA</code>的名称（该名称在以上示例中为“sublime-text”）。</p>
+<h2 id="Linux日志"><a href="#Linux日志" class="headerlink" title="Linux日志"></a>Linux日志</h2><p>我们在 Linux 基础知识第一部分中简要介绍了日志文件以及它们所在的位置，现在，让我们快速回顾一下：这些包含日志信息的文件和文件夹位于<code>/var/log</code>目录中，主要包含了在系统上所运行的应用程序、服务的日志记录信息。 </p>
+<p>操作系统 (OS) 擅长通过一个被称为“轮换-rotating”的过程来自动管理日志信息。</p>
+<p>以下是Linux机器上正在运行的三个服务以及和这些服务相关的日志信息（此处仅为示例）：</p>
+<ul>
+<li>Apache2 web服务器；</li>
+<li>fail2ban服务（此服务的日志信息可用于监视攻击者所尝试的暴力操作）；</li>
+<li>UFW服务，用作防火墙；</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404204023732.png"
+                      alt="image-20230404204023732"
+                ></p>
+<p>通过查看这些服务日志，能够很好地监视系统运行状况以及保护系统的安全；而且，像web server这样的服务所对应的日志文件，还包含了关于每个请求的信息——这将允许网站开发人员或网站管理员诊断web服务的性能，并且有助于调查网络入侵者的活动。</p>
+<p>关于web服务，下面两种类型的日志文件是值得我们注意的：</p>
+<ul>
+<li>access log</li>
+<li>error log</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404204753923.png"
+                      alt="image-20230404204753923"
+                ></p>
+<p>tips：日志文件会存储关于操作系统如何运行的信息，还会存储用户所执行的操作，例如身份验证尝试。</p>
+<h3 id="答题-4"><a href="#答题-4" class="headerlink" title="答题"></a><strong>答题</strong></h3><p>通过SSH会话对目标Linux虚拟机进行操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404210233373.png"
+                      alt="image-20230404210233373"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230404210347221.png"
+                      alt="image-20230404210347221"
+                ></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>欢迎来到Linux基础模块的末尾，随着你与Linux交互时间的增加，你对Linux的熟悉程度也将会得到提高。</p>
+<p>本文主要介绍了以下内容：</p>
+<ul>
+<li>关于两种终端文本编辑器（nano和vim）的简介；</li>
+<li>了解Linux中的一般实用程序，如下载文件、传输文件、使用python web服务器托管本地内容；</li>
+<li>了解Linux中的进程；</li>
+<li>通过学习crontab定时任务、软件包管理和日志检查来维护和自动化你的Linux系统。</li>
+</ul>
+<p>可参考的Linux中文学习资源：</p>
+<ul>
+<li>Linux中文教程：<a class="link"   href="https://www.runoob.com/linux/linux-tutorial.html" >https://www.runoob.com/linux/linux-tutorial.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li>Linux 命令大全：<a class="link"   href="https://www.runoob.com/linux/linux-command-manual.html" >https://www.runoob.com/linux/linux-command-manual.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li>Linux 常用命令英文全拼：<a class="link"   href="https://www.runoob.com/w3cnote/linux-command-full-fight.html" >https://www.runoob.com/w3cnote/linux-command-full-fight.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+<p>你可以通过以下TryHackMe实验房间继续扩展你的Linux基础学习：</p>
+<ul>
+<li>Bash Scripting（Bash脚本基础） - <a class="link"   href="https://tryhackme.com/room/bashscripting" >https://tryhackme.com/room/bashscripting <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li>Regular Expressions（正则表达式基础） - <a class="link"   href="https://tryhackme.com/room/catregex" >https://tryhackme.com/room/catregex <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>TryHackMe笔记</category>
+      </categories>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-Windows Fundamentals 1(Windows基础知识1)-学习</title>
+    <url>/2024/01/27/THM-Windows%20Fundamentals%201(Windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%861)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/windowsfundamentals1xbx" >https://tryhackme.com/room/windowsfundamentals1xbx <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文介绍：本文所涉及的内容是Windows 基础模块的第 1 部分，我们将了解 Windows 桌面、NTFS 文件系统、UAC、控制面板等Windows基础组件。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Windows操作系统(OS)是一个复杂的产品，有许多系统文件、实用程序、设置、功能等。</p>
+<p>本文将尝试对Windows操作系统作一般概述，比如浏览用户界面，对系统进行更改等。</p>
+<p>启动本文相关实验房间中所附加的Windows虚拟机（你可以直接在浏览器中访问），如果你希望通过<a class="link"   href="https://www.cyberark.com/resources/threat-research-blog/explain-like-i-m-5-remote-desktop-protocol-rdp" >远程桌面 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>访问Windows虚拟机，请使用以下凭据：</p>
+<ul>
+<li><p>Machine IP: <code>MACHINE_IP</code>（在实验房间中启动Windows虚拟机之后，你将获得一个相关的ip地址）</p>
+</li>
+<li><p>User: <code>administrator</code></p>
+</li>
+<li><p>Password: <code>letmein123!</code></p>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331090333532.png"
+                      alt="image-20230331090333532"
+                ></p>
+<p>当上述界面弹出提示时，点击接受证书，然后你现在应该可以登录到远程系统。</p>
+<h2 id="Windows版本"><a href="#Windows版本" class="headerlink" title="Windows版本"></a>Windows版本</h2><p>Windows操作系统有很长的历史，可以追溯到1985年，目前，它是家庭和公司网络的主要操作系统。正因为如此，Windows操作系统一直是黑客和恶意软件作者的目标。</p>
+<p>Windows XP是Windows的一个流行版本，运行时间很长；微软还发布过Windows Vista，Vista是对Windows操作系统的一次彻底改造。Windows Vista存在很多问题，因此它在Windows用户中反响不佳，并很快就被淘汰了。</p>
+<p>当微软(Microsoft)宣布Windows XP寿终待寝时，许多用户都陷入了恐慌。企业、医院等组织争先恐后地在许多其他硬件和设备上测试下一个可行的Windows版本，即Windows 7；厂商们不得不争分夺秒地工作，以确保他们的产品与Windows 7能够兼容，如果他们做不到，他们的客户就不得不撕毁协议，并寻找另一家可升级他们的产品以兼容Windows 7的供应商。</p>
+<p>Windows 7虽然很快就发布了，但它也被标记上了终止支持的日期，然后是Windows 8.x，8.x出现时间很短暂，就像Vista一样。</p>
+<p>后面出现了Windows 10，这是目前普遍用于台式电脑的Windows操作系统版本。Windows 10有两种版本，家庭版和专业版，<a class="link"   href="https://www.microsoft.com/en-us/windows/compare-windows-10-home-vs-pro" >家庭版和专业版存在一些区别 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p>tips：尽管我们没有谈论服务器，但也有可用于服务器的Windows操作系统，比如<a class="link"   href="https://www.microsoft.com/en-us/windows-server" >Windows Server 2022 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p>许多批评人士喜欢抨击微软，但微软每一个新版本的Windows操作系统的可用性和安全性方面都取得了长足进步。</p>
+<p>注：本文所探索的Windows虚拟机的操作系统版本为“Windows Server 2019 Standard”，详见此Windows虚拟机中的“系统信息”界面。</p>
+<p>截至2021年6月，微软宣布了<a class="link"   href="https://docs.microsoft.com/en-us/lifecycle/products/windows-10-home-and-pro?ranMID=24542&ranEAID=kXQk6*ivFEQ&ranSiteID=kXQk6.ivFEQ-M28j3qbUhtM2JFCT2wmhOA&epi=kXQk6.ivFEQ-M28j3qbUhtM2JFCT2wmhOA&irgwc=1&OCID=AID2000142_aff_7593_1243925&tduid=(ir__uszrgcddyskfqz3fkk0sohz3wv2xuurc01kgzkod00)(7593)(1243925)(kXQk6.ivFEQ-M28j3qbUhtM2JFCT2wmhOA)()&irclickid=_uszrgcddyskfqz3fkk0sohz3wv2xuurc01kgzkod00&ranMID=24542&ranEAID=kXQk6*ivFEQ&ranSiteID=kXQk6.ivFEQ-4cKUPfbv9lM_IR2EX7K_hw&epi=kXQk6.ivFEQ-4cKUPfbv9lM_IR2EX7K_hw&irgwc=1&OCID=AID2000142_aff_7593_1243925&tduid=(ir__feexvhocigkfqna9kk0sohznb32xutanagupypus00)(7593)(1243925)(kXQk6.ivFEQ-4cKUPfbv9lM_IR2EX7K_hw)()&irclickid=_feexvhocigkfqna9kk0sohznb32xutanagupypus00" >Windows 10的退休日期 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>：“微软将继续支持至少一个Windows 10版本，直到2025年10月14日。”</p>
+<p>截至2021年10月5日，Windows 11已经成为终端用户可用的Windows操作系统。</p>
+<p>访问以下链接，可阅读更多关于Windows 11的信息：<a class="link"   href="https://www.microsoft.com/en-us/windows?wa=wsignin1.0" >https://www.microsoft.com/en-us/windows?wa=wsignin1.0 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><strong>答题</strong></p>
+<p>阅读以下链接，查看Windows 10家庭版和专业版的区别：</p>
+<p><a class="link"   href="https://www.microsoft.com/en-us/windows/compare-windows-10-home-vs-pro" >https://www.microsoft.com/en-us/windows/compare-windows-10-home-vs-pro <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331100052164.png"
+                      alt="image-20230331100052164"
+                ></p>
+<blockquote>
+<p>答案：BitLocker</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331095806462.png"
+                      alt="image-20230331095806462"
+                ></p>
+<h2 id="桌面（图形用户界面）"><a href="#桌面（图形用户界面）" class="headerlink" title="桌面（图形用户界面）"></a>桌面（图形用户界面）</h2><p>Windows 桌面，简称Windows图形用户界面(GUI)，是你登录 Windows 计算机后能看到并使用的主屏幕界面。</p>
+<p>通常情况下，你需要先通过登录界面完成系统登录，然后才能看到Windows桌面。在登录界面上，你需要输入有效的帐户名称和登录凭据，这通常是该特定系统使用者的用户名和密码或者是Active Directory环境(如果是加入域的机器)中先前存在的Windows帐户的用户名和密码。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331100826045.png"
+                      alt="image-20230331100826045"
+                ></p>
+<p>上面的截图就是一个典型的Windows Desktop的例子，以下是组成上述GUI的一些组件名称：</p>
+<ol>
+<li>The Desktop（主桌面）</li>
+<li>Start Menu（开始菜单）</li>
+<li>Search Box (搜索框-Cortana)</li>
+<li>Task View（任务视图）</li>
+<li>Taskbar（任务栏）</li>
+<li>Toolbars（工具栏）</li>
+<li>Notification Area（通知区域）</li>
+</ol>
+<p><strong>The Desktop（主桌面）</strong></p>
+<p>桌面是你可以快捷进入程序、文件夹、文件等的地方。计算机程序和文件的图标要么按照字母顺序排列在文件夹中，要么随机分散在桌面上，并没有特定的组织；但是，放在文件夹中的程序通常也可以通过桌面上的对应快捷方式被用户快速访问。</p>
+<p>桌面的外观和风格可以根据用户的喜好自行进行更改。你可以右键单击桌面上的任何位置，然后就能出现一个上下文菜单，此菜单将允许你更改桌面图标的大小、指定图标的排列方式，并且还能允许你将项目复制&#x2F;粘贴到桌面，以及在桌面上创建新项目(如创建文件夹、快捷方式或文本文档)等等。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331183522221.png"
+                      alt="image-20230331183522221"
+                ></p>
+<p>通过“显示设置-Display settings”功能，你还可以更改屏幕的分辨率和屏幕方向，如果你有多个电脑屏幕，你可以在这里对多屏幕设置进行配置。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331183648774.png"
+                      alt="image-20230331183648774"
+                ></p>
+<p><em>注意:在远程桌面会话中，某些显示设置将被禁用。</em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331184113446.png"
+                      alt="image-20230331184113446"
+                ></p>
+<p>你也可以通过选择“个性化-Personalize”来更改壁纸。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331183829228.png"
+                      alt="image-20230331183829228"
+                ></p>
+<p>通过“个性化-Personalize”功能，你可以更改桌面的背景图像，以及更改字体、主题、配色方案等。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331184043358.png"
+                      alt="image-20230331184043358"
+                ></p>
+<p><strong>The Start Menu（开始菜单）</strong></p>
+<p>在之前的Windows版本中，桌面GUI的左下角还可以看到“开始-Start ”一词；但是，在Windows 10等现代版本的操作系统中，“开始-Start ”一词不再出现，取而代之的是一个Windows Logo。尽管开始菜单的外观发生了变化，但其总体功能还是和以前一样的。</p>
+<p>“开始菜单”为计算机用户提供了对所有最有用的程序、文件、实用工具等的访问，当你点击Windows logo之后，开始菜单就会打开，它将由三个部分共同组成。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331184759638.png"
+                      alt="image-20230331184759638"
+                ></p>
+<p>**1.**“开始菜单”的第一个部分(Start Menu从左到右的第一个区域)为你对帐户或登录会话的可执行操作提供了快速快捷方式，例如更改用户帐户、锁定屏幕或注销帐户，其他特定于你的帐户的快捷方式还有“文档”文件夹(文档图标)和“图片”文件夹(图片图标)，最后，点击齿轮图标将允许你进入设置屏幕界面，点击电源图标将允许你关闭计算机、重新启动计算机或者断开远程桌面会话(如果存在远程桌面会话)。</p>
+<p>如下图所示，你可以看到多个附加了功能的图标，如果你要展开此部分的更多内容，请单击顶部的图标：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331190016903.png"
+                      alt="image-20230331190016903"
+                ></p>
+<p>**2.**“开始菜单”的第二个部分(Start Menu从左到右的第二个区域)将在顶部显示所有最近添加的程序和所有已安装的程序(可配置为出现在开始菜单中)，在此部分中，应用程序&#x2F;程序将会按字母顺序被列出。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331190757774.png"
+                      alt="image-20230331190757774"
+                ></p>
+<p>如上图所示，第一个框是最近添加的应用程序&#x2F;程序将出现的地方，第二个框将显示所有已安装的应用程序&#x2F;程序 并且按字母排列。</p>
+<p>如果你有一个很长的已安装程序列表，你可以点击字母网格中的字母标题，从而实现跳转到已安装程序列表中的特定部分。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331191141034.png"
+                      alt="image-20230331191141034"
+                ></p>
+<p><em>注意：上图中的白色字母与已安装程序的字母标题相匹配。</em></p>
+<p>**3.**“开始菜单”的第三个部分(Start Menu从左到右的第三个区域)，也就是开始菜单的右侧，此区域是你可以找到特定应用程序&#x2F;程序或者实用程序的图标的地方；这些图标被称为磁贴，一些磁贴在默认情况下会被添加到此区域。</p>
+<p>右键单击任何一个磁贴，都会出现一个菜单，这个菜单可以允许你对所选磁贴执行更多操作：例如调整平铺大小，从开始菜单中取消固定，查看其属性等。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331192202260.png"
+                      alt="image-20230331192202260"
+                ></p>
+<p>在前述的“开始菜单”第二个区域中的应用程序&#x2F;程序，都可以通过右键单击并选择“Pin to Start”以形成新的磁贴，而这些新的磁贴会出现在“开始菜单”的第三个区域中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331192854403.png"
+                      alt="image-20230331192854403"
+                ></p>
+<p><strong>The Taskbar（任务栏）</strong></p>
+<p>在任务栏中(任务栏一般在桌面GUI的底部)，某些组件是默认启用且可见的，例如，下图中的工具栏（Toolbars）就是为了演示目的而启用的。</p>
+<p>如果你想要禁用一些任务栏可用组件，你可以右键单击任务栏，这将弹出一个上下文菜单以允许你进行更改。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331193428534.png"
+                      alt="image-20230331193428534"
+                ></p>
+<p>所有你已经打开或者启动的任何应用程序&#x2F;程序、文件夹、文件等都会出现在任务栏中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331194347701.png"
+                      alt="image-20230331194347701"
+                ></p>
+<p>当你将鼠标悬停在任务栏中的应用程序图标上时，这将提供关于此应用程序的预览运行缩略图以及提示信息，这个提示信息是有用的，如果你打开了很多不同的或者相同的应用&#x2F;程序，如多个谷歌Chrome浏览器界面，你可能会希望找到一个你想要的谷歌Chrome实例，此时你就可以根据提示信息来找到目标实例。</p>
+<p>当你关闭应用程序时，相关的应用程序的图标将从任务栏中消失(除非你显式地将应用程序图标固定到任务栏)。</p>
+<p><strong>The Notification Area（通知区域）</strong></p>
+<p>通知区域通常位于Windows屏幕的右下方，它是显示日期和时间的地方。在通知区域中，你可能看到的其他图标还包括音量图标、网络&#x2F;无线图标、电池状态图标等等，你可以通过任务栏设置来添加或删除通知区域中的图标。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331195748338.png"
+                      alt="image-20230331195748338"
+                ></p>
+<p>进入任务栏设置界面，然后向下滚动到通知区域部分即可进行更改。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331195842358.png"
+                      alt="image-20230331195842358"
+                ></p>
+<p>下面是微软官方关于用户桌面GUI中的“开始菜单”和“通知区域”的简要文档。</p>
+<ul>
+<li><a class="link"   href="https://support.microsoft.com/en-us/windows/see-what-s-on-the-start-menu-a8ccb400-ad49-962b-d2b1-93f453785a13" >https://support.microsoft.com/en-us/windows/see-what-s-on-the-start-menu-a8ccb400-ad49-962b-d2b1-93f453785a13 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   href="https://support.microsoft.com/en-us/windows/customize-the-taskbar-notification-area-e159e8d2-9ac5-b2bd-61c5-bb63c1d437c3#WindowsVersion=Windows_10" >https://support.microsoft.com/en-us/windows/customize-the-taskbar-notification-area-e159e8d2-9ac5-b2bd-61c5-bb63c1d437c3#WindowsVersion=Windows_10 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+<p>tips：你可以右键单击任何文件夹、文件、应用程序&#x2F;程序的图标来查看更多信息或者对所单击的项目执行相关操作。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p>问题1：哪个选项可以隐藏&#x2F;禁用搜索框？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331220154338.png"
+                      alt="image-20230331220154338"
+                ></p>
+<blockquote>
+<p>答案1:Hidden</p>
+</blockquote>
+<p>问题2：哪个选项可以隐藏&#x2F;禁用任务视图按钮？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331220607941.png"
+                      alt="image-20230331220607941"
+                ></p>
+<blockquote>
+<p>答案2：Show Task View button</p>
+</blockquote>
+<p>问题3：除了“时钟”和“网络”之外，通知区域中还有哪些其他图标可见？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331220953527.png"
+                      alt="image-20230331220953527"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331221057862.png"
+                      alt="image-20230331221057862"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331220827367.png"
+                      alt="image-20230331220827367"
+                ></p>
+<blockquote>
+<p>答案3：Action Center</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331200408557.png"
+                      alt="image-20230331200408557"
+                ></p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><p>在现代版本的Windows中所使用的文件系统是“New Technology File System-新技术文件系统-NT文件系统”，可简称为<a class="link"   href="https://learn.microsoft.com/en-us/windows-server/storage/file-server/ntfs-overview" >NTFS <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p>在NTFS之前，还有其他文件系统：比如 FAT16&#x2F;FAT32(File Allocation Table-文件分配表)和HPFS(High Performance File System-高性能文件系统)。</p>
+<p>现在你仍然可以看到FAT分区的使用，例如，你通常可以在一些USB设备、MicroSD卡中看到FAT分区，但你通常不会在个人Windows电脑或Windows服务器上看到FAT分区。</p>
+<p>NTFS也是一种日志文件系统(具有故障恢复能力的文件系统)，当出现故障时，NTFS文件系统可以根据日志文件中所存储的信息 自动修复磁盘上的文件夹&#x2F;文件（这个功能是FAT文件系统所不具备的）。</p>
+<p>NTFS解决了以前的文件系统的许多限制，如：</p>
+<ul>
+<li>支持大于4GB的文件</li>
+<li>能够对文件夹和文件设置特定的权限</li>
+<li>能够对文件夹和文件进行压缩</li>
+<li>支持加密(属于EFS-<a class="link"   href="https://learn.microsoft.com/en-us/windows/win32/fileio/file-encryption" >Encryption File System <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>-加密文件系统)</li>
+</ul>
+<p>如果你正在运行Windows，你的Windows所安装使用的文件系统是什么?你可以查看操作系统的驱动器属性(右键单击)，通常是C驱动器(<code>C:\</code>)。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331210623069.png"
+                      alt="image-20230331210623069"
+                ></p>
+<p>关于文件系统的概述，你可以阅读 Microsoft <a class="link"   href="https://docs.microsoft.com/en-us/troubleshoot/windows-client/backup-and-storage/fat-hpfs-and-ntfs-file-systems" >关于 FAT、HPFS 和 NTFS 的官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p>接下来，让我们简要谈谈 NTFS 特有的一些功能。</p>
+<p>在 NTFS volumes(volumes–磁盘“卷标”)上，你可以设置授予访问或者拒绝访问文件、文件夹的权限，具体的权限有：</p>
+<ul>
+<li><strong>Read-读</strong></li>
+<li><strong>Write-写</strong></li>
+<li><strong>Read &amp; Execute-读、执行</strong></li>
+<li><strong>List folder contents-列出文件夹内容</strong></li>
+<li><strong>Modify-修改</strong></li>
+<li><strong>Full control-完全控制</strong></li>
+</ul>
+<p>下图列出了每个权限的含义以及这些权限如何应用于文件和文件夹。 （出自<a class="link"   href="https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/bb727008(v=technet.10)?redirectedfrom=MSDN" >微软官方文档-文件和文件夹权限 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>）</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331211513652.png"
+                      alt="image-20230331211513652"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331211943792.png"
+                      alt="image-20230331211943792"
+                ></p>
+<p>如何查看文件或文件夹的权限？</p>
+<ol>
+<li><p>右键单击要检查权限的文件或文件夹。</p>
+</li>
+<li><p>在弹出的上下文菜单中单击选择“属性”（<code>Properties</code>）。</p>
+</li>
+<li><p>在“属性”中，单击“安全”（<code>Security</code>）选项卡。</p>
+</li>
+<li><p>在组或用户名（<code>Group or user names</code>）列表中，选择要查看其权限的用户、计算机或组。</p>
+</li>
+</ol>
+<p>在下图中，你可以看到 Windows 文件夹的用户(<code>Users</code>)组的权限。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331213944033.png"
+                      alt="image-20230331213944033"
+                ></p>
+<p>NTFS 文件系统的另一个特性是备用数据流 (ADS-Alternate Data Streams)。</p>
+<p>备用数据流(ADS)是特定于Windows NTFS(New Technology File System-新技术文件系统)的文件属性。</p>
+<p>每个文件都至少有一个数据流(<code>$DATA</code>)，而ADS（备用数据流）将允许文件包含多个数据流。本机<a class="link"   href="https://support.microsoft.com/en-us/windows/what-s-changed-in-file-explorer-ef370130-1cca-9dc5-e0df-2f7416fe1cb1" >Windows文件资源管理器 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>并不会向用户显示ADS（备用数据流），你可以使用第三方可执行文件来查看ADS（备用数据流），或者你也可以选择使用<a class="link"   href="https://learn.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.3&viewFallbackFrom=powershell-7.1" >Powershell <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 来查看文件的ADS（备用数据流）。</p>
+<p>从安全的角度来看，恶意软件编写者会使用ADS来隐藏数据，但是这并非意味着所有的ADS使用都是恶意的；例如，当你从Internet(互联网)下载一个文件时，会向ADS写入标识符，以识别该文件确实是从Internet下载的。</p>
+<p>要了解更多关于ADS的知识，请参考<a class="link"   href="https://www.malwarebytes.com/blog/news/2015/07/introduction-to-alternate-data-streams" >MalwareBytes所提供的相关文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：通过阅读本小节内容即可回答以下问题。</em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331222543571.png"
+                      alt="image-20230331222543571"
+                ></p>
+<h2 id="Windows-System32文件夹"><a href="#Windows-System32文件夹" class="headerlink" title="Windows\System32文件夹"></a>Windows\System32文件夹</h2><p>Windows文件夹(<code>C:\Windows</code>)通常被称为包含Windows操作系统的文件夹。</p>
+<p>这个文件夹不一定要位于C盘，它可以驻留在任何其他磁盘驱动器中，在技术上还可以实现驻留在不同的文件夹中；这就是环境变量，更具体地说是系统环境变量能够发挥作用的地方，Windows文件夹(目录)的系统环境变量是<code>%windir%</code>。</p>
+<p>根据<a class="link"   href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables?view=powershell-7.1" >微软相关文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>：“环境变量存储着有关操作系统环境的信息，这些信息包括操作系统路径、操作系统使用的处理器数量以及临时文件夹的位置等详细信息。”</p>
+<p>在“Windows”文件夹中有很多文件夹：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331224546618.png"
+                      alt="image-20230331224546618"
+                ></p>
+<p>其中一个文件夹是System32：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331224616743.png"
+                      alt="image-20230331224616743"
+                ></p>
+<p>System32文件夹中保存着一些对操作系统至关重要的文件，在与此文件夹交互时，你应该要非常谨慎，不小心删除System32中的任何文件或者文件夹都可能会导致Windows操作系统无法正常操作。</p>
+<p>可参考资料：<a class="link"   href="https://www.howtogeek.com/346997/what-is-the-system32-directory-and-why-you-shouldnt-delete-it/" >https://www.howtogeek.com/346997/what-is-the-system32-directory-and-why-you-shouldnt-delete-it/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>注意：Windows基础所涉及的许多工具都位于System32文件夹中。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：通过阅读本小节内容即可回答以下问题。</em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331224902472.png"
+                      alt="image-20230331224902472"
+                ></p>
+<h2 id="用户帐户、配置文件和权限"><a href="#用户帐户、配置文件和权限" class="headerlink" title="用户帐户、配置文件和权限"></a>用户帐户、配置文件和权限</h2><p>在典型的本地Windows系统上，用户帐户可以是以下两种类型之一：管理员（Administrator）和标准用户（Standard User）。</p>
+<p>用户帐户的类型将决定用户可以在特定的Windows系统上执行什么操作。</p>
+<ul>
+<li>管理员可以对系统进行更改，如添加用户、删除用户、修改组、修改系统设置等。</li>
+<li>标准用户只能对归属于该用户的文件夹&#x2F;文件进行更改，不能执行系统级更改。</li>
+</ul>
+<p>假设你当前以管理员身份登录到Windows机器，你可以通过一些方法来确定当前系统上存在哪些用户帐户。</p>
+<p>你可以单击<code>Start Menu</code>并输入<code>Other User</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331230819292.png"
+                      alt="image-20230331230819292"
+                ></p>
+<p>如果你点击上图中的<code>Other Users</code>，则应该会出现一个设置窗口：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331230932138.png"
+                      alt="image-20230331230932138"
+                ></p>
+<p>由于你现在是管理员，你将能够看到一个将其他人添加到此PC的选项（Add someone else to this PC）。</p>
+<p><em>注意：标准用户将看不到此选项。</em></p>
+<p>继续单击本地用户帐户，此时应该会出现更多选项：更改帐户类型和删除。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331231440182.png"
+                      alt="image-20230331231440182"
+                ></p>
+<p>单击上图中的Change account type，下拉框中的当前值即表示当前的帐户类型。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331231216995.png"
+                      alt="image-20230331231216995"
+                ></p>
+<p>当系统创建用户帐户时，将同时为该用户创建一个配置文件，每个用户配置文件的文件夹位置将落在<code>C:\Users</code>下；例如，用户帐号Max的用户配置文件所在的文件夹为<code>C:\Users\Max</code>。</p>
+<p>用户配置文件的创建会在用户账户初次登录时完成。</p>
+<p>当一个新用户帐户第一次登录到本地系统时，他将在登录屏幕上看到几条消息，其中一条消息User Profile Service会在登录屏幕上停留一段时间，这表示它正在创建相关的用户配置文件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331231928100.png"
+                      alt="image-20230331231928100"
+                ></p>
+<p>一旦登录成功，用户将看到一个类似于下面的对话框，这表明配置文件正在创建中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331232138839.png"
+                      alt="image-20230331232138839"
+                ></p>
+<p>每个用户配置文件都会有一些相同的文件夹，其中的一些是：</p>
+<ul>
+<li>Desktop</li>
+<li>Documents</li>
+<li>Downloads</li>
+<li>Music</li>
+<li>Pictures</li>
+</ul>
+<p>访问用户账户信息的另一种方法是使用本地用户和组管理界面（ Local User and Group Management）。</p>
+<p>你可以右键单击“开始菜单- Start Menu”并单击Run，然后输入<code>lusrmgr.msc</code>：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331233204501.png"
+                      alt="image-20230331233204501"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331233318791.png"
+                      alt="image-20230331233318791"
+                ></p>
+<p><em>注意：Run对话框可以允许我们快速打开项目。</em></p>
+<p>使用Run对话框并访问<code>lusrmgr.msc</code>之后，我们就进入到了“本地用户和组管理”界面，在这个界面，你可以看到两个文件夹：Users和Groups。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331233829846.png"
+                      alt="image-20230331233829846"
+                ></p>
+<p>如果单击Groups，你将看到所有本地组的名称以及每个组的简要描述。每个组都有其权限，计算机用户将由管理员分配&#x2F;添加到组中，当用户被分配到某个组时，该用户将会继承该组的权限，并且一个用户可以被分配给多个组。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331234311751.png"
+                      alt="image-20230331234311751"
+                ></p>
+<p><em>注意：如果你从“其他用户-Other users”中单击“将其他人添加到此PC”，这将自动打开一个“本地用户和组管理”界面。</em></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p>查看Other users账户：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331235802326.png"
+                      alt="image-20230331235802326"
+                ></p>
+<p>使用<code>win + r</code>打开Run对话框，然后输入<code>lusrmgr.msc</code>并点击确定，成功进入到“本地用户和组管理”界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401000117411.png"
+                      alt="image-20230401000117411"
+                ></p>
+<blockquote>
+<p>Other users所对应的账户Name为：tryhackmebilly</p>
+</blockquote>
+<p>查看这个用户(tryhackmebilly)属于哪个组：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401000445572.png"
+                      alt="image-20230401000445572"
+                ></p>
+<blockquote>
+<p>tryhackmebilly用户属于：Remote Desktop Users组和Users组。</p>
+</blockquote>
+<p>查看用于来宾用户访问的内置帐户：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401000749028.png"
+                      alt="image-20230401000749028"
+                ></p>
+<blockquote>
+<p>用于来宾用户访问的内置帐户是：Guest</p>
+</blockquote>
+<p>查看来宾用户帐户的帐户状态：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401001211417.png"
+                      alt="image-20230401001211417"
+                ></p>
+<blockquote>
+<p>帐户状态为：Account is disabled</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331234547668.png"
+                      alt="image-20230331234547668"
+                ></p>
+<h2 id="用户帐户控制"><a href="#用户帐户控制" class="headerlink" title="用户帐户控制"></a>用户帐户控制</h2><p>大多数家庭用户都以本地管理员身份登录到他们的 Windows 系统，而帐户类型为管理员的用户可以对系统进行任意更改。</p>
+<p>计算机用户在执行某些操作时，其实并不需要系统为这些操作分配一个很高的权限，例如网上冲浪、处理 Word 文档等；这种提升的权限增加了系统被攻破的风险，也使得恶意软件更容易感染系统（因为这可能会使恶意软件在一个较高的权限下得到运行）。</p>
+<p>为了保护本地用户的权限分配安全，Microsoft 引入了用户帐户控制机制(UAC-User Account Control)，这个概念最初是在<a class="link"   href="https://en.wikipedia.org/wiki/Windows_Vista" >Windows Vista <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>系统中引入的，并且在随后的 Windows 版本中也得到继续使用。</p>
+<p>注意：UAC在默认情况下不适用于内置的本地管理员帐户。 </p>
+<p>UAC是如何工作的？当具有管理员帐户类型的用户登录系统时，当前会话并不会以提升的权限运行(此时用户具有管理员权限，无需再提升)；当具有标准帐户类型的用户登录系统时，如果用户想要执行一些需要更高级别权限的操作时，UAC机制会提示用户是否允许执行 并可能需要我们输入管理员密码。 </p>
+<p>我们可以查看当前所登录的帐户（假设为内置管理员帐户）上的程序信息——右键单击程序并查看其属性即可。</p>
+<p>在程序属性的“安全-Security ”选项卡中，我们可以看到该程序所属的用户&#x2F;组以及它们对此程序文件的权限（从下图可知：标准用户没有被列出）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401081039434.png"
+                      alt="image-20230401081039434"
+                ></p>
+<p>如果我们以标准用户登录并尝试运行上图中的程序，那么就会触发UAC机制。</p>
+<p>注意：当我们以管理员帐户登录之后，可以通过lusrmgr.msc界面查看到标准用户的用户名和密码(知道用户名和密码之后，我们就能通过远程桌面进行登录)。</p>
+<p>当我们作为标准用户登录时，上述可执行程序的默认图标上会有一个盾牌标志。程序上的盾牌标志代表该程序受UAC限制，当我们点击运行该程序时，会提示是否允许以更高级别的权限运行。（如果要继续运行该程序，就需要我们输入管理员密码）</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401083931178.png"
+                      alt="image-20230401083931178"
+                ></p>
+<p>双击上图中的程序，你将看到UAC提示（此时需要输入管理员帐户的密码，然后才能继续运行该程序）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401084355843.png"
+                      alt="image-20230401084355843"
+                ></p>
+<p>一段时间无操作之后，上图中的UAC提示符就会消失，然后程序就不会运行。</p>
+<p>UAC功能降低了恶意软件成功破坏系统的可能性，你可以阅读<a class="link"   href="https://learn.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works" >微软官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>了解更多关于UAC的信息。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：通过阅读本小节内容即可回答以下问题。</em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401085221414.png"
+                      alt="image-20230401085221414"
+                ></p>
+<h2 id="设置和控制面板"><a href="#设置和控制面板" class="headerlink" title="设置和控制面板"></a>设置和控制面板</h2><p>在Windows系统上，进行系统更改的主要位置是“设置菜单”和“控制面板”。</p>
+<p>长期以来，“控制面板”一直是进行系统更改(如添加打印机、卸载程序等)的首选位置；而“设置菜单”是在Windows 8 版本中引入的，此版本是第一个适用于触摸屏平板电脑的Windows操作系统，而且“设置菜单”在Windows 10中也仍然可用。事实上，如果用户现在想要进行系统更改，“设置菜单”将会是用户所使用的主要位置。</p>
+<p>“设置菜单”和“控制面板”既有相似之处，也有不同之处。</p>
+<p><strong>设置菜单</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401090019326.png"
+                      alt="image-20230401090019326"
+                ></p>
+<p><strong>控制面板</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401090327928.png"
+                      alt="image-20230401090327928"
+                ></p>
+<p>注意：如果个人计算机设备上的Windows操作系统版本不同，那么“设置菜单”中的图标也可能不同。</p>
+<p>设置菜单和控制面板都可以通过开始菜单进行访问。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401090517708.png"
+                      alt="image-20230401090517708"
+                ></p>
+<p>控制面板能够让你访问更复杂的设置和执行更复杂的操作。在某些情况下，当你使用“设置菜单”开始进行系统更改时，最后还是会进入到“控制面板”中的相关界面。</p>
+<p>例如，你可以在“设置菜单”中单击“网络和Internet”，然后再单击“更改适配器选项”。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401090924855.png"
+                      alt="image-20230401090924855"
+                ></p>
+<p>然后你就会注意到：接下来所弹出的窗口来自于控制面板。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401091210493.png"
+                      alt="image-20230401091210493"
+                ></p>
+<p>如果你不清楚在更改设置时应该打开设置菜单还是控制面板，你可以使用开始菜单并进行搜索。</p>
+<p>在下面的例子中，正在搜索的内容是“wallpaper”，并且最后得到的返回结果会很少。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401091556674.png"
+                      alt="image-20230401091556674"
+                ></p>
+<p>如果我们点击上图中的“最佳匹配”，将会出现一个“设置”菜单窗口，能够让我们对壁纸进行更改。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401091737337.png"
+                      alt="image-20230401091737337"
+                ></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p>进入到控制面板界面，将视图更改为小图标显示，查看最后一项设置名称：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401093612966.png"
+                      alt="image-20230401093612966"
+                ></p>
+<blockquote>
+<p>最后一项设置名称为：Windows Defender Firewall 。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401091808960.png"
+                      alt="image-20230401091808960"
+                ></p>
+<h2 id="任务管理器"><a href="#任务管理器" class="headerlink" title="任务管理器"></a>任务管理器</h2><p>本文所涉及的最后一个主题是任务管理器。</p>
+<p>任务管理器可以提供 有关当前在系统上运行的应用程序和进程的信息，任务管理器中还有一些其他信息也是可用的，比如正在使用多少CPU和RAM，这是属于系统性能的部分。</p>
+<p>你可以通过右键单击任务栏来访问任务管理器。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401092305061.png"
+                      alt="image-20230401092305061"
+                ></p>
+<p>任务管理器界面将会以一个简单视图的形式打开，视图中可能并不会显示太多信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401092416660.png"
+                      alt="image-20230401092416660"
+                ></p>
+<p>我们可以单击上图中的<code>More details</code>，然后视图内容将会发生变化。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401092538793.png"
+                      alt="image-20230401092538793"
+                ></p>
+<p>有关任务管理器的更多内容，请参阅以下博客文章：</p>
+<blockquote>
+<p><a class="link"   href="https://www.howtogeek.com/405806/windows-task-manager-the-complete-guide/" >https://www.howtogeek.com/405806/windows-task-manager-the-complete-guide/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link"   href="https://www.howtogeek.com/66622/stupid-geek-tricks-6-ways-to-open-windows-task-manager/" >https://www.howtogeek.com/66622/stupid-geek-tricks-6-ways-to-open-windows-task-manager/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p><strong>答题</strong></p>
+<p><em>tips：通过阅读上述链接相关的博客文章，可回答下面问题。</em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401092709123.png"
+                      alt="image-20230401092709123"
+                ></p>
+]]></content>
+      <categories>
+        <category>TryHackMe笔记</category>
+      </categories>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+        <tag>BlueTeam</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-Windows Fundamentals 2(Windows基础知识2)-学习</title>
+    <url>/2024/01/27/THM-Windows%20Fundamentals%202(Windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%862)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/windowsfundamentals2x0x" >https://tryhackme.com/room/windowsfundamentals2x0x <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文介绍：本文所涉及的内容是Windows 基础模块的第 2 部分，了解有关系统配置、UAC 设置、资源监控、Windows 注册表等更多信息。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在Windows Fundamentals 1中，我们已经介绍了Windows的桌面、文件系统、用户帐户控制、控制面板、设置和任务管理器。 </p>
+<p>本文将继续尝试概述 Windows 操作系统中可用的其他一些实用程序以及访问这些实用程序的不同方法。</p>
+<p>启动本文相关实验房间中所附加的Windows虚拟机（你可以直接在浏览器中访问），如果你希望通过远程桌面访问虚拟机，请使用以下凭据：</p>
+<ul>
+<li>Machine IP: <code>MACHINE_IP</code>（在实验房间中启动Windows虚拟机之后，你将获得一个相关的ip地址）</li>
+<li>User: <code>administrator</code></li>
+<li>Password: <code>letmein123!</code></li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331102855386.png"
+                      alt="image-20230331102855386"
+                ></p>
+<p>当上述界面弹出提示时，点击接受证书，然后你现在应该可以登录到远程系统。</p>
+<h2 id="系统配置面板（-System-Configuration）"><a href="#系统配置面板（-System-Configuration）" class="headerlink" title="系统配置面板（ System Configuration）"></a>系统配置面板（ System Configuration）</h2><p>系统配置实用程序 (<code>MSConfig</code>)可用于高级故障排除，其主要目的是帮助诊断启动问题，系统配置面板可以帮助我们导航到其他 Windows 应用程序。</p>
+<p>有关系统配置实用程序的更多信息，请参阅下面的文档。</p>
+<blockquote>
+<p><a class="link"   href="https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/system-configuration-utility-troubleshoot-configuration-errors" >https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/system-configuration-utility-troubleshoot-configuration-errors <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p>有几种方法可以启动系统配置，其中一种方法是从开始菜单启动–在开始菜单处输入MSConfig即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401185721094.png"
+                      alt="image-20230401185721094"
+                ></p>
+<p>注意:你需要本地管理员权限才能打开系统配置实用程序。</p>
+<p>该实用程序顶部有五个选项卡，下面是每个选项卡的名称，在本小节中，我们将简要对每个选项卡进行介绍。</p>
+<ul>
+<li><p>General-常规</p>
+</li>
+<li><p>Boot-引导</p>
+</li>
+<li><p>Services-服务</p>
+</li>
+<li><p>Startup-启动</p>
+</li>
+<li><p>Tools-工具</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401190049438.png"
+                      alt="image-20230401190049438"
+                ></p>
+</li>
+</ul>
+<p>在General选项卡中，我们可以选择Windows启动时要加载的设备和服务，相关的选项包括:标准（Normal,）、诊断性（Diagnostic）以及选择性（Selective）。</p>
+<p>在Boot选项卡中，我们可以为操作系统定义各种启动选项。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401190444870.png"
+                      alt="image-20230401190444870"
+                ></p>
+<p>在Services选项卡中，会列出系统中配置的所有服务，而不考虑其状态(运行或停止)，服务是指在后台运行的一种特殊类型的应用程序。Services选项卡允许我们启用或禁用出现在列表中的服务。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401190621227.png"
+                      alt="image-20230401190621227"
+                ></p>
+<p>Startup选项卡会将用户引导至任务管理器以管理启动项，下面是本地机器上MSConfig的Startup选项卡的截图。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401190728279.png"
+                      alt="image-20230401190728279"
+                ></p>
+<p>如上图所示，微软会建议你使用任务管理器(<code>taskmgr</code>)来管理(启用&#x2F;禁用)启动项，系统配置实用程序并不是一个启动管理程序。</p>
+<p>在Tools选项卡中，有一个关于各种实用程序(工具)的列表，我们可以运行这些工具来进一步配置操作系统。Tools选项卡中的每个工具都有一个简短的描述，以让我们对工具用途有一些了解。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401191148145.png"
+                      alt="image-20230401191148145"
+                ></p>
+<p>注意上图中的<code>Selected command</code>部分，此文本框中的信息将根据工具的不同而变化。</p>
+<p>关于工具的运行：我们可以通过Run提示符使用命令运行工具，也可以通过命令提示符使用命令运行工具，或者可以通过单击上图中的<code>launch</code>按钮启动对应工具。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><em><strong>问题1：将 Systems Internals 列为制造商的服务的名称是什么？</strong></em></p>
+<p>导航到系统配置面板(<code>MSConfig</code>)的“服务”选项卡并单击“制造商-Manufacturer”，这将按服务制造商的字母顺序对服务进行排序，然后寻找由“Systems Internals”所制造的服务。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401201614902.png"
+                      alt="image-20230401201614902"
+                ></p>
+<blockquote>
+<p>由Systems Internals所制造的服务名称为：PsShutdown</p>
+</blockquote>
+<p><em><strong>问题2：Windows 许可证注册给谁？</strong></em></p>
+<p>导航到系统配置面板的“工具”选项卡并选择“关于 Windows”工具。</p>
+<p>单击“启动”按钮启动该工具，你将看到有关操作系统的信息，包括了Windows许可证的注册对象。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401201811501.png"
+                      alt="image-20230401201811501"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401201840541.png"
+                      alt="image-20230401201840541"
+                ></p>
+<blockquote>
+<p>Windows许可证的注册对象是：Windows User</p>
+</blockquote>
+<p><em><strong>问题3：Windows 故障排除的命令是什么？</strong></em></p>
+<p>在系统配置面板的“工具”选项卡中 选择Windows 故障排除工具，注意此时选项卡的“Selected command”部分，我们可以使用选项卡中对应的命令启动工具（在cmd或者Powershell中运行命令即可）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401203319568.png"
+                      alt="image-20230401203319568"
+                ></p>
+<blockquote>
+<p>Windows 故障排除的命令是：C:\Windows\System32\control.exe &#x2F;name Microsoft.Troubleshooting</p>
+</blockquote>
+<p><em><strong>问题4：什么命令将打开控制面板？（答案是.exe的名字，并非全路径）</strong></em></p>
+<p>虽然不是很明显，但是有多个工具的启动命令都引用了同一个exe 文件——系统属性以及Windows 故障排除，两者都使用了control.exe。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401203904805.png"
+                      alt="image-20230401203904805"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401203932302.png"
+                      alt="image-20230401203932302"
+                ></p>
+<blockquote>
+<p>打开控制面板的命令中将包含control.exe</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401191632414.png"
+                      alt="image-20230401191632414"
+                ></p>
+<h2 id="更改UAC设置"><a href="#更改UAC设置" class="headerlink" title="更改UAC设置"></a>更改UAC设置</h2><p>我们将继续探索可通过“系统配置”面板使用的工具——Change UAC Settings。</p>
+<p>用户帐户控制(UAC-User Account Control) 机制和Windows中的权限分配有关，UAC能够在日常使用时 为具有管理员访问权限的用户帐户保持较低级别的权限，并能在实际需要管理员访问权限时临时提升权限级别。</p>
+<p>UAC可以通过UAC设置进行更改，甚至能够完全关闭(不推荐完全关闭UAC)。</p>
+<p>我们能够导航至MSConfig 系统配置实用程序中的“工具”选项卡，然后选择对应程序以更改 UAC 设置。</p>
+<p>在UAC设置界面，你可以通过移动滑块来改变UAC提示的优先级（从总是提示到完全不提示）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401204502203.png"
+                      alt="image-20230401204502203"
+                ></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p>单击MSConfig的“工具”选项卡中的“更改 UAC 设置”工具，查看“Selected command”部分。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401205525109.png"
+                      alt="image-20230401205525109"
+                ></p>
+<blockquote>
+<p>与启动UAC设置的命令 相关联的程序为：UserAccountControlSettings.exe</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401204813864.png"
+                      alt="image-20230401204813864"
+                ></p>
+<h2 id="计算机管理界面"><a href="#计算机管理界面" class="headerlink" title="计算机管理界面"></a>计算机管理界面</h2><p>我们将继续探索可通过“系统配置”面板使用的工具——Computer Management（<code>compmgmt</code>）。</p>
+<p>计算机管理（<code>compmgmt</code>) 实用程序包含三个主要部分：系统工具(System Tools)、 存储(Storage)以及服务和应用程序(Services and Applications)。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401205855916.png"
+                      alt="image-20230401205855916"
+                ></p>
+<p><strong>System Tools（系统工具）</strong></p>
+<p>系统工具菜单由六部分组成：<em><strong>Task Scheduler、Event Viewer、Shared Folders、Local Users and Groups、Performance、Device Manager</strong></em>。</p>
+<p>让我们首先从任务调度器(<em><strong>Task Scheduler</strong></em>)开始，根据微软的说法：通过任务调度器，我们可以创建和管理 计算机在指定的时间自动执行的常见任务。</p>
+<p>任务可以是运行应用程序、脚本等，并且任务可以被配置为在任何时间运行。比如计算机任务可以在用户登录或注销时运行，任务也可以被配置为按特定的时间表运行，例如，设置每五分钟运行一次指定的计算机任务。</p>
+<p>如果你要创建一个基本任务，可以单击“操作-Actions”(计算机管理页面的右侧窗格)下的“创建基本任务-Create Basic Task”。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401211603366.png"
+                      alt="image-20230401211603366"
+                ></p>
+<p>接下来的系统工具是事件查看器（<em><strong>Event Viewer</strong></em>）。</p>
+<p>事件查看器允许我们查看计算机上发生的事件，这些事件的记录可以被看作是一种审计跟踪，能够用来了解计算机系统的活动；这些事件信息通常可用于诊断问题以及调查系统上已执行的操作。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225150680.png"
+                      alt="image-20230401225150680"
+                ></p>
+<p>事件查看器有三个窗格。</p>
+<ol>
+<li>左边的窗格显示了一个关于事件日志提供程序的分层树列表。(如上图所示)</li>
+<li>中间的窗格将显示一个总体概述和特定于选定提供者的事件摘要。</li>
+<li>右边的窗格是一个操作（Action）界面。</li>
+</ol>
+<p>可以记录的事件有五种类型，下面是来自<a class="link"   href="https://docs.microsoft.com/en-us/windows/win32/eventlog/event-types" >docs.microsoft.com <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的一个表格，提供了对每种事件类型的简要描述。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401212813748.png"
+                      alt="image-20230401212813748"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402103926626.png"
+                      alt="image-20230402103926626"
+                ></p>
+<p>事件日志能够在 Windows logs下可见，下面是来自于<a class="link"   href="https://docs.microsoft.com/en-us/windows/win32/eventlog/eventlog-key" >微软官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的一个表格，它提供了对标准日志和自定义日志的简要描述。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401213048340.png"
+                      alt="image-20230401213048340"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402104244808.png"
+                      alt="image-20230402104244808"
+                ></p>
+<p>接下来的系统工具是共享文件夹（<em><strong>Shared Folders</strong></em>），在此系统工具中——你将看到其他人可以连接到的共享和共享文件夹的完整列表。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401224757803.png"
+                      alt="image-20230401224757803"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401213444809.png"
+                      alt="image-20230401213444809"
+                ></p>
+<p>上图是打开Shares文件夹之后所看到的共享列表，此列表会显示 Windows 的默认共享<code>C$</code>和 Windows 所创建的默认远程管理共享，如<code>ADMIN$</code>。</p>
+<p>与Windows中的任何对象一样，你可以右键单击共享文件夹以查看其属性，例如权限属性(谁可以访问共享资源)。</p>
+<p>在Sessions文件夹下，你将看到当前连接到“共享”的用户列表（为空）；而正在连接共享的用户可访问的文件夹和文件将在“Open Files”下被列出。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225023683.png"
+                      alt="image-20230401225023683"
+                ></p>
+<p>接下来的系统工具是本地用户和组（<em><strong>Local Users and Groups</strong></em>），我们可通过在Run提示符下输入<code>lusrmgr.msc</code>打开本地用户和组界面（在之前的文章中已有介绍，此处不再赘述）。</p>
+<p>接下来的系统工具是性能（<em><strong>Performance</strong></em>），你将看到一个名为Performance Monitor (<code>perfmon</code>)的实用程序。</p>
+<p>Perfmon（即性能监视器）可用于实时或者从日志文件中查看性能数据，此实用程序可用于排除计算机系统(本地或远程)上的性能问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401220426705.png"
+                      alt="image-20230401220426705"
+                ></p>
+<p>我们最后要介绍的系统工具是 设备管理器（<em><strong>Device Manager</strong></em>），它允许我们查看和配置硬件，例如允许我们禁用任何连接到计算机的硬件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225612103.png"
+                      alt="image-20230401225612103"
+                ></p>
+<p><strong>Storage（存储）</strong> </p>
+<p>在“存储”菜单下的是“Windows服务器备份”和“磁盘管理”，在这里，我们只讨论“磁盘管理”部分。</p>
+<p>注意：由于本文相关实验所使用的虚拟机是 Windows Server，所以会有一些在Windows 10系统中通常看不到的实用程序。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401220930240.png"
+                      alt="image-20230401220930240"
+                ></p>
+<p>磁盘管理是Windows中的一个系统实用程序，它使你能够执行高级存储任务，这些任务包括：</p>
+<ul>
+<li>Set up a new drive——建立一个新的驱动器；</li>
+<li>Extend a partition——扩展分区；</li>
+<li>Shrink a partition——缩小分区；</li>
+<li>Assign or change a drive letter (ex. E:) ——分配或更改驱动器盘符(例如E:)</li>
+</ul>
+<p><strong>Services and Applications（服务和应用程序）</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401221421693.png"
+                      alt="image-20230401221421693"
+                ></p>
+<p>如上图所示，计算机管理页面的“服务和应用程序”菜单列表将包含“路由和远程访问”、“服务”和“WMI控制”三部分。</p>
+<p>“服务”是在后台运行的一种特殊类型的应用程序，通过计算机管理页面的“服务和应用程序”菜单，你不仅可以启用和禁用服务，还可以查看服务的Properties（属性）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401221511583.png"
+                      alt="image-20230401221511583"
+                ></p>
+<p>此外，“服务和应用程序”菜单中的“WMI Control”将用于配置和控制WMI服务。</p>
+<p><em>tips：WMI是指Windows管理工具，它的全称为——Windows Management Instrumentation。</em></p>
+<p>根据维基百科的说法：“WMI允许脚本语言(如VBScript或Windows PowerShell)在本地和远程 对Microsoft Windows个人电脑与服务器进行管理，微软还为WMI提供了一个命令行接口，被称为Windows管理工具命令行(WMIC：Windows Management Instrumentation Command-line)。”</p>
+<p>注意：WMIC工具在Windows 10 21H1版本中已弃用，Windows PowerShell取代了WMI服务。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><em><strong>问题1：打开计算机管理界面的命令是什么？（使用.msc 文件名称作答即可）</strong></em></p>
+<p>单击 MSConfig 的“工具”选项卡中的“计算机管理”工具，查看“Selected command”部分即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225315207.png"
+                      alt="image-20230401225315207"
+                ></p>
+<blockquote>
+<p>答案1：compmgmt.msc</p>
+</blockquote>
+<p><em><strong>问题2：GoogleUpdateTaskMachineUA 任务配置为每天什么时间运行？</strong></em></p>
+<p>通过系统配置面板启动“计算机管理”工具并导航到“任务调度器”，在计划任务列表中，你可以看到“GoogleUpdateTaskMachineUA”任务，和此任务关联的运行时间可以在“触发器-Triggers”栏目下找到。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225451929.png"
+                      alt="image-20230401225451929"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225532208.png"
+                      alt="image-20230401225532208"
+                ></p>
+<blockquote>
+<p>答案2：6:15 AM</p>
+</blockquote>
+<p><em><strong>问题3：共享的隐藏文件夹的名称是什么？</strong></em></p>
+<p>通过系统配置面板启动“计算机管理”工具并导航到系统工具下的“共享文件夹”部分，打开包含共享列表的Shares文件夹：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225743498.png"
+                      alt="image-20230401225743498"
+                ></p>
+<blockquote>
+<p>答案3：sh4r3dF0Ld3r</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401222619478.png"
+                      alt="image-20230401222619478"
+                ></p>
+<h2 id="系统信息界面"><a href="#系统信息界面" class="headerlink" title="系统信息界面"></a>系统信息界面</h2><p>我们将继续探索可通过“系统配置”面板使用的工具—— System Information（<code>msinfo32</code>）。</p>
+<p><strong>什么是系统信息( <code>msinfo32</code>) 工具？</strong></p>
+<p>根据 Microsoft 的说法，“ Windows 包含一个名为Microsoft System Information (Msinfo32.exe) 的工具，此工具可收集有关你的计算机的信息并显示计算机硬件、系统组件和软件环境的综合视图，你可以使用它来诊断计算机问题。”</p>
+<p>系统信息工具的主窗口是系统摘要（System Summary），它提供了很多关于操作系统、系统、处理器、BIOS、内存等的信息。</p>
+<p>系统摘要(System Summary)中的信息分为以下三部分：</p>
+<ul>
+<li>硬件资源：有关系统硬件的高级信息；</li>
+<li>组件：有关计算机上安装的不同设备的信息，如存储、显示器、键盘、鼠标、打印机等；</li>
+<li>软件环境：提供有关系统上安装的软件的详细信息，包括驱动程序、服务、任务和启动程序等，还有一个被称为环境变量的部分，环境变量用于存储有关操作系统的详细信息。</li>
+</ul>
+<p>系统摘要(System Summary)将显示计算机所使用的一般技术规格，例如计算机的处理器品牌和型号等。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401233204758.png"
+                      alt="image-20230401233204758"
+                ></p>
+<p>“硬件资源”中显示的信息不适用于普通计算机用户，如果你想了解更多关于此部分的信息，请参阅<a class="link"   href="https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/hardware-resources#:~:text=Hardware%20resources%20are%20the%20assignable,of%20bus%2Drelative%20memory%20addresses." >Microsoft官方页面 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401234718952.png"
+                      alt="image-20230401234718952"
+                ></p>
+<p>在“组件”下，你可以看到有关计算机上安装的硬件设备的特定信息（此处存在部分信息不会显示）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401234913754.png"
+                      alt="image-20230401234913754"
+                ></p>
+<p>在Software Environment部分中，你可以看到有关嵌入到操作系统中的软件(如：驱动程序)和已安装软件的信息，在此处还可以看到其他详细信息，例如环境变量和网络连接等。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401235447963.png"
+                      alt="image-20230401235447963"
+                ></p>
+<p>根据微软的说法，“环境变量存储着有关操作系统环境的信息，这些信息包括操作系统路径、操作系统使用的处理器数量以及临时文件夹的位置等详细信息。具体而言：环境变量存储着操作系统和其他程序所使用的数据，例如，WINDIR环境变量（<code>%windir%</code>）所包含的是Windows安装目录的位置，程序可以通过查询这个变量的值来确定Windows操作系统文件的位置。”</p>
+<p>单击Environment Variables即可查看已经为计算机分配好的环境变量值。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402000123298.png"
+                      alt="image-20230402000123298"
+                ></p>
+<p>可用于查看环境变量的方法还包括：</p>
+<ol>
+<li>Control Panel &gt; System and Security &gt; System &gt; Advanced system settings &gt; Environment Variables</li>
+<li>Settings &gt; System &gt; About &gt; system info &gt; Advanced system settings &gt; Environment Variables</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402000305026.png"
+                      alt="image-20230402000305026"
+                ></p>
+<p>在系统信息实用程序（<code>msinfo32</code>）的最底部，还有一个搜索栏可以帮助我们快速定位，例如：我们可以选择“组件”并搜索“<code>IP address</code>”。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402001026708.png"
+                      alt="image-20230402001026708"
+                ></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><em><strong>问题1：打开系统信息的命令是什么？（以相关的exe文件名称作答即可）</strong></em></p>
+<p>导航到MSConfig面板的“工具”选项卡并找到“系统信息”工具，查看“Selected command”部分即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402002650839.png"
+                      alt="image-20230402002650839"
+                ></p>
+<blockquote>
+<p>答案1：msinfo32.exe</p>
+</blockquote>
+<p><em><strong>问题2：系统名称下列出的是什么？</strong></em></p>
+<p>导航到MSConfig面板的工具选项卡并启动“系统信息”工具，然后选择“系统摘要”并查看“系统名称”条目。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402002833201.png"
+                      alt="image-20230402002833201"
+                ></p>
+<blockquote>
+<p>答案2：THM-WINFUN2</p>
+</blockquote>
+<p><em><strong>问题3：ComSpec的环境变量值是多少？</strong></em></p>
+<p>我们导航到MSConfig面板的工具选项卡并启动“系统信息”工具，然后展开“软件环境”菜单并查看“环境变量”页面，以找到ComSpec条目和相应的变量值。</p>
+<p>ComSpec 环境变量将指向命令行解释器，即 cmd.exe。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003006483.png"
+                      alt="image-20230402003006483"
+                ></p>
+<blockquote>
+<p>答案3：%SystemRoot%\system32\cmd.exe</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402001112874.png"
+                      alt="image-20230402001112874"
+                ></p>
+<h2 id="资源监视器"><a href="#资源监视器" class="headerlink" title="资源监视器"></a>资源监视器</h2><p>我们将继续探索可通过“系统配置”面板使用的工具——Resource Monitor（<code>resmon</code>）。</p>
+<p><strong>什么是资源监视器( <code>resmon</code>)？</strong></p>
+<p>根据Microsoft的说法：“资源监视器用于显示每个进程和聚合 CPU、内存、磁盘、网络的使用信息，此外它还提供有关哪些进程正在使用单个文件句柄和模块的详细信息；它的高级过滤功能将允许用户隔离与一个或多个进程(应用程序或服务)相关的数据，并能启动、停止、暂停和恢复服务，以及从用户界面关闭无响应的应用程序；它还包括一个进程分析功能，可以帮助识别死锁进程和文件锁定冲突，以便用户可以尝试解决冲突，而不是直接关闭应用程序并遭受丢失数据的风险。 ”</p>
+<p>正如本文所提到的其他一些工具一样，资源监视器实用程序主要面向——那些需要在计算机系统上执行高级故障排除的用户。</p>
+<p>在概述(Overview)选项卡中，Resmon 有四个部分：</p>
+<ul>
+<li>CPU-中央处理器</li>
+<li>Disk-磁盘</li>
+<li>Network-网络</li>
+<li>Memory-内存</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003146897.png"
+                      alt="image-20230402003146897"
+                ></p>
+<p>上图中的四个部分在资源监视器界面的顶部 也有相应的选项卡。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003326346.png"
+                      alt="image-20230402003326346"
+                ></p>
+<p>请注意，上图每个选项卡都有各自的附加信息，四个选项卡的具体图像信息如下所示。 </p>
+<p><strong>中央处理器</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003355546.png"
+                      alt="image-20230402003355546"
+                ></p>
+<p><strong>内存</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003410757.png"
+                      alt="image-20230402003410757"
+                ></p>
+<p><strong>磁盘</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003427038.png"
+                      alt="image-20230402003427038"
+                ></p>
+<p><strong>网络</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003441094.png"
+                      alt="image-20230402003441094"
+                ></p>
+<p>资源监视器界面的最右侧还有窗格区域：当你查看概述选项卡时，窗格区域会实时显示和以上四个部分相关的图形视图；当你查看单个选项卡时，窗格区域则会实时显示和选项卡类型对应的图形视图。 </p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402085550790.png"
+                      alt="image-20230402085550790"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402085443134.png"
+                      alt="image-20230402085443134"
+                ></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><strong>问题：打开资源监视器的命令是什么？（以相关的exe文件名称作答即可）</strong></p>
+<p>导航到MSConfig面板的工具选项卡并找到“资源监视器”工具，查看“Selected command”部分即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402004626723.png"
+                      alt="image-20230402004626723"
+                ></p>
+<blockquote>
+<p>答案：resmon.exe</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402004955219.png"
+                      alt="image-20230402004955219"
+                ></p>
+<h2 id="命令提示符界面"><a href="#命令提示符界面" class="headerlink" title="命令提示符界面"></a>命令提示符界面</h2><p>我们将继续探索可通过“系统配置”面板使用的工具——Command Prompt（<code>cmd</code>）。</p>
+<p>命令提示符(<code>cmd</code>)一开始似乎令人生畏，但一旦你了解如何与它进行交互，你就会发现它没有那么难理解。</p>
+<p>在早期的操作系统中，命令行是与操作系统交互的唯一方式，随着GUI(图形用户界面)被引入，用户就能够使用GUI并点击一些按钮来执行复杂的计算机任务，用户也不再局限于 只能使用命令提示符来与操作系统发生交互。</p>
+<p>即使现在GUI是与操作系统进行交互的主要方式，但是计算机用户仍然可以通过命令提示符和操作系统发生交互。</p>
+<p>在本小节中，我们将只讨论计算机用户可以在命令提示符中运行以获取有关计算机系统的信息的几个简单命令。</p>
+<p>让我们从一些简单的命令开始，比如<code>hostname</code>和<code>whoami</code>。</p>
+<p>命令<code>hostname</code>将输出计算机名。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402085935253.png"
+                      alt="image-20230402085935253"
+                ></p>
+<p>命令<code>whoami</code>将输出登录用户的名称。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090001407.png"
+                      alt="image-20230402090001407"
+                ></p>
+<p>接下来，让我们看看在故障排除时有用的一些命令。</p>
+<p>经常使用的命令是<code>ipconfig</code>，这个命令将显示计算机的网络地址设置。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090043093.png"
+                      alt="image-20230402090043093"
+                ></p>
+<p>每个命令都有一个帮助手册，用于解释正确执行命令所需的语法，以及可添加到命令中以扩展其执行的任何其他参数。</p>
+<p>检索命令帮助手册的命令是<code>/?</code></p>
+<p>例如，如果要查看<code>ipconfig</code>的帮助手册，可以使用如下命令：<code>ipconfig /?</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090216859.png"
+                      alt="image-20230402090216859"
+                ></p>
+<p>注意：清除命令提示符界面的命令为<code>cls</code>。</p>
+<p>下一个命令是<code>netstat</code>，根据帮助手册，此命令将显示协议统计信息和当前TCP&#x2F;IP网络连接信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090331950.png"
+                      alt="image-20230402090331950"
+                ></p>
+<p>上图中的红框部分向我们展示了<code>netstat</code>命令的示例语法，此语法结构告诉我们<code>netstat</code>命令可以单独运行，也可以带参数运行，例如<code>-a</code>、<code>-b</code>、<code>-e</code>等。</p>
+<p>当任何参数附加到根命令(本例中为<code>netstat</code>)时，对应的命令输出也将发生变化。</p>
+<p>接下来我们介绍<code>net</code>命令，此命令主要用于管理网络资源，<code>net</code>命令支持子命令。</p>
+<p>如果输入<code>net</code>而不带子命令，则输出结果将显示根命令的语法，并会显示一些你可以使用的子命令。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090824244.png"
+                      alt="image-20230402090824244"
+                ></p>
+<p>对于<code>net</code>命令，显示帮助手册<code>/?</code>不会起作用，在这种情况下，我们需要使用不同的语法以查看帮助信息，即<code>net help</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090931154.png"
+                      alt="image-20230402090931154"
+                ></p>
+<p>如果你希望查看<code>net user</code>的帮助信息，则相关的命令为<code>net help user</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402091028314.png"
+                      alt="image-20230402091028314"
+                ></p>
+<p>你可以使用类似的命令查看其他有用的<code>net</code>子命令的帮助信息，例如<code>localgroup</code>、<code>use</code>、<code>share</code>和<code>session</code>。</p>
+<p>请参考下面的链接，以查看你可以在命令提示符中执行的命令的相关列表： <a class="link"   href="https://ss64.com/nt/" >https://ss64.com/nt/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><em><strong>问题1：在系统配置中，Internet 协议配置的完整命令是什么？</strong></em></p>
+<p>导航到MSConfig面板的“工具”选项卡并找到“Internet 协议配置”工具，查看“Selected command”部分即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402092105770.png"
+                      alt="image-20230402092105770"
+                ></p>
+<blockquote>
+<p>答案1：C:\Windows\System32\cmd.exe &#x2F;k %windir%\system32\ipconfig.exe</p>
+</blockquote>
+<p><em><strong>问题2：对于 ipconfig 命令，如何显示其详细信息？</strong></em></p>
+<p>启动cmd工具，并输入<code>ipconfig /?</code>命令以查看相关的帮助信息：</p>
+<p>tips：ipconfig 命令将显示计算机的网络地址设置。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402094749041.png"
+                      alt="image-20230402094749041"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402094951203.png"
+                      alt="image-20230402094951203"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402095102296.png"
+                      alt="image-20230402095102296"
+                ></p>
+<blockquote>
+<p>答案2：ipconfig &#x2F;all</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402005656334.png"
+                      alt="image-20230402005656334"
+                ></p>
+<h2 id="注册表编辑器"><a href="#注册表编辑器" class="headerlink" title="注册表编辑器"></a>注册表编辑器</h2><p>我们将继续探索可通过“系统配置”面板使用的工具——Registry Editor （<code>regedit</code>）。</p>
+<p>Windows注册表是一个中央分层数据库，它用于存储配置系统所需的信息，这些信息适用于一个或多个用户、应用程序和硬件设备。</p>
+<p>注册表包含 Windows 在运行期间不断引用的信息，例如：</p>
+<ul>
+<li>每个用户的配置文件。</li>
+<li>计算机上安装的应用程序和每个应用程序可以创建的文档类型。</li>
+<li>文件夹和应用程序图标的属性表设置。</li>
+<li>系统上存在哪些硬件。</li>
+<li>正在使用的端口。</li>
+</ul>
+<p>警告：注册表仅适用于高级计算机用户设置，随意更改注册表会影响正常的计算机操作。 </p>
+<p>有多种方法可以查看&#x2F;编辑注册表。其中一种方法是使用注册表编辑器( <code>regedit</code>)。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402005424423.png"
+                      alt="image-20230402005424423"
+                ></p>
+<p>请参阅<a class="link"   href="https://docs.microsoft.com/en-us/troubleshoot/windows-server/performance/windows-registry-advanced-users" >Microsoft相关文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>以了解更多有关Windows注册表的信息。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><strong>问题：打开注册表编辑器的命令是什么？（以相关的exe文件名称作答即可）</strong></p>
+<p>导航到MSConfig面板的“工具”选项卡并找到“注册表编辑器”工具，查看“Selected command”部分即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402085801146.png"
+                      alt="image-20230402085801146"
+                ></p>
+<blockquote>
+<p>答案：regedt32.exe</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402005539209.png"
+                      alt="image-20230402005539209"
+                ></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>回顾：本文所介绍的主要内容是一些可以从Windows<code>MSConfig</code> 启动的工具。</p>
+<p>在Window操作系统中，实用程序的命令和快捷方式是共享的，这意味着你不必启动<code>MSConfig</code>（系统配置）也可运行一些实用程序。</p>
+<p>比如：你也可以直接从“开始菜单”界面运行其中一些实用程序：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331104050610.png"
+                      alt="image-20230331104050610"
+                ></p>
+<p><code>MSConfig</code>中所列出的工具并未在本文中全部提及，你可以自行探索<code>MSConfig</code>中的其他工具。</p>
+]]></content>
+      <categories>
+        <category>TryHackMe笔记</category>
+      </categories>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+        <tag>BlueTeam</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>THM-Windows Fundamentals  3(Windows基础知识3)-学习</title>
+    <url>/2024/01/27/THM-Windows%20Fundamentals%203(Windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%863)-%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>本文相关的TryHackMe实验房间链接：<a class="link"   href="https://tryhackme.com/room/windowsfundamentals3xzx" >https://tryhackme.com/room/windowsfundamentals3xzx <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文介绍：本文所涉及的内容是 Windows 基础模块的第 3 部分，了解有助于保护设备安全的内置 Microsoft 工具，例如 Windows 更新、Windows 安全、BitLocker等…</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在Windows Fundamentals 1中，我们介绍了Windows的桌面、文件系统、用户帐户控制、控制面板、设置和任务管理器。 </p>
+<p>在Windows Fundamentals 2中，我们介绍了Windows的各种实用程序，例如系统配置面板、计算机管理界面、资源监视器等。</p>
+<p>本文将尝试概述 Windows 操作系统中的一些安全功能。</p>
+<p>启动本文相关实验房间中所附加的Windows虚拟机（你可以直接在浏览器中访问），如果你希望通过远程桌面访问虚拟机，请使用以下凭据：</p>
+<ul>
+<li>Machine IP: <code>MACHINE_IP</code>（在实验房间中启动Windows虚拟机之后，你将获得一个相关的ip地址）</li>
+<li>User: <code>administrator</code></li>
+<li>Password: <code>letmein123!</code></li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331104939724.png"
+                      alt="image-20230331104939724"
+                ></p>
+<p>当上述界面弹出提示时，点击接受证书，然后你现在应该可以登录到远程系统。</p>
+<h2 id="Windows更新（-Windows-Update）"><a href="#Windows更新（-Windows-Update）" class="headerlink" title="Windows更新（ Windows Update）"></a>Windows更新（ Windows Update）</h2><p>让我们从Windows Update开始。</p>
+<p>Windows Update是微软提供的一项服务，可为Windows操作系统和其他微软产品(如Microsoft Defender)提供安全更新、功能增强和补丁。</p>
+<p>Windows 更新通常在每个月的第二个星期二发布，这一天被称为补丁星期二，但是这并不一定意味着一个关键的更新&#x2F;补丁必须等到下一个补丁星期二才会发布；如果某个更新补丁很重要，微软则将通过Windows更新服务向Windows设备推送更新。</p>
+<p>Windows更新服务可通过“设置-Settings”面板找到并访问，更多相关信息可查看<a class="link"   href="https://msrc.microsoft.com/update-guide" >微软安全更新指南 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p>tips：另一种访问Windows更新服务的方法是使用Run对话框或者使用CMD界面，然后运行以下命令<code>control /name Microsoft.WindowsUpdate</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402112207713.png"
+                      alt="image-20230402112207713"
+                ></p>
+<p>Windows更新设置是“受监管的”(通常情况下，家庭用户不会看到这种类型的消息)，如果计算机没有连接到Internet，则无法与Microsoft通信以获取最新的更新信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402112622623.png"
+                      alt="image-20230402112622623"
+                ></p>
+<p>多年以来，Windows用户已经习惯于将Windows更新推迟到较晚的日期或者根本不安装更新，导致此类操作的原因有很多，其中一个原因是：Windows在更新之后通常需要重新启动。</p>
+<p>微软在Windows 10中尝试解决了用户更新问题，现在的Windows更新不能再被忽视或完全不管不顾，也就是说Windows更新虽然能推迟，但最终还是会发生，更新完成之后你的电脑也会重新启动。微软通过提供此类强制更新服务来尽量保证设备的安全。</p>
+<p>如下图所示，在Windows更新界面中可看到此时计算机需要重启，此更新界面还提供了关于安排重启的几个可用选项。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402113525741.png"
+                      alt="image-20230402113525741"
+                ></p>
+<p>更多信息请参考<a class="link"   href="https://support.microsoft.com/en-us/windows/windows-update-faq-8a903416-6f45-0718-f5c7-375e92dddeb2" >Windows更新常见问题解答 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p>通过“设置”面板访问Windows更新服务，在Windows更新界面点击“查看更新历史”：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402132839575.png"
+                      alt="image-20230402132839575"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402132937163.png"
+                      alt="image-20230402132937163"
+                ></p>
+<blockquote>
+<p>自定义更新的安装日期是：5&#x2F;3&#x2F;2021</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402113919880.png"
+                      alt="image-20230402113919880"
+                ></p>
+<h2 id="Windows安全（Windows-Security）"><a href="#Windows安全（Windows-Security）" class="headerlink" title="Windows安全（Windows Security）"></a>Windows安全（Windows Security）</h2><p>根据微软的说法，“Windows Security是管理保护你的设备和数据的工具的主界面。”</p>
+<p>和Windows更新服务一样，Windows安全服务也可以通过“设置-Settings”面板进行访问。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402132307179.png"
+                      alt="image-20230402132307179"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402114542296.png"
+                      alt="image-20230402114542296"
+                ></p>
+<p>请查看上图，并将注意力集中在<em><strong>Protection areas</strong></em>（保护区域），其中包括：</p>
+<ul>
+<li>Virus &amp; threat protection（病毒和威胁防护）</li>
+<li>Firewall &amp; network protection（防火墙和网络保护）</li>
+<li>App &amp; browser control（应用程序和浏览器控制）</li>
+<li>Device security（设备安全）</li>
+</ul>
+<p>tips：在下面几个小节中我们会简要地介绍以上四部分内容（在本小节中我们不展开讲解）。</p>
+<p>在继续介绍Windows安全服务之前，让我们快速了解一下状态图标：</p>
+<ul>
+<li>绿色图标：表示你的设备已得到充分保护，并且没有任何建议操作。</li>
+<li>黄色图标：表示有安全建议供你查看。</li>
+<li>红色图标：表示警告，即有某件事情需要你立即关注。</li>
+</ul>
+<p>我们点击“设置-Settings”界面中的“Windows Security”下的<code>Open Windows Security</code>，将看到如下界面（一个红色图标，三个绿色图标）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402115417123.png"
+                      alt="image-20230402115417123"
+                ></p>
+<p>注意：由于本文所附的实验机是Windows Server 2019，因此相关页面看起来会与Windows 10家庭版或专业版不同。</p>
+<p>下图是来自于Windows 10设备的Windows Security相关页面（点击<code>Open Windows Security</code>即可看到具体界面）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402115601501.png"
+                      alt="image-20230402115601501"
+                ></p>
+<p>在下一小节，我们将继续查看Windows安全服务中的“病毒和威胁防护”部分。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p>查看“Windows安全”界面，我们可以发现Virus &amp; threat protection（病毒和威胁防护）对应的图标是红色的——红色图标表示警告，所以需要我们立即关注。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402135755579.png"
+                      alt="image-20230402135755579"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402120607299.png"
+                      alt="image-20230402120607299"
+                ></p>
+<h2 id="病毒和威胁防护（Virus-threat-protection）"><a href="#病毒和威胁防护（Virus-threat-protection）" class="headerlink" title="病毒和威胁防护（Virus &amp; threat protection）"></a>病毒和威胁防护（Virus &amp; threat protection）</h2><p>病毒和威胁防护分为以下部分：</p>
+<ul>
+<li>当前威胁——Current threats</li>
+<li>病毒和威胁防护设置——Virus &amp; threat protection settings</li>
+<li>病毒和威胁防护更新——Virus &amp; threat protection updates</li>
+<li>勒索软件防护——Ransomware protection</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402135055783.png"
+                      alt="image-20230402135055783"
+                ></p>
+<p><strong>Current threats(当前威胁)</strong></p>
+<p>下图是“当前威胁”部分界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402122307444.png"
+                      alt="image-20230402122307444"
+                ></p>
+<p>我们可以通过Current threats界面点击并选择“扫描选项”（Scan options），相关的内容如下：</p>
+<ul>
+<li>Quick scan（快速扫描）：检查系统中通常可能存在威胁项目的文件夹。</li>
+<li>Full scan（全面扫描）：检查硬盘上的所有文件和正在运行的程序，此扫描可能需要一个多小时。</li>
+<li>Custom scan（自定义扫描）：任意选择你想要检查的文件和位置，然后开始扫描。</li>
+</ul>
+<p>我们可以通过Current threats界面点击并查看“威胁历史”（Threat history），相关的内容如下：</p>
+<ul>
+<li>Last scan（上次扫描）：Windows Defender防病毒软件会自动扫描你的设备是否存在病毒和其他威胁，以帮助保护你的设备安全。</li>
+<li>Quarantined threats（隔离的威胁）：是指已被隔离的威胁项目，隔离能有效阻止威胁项目在你的设备上运行，此外，被隔离的威胁项目将会被定期删除。</li>
+<li>Allowed threats（允许的威胁）：是指你允许“已经被识别为威胁的项目”在你的设备上运行。</li>
+</ul>
+<p>警告：只有在100%确定自己在做什么时，才允许运行已被识别为威胁的项目。</p>
+<p><strong>Virus &amp; threat protection settings(病毒和威胁防护设置)</strong></p>
+<p>下图是“病毒和威胁防护设置”部分界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402134413535.png"
+                      alt="image-20230402134413535"
+                ></p>
+<p>在上图中的Virus &amp; threat protection settings界面点击并查看“管理设置”（Manage settings），相关的内容如下：</p>
+<ul>
+<li>Real-time protection（实时保护）：实时定位并阻止恶意软件在你的设备上安装或运行。</li>
+<li>Cloud-delivered protection（云提供的保护）：通过访问云中的最新保护数据以提供增强保护和更快的保护。</li>
+<li>Automatic sample submission（自动提交样本）：将可能具有安全威胁的样本文件发送到 Microsoft，以帮助保护你和其他人免受潜在威胁。 </li>
+<li>Controlled folder access（控制文件夹访问权限）：保护你设备上的文件、文件夹和内存区域免受不友好应用程序未经授权的更改。</li>
+<li>Exclusions（排除）：Windows Defender防病毒软件不会扫描你已排除的项目。</li>
+<li>Notifications（通知）：允许Windows Defender防病毒软件发送通知，其中会包含有关设备健康和安全的重要信息。</li>
+</ul>
+<p>警告：你所排除的项目也可能会包含一些能让你的设备受到攻击的危险应用程序，所以，只有当你100%确定自己在做什么时才能使用此选项。</p>
+<p><strong>Virus &amp; threat protection updates(病毒和威胁防护更新)</strong></p>
+<p>下图是“病毒和威胁防护更新”部分界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402134527557.png"
+                      alt="image-20230402134527557"
+                ></p>
+<p>查看上图中的“病毒和威胁防护更新”（Virus &amp; threat protection updates）下的“Check for updates”：</p>
+<ul>
+<li><p>Check for updates（检查更新）： 手动检查更新以更新 Windows Defender防病毒软件的反病毒规则。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402134647659.png"
+                      alt="image-20230402134647659"
+                ></p>
+</li>
+</ul>
+<p><strong>Ransomware protection(勒索软件防护)</strong></p>
+<p>下图是“勒索软件防护”部分界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402134558602.png"
+                      alt="image-20230402134558602"
+                ></p>
+<p>查看上图中的“勒索软件防护”（Ransomware protection）下的“Manage ransomware protection”：</p>
+<ul>
+<li><p>Controlled folder access（控制文件夹访问权限）：勒索软件防护需要启用此功能，但是为了启用此功能你需要首先启用实时保护功能。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402133423850.png"
+                      alt="image-20230402133423850"
+                ></p>
+</li>
+</ul>
+<p><em>tips：你可以对任何文件&#x2F;文件夹执行按需安全扫描，只需右键单击项目并选择“使用Microsoft Defender扫描”即可。</em></p>
+<p>下图是来自于另一个Windows设备，以展示按需扫描功能：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402123519987.png"
+                      alt="image-20230402123519987"
+                ></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p>基于上一小节的答题任务可知，我们需要关注的内容是“病毒和威胁防护”，因此我们可以查看“病毒和威胁防护”面板以找到更多详细信息：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402135608336.png"
+                      alt="image-20230402135608336"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402140016742.png"
+                      alt="image-20230402140016742"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402123705311.png"
+                      alt="image-20230402123705311"
+                ></p>
+<h2 id="防火墙和网络保护（Firewall-network-protection）"><a href="#防火墙和网络保护（Firewall-network-protection）" class="headerlink" title="防火墙和网络保护（Firewall &amp; network protection）"></a>防火墙和网络保护（Firewall &amp; network protection）</h2><p><strong>什么是firewall（防火墙）?</strong></p>
+<p>根据微软的说法，“流量是通过端口流入和流出设备的，而防火墙能够控制什么可以（更重要的是不可以）通过这些端口；你可以把防火墙想象成一个站在门口的保安，它会检查所有试图进出的人的ID信息”。</p>
+<p>我们可以导航到“防火墙和网络保护”界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402143136894.png"
+                      alt="image-20230402143136894"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402140909388.png"
+                      alt="image-20230402140909388"
+                ></p>
+<p>注意：上图中的每个选项可能会有不同的状态图标。</p>
+<p>我们在“防火墙和网络保护”界面中所看到的“Domain network”、“Private network ”和“Public network ”三者之间有什么区别?</p>
+<p>根据微软的说法，“Windows防火墙会提供三种防火墙配置：域、私有和公共”。</p>
+<ul>
+<li>Domain（域）：防火墙的域配置适用于主机系统可以向域控制器进行身份验证的网络。</li>
+<li>Private （私有）：防火墙的私有配置是用户分配的配置，可用于指定私有或家庭网络。</li>
+<li>Public （公共）：防火墙的默认配置为Public，可用于指定公共网络，例如咖啡店、机场和其他地点的Wi-Fi热点。</li>
+</ul>
+<p>如果你单击任何一种防火墙配置，则将出现对应的相关配置页面，其中会包含两个选项：打开&#x2F;关闭防火墙、阻止所有传入连接。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402141951302.png"
+                      alt="image-20230402141951302"
+                ></p>
+<p>警告：除非你对你正在做的事情有100%的信心，否则建议你开启Windows Defender 防火墙。</p>
+<p>接下来我们关注“防火墙和网络保护”界面的“Allow an app through firewall”和“Advanced Settings”：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402142228875.png"
+                      alt="image-20230402142228875"
+                ></p>
+<p><strong>Allow an app through firewall</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402142409767.png"
+                      alt="image-20230402142409767"
+                ></p>
+<p>你可以查看任何防火墙配置的当前设置，在上图中，我们可以看到有一些应用程序可以访问私有或者公共防火墙配置，如果你点击“详细信息-Details”按钮，则能获取到对应应用程序所提供的一些额外信息。</p>
+<p><strong>Advanced Settings</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402142440552.png"
+                      alt="image-20230402142440552"
+                ></p>
+<p>配置Windows Defender防火墙的操作适用于Windows高级用户，你可以参考<a class="link"   href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-firewall/best-practices-configuring" >相关的Microsoft 官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p>tips：打开Windows Defender防火墙的命令为<code>WF.msc</code>。</p>
+<p><strong>答题</strong></p>
+<p>tips：通过阅读本小节相关内容，可回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402143709102.png"
+                      alt="image-20230402143709102"
+                ></p>
+<h2 id="应用程序和浏览器控制（App-browser-control）"><a href="#应用程序和浏览器控制（App-browser-control）" class="headerlink" title="应用程序和浏览器控制（App &amp; browser control）"></a>应用程序和浏览器控制（App &amp; browser control）</h2><p>在此部分中，你可以更改Microsoft Defender SmartScreen的设置。</p>
+<p>根据 Microsoft 的说法，“ Microsoft Defender SmartScreen 可以防止网络钓鱼、恶意软件网站和应用程序以及潜在恶意文件的下载”。</p>
+<p>有关 Microsoft Defender SmartScreen 的更多信息，请参阅<a class="link"   href="https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-smartscreen/microsoft-defender-smartscreen-overview" >相关的Microsoft官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402184152523.png"
+                      alt="image-20230402184152523"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402144528956.png"
+                      alt="image-20230402144528956"
+                ></p>
+<p><strong>Check apps and files</strong></p>
+<p>Windows Defender SmartScreen 通过检查来自网络的 无法识别的应用程序和文件来帮助保护你的设备。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402144656769.png"
+                      alt="image-20230402144656769"
+                ></p>
+<p><strong>Exploit protection</strong></p>
+<p>Exploit protection 内置在Windows 10操作系统(本文相关的实验机为Windows Server 2019)中，能够帮助保护你的设备免受恶意攻击。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402144921155.png"
+                      alt="image-20230402144921155"
+                ></p>
+<p>警告：除非你对所做的事情有100%的信心，否则建议你保持上图中的默认设置。</p>
+<h2 id="设备安全（Device-security）"><a href="#设备安全（Device-security）" class="headerlink" title="设备安全（Device security）"></a>设备安全（Device security）</h2><p>尽管你可能永远不会更改以下设置，但我们还是会简要介绍一下。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402184241911.png"
+                      alt="image-20230402184241911"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402150319201.png"
+                      alt="image-20230402150319201"
+                ></p>
+<p><strong>Core isolation（核心隔离）</strong></p>
+<ul>
+<li>Memory Integrity（内存完整性）：防止攻击者将恶意代码插入高安全性进程。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402145704103.png"
+                      alt="image-20230402145704103"
+                ></p>
+<p>警告：除非你对所做的事情有100%的信心，否则建议你保持默认设置。</p>
+<p>下面的图片来自于另一台机器，展示了个人Windows 10设备应该具备的另一个安全功能——Security processor。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402145809858.png"
+                      alt="image-20230402145809858"
+                ></p>
+<p>下面是Security processor（安全处理器）的详细信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402150039454.png"
+                      alt="image-20230402150039454"
+                ></p>
+<p>上图所提及的可信平台模块(TPM-Trusted Platform Module)是什么？</p>
+<p>根据微软的说法，“可信平台模块(TPM)技术旨在提供基于硬件的安全相关功能。TPM芯片是一种安全的加密处理器，被设计用于执行加密操作，该芯片包括多种物理安全机制，使其具有抗篡改性，恶意软件无法篡改TPM的安全功能”。</p>
+<p><strong>答题</strong></p>
+<p>tips：阅读本小节内容，可回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402150412883.png"
+                      alt="image-20230402150412883"
+                ></p>
+<h2 id="BitLocker"><a href="#BitLocker" class="headerlink" title="BitLocker"></a>BitLocker</h2><p>什么是<strong>BitLocker</strong>？</p>
+<p>根据微软的说法，“ BitLocker驱动器加密是一种数据保护功能，它与操作系统集成在一起，可以解决数据被盗的威胁，数据被盗指的是由于计算机丢失、计算机被盗或者不当停用的旧计算机被利用等因素而导致的数据泄露”。</p>
+<p>在安装了 TPM 的设备上，BitLocker 能提供最好的数据保护。</p>
+<p>根据 Microsoft 的说法，“ BitLocker 在与可信平台模块 (TPM) 1.2 或更高版本的TPM一起使用时能够提供最大的保护。TPM 是一种计算机制造商安装在许多较新计算机中的硬件组件，它可以与 BitLocker 一起帮助保护用户数据以及能够确保计算机在系统离线时不被篡改数据”。</p>
+<p>请参阅<a class="link"   href="https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview" >相关的Microsoft官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>以了解有关 BitLocker 的更多信息。 </p>
+<p>注意：本文相关的实验房间所附加的虚拟机中不包含 BitLocker 功能。</p>
+<p><strong>答题</strong></p>
+<p>tips：请参阅有关 BitLocker 的 Microsoft 文档，然后回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402183226395.png"
+                      alt="image-20230402183226395"
+                ></p>
+<p>翻译页面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402183931261.png"
+                      alt="image-20230402183931261"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402183012938.png"
+                      alt="image-20230402183012938"
+                ></p>
+<h2 id="卷影复制服务（Volume-Shadow-Copy-Service）"><a href="#卷影复制服务（Volume-Shadow-Copy-Service）" class="headerlink" title="卷影复制服务（Volume Shadow Copy Service）"></a>卷影复制服务（Volume Shadow Copy Service）</h2><p>根据<a class="link"   href="https://learn.microsoft.com/en-us/windows-server/storage/file-server/volume-shadow-copy-service" >微软官方相关文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的说法：卷影复制服务(VSS-Volume Shadow Copy Service)能够协调所需的操作 以创建与要备份的数据一致的影子副本(也被称为快照或时间点拷贝)。</p>
+<p>卷影副本会存储在每个启用了保护功能的驱动器上的“系统卷信息”文件夹中。</p>
+<p>如果启用了VSS(这需要先启动系统保护)，你就可以在“高级系统设置”页面中执行以下任务：</p>
+<ul>
+<li>创建还原点</li>
+<li>执行系统恢复（还原）</li>
+<li>配置还原设置</li>
+<li>删除还原点</li>
+</ul>
+<p>从安全的角度来看，恶意软件编写者可能知道这个Windows特性（此处指的是VSS），并会在恶意软件中编写代码 以便查找备份文件并删除它们；这样攻击者这样做，那么我们就不可能从勒索软件攻击中恢复数据，除非我们另有离线&#x2F;异地备份。</p>
+<p>如果你希望配置影子副本，请参考以下图片：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402191730722.png"
+                      alt="image-20230402191730722"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402192812926.png"
+                      alt="image-20230402192812926"
+                ></p>
+<p>注意：选中系统卷（如c:\）并点击上图中的“Enable”，即可成功创建一个卷影副本。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402192739427.png"
+                      alt="image-20230402192739427"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402193151086.png"
+                      alt="image-20230402193151086"
+                ></p>
+<p><strong>答题</strong></p>
+<p>tips：阅读本小节内容，可回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402191908942.png"
+                      alt="image-20230402191908942"
+                ></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>在本文中，我们介绍了几个内置的 Windows 安全工具，这些工具会随 Windows 操作系统一起被提供给用户，以帮助我们更好地保护计算机设备。</p>
+<p>关于 Windows 操作系统，还有很多内容需要解释和涵盖。本文包括前两篇系列文章都只是对Windows操作系统进行了一些基础介绍，如果想了解有关 Windows 操作系统的更多信息，你还需要自己继续开展相关的学习。</p>
+<p>延伸阅读材料：</p>
+<ul>
+<li><a class="link"   href="https://docs.microsoft.com/en-us/windows/win32/amsi/antimalware-scan-interface-portal" >Antimalware Scan Interface <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   href="https://docs.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard-manage" >Credential Guard <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li>[Windows 10 Hello](<a class="link"   href="https://support.microsoft.com/en-us/windows/learn-about-windows-hello-and-set-it-up-dae28983-8242-bb2a-d3d1-87c9d265a5f0#:~:text=Windows" >https://support.microsoft.com/en-us/windows/learn-about-windows-hello-and-set-it-up-dae28983-8242-bb2a-d3d1-87c9d265a5f0#:~:text=Windows <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 10,in with just your PIN.)</li>
+<li><a class="link"   href="https://www.csoonline.com/article/3253899/the-best-new-windows-10-security-features.html" >CSO Online - The best new Windows 10 security features <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+<p><strong>注意：</strong></p>
+<p>攻击者可以使用内置的 Windows 工具和实用程序来完成进一步的攻击操作，这种方式能够试图让攻击者在受害者环境中不被轻易发现；此策略被称为 Living Off The Land（LotL策略），你可以参阅以下链接以了解更多相关信息。</p>
+<p>LOLBAS：<a class="link"   href="https://lolbas-project.github.io/" >https://lolbas-project.github.io/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+]]></content>
+      <categories>
+        <category>TryHackMe笔记</category>
+      </categories>
+      <tags>
+        <tag>TryHackMe</tag>
+        <tag>网络安全基础</tag>
+        <tag>BlueTeam</tag>
+      </tags>
+  </entry>
 </search>

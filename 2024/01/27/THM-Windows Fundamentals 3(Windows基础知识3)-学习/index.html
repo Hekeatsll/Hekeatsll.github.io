@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-windows fundamentals 3(windows基础知识3)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="本文所涉及的内容是 Windows 基础模块的第 3 部分，了解有助于保护设备安全的内置 Microsoft 工具，例如 Windows 更新、Windows 安全、BitLocker等...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Windows Fundamentals  3(Windows基础知识3)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Windows%20Fundamentals%203(Windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%863)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本文所涉及的内容是 Windows 基础模块的第 3 部分，了解有助于保护设备安全的内置 Microsoft 工具，例如 Windows 更新、Windows 安全、BitLocker等...">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20230331104939724.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402112207713.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402112622623.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402113525741.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402132839575.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402132937163.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402113919880.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402132307179.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402114542296.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402115417123.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402115601501.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402135755579.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402120607299.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402135055783.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402122307444.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402134413535.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402134527557.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402134647659.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402134558602.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402133423850.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402123519987.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402135608336.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402140016742.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402123705311.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402143136894.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402140909388.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402141951302.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402142228875.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402142409767.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402142440552.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402143709102.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402184152523.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402144528956.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402144656769.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402144921155.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402184241911.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402150319201.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402145704103.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402145809858.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402150039454.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402150412883.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402183226395.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402183931261.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402183012938.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402191730722.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402192812926.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402192739427.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402193151086.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402191908942.png">
+<meta property="article:published_time" content="2024-01-27T02:42:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T03:08:57.856Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="网络安全基础">
+<meta property="article:tag" content="BlueTeam">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20230331104939724.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Windows Fundamentals  3(Windows基础知识3)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">25</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/61add44b3c6be8004802cc37/room-content/4094ed0a54f8dc274b9b4f602c57b152.svg" alt="THM-Windows Fundamentals  3(Windows基础知识3)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Windows Fundamentals  3(Windows基础知识3)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 10:42:55</span>
+        <span class="mobile">2024-01-27 10:42:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 11:08:57</span>
+            <span class="mobile">2024-01-27 11:08:57</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">网络安全基础</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/BlueTeam/">BlueTeam</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>4.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>15 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/windowsfundamentals3xzx" >https://tryhackme.com/room/windowsfundamentals3xzx <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文介绍：本文所涉及的内容是 Windows 基础模块的第 3 部分，了解有助于保护设备安全的内置 Microsoft 工具，例如 Windows 更新、Windows 安全、BitLocker等…</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在Windows Fundamentals 1中，我们介绍了Windows的桌面、文件系统、用户帐户控制、控制面板、设置和任务管理器。 </p>
+<p>在Windows Fundamentals 2中，我们介绍了Windows的各种实用程序，例如系统配置面板、计算机管理界面、资源监视器等。</p>
+<p>本文将尝试概述 Windows 操作系统中的一些安全功能。</p>
+<p>启动本文相关实验房间中所附加的Windows虚拟机（你可以直接在浏览器中访问），如果你希望通过远程桌面访问虚拟机，请使用以下凭据：</p>
+<ul>
+<li>Machine IP: <code>MACHINE_IP</code>（在实验房间中启动Windows虚拟机之后，你将获得一个相关的ip地址）</li>
+<li>User: <code>administrator</code></li>
+<li>Password: <code>letmein123!</code></li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331104939724.png"
+                      alt="image-20230331104939724"
+                ></p>
+<p>当上述界面弹出提示时，点击接受证书，然后你现在应该可以登录到远程系统。</p>
+<h2 id="Windows更新（-Windows-Update）"><a href="#Windows更新（-Windows-Update）" class="headerlink" title="Windows更新（ Windows Update）"></a>Windows更新（ Windows Update）</h2><p>让我们从Windows Update开始。</p>
+<p>Windows Update是微软提供的一项服务，可为Windows操作系统和其他微软产品(如Microsoft Defender)提供安全更新、功能增强和补丁。</p>
+<p>Windows 更新通常在每个月的第二个星期二发布，这一天被称为补丁星期二，但是这并不一定意味着一个关键的更新&#x2F;补丁必须等到下一个补丁星期二才会发布；如果某个更新补丁很重要，微软则将通过Windows更新服务向Windows设备推送更新。</p>
+<p>Windows更新服务可通过“设置-Settings”面板找到并访问，更多相关信息可查看<a class="link"   target="_blank" rel="noopener" href="https://msrc.microsoft.com/update-guide" >微软安全更新指南 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p>tips：另一种访问Windows更新服务的方法是使用Run对话框或者使用CMD界面，然后运行以下命令<code>control /name Microsoft.WindowsUpdate</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402112207713.png"
+                      alt="image-20230402112207713"
+                ></p>
+<p>Windows更新设置是“受监管的”(通常情况下，家庭用户不会看到这种类型的消息)，如果计算机没有连接到Internet，则无法与Microsoft通信以获取最新的更新信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402112622623.png"
+                      alt="image-20230402112622623"
+                ></p>
+<p>多年以来，Windows用户已经习惯于将Windows更新推迟到较晚的日期或者根本不安装更新，导致此类操作的原因有很多，其中一个原因是：Windows在更新之后通常需要重新启动。</p>
+<p>微软在Windows 10中尝试解决了用户更新问题，现在的Windows更新不能再被忽视或完全不管不顾，也就是说Windows更新虽然能推迟，但最终还是会发生，更新完成之后你的电脑也会重新启动。微软通过提供此类强制更新服务来尽量保证设备的安全。</p>
+<p>如下图所示，在Windows更新界面中可看到此时计算机需要重启，此更新界面还提供了关于安排重启的几个可用选项。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402113525741.png"
+                      alt="image-20230402113525741"
+                ></p>
+<p>更多信息请参考<a class="link"   target="_blank" rel="noopener" href="https://support.microsoft.com/en-us/windows/windows-update-faq-8a903416-6f45-0718-f5c7-375e92dddeb2" >Windows更新常见问题解答 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p>通过“设置”面板访问Windows更新服务，在Windows更新界面点击“查看更新历史”：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402132839575.png"
+                      alt="image-20230402132839575"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402132937163.png"
+                      alt="image-20230402132937163"
+                ></p>
+<blockquote>
+<p>自定义更新的安装日期是：5&#x2F;3&#x2F;2021</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402113919880.png"
+                      alt="image-20230402113919880"
+                ></p>
+<h2 id="Windows安全（Windows-Security）"><a href="#Windows安全（Windows-Security）" class="headerlink" title="Windows安全（Windows Security）"></a>Windows安全（Windows Security）</h2><p>根据微软的说法，“Windows Security是管理保护你的设备和数据的工具的主界面。”</p>
+<p>和Windows更新服务一样，Windows安全服务也可以通过“设置-Settings”面板进行访问。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402132307179.png"
+                      alt="image-20230402132307179"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402114542296.png"
+                      alt="image-20230402114542296"
+                ></p>
+<p>请查看上图，并将注意力集中在<em><strong>Protection areas</strong></em>（保护区域），其中包括：</p>
+<ul>
+<li>Virus &amp; threat protection（病毒和威胁防护）</li>
+<li>Firewall &amp; network protection（防火墙和网络保护）</li>
+<li>App &amp; browser control（应用程序和浏览器控制）</li>
+<li>Device security（设备安全）</li>
+</ul>
+<p>tips：在下面几个小节中我们会简要地介绍以上四部分内容（在本小节中我们不展开讲解）。</p>
+<p>在继续介绍Windows安全服务之前，让我们快速了解一下状态图标：</p>
+<ul>
+<li>绿色图标：表示你的设备已得到充分保护，并且没有任何建议操作。</li>
+<li>黄色图标：表示有安全建议供你查看。</li>
+<li>红色图标：表示警告，即有某件事情需要你立即关注。</li>
+</ul>
+<p>我们点击“设置-Settings”界面中的“Windows Security”下的<code>Open Windows Security</code>，将看到如下界面（一个红色图标，三个绿色图标）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402115417123.png"
+                      alt="image-20230402115417123"
+                ></p>
+<p>注意：由于本文所附的实验机是Windows Server 2019，因此相关页面看起来会与Windows 10家庭版或专业版不同。</p>
+<p>下图是来自于Windows 10设备的Windows Security相关页面（点击<code>Open Windows Security</code>即可看到具体界面）：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402115601501.png"
+                      alt="image-20230402115601501"
+                ></p>
+<p>在下一小节，我们将继续查看Windows安全服务中的“病毒和威胁防护”部分。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p>查看“Windows安全”界面，我们可以发现Virus &amp; threat protection（病毒和威胁防护）对应的图标是红色的——红色图标表示警告，所以需要我们立即关注。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402135755579.png"
+                      alt="image-20230402135755579"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402120607299.png"
+                      alt="image-20230402120607299"
+                ></p>
+<h2 id="病毒和威胁防护（Virus-threat-protection）"><a href="#病毒和威胁防护（Virus-threat-protection）" class="headerlink" title="病毒和威胁防护（Virus &amp; threat protection）"></a>病毒和威胁防护（Virus &amp; threat protection）</h2><p>病毒和威胁防护分为以下部分：</p>
+<ul>
+<li>当前威胁——Current threats</li>
+<li>病毒和威胁防护设置——Virus &amp; threat protection settings</li>
+<li>病毒和威胁防护更新——Virus &amp; threat protection updates</li>
+<li>勒索软件防护——Ransomware protection</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402135055783.png"
+                      alt="image-20230402135055783"
+                ></p>
+<p><strong>Current threats(当前威胁)</strong></p>
+<p>下图是“当前威胁”部分界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402122307444.png"
+                      alt="image-20230402122307444"
+                ></p>
+<p>我们可以通过Current threats界面点击并选择“扫描选项”（Scan options），相关的内容如下：</p>
+<ul>
+<li>Quick scan（快速扫描）：检查系统中通常可能存在威胁项目的文件夹。</li>
+<li>Full scan（全面扫描）：检查硬盘上的所有文件和正在运行的程序，此扫描可能需要一个多小时。</li>
+<li>Custom scan（自定义扫描）：任意选择你想要检查的文件和位置，然后开始扫描。</li>
+</ul>
+<p>我们可以通过Current threats界面点击并查看“威胁历史”（Threat history），相关的内容如下：</p>
+<ul>
+<li>Last scan（上次扫描）：Windows Defender防病毒软件会自动扫描你的设备是否存在病毒和其他威胁，以帮助保护你的设备安全。</li>
+<li>Quarantined threats（隔离的威胁）：是指已被隔离的威胁项目，隔离能有效阻止威胁项目在你的设备上运行，此外，被隔离的威胁项目将会被定期删除。</li>
+<li>Allowed threats（允许的威胁）：是指你允许“已经被识别为威胁的项目”在你的设备上运行。</li>
+</ul>
+<p>警告：只有在100%确定自己在做什么时，才允许运行已被识别为威胁的项目。</p>
+<p><strong>Virus &amp; threat protection settings(病毒和威胁防护设置)</strong></p>
+<p>下图是“病毒和威胁防护设置”部分界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402134413535.png"
+                      alt="image-20230402134413535"
+                ></p>
+<p>在上图中的Virus &amp; threat protection settings界面点击并查看“管理设置”（Manage settings），相关的内容如下：</p>
+<ul>
+<li>Real-time protection（实时保护）：实时定位并阻止恶意软件在你的设备上安装或运行。</li>
+<li>Cloud-delivered protection（云提供的保护）：通过访问云中的最新保护数据以提供增强保护和更快的保护。</li>
+<li>Automatic sample submission（自动提交样本）：将可能具有安全威胁的样本文件发送到 Microsoft，以帮助保护你和其他人免受潜在威胁。 </li>
+<li>Controlled folder access（控制文件夹访问权限）：保护你设备上的文件、文件夹和内存区域免受不友好应用程序未经授权的更改。</li>
+<li>Exclusions（排除）：Windows Defender防病毒软件不会扫描你已排除的项目。</li>
+<li>Notifications（通知）：允许Windows Defender防病毒软件发送通知，其中会包含有关设备健康和安全的重要信息。</li>
+</ul>
+<p>警告：你所排除的项目也可能会包含一些能让你的设备受到攻击的危险应用程序，所以，只有当你100%确定自己在做什么时才能使用此选项。</p>
+<p><strong>Virus &amp; threat protection updates(病毒和威胁防护更新)</strong></p>
+<p>下图是“病毒和威胁防护更新”部分界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402134527557.png"
+                      alt="image-20230402134527557"
+                ></p>
+<p>查看上图中的“病毒和威胁防护更新”（Virus &amp; threat protection updates）下的“Check for updates”：</p>
+<ul>
+<li><p>Check for updates（检查更新）： 手动检查更新以更新 Windows Defender防病毒软件的反病毒规则。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402134647659.png"
+                      alt="image-20230402134647659"
+                ></p>
+</li>
+</ul>
+<p><strong>Ransomware protection(勒索软件防护)</strong></p>
+<p>下图是“勒索软件防护”部分界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402134558602.png"
+                      alt="image-20230402134558602"
+                ></p>
+<p>查看上图中的“勒索软件防护”（Ransomware protection）下的“Manage ransomware protection”：</p>
+<ul>
+<li><p>Controlled folder access（控制文件夹访问权限）：勒索软件防护需要启用此功能，但是为了启用此功能你需要首先启用实时保护功能。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402133423850.png"
+                      alt="image-20230402133423850"
+                ></p>
+</li>
+</ul>
+<p><em>tips：你可以对任何文件&#x2F;文件夹执行按需安全扫描，只需右键单击项目并选择“使用Microsoft Defender扫描”即可。</em></p>
+<p>下图是来自于另一个Windows设备，以展示按需扫描功能：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402123519987.png"
+                      alt="image-20230402123519987"
+                ></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p>基于上一小节的答题任务可知，我们需要关注的内容是“病毒和威胁防护”，因此我们可以查看“病毒和威胁防护”面板以找到更多详细信息：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402135608336.png"
+                      alt="image-20230402135608336"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402140016742.png"
+                      alt="image-20230402140016742"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402123705311.png"
+                      alt="image-20230402123705311"
+                ></p>
+<h2 id="防火墙和网络保护（Firewall-network-protection）"><a href="#防火墙和网络保护（Firewall-network-protection）" class="headerlink" title="防火墙和网络保护（Firewall &amp; network protection）"></a>防火墙和网络保护（Firewall &amp; network protection）</h2><p><strong>什么是firewall（防火墙）?</strong></p>
+<p>根据微软的说法，“流量是通过端口流入和流出设备的，而防火墙能够控制什么可以（更重要的是不可以）通过这些端口；你可以把防火墙想象成一个站在门口的保安，它会检查所有试图进出的人的ID信息”。</p>
+<p>我们可以导航到“防火墙和网络保护”界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402143136894.png"
+                      alt="image-20230402143136894"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402140909388.png"
+                      alt="image-20230402140909388"
+                ></p>
+<p>注意：上图中的每个选项可能会有不同的状态图标。</p>
+<p>我们在“防火墙和网络保护”界面中所看到的“Domain network”、“Private network ”和“Public network ”三者之间有什么区别?</p>
+<p>根据微软的说法，“Windows防火墙会提供三种防火墙配置：域、私有和公共”。</p>
+<ul>
+<li>Domain（域）：防火墙的域配置适用于主机系统可以向域控制器进行身份验证的网络。</li>
+<li>Private （私有）：防火墙的私有配置是用户分配的配置，可用于指定私有或家庭网络。</li>
+<li>Public （公共）：防火墙的默认配置为Public，可用于指定公共网络，例如咖啡店、机场和其他地点的Wi-Fi热点。</li>
+</ul>
+<p>如果你单击任何一种防火墙配置，则将出现对应的相关配置页面，其中会包含两个选项：打开&#x2F;关闭防火墙、阻止所有传入连接。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402141951302.png"
+                      alt="image-20230402141951302"
+                ></p>
+<p>警告：除非你对你正在做的事情有100%的信心，否则建议你开启Windows Defender 防火墙。</p>
+<p>接下来我们关注“防火墙和网络保护”界面的“Allow an app through firewall”和“Advanced Settings”：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402142228875.png"
+                      alt="image-20230402142228875"
+                ></p>
+<p><strong>Allow an app through firewall</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402142409767.png"
+                      alt="image-20230402142409767"
+                ></p>
+<p>你可以查看任何防火墙配置的当前设置，在上图中，我们可以看到有一些应用程序可以访问私有或者公共防火墙配置，如果你点击“详细信息-Details”按钮，则能获取到对应应用程序所提供的一些额外信息。</p>
+<p><strong>Advanced Settings</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402142440552.png"
+                      alt="image-20230402142440552"
+                ></p>
+<p>配置Windows Defender防火墙的操作适用于Windows高级用户，你可以参考<a class="link"   target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-firewall/best-practices-configuring" >相关的Microsoft 官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p>tips：打开Windows Defender防火墙的命令为<code>WF.msc</code>。</p>
+<p><strong>答题</strong></p>
+<p>tips：通过阅读本小节相关内容，可回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402143709102.png"
+                      alt="image-20230402143709102"
+                ></p>
+<h2 id="应用程序和浏览器控制（App-browser-control）"><a href="#应用程序和浏览器控制（App-browser-control）" class="headerlink" title="应用程序和浏览器控制（App &amp; browser control）"></a>应用程序和浏览器控制（App &amp; browser control）</h2><p>在此部分中，你可以更改Microsoft Defender SmartScreen的设置。</p>
+<p>根据 Microsoft 的说法，“ Microsoft Defender SmartScreen 可以防止网络钓鱼、恶意软件网站和应用程序以及潜在恶意文件的下载”。</p>
+<p>有关 Microsoft Defender SmartScreen 的更多信息，请参阅<a class="link"   target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-smartscreen/microsoft-defender-smartscreen-overview" >相关的Microsoft官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402184152523.png"
+                      alt="image-20230402184152523"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402144528956.png"
+                      alt="image-20230402144528956"
+                ></p>
+<p><strong>Check apps and files</strong></p>
+<p>Windows Defender SmartScreen 通过检查来自网络的 无法识别的应用程序和文件来帮助保护你的设备。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402144656769.png"
+                      alt="image-20230402144656769"
+                ></p>
+<p><strong>Exploit protection</strong></p>
+<p>Exploit protection 内置在Windows 10操作系统(本文相关的实验机为Windows Server 2019)中，能够帮助保护你的设备免受恶意攻击。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402144921155.png"
+                      alt="image-20230402144921155"
+                ></p>
+<p>警告：除非你对所做的事情有100%的信心，否则建议你保持上图中的默认设置。</p>
+<h2 id="设备安全（Device-security）"><a href="#设备安全（Device-security）" class="headerlink" title="设备安全（Device security）"></a>设备安全（Device security）</h2><p>尽管你可能永远不会更改以下设置，但我们还是会简要介绍一下。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402184241911.png"
+                      alt="image-20230402184241911"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402150319201.png"
+                      alt="image-20230402150319201"
+                ></p>
+<p><strong>Core isolation（核心隔离）</strong></p>
+<ul>
+<li>Memory Integrity（内存完整性）：防止攻击者将恶意代码插入高安全性进程。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402145704103.png"
+                      alt="image-20230402145704103"
+                ></p>
+<p>警告：除非你对所做的事情有100%的信心，否则建议你保持默认设置。</p>
+<p>下面的图片来自于另一台机器，展示了个人Windows 10设备应该具备的另一个安全功能——Security processor。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402145809858.png"
+                      alt="image-20230402145809858"
+                ></p>
+<p>下面是Security processor（安全处理器）的详细信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402150039454.png"
+                      alt="image-20230402150039454"
+                ></p>
+<p>上图所提及的可信平台模块(TPM-Trusted Platform Module)是什么？</p>
+<p>根据微软的说法，“可信平台模块(TPM)技术旨在提供基于硬件的安全相关功能。TPM芯片是一种安全的加密处理器，被设计用于执行加密操作，该芯片包括多种物理安全机制，使其具有抗篡改性，恶意软件无法篡改TPM的安全功能”。</p>
+<p><strong>答题</strong></p>
+<p>tips：阅读本小节内容，可回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402150412883.png"
+                      alt="image-20230402150412883"
+                ></p>
+<h2 id="BitLocker"><a href="#BitLocker" class="headerlink" title="BitLocker"></a>BitLocker</h2><p>什么是<strong>BitLocker</strong>？</p>
+<p>根据微软的说法，“ BitLocker驱动器加密是一种数据保护功能，它与操作系统集成在一起，可以解决数据被盗的威胁，数据被盗指的是由于计算机丢失、计算机被盗或者不当停用的旧计算机被利用等因素而导致的数据泄露”。</p>
+<p>在安装了 TPM 的设备上，BitLocker 能提供最好的数据保护。</p>
+<p>根据 Microsoft 的说法，“ BitLocker 在与可信平台模块 (TPM) 1.2 或更高版本的TPM一起使用时能够提供最大的保护。TPM 是一种计算机制造商安装在许多较新计算机中的硬件组件，它可以与 BitLocker 一起帮助保护用户数据以及能够确保计算机在系统离线时不被篡改数据”。</p>
+<p>请参阅<a class="link"   target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview" >相关的Microsoft官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>以了解有关 BitLocker 的更多信息。 </p>
+<p>注意：本文相关的实验房间所附加的虚拟机中不包含 BitLocker 功能。</p>
+<p><strong>答题</strong></p>
+<p>tips：请参阅有关 BitLocker 的 Microsoft 文档，然后回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402183226395.png"
+                      alt="image-20230402183226395"
+                ></p>
+<p>翻译页面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402183931261.png"
+                      alt="image-20230402183931261"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402183012938.png"
+                      alt="image-20230402183012938"
+                ></p>
+<h2 id="卷影复制服务（Volume-Shadow-Copy-Service）"><a href="#卷影复制服务（Volume-Shadow-Copy-Service）" class="headerlink" title="卷影复制服务（Volume Shadow Copy Service）"></a>卷影复制服务（Volume Shadow Copy Service）</h2><p>根据<a class="link"   target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows-server/storage/file-server/volume-shadow-copy-service" >微软官方相关文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的说法：卷影复制服务(VSS-Volume Shadow Copy Service)能够协调所需的操作 以创建与要备份的数据一致的影子副本(也被称为快照或时间点拷贝)。</p>
+<p>卷影副本会存储在每个启用了保护功能的驱动器上的“系统卷信息”文件夹中。</p>
+<p>如果启用了VSS(这需要先启动系统保护)，你就可以在“高级系统设置”页面中执行以下任务：</p>
+<ul>
+<li>创建还原点</li>
+<li>执行系统恢复（还原）</li>
+<li>配置还原设置</li>
+<li>删除还原点</li>
+</ul>
+<p>从安全的角度来看，恶意软件编写者可能知道这个Windows特性（此处指的是VSS），并会在恶意软件中编写代码 以便查找备份文件并删除它们；这样攻击者这样做，那么我们就不可能从勒索软件攻击中恢复数据，除非我们另有离线&#x2F;异地备份。</p>
+<p>如果你希望配置影子副本，请参考以下图片：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402191730722.png"
+                      alt="image-20230402191730722"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402192812926.png"
+                      alt="image-20230402192812926"
+                ></p>
+<p>注意：选中系统卷（如c:\）并点击上图中的“Enable”，即可成功创建一个卷影副本。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402192739427.png"
+                      alt="image-20230402192739427"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402193151086.png"
+                      alt="image-20230402193151086"
+                ></p>
+<p><strong>答题</strong></p>
+<p>tips：阅读本小节内容，可回答以下问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402191908942.png"
+                      alt="image-20230402191908942"
+                ></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>在本文中，我们介绍了几个内置的 Windows 安全工具，这些工具会随 Windows 操作系统一起被提供给用户，以帮助我们更好地保护计算机设备。</p>
+<p>关于 Windows 操作系统，还有很多内容需要解释和涵盖。本文包括前两篇系列文章都只是对Windows操作系统进行了一些基础介绍，如果想了解有关 Windows 操作系统的更多信息，你还需要自己继续开展相关的学习。</p>
+<p>延伸阅读材料：</p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/amsi/antimalware-scan-interface-portal" >Antimalware Scan Interface <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard-manage" >Credential Guard <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li>[Windows 10 Hello](<a class="link"   target="_blank" rel="noopener" href="https://support.microsoft.com/en-us/windows/learn-about-windows-hello-and-set-it-up-dae28983-8242-bb2a-d3d1-87c9d265a5f0#:~:text=Windows" >https://support.microsoft.com/en-us/windows/learn-about-windows-hello-and-set-it-up-dae28983-8242-bb2a-d3d1-87c9d265a5f0#:~:text=Windows <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 10,in with just your PIN.)</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.csoonline.com/article/3253899/the-best-new-windows-10-security-features.html" >CSO Online - The best new Windows 10 security features <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+<p><strong>注意：</strong></p>
+<p>攻击者可以使用内置的 Windows 工具和实用程序来完成进一步的攻击操作，这种方式能够试图让攻击者在受害者环境中不被轻易发现；此策略被称为 Living Off The Land（LotL策略），你可以参阅以下链接以了解更多相关信息。</p>
+<p>LOLBAS：<a class="link"   target="_blank" rel="noopener" href="https://lolbas-project.github.io/" >https://lolbas-project.github.io/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Windows Fundamentals  3(Windows基础知识3)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 10:42:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 11:08:57
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Windows Fundamentals 3(Windows基础知识3)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">#网络安全基础</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/BlueTeam/">#BlueTeam</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Windows%20Fundamentals%202(Windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%862)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Windows Fundamentals 2(Windows基础知识2)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Windows Fundamentals  3(Windows基础知识3)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows%E6%9B%B4%E6%96%B0%EF%BC%88-Windows-Update%EF%BC%89"><span class="nav-text">Windows更新（ Windows Update）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows%E5%AE%89%E5%85%A8%EF%BC%88Windows-Security%EF%BC%89"><span class="nav-text">Windows安全（Windows Security）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%97%85%E6%AF%92%E5%92%8C%E5%A8%81%E8%83%81%E9%98%B2%E6%8A%A4%EF%BC%88Virus-threat-protection%EF%BC%89"><span class="nav-text">病毒和威胁防护（Virus &amp; threat protection）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E5%92%8C%E7%BD%91%E7%BB%9C%E4%BF%9D%E6%8A%A4%EF%BC%88Firewall-network-protection%EF%BC%89"><span class="nav-text">防火墙和网络保护（Firewall &amp; network protection）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%92%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8E%A7%E5%88%B6%EF%BC%88App-browser-control%EF%BC%89"><span class="nav-text">应用程序和浏览器控制（App &amp; browser control）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E5%AE%89%E5%85%A8%EF%BC%88Device-security%EF%BC%89"><span class="nav-text">设备安全（Device security）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BitLocker"><span class="nav-text">BitLocker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B7%E5%BD%B1%E5%A4%8D%E5%88%B6%E6%9C%8D%E5%8A%A1%EF%BC%88Volume-Shadow-Copy-Service%EF%BC%89"><span class="nav-text">卷影复制服务（Volume Shadow Copy Service）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

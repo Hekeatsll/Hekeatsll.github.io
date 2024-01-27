@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Hekeatsll">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/27/thm-windows fundamentals 2(windows基础知识2)-学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="本文所涉及的内容是Windows 基础模块的第 2 部分，了解有关系统配置、UAC 设置、资源监控、Windows 注册表等更多信息。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM-Windows Fundamentals 2(Windows基础知识2)-学习">
+<meta property="og:url" content="http://example.com/2024/01/27/THM-Windows%20Fundamentals%202(Windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%862)-%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本文所涉及的内容是Windows 基础模块的第 2 部分，了解有关系统配置、UAC 设置、资源监控、Windows 注册表等更多信息。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/articleimg/image-20230331102855386.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401185721094.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401190049438.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401190444870.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401190621227.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401190728279.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401191148145.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401201614902.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401201811501.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401201840541.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401203319568.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401203904805.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401203932302.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401191632414.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401204502203.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401205525109.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401204813864.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401205855916.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401211603366.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401225150680.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401212813748.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402103926626.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401213048340.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402104244808.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401224757803.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401213444809.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401225023683.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401220426705.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401225612103.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401220930240.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401221421693.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401221511583.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401225315207.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401225451929.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401225532208.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401225743498.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401222619478.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401233204758.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401234718952.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401234913754.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230401235447963.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402000123298.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402000305026.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402001026708.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402002650839.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402002833201.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402003006483.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402001112874.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402003146897.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402003326346.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402003355546.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402003410757.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402003427038.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402003441094.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402085550790.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402085443134.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402004626723.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402004955219.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402085935253.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402090001407.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402090043093.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402090216859.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402090331950.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402090824244.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402090931154.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402091028314.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402092105770.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402094749041.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402094951203.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402095102296.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402005656334.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402005424423.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402085801146.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230402005539209.png">
+<meta property="og:image" content="http://example.com/articleimg/image-20230331104050610.png">
+<meta property="article:published_time" content="2024-01-27T02:41:55.000Z">
+<meta property="article:modified_time" content="2024-01-27T02:58:05.779Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="网络安全基础">
+<meta property="article:tag" content="BlueTeam">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/articleimg/image-20230331102855386.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/20240103084029.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/20240103084029.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/20240103084029.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            THM-Windows Fundamentals 2(Windows基础知识2)-学习 -
+        
+        Hekeats-Limited Lyric
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Hekeats-Limited Lyric
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":5,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":null},"english":{"enable":false,"family":null,"url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"}},"content_max_width":"1000px","sidebar_width":"350px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-o57z3m.jpg","dark":"/images/wallhaven-28m68g.jpg"},"title":"Hekeats-Limited Lyric","subtitle":{"text":["死亡无时无刻不围绕在我们身边，然而我们依旧挥霍着时间，以为生命 享之不尽⌛️"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Hekeatsll/","instagram":null,"zhihu":null,"twitter":"https://twitter.com/Hekeatsll","email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":5},"tags":{"enable":true,"limit":5}},"footerStart":"2024/1/16 0:30:30"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Hekeats-Limited Lyric
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">1</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">25</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/61add44b3c6be8004802cc37/room-content/4094ed0a54f8dc274b9b4f602c57b152.svg" alt="THM-Windows Fundamentals 2(Windows基础知识2)-学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">THM-Windows Fundamentals 2(Windows基础知识2)-学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/20240103084029.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Hekeatsll</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 10:41:55</span>
+        <span class="mobile">2024-01-27 10:41:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 10:58:05</span>
+            <span class="mobile">2024-01-27 10:58:05</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/TryHackMe%E7%AC%94%E8%AE%B0/">TryHackMe笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/TryHackMe/">TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">网络安全基础</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/BlueTeam/">BlueTeam</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>6.2k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>22 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文相关的TryHackMe实验房间链接：<a class="link"   target="_blank" rel="noopener" href="https://tryhackme.com/room/windowsfundamentals2x0x" >https://tryhackme.com/room/windowsfundamentals2x0x <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>本文介绍：本文所涉及的内容是Windows 基础模块的第 2 部分，了解有关系统配置、UAC 设置、资源监控、Windows 注册表等更多信息。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在Windows Fundamentals 1中，我们已经介绍了Windows的桌面、文件系统、用户帐户控制、控制面板、设置和任务管理器。 </p>
+<p>本文将继续尝试概述 Windows 操作系统中可用的其他一些实用程序以及访问这些实用程序的不同方法。</p>
+<p>启动本文相关实验房间中所附加的Windows虚拟机（你可以直接在浏览器中访问），如果你希望通过远程桌面访问虚拟机，请使用以下凭据：</p>
+<ul>
+<li>Machine IP: <code>MACHINE_IP</code>（在实验房间中启动Windows虚拟机之后，你将获得一个相关的ip地址）</li>
+<li>User: <code>administrator</code></li>
+<li>Password: <code>letmein123!</code></li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331102855386.png"
+                      alt="image-20230331102855386"
+                ></p>
+<p>当上述界面弹出提示时，点击接受证书，然后你现在应该可以登录到远程系统。</p>
+<h2 id="系统配置面板（-System-Configuration）"><a href="#系统配置面板（-System-Configuration）" class="headerlink" title="系统配置面板（ System Configuration）"></a>系统配置面板（ System Configuration）</h2><p>系统配置实用程序 (<code>MSConfig</code>)可用于高级故障排除，其主要目的是帮助诊断启动问题，系统配置面板可以帮助我们导航到其他 Windows 应用程序。</p>
+<p>有关系统配置实用程序的更多信息，请参阅下面的文档。</p>
+<blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/system-configuration-utility-troubleshoot-configuration-errors" >https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/system-configuration-utility-troubleshoot-configuration-errors <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+</blockquote>
+<p>有几种方法可以启动系统配置，其中一种方法是从开始菜单启动–在开始菜单处输入MSConfig即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401185721094.png"
+                      alt="image-20230401185721094"
+                ></p>
+<p>注意:你需要本地管理员权限才能打开系统配置实用程序。</p>
+<p>该实用程序顶部有五个选项卡，下面是每个选项卡的名称，在本小节中，我们将简要对每个选项卡进行介绍。</p>
+<ul>
+<li><p>General-常规</p>
+</li>
+<li><p>Boot-引导</p>
+</li>
+<li><p>Services-服务</p>
+</li>
+<li><p>Startup-启动</p>
+</li>
+<li><p>Tools-工具</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401190049438.png"
+                      alt="image-20230401190049438"
+                ></p>
+</li>
+</ul>
+<p>在General选项卡中，我们可以选择Windows启动时要加载的设备和服务，相关的选项包括:标准（Normal,）、诊断性（Diagnostic）以及选择性（Selective）。</p>
+<p>在Boot选项卡中，我们可以为操作系统定义各种启动选项。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401190444870.png"
+                      alt="image-20230401190444870"
+                ></p>
+<p>在Services选项卡中，会列出系统中配置的所有服务，而不考虑其状态(运行或停止)，服务是指在后台运行的一种特殊类型的应用程序。Services选项卡允许我们启用或禁用出现在列表中的服务。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401190621227.png"
+                      alt="image-20230401190621227"
+                ></p>
+<p>Startup选项卡会将用户引导至任务管理器以管理启动项，下面是本地机器上MSConfig的Startup选项卡的截图。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401190728279.png"
+                      alt="image-20230401190728279"
+                ></p>
+<p>如上图所示，微软会建议你使用任务管理器(<code>taskmgr</code>)来管理(启用&#x2F;禁用)启动项，系统配置实用程序并不是一个启动管理程序。</p>
+<p>在Tools选项卡中，有一个关于各种实用程序(工具)的列表，我们可以运行这些工具来进一步配置操作系统。Tools选项卡中的每个工具都有一个简短的描述，以让我们对工具用途有一些了解。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401191148145.png"
+                      alt="image-20230401191148145"
+                ></p>
+<p>注意上图中的<code>Selected command</code>部分，此文本框中的信息将根据工具的不同而变化。</p>
+<p>关于工具的运行：我们可以通过Run提示符使用命令运行工具，也可以通过命令提示符使用命令运行工具，或者可以通过单击上图中的<code>launch</code>按钮启动对应工具。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><em><strong>问题1：将 Systems Internals 列为制造商的服务的名称是什么？</strong></em></p>
+<p>导航到系统配置面板(<code>MSConfig</code>)的“服务”选项卡并单击“制造商-Manufacturer”，这将按服务制造商的字母顺序对服务进行排序，然后寻找由“Systems Internals”所制造的服务。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401201614902.png"
+                      alt="image-20230401201614902"
+                ></p>
+<blockquote>
+<p>由Systems Internals所制造的服务名称为：PsShutdown</p>
+</blockquote>
+<p><em><strong>问题2：Windows 许可证注册给谁？</strong></em></p>
+<p>导航到系统配置面板的“工具”选项卡并选择“关于 Windows”工具。</p>
+<p>单击“启动”按钮启动该工具，你将看到有关操作系统的信息，包括了Windows许可证的注册对象。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401201811501.png"
+                      alt="image-20230401201811501"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401201840541.png"
+                      alt="image-20230401201840541"
+                ></p>
+<blockquote>
+<p>Windows许可证的注册对象是：Windows User</p>
+</blockquote>
+<p><em><strong>问题3：Windows 故障排除的命令是什么？</strong></em></p>
+<p>在系统配置面板的“工具”选项卡中 选择Windows 故障排除工具，注意此时选项卡的“Selected command”部分，我们可以使用选项卡中对应的命令启动工具（在cmd或者Powershell中运行命令即可）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401203319568.png"
+                      alt="image-20230401203319568"
+                ></p>
+<blockquote>
+<p>Windows 故障排除的命令是：C:\Windows\System32\control.exe &#x2F;name Microsoft.Troubleshooting</p>
+</blockquote>
+<p><em><strong>问题4：什么命令将打开控制面板？（答案是.exe的名字，并非全路径）</strong></em></p>
+<p>虽然不是很明显，但是有多个工具的启动命令都引用了同一个exe 文件——系统属性以及Windows 故障排除，两者都使用了control.exe。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401203904805.png"
+                      alt="image-20230401203904805"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401203932302.png"
+                      alt="image-20230401203932302"
+                ></p>
+<blockquote>
+<p>打开控制面板的命令中将包含control.exe</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401191632414.png"
+                      alt="image-20230401191632414"
+                ></p>
+<h2 id="更改UAC设置"><a href="#更改UAC设置" class="headerlink" title="更改UAC设置"></a>更改UAC设置</h2><p>我们将继续探索可通过“系统配置”面板使用的工具——Change UAC Settings。</p>
+<p>用户帐户控制(UAC-User Account Control) 机制和Windows中的权限分配有关，UAC能够在日常使用时 为具有管理员访问权限的用户帐户保持较低级别的权限，并能在实际需要管理员访问权限时临时提升权限级别。</p>
+<p>UAC可以通过UAC设置进行更改，甚至能够完全关闭(不推荐完全关闭UAC)。</p>
+<p>我们能够导航至MSConfig 系统配置实用程序中的“工具”选项卡，然后选择对应程序以更改 UAC 设置。</p>
+<p>在UAC设置界面，你可以通过移动滑块来改变UAC提示的优先级（从总是提示到完全不提示）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401204502203.png"
+                      alt="image-20230401204502203"
+                ></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p>单击MSConfig的“工具”选项卡中的“更改 UAC 设置”工具，查看“Selected command”部分。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401205525109.png"
+                      alt="image-20230401205525109"
+                ></p>
+<blockquote>
+<p>与启动UAC设置的命令 相关联的程序为：UserAccountControlSettings.exe</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401204813864.png"
+                      alt="image-20230401204813864"
+                ></p>
+<h2 id="计算机管理界面"><a href="#计算机管理界面" class="headerlink" title="计算机管理界面"></a>计算机管理界面</h2><p>我们将继续探索可通过“系统配置”面板使用的工具——Computer Management（<code>compmgmt</code>）。</p>
+<p>计算机管理（<code>compmgmt</code>) 实用程序包含三个主要部分：系统工具(System Tools)、 存储(Storage)以及服务和应用程序(Services and Applications)。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401205855916.png"
+                      alt="image-20230401205855916"
+                ></p>
+<p><strong>System Tools（系统工具）</strong></p>
+<p>系统工具菜单由六部分组成：<em><strong>Task Scheduler、Event Viewer、Shared Folders、Local Users and Groups、Performance、Device Manager</strong></em>。</p>
+<p>让我们首先从任务调度器(<em><strong>Task Scheduler</strong></em>)开始，根据微软的说法：通过任务调度器，我们可以创建和管理 计算机在指定的时间自动执行的常见任务。</p>
+<p>任务可以是运行应用程序、脚本等，并且任务可以被配置为在任何时间运行。比如计算机任务可以在用户登录或注销时运行，任务也可以被配置为按特定的时间表运行，例如，设置每五分钟运行一次指定的计算机任务。</p>
+<p>如果你要创建一个基本任务，可以单击“操作-Actions”(计算机管理页面的右侧窗格)下的“创建基本任务-Create Basic Task”。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401211603366.png"
+                      alt="image-20230401211603366"
+                ></p>
+<p>接下来的系统工具是事件查看器（<em><strong>Event Viewer</strong></em>）。</p>
+<p>事件查看器允许我们查看计算机上发生的事件，这些事件的记录可以被看作是一种审计跟踪，能够用来了解计算机系统的活动；这些事件信息通常可用于诊断问题以及调查系统上已执行的操作。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225150680.png"
+                      alt="image-20230401225150680"
+                ></p>
+<p>事件查看器有三个窗格。</p>
+<ol>
+<li>左边的窗格显示了一个关于事件日志提供程序的分层树列表。(如上图所示)</li>
+<li>中间的窗格将显示一个总体概述和特定于选定提供者的事件摘要。</li>
+<li>右边的窗格是一个操作（Action）界面。</li>
+</ol>
+<p>可以记录的事件有五种类型，下面是来自<a class="link"   target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/eventlog/event-types" >docs.microsoft.com <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的一个表格，提供了对每种事件类型的简要描述。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401212813748.png"
+                      alt="image-20230401212813748"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402103926626.png"
+                      alt="image-20230402103926626"
+                ></p>
+<p>事件日志能够在 Windows logs下可见，下面是来自于<a class="link"   target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/eventlog/eventlog-key" >微软官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的一个表格，它提供了对标准日志和自定义日志的简要描述。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401213048340.png"
+                      alt="image-20230401213048340"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402104244808.png"
+                      alt="image-20230402104244808"
+                ></p>
+<p>接下来的系统工具是共享文件夹（<em><strong>Shared Folders</strong></em>），在此系统工具中——你将看到其他人可以连接到的共享和共享文件夹的完整列表。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401224757803.png"
+                      alt="image-20230401224757803"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401213444809.png"
+                      alt="image-20230401213444809"
+                ></p>
+<p>上图是打开Shares文件夹之后所看到的共享列表，此列表会显示 Windows 的默认共享<code>C$</code>和 Windows 所创建的默认远程管理共享，如<code>ADMIN$</code>。</p>
+<p>与Windows中的任何对象一样，你可以右键单击共享文件夹以查看其属性，例如权限属性(谁可以访问共享资源)。</p>
+<p>在Sessions文件夹下，你将看到当前连接到“共享”的用户列表（为空）；而正在连接共享的用户可访问的文件夹和文件将在“Open Files”下被列出。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225023683.png"
+                      alt="image-20230401225023683"
+                ></p>
+<p>接下来的系统工具是本地用户和组（<em><strong>Local Users and Groups</strong></em>），我们可通过在Run提示符下输入<code>lusrmgr.msc</code>打开本地用户和组界面（在之前的文章中已有介绍，此处不再赘述）。</p>
+<p>接下来的系统工具是性能（<em><strong>Performance</strong></em>），你将看到一个名为Performance Monitor (<code>perfmon</code>)的实用程序。</p>
+<p>Perfmon（即性能监视器）可用于实时或者从日志文件中查看性能数据，此实用程序可用于排除计算机系统(本地或远程)上的性能问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401220426705.png"
+                      alt="image-20230401220426705"
+                ></p>
+<p>我们最后要介绍的系统工具是 设备管理器（<em><strong>Device Manager</strong></em>），它允许我们查看和配置硬件，例如允许我们禁用任何连接到计算机的硬件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225612103.png"
+                      alt="image-20230401225612103"
+                ></p>
+<p><strong>Storage（存储）</strong> </p>
+<p>在“存储”菜单下的是“Windows服务器备份”和“磁盘管理”，在这里，我们只讨论“磁盘管理”部分。</p>
+<p>注意：由于本文相关实验所使用的虚拟机是 Windows Server，所以会有一些在Windows 10系统中通常看不到的实用程序。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401220930240.png"
+                      alt="image-20230401220930240"
+                ></p>
+<p>磁盘管理是Windows中的一个系统实用程序，它使你能够执行高级存储任务，这些任务包括：</p>
+<ul>
+<li>Set up a new drive——建立一个新的驱动器；</li>
+<li>Extend a partition——扩展分区；</li>
+<li>Shrink a partition——缩小分区；</li>
+<li>Assign or change a drive letter (ex. E:) ——分配或更改驱动器盘符(例如E:)</li>
+</ul>
+<p><strong>Services and Applications（服务和应用程序）</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401221421693.png"
+                      alt="image-20230401221421693"
+                ></p>
+<p>如上图所示，计算机管理页面的“服务和应用程序”菜单列表将包含“路由和远程访问”、“服务”和“WMI控制”三部分。</p>
+<p>“服务”是在后台运行的一种特殊类型的应用程序，通过计算机管理页面的“服务和应用程序”菜单，你不仅可以启用和禁用服务，还可以查看服务的Properties（属性）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401221511583.png"
+                      alt="image-20230401221511583"
+                ></p>
+<p>此外，“服务和应用程序”菜单中的“WMI Control”将用于配置和控制WMI服务。</p>
+<p><em>tips：WMI是指Windows管理工具，它的全称为——Windows Management Instrumentation。</em></p>
+<p>根据维基百科的说法：“WMI允许脚本语言(如VBScript或Windows PowerShell)在本地和远程 对Microsoft Windows个人电脑与服务器进行管理，微软还为WMI提供了一个命令行接口，被称为Windows管理工具命令行(WMIC：Windows Management Instrumentation Command-line)。”</p>
+<p>注意：WMIC工具在Windows 10 21H1版本中已弃用，Windows PowerShell取代了WMI服务。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><em><strong>问题1：打开计算机管理界面的命令是什么？（使用.msc 文件名称作答即可）</strong></em></p>
+<p>单击 MSConfig 的“工具”选项卡中的“计算机管理”工具，查看“Selected command”部分即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225315207.png"
+                      alt="image-20230401225315207"
+                ></p>
+<blockquote>
+<p>答案1：compmgmt.msc</p>
+</blockquote>
+<p><em><strong>问题2：GoogleUpdateTaskMachineUA 任务配置为每天什么时间运行？</strong></em></p>
+<p>通过系统配置面板启动“计算机管理”工具并导航到“任务调度器”，在计划任务列表中，你可以看到“GoogleUpdateTaskMachineUA”任务，和此任务关联的运行时间可以在“触发器-Triggers”栏目下找到。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225451929.png"
+                      alt="image-20230401225451929"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225532208.png"
+                      alt="image-20230401225532208"
+                ></p>
+<blockquote>
+<p>答案2：6:15 AM</p>
+</blockquote>
+<p><em><strong>问题3：共享的隐藏文件夹的名称是什么？</strong></em></p>
+<p>通过系统配置面板启动“计算机管理”工具并导航到系统工具下的“共享文件夹”部分，打开包含共享列表的Shares文件夹：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401225743498.png"
+                      alt="image-20230401225743498"
+                ></p>
+<blockquote>
+<p>答案3：sh4r3dF0Ld3r</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401222619478.png"
+                      alt="image-20230401222619478"
+                ></p>
+<h2 id="系统信息界面"><a href="#系统信息界面" class="headerlink" title="系统信息界面"></a>系统信息界面</h2><p>我们将继续探索可通过“系统配置”面板使用的工具—— System Information（<code>msinfo32</code>）。</p>
+<p><strong>什么是系统信息( <code>msinfo32</code>) 工具？</strong></p>
+<p>根据 Microsoft 的说法，“ Windows 包含一个名为Microsoft System Information (Msinfo32.exe) 的工具，此工具可收集有关你的计算机的信息并显示计算机硬件、系统组件和软件环境的综合视图，你可以使用它来诊断计算机问题。”</p>
+<p>系统信息工具的主窗口是系统摘要（System Summary），它提供了很多关于操作系统、系统、处理器、BIOS、内存等的信息。</p>
+<p>系统摘要(System Summary)中的信息分为以下三部分：</p>
+<ul>
+<li>硬件资源：有关系统硬件的高级信息；</li>
+<li>组件：有关计算机上安装的不同设备的信息，如存储、显示器、键盘、鼠标、打印机等；</li>
+<li>软件环境：提供有关系统上安装的软件的详细信息，包括驱动程序、服务、任务和启动程序等，还有一个被称为环境变量的部分，环境变量用于存储有关操作系统的详细信息。</li>
+</ul>
+<p>系统摘要(System Summary)将显示计算机所使用的一般技术规格，例如计算机的处理器品牌和型号等。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401233204758.png"
+                      alt="image-20230401233204758"
+                ></p>
+<p>“硬件资源”中显示的信息不适用于普通计算机用户，如果你想了解更多关于此部分的信息，请参阅<a class="link"   target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/hardware-resources#:~:text=Hardware%20resources%20are%20the%20assignable,of%20bus%2Drelative%20memory%20addresses." >Microsoft官方页面 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401234718952.png"
+                      alt="image-20230401234718952"
+                ></p>
+<p>在“组件”下，你可以看到有关计算机上安装的硬件设备的特定信息（此处存在部分信息不会显示）。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401234913754.png"
+                      alt="image-20230401234913754"
+                ></p>
+<p>在Software Environment部分中，你可以看到有关嵌入到操作系统中的软件(如：驱动程序)和已安装软件的信息，在此处还可以看到其他详细信息，例如环境变量和网络连接等。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230401235447963.png"
+                      alt="image-20230401235447963"
+                ></p>
+<p>根据微软的说法，“环境变量存储着有关操作系统环境的信息，这些信息包括操作系统路径、操作系统使用的处理器数量以及临时文件夹的位置等详细信息。具体而言：环境变量存储着操作系统和其他程序所使用的数据，例如，WINDIR环境变量（<code>%windir%</code>）所包含的是Windows安装目录的位置，程序可以通过查询这个变量的值来确定Windows操作系统文件的位置。”</p>
+<p>单击Environment Variables即可查看已经为计算机分配好的环境变量值。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402000123298.png"
+                      alt="image-20230402000123298"
+                ></p>
+<p>可用于查看环境变量的方法还包括：</p>
+<ol>
+<li>Control Panel &gt; System and Security &gt; System &gt; Advanced system settings &gt; Environment Variables</li>
+<li>Settings &gt; System &gt; About &gt; system info &gt; Advanced system settings &gt; Environment Variables</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402000305026.png"
+                      alt="image-20230402000305026"
+                ></p>
+<p>在系统信息实用程序（<code>msinfo32</code>）的最底部，还有一个搜索栏可以帮助我们快速定位，例如：我们可以选择“组件”并搜索“<code>IP address</code>”。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402001026708.png"
+                      alt="image-20230402001026708"
+                ></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><em><strong>问题1：打开系统信息的命令是什么？（以相关的exe文件名称作答即可）</strong></em></p>
+<p>导航到MSConfig面板的“工具”选项卡并找到“系统信息”工具，查看“Selected command”部分即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402002650839.png"
+                      alt="image-20230402002650839"
+                ></p>
+<blockquote>
+<p>答案1：msinfo32.exe</p>
+</blockquote>
+<p><em><strong>问题2：系统名称下列出的是什么？</strong></em></p>
+<p>导航到MSConfig面板的工具选项卡并启动“系统信息”工具，然后选择“系统摘要”并查看“系统名称”条目。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402002833201.png"
+                      alt="image-20230402002833201"
+                ></p>
+<blockquote>
+<p>答案2：THM-WINFUN2</p>
+</blockquote>
+<p><em><strong>问题3：ComSpec的环境变量值是多少？</strong></em></p>
+<p>我们导航到MSConfig面板的工具选项卡并启动“系统信息”工具，然后展开“软件环境”菜单并查看“环境变量”页面，以找到ComSpec条目和相应的变量值。</p>
+<p>ComSpec 环境变量将指向命令行解释器，即 cmd.exe。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003006483.png"
+                      alt="image-20230402003006483"
+                ></p>
+<blockquote>
+<p>答案3：%SystemRoot%\system32\cmd.exe</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402001112874.png"
+                      alt="image-20230402001112874"
+                ></p>
+<h2 id="资源监视器"><a href="#资源监视器" class="headerlink" title="资源监视器"></a>资源监视器</h2><p>我们将继续探索可通过“系统配置”面板使用的工具——Resource Monitor（<code>resmon</code>）。</p>
+<p><strong>什么是资源监视器( <code>resmon</code>)？</strong></p>
+<p>根据Microsoft的说法：“资源监视器用于显示每个进程和聚合 CPU、内存、磁盘、网络的使用信息，此外它还提供有关哪些进程正在使用单个文件句柄和模块的详细信息；它的高级过滤功能将允许用户隔离与一个或多个进程(应用程序或服务)相关的数据，并能启动、停止、暂停和恢复服务，以及从用户界面关闭无响应的应用程序；它还包括一个进程分析功能，可以帮助识别死锁进程和文件锁定冲突，以便用户可以尝试解决冲突，而不是直接关闭应用程序并遭受丢失数据的风险。 ”</p>
+<p>正如本文所提到的其他一些工具一样，资源监视器实用程序主要面向——那些需要在计算机系统上执行高级故障排除的用户。</p>
+<p>在概述(Overview)选项卡中，Resmon 有四个部分：</p>
+<ul>
+<li>CPU-中央处理器</li>
+<li>Disk-磁盘</li>
+<li>Network-网络</li>
+<li>Memory-内存</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003146897.png"
+                      alt="image-20230402003146897"
+                ></p>
+<p>上图中的四个部分在资源监视器界面的顶部 也有相应的选项卡。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003326346.png"
+                      alt="image-20230402003326346"
+                ></p>
+<p>请注意，上图每个选项卡都有各自的附加信息，四个选项卡的具体图像信息如下所示。 </p>
+<p><strong>中央处理器</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003355546.png"
+                      alt="image-20230402003355546"
+                ></p>
+<p><strong>内存</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003410757.png"
+                      alt="image-20230402003410757"
+                ></p>
+<p><strong>磁盘</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003427038.png"
+                      alt="image-20230402003427038"
+                ></p>
+<p><strong>网络</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402003441094.png"
+                      alt="image-20230402003441094"
+                ></p>
+<p>资源监视器界面的最右侧还有窗格区域：当你查看概述选项卡时，窗格区域会实时显示和以上四个部分相关的图形视图；当你查看单个选项卡时，窗格区域则会实时显示和选项卡类型对应的图形视图。 </p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402085550790.png"
+                      alt="image-20230402085550790"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402085443134.png"
+                      alt="image-20230402085443134"
+                ></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><strong>问题：打开资源监视器的命令是什么？（以相关的exe文件名称作答即可）</strong></p>
+<p>导航到MSConfig面板的工具选项卡并找到“资源监视器”工具，查看“Selected command”部分即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402004626723.png"
+                      alt="image-20230402004626723"
+                ></p>
+<blockquote>
+<p>答案：resmon.exe</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402004955219.png"
+                      alt="image-20230402004955219"
+                ></p>
+<h2 id="命令提示符界面"><a href="#命令提示符界面" class="headerlink" title="命令提示符界面"></a>命令提示符界面</h2><p>我们将继续探索可通过“系统配置”面板使用的工具——Command Prompt（<code>cmd</code>）。</p>
+<p>命令提示符(<code>cmd</code>)一开始似乎令人生畏，但一旦你了解如何与它进行交互，你就会发现它没有那么难理解。</p>
+<p>在早期的操作系统中，命令行是与操作系统交互的唯一方式，随着GUI(图形用户界面)被引入，用户就能够使用GUI并点击一些按钮来执行复杂的计算机任务，用户也不再局限于 只能使用命令提示符来与操作系统发生交互。</p>
+<p>即使现在GUI是与操作系统进行交互的主要方式，但是计算机用户仍然可以通过命令提示符和操作系统发生交互。</p>
+<p>在本小节中，我们将只讨论计算机用户可以在命令提示符中运行以获取有关计算机系统的信息的几个简单命令。</p>
+<p>让我们从一些简单的命令开始，比如<code>hostname</code>和<code>whoami</code>。</p>
+<p>命令<code>hostname</code>将输出计算机名。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402085935253.png"
+                      alt="image-20230402085935253"
+                ></p>
+<p>命令<code>whoami</code>将输出登录用户的名称。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090001407.png"
+                      alt="image-20230402090001407"
+                ></p>
+<p>接下来，让我们看看在故障排除时有用的一些命令。</p>
+<p>经常使用的命令是<code>ipconfig</code>，这个命令将显示计算机的网络地址设置。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090043093.png"
+                      alt="image-20230402090043093"
+                ></p>
+<p>每个命令都有一个帮助手册，用于解释正确执行命令所需的语法，以及可添加到命令中以扩展其执行的任何其他参数。</p>
+<p>检索命令帮助手册的命令是<code>/?</code></p>
+<p>例如，如果要查看<code>ipconfig</code>的帮助手册，可以使用如下命令：<code>ipconfig /?</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090216859.png"
+                      alt="image-20230402090216859"
+                ></p>
+<p>注意：清除命令提示符界面的命令为<code>cls</code>。</p>
+<p>下一个命令是<code>netstat</code>，根据帮助手册，此命令将显示协议统计信息和当前TCP&#x2F;IP网络连接信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090331950.png"
+                      alt="image-20230402090331950"
+                ></p>
+<p>上图中的红框部分向我们展示了<code>netstat</code>命令的示例语法，此语法结构告诉我们<code>netstat</code>命令可以单独运行，也可以带参数运行，例如<code>-a</code>、<code>-b</code>、<code>-e</code>等。</p>
+<p>当任何参数附加到根命令(本例中为<code>netstat</code>)时，对应的命令输出也将发生变化。</p>
+<p>接下来我们介绍<code>net</code>命令，此命令主要用于管理网络资源，<code>net</code>命令支持子命令。</p>
+<p>如果输入<code>net</code>而不带子命令，则输出结果将显示根命令的语法，并会显示一些你可以使用的子命令。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090824244.png"
+                      alt="image-20230402090824244"
+                ></p>
+<p>对于<code>net</code>命令，显示帮助手册<code>/?</code>不会起作用，在这种情况下，我们需要使用不同的语法以查看帮助信息，即<code>net help</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402090931154.png"
+                      alt="image-20230402090931154"
+                ></p>
+<p>如果你希望查看<code>net user</code>的帮助信息，则相关的命令为<code>net help user</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402091028314.png"
+                      alt="image-20230402091028314"
+                ></p>
+<p>你可以使用类似的命令查看其他有用的<code>net</code>子命令的帮助信息，例如<code>localgroup</code>、<code>use</code>、<code>share</code>和<code>session</code>。</p>
+<p>请参考下面的链接，以查看你可以在命令提示符中执行的命令的相关列表： <a class="link"   target="_blank" rel="noopener" href="https://ss64.com/nt/" >https://ss64.com/nt/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><em><strong>问题1：在系统配置中，Internet 协议配置的完整命令是什么？</strong></em></p>
+<p>导航到MSConfig面板的“工具”选项卡并找到“Internet 协议配置”工具，查看“Selected command”部分即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402092105770.png"
+                      alt="image-20230402092105770"
+                ></p>
+<blockquote>
+<p>答案1：C:\Windows\System32\cmd.exe &#x2F;k %windir%\system32\ipconfig.exe</p>
+</blockquote>
+<p><em><strong>问题2：对于 ipconfig 命令，如何显示其详细信息？</strong></em></p>
+<p>启动cmd工具，并输入<code>ipconfig /?</code>命令以查看相关的帮助信息：</p>
+<p>tips：ipconfig 命令将显示计算机的网络地址设置。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402094749041.png"
+                      alt="image-20230402094749041"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402094951203.png"
+                      alt="image-20230402094951203"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402095102296.png"
+                      alt="image-20230402095102296"
+                ></p>
+<blockquote>
+<p>答案2：ipconfig &#x2F;all</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402005656334.png"
+                      alt="image-20230402005656334"
+                ></p>
+<h2 id="注册表编辑器"><a href="#注册表编辑器" class="headerlink" title="注册表编辑器"></a>注册表编辑器</h2><p>我们将继续探索可通过“系统配置”面板使用的工具——Registry Editor （<code>regedit</code>）。</p>
+<p>Windows注册表是一个中央分层数据库，它用于存储配置系统所需的信息，这些信息适用于一个或多个用户、应用程序和硬件设备。</p>
+<p>注册表包含 Windows 在运行期间不断引用的信息，例如：</p>
+<ul>
+<li>每个用户的配置文件。</li>
+<li>计算机上安装的应用程序和每个应用程序可以创建的文档类型。</li>
+<li>文件夹和应用程序图标的属性表设置。</li>
+<li>系统上存在哪些硬件。</li>
+<li>正在使用的端口。</li>
+</ul>
+<p>警告：注册表仅适用于高级计算机用户设置，随意更改注册表会影响正常的计算机操作。 </p>
+<p>有多种方法可以查看&#x2F;编辑注册表。其中一种方法是使用注册表编辑器( <code>regedit</code>)。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402005424423.png"
+                      alt="image-20230402005424423"
+                ></p>
+<p>请参阅<a class="link"   target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/troubleshoot/windows-server/performance/windows-registry-advanced-users" >Microsoft相关文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>以了解更多有关Windows注册表的信息。</p>
+<p><strong>答题</strong></p>
+<p><em>tips：阅读本小节内容并且访问Windows虚拟机进行探索，然后回答以下问题。</em></p>
+<p>访问由实验房间所提供的Windows虚拟机，并进行相关探索。</p>
+<p><strong>问题：打开注册表编辑器的命令是什么？（以相关的exe文件名称作答即可）</strong></p>
+<p>导航到MSConfig面板的“工具”选项卡并找到“注册表编辑器”工具，查看“Selected command”部分即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402085801146.png"
+                      alt="image-20230402085801146"
+                ></p>
+<blockquote>
+<p>答案：regedt32.exe</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230402005539209.png"
+                      alt="image-20230402005539209"
+                ></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>回顾：本文所介绍的主要内容是一些可以从Windows<code>MSConfig</code> 启动的工具。</p>
+<p>在Window操作系统中，实用程序的命令和快捷方式是共享的，这意味着你不必启动<code>MSConfig</code>（系统配置）也可运行一些实用程序。</p>
+<p>比如：你也可以直接从“开始菜单”界面运行其中一些实用程序：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../articleimg/image-20230331104050610.png"
+                      alt="image-20230331104050610"
+                ></p>
+<p><code>MSConfig</code>中所列出的工具并未在本文中全部提及，你可以自行探索<code>MSConfig</code>中的其他工具。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> THM-Windows Fundamentals 2(Windows基础知识2)-学习</li>
+        <li><strong>Author:</strong> Hekeatsll</li>
+        <li><strong>Created at
+                :</strong> 2024-01-27 10:41:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-27 10:58:05
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://hekeatsll.github.io/2024/01/27/THM-Windows Fundamentals 2(Windows基础知识2)-学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/TryHackMe/">#TryHackMe</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/">#网络安全基础</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/BlueTeam/">#BlueTeam</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/27/THM-Windows%20Fundamentals%203(Windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%863)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Windows Fundamentals  3(Windows基础知识3)-学习</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/27/THM-Windows%20Fundamentals%201(Windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%861)-%E5%AD%A6%E4%B9%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">THM-Windows Fundamentals 1(Windows基础知识1)-学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">THM-Windows Fundamentals 2(Windows基础知识2)-学习</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E9%9D%A2%E6%9D%BF%EF%BC%88-System-Configuration%EF%BC%89"><span class="nav-text">系统配置面板（ System Configuration）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9UAC%E8%AE%BE%E7%BD%AE"><span class="nav-text">更改UAC设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2"><span class="nav-text">计算机管理界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E7%95%8C%E9%9D%A2"><span class="nav-text">系统信息界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E7%9B%91%E8%A7%86%E5%99%A8"><span class="nav-text">资源监视器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6%E7%95%8C%E9%9D%A2"><span class="nav-text">命令提示符界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E8%A1%A8%E7%BC%96%E8%BE%91%E5%99%A8"><span class="nav-text">注册表编辑器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2024</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Hekeatsll</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
